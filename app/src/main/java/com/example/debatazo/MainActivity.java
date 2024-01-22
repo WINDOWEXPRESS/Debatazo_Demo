@@ -1,4 +1,4 @@
-package com.example.bottomnavigationdemo;
+package com.example.debatazo;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.bottomnavigationdemo.databinding.ActivityMainBinding;
+import com.example.debatazo.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
