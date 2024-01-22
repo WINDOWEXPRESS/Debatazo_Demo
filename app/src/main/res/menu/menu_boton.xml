@@ -4,13 +4,13 @@
 
     <item
         android:id="@+id/home"
-        android:title="Home"
-        android:icon="@drawable/ic_home"/>
+        android:title="@string/principal"
+        android:icon="@drawable/principal"/>
 
     <item
         android:id="@+id/shorts"
-        android:title="Shorts"
-        android:icon="@drawable/ic_baseline_whatshot_24"
+        android:title="@string/debate"
+        android:icon="@drawable/debate"
         />
 
     <item
@@ -18,11 +18,11 @@
 
     <item
         android:id="@+id/subscriptions"
-        android:title="Subscriptions"
-        android:icon="@drawable/ic_baseline_subscriptions_24" />
+        android:title="@string/valoracion"
+        android:icon="@drawable/valoracion" />
     <item
         android:id="@+id/library"
-        android:title="Library"
-        android:icon="@drawable/ic_baseline_video_library_24" />
+        android:title="@string/usuario"
+        android:icon="@drawable/usuario" />
 
 </menu>
