@@ -1,10 +1,10 @@
-package com.example.bottomnavigationdemo;
+package com.example.debatazo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.example.bottomnavigationdemo.databinding.ActividadPrincipalBinding;
+import com.example.debatazo.databinding.ActividadPrincipalBinding;
 
 
 public class principal extends AppCompatActivity {

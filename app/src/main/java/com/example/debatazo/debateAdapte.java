@@ -1,9 +1,8 @@
-package com.example.bottomnavigationdemo;
+package com.example.debatazo;
 
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 
 import android.view.LayoutInflater;
 import android.view.View;

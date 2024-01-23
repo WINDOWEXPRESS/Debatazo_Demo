@@ -1,4 +1,4 @@
-package com.example.bottomnavigationdemo;
+package com.example.debatazo;
 
 import android.os.Bundle;
 
