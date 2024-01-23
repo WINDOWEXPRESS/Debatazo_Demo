@@ -1,4 +1,4 @@
-package com.example.debatazo;
+package com.example.debatazo.debaterecycler;
 
 import java.util.Date;
 

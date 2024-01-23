@@ -1,4 +1,4 @@
-package com.example.debatazo;
+package com.example.debatazo.debaterecycler;
 
 
 import android.graphics.Bitmap;
@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.debatazo.R;
+import com.example.debatazo.imagenCircular;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
