@@ -1,10 +1,26 @@
 package com.example.debatazo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.view.View;
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.debatazo.databinding.ActividadPrincipalBinding;
+import com.example.debatazo.debaterecycler.debateFragment;
 
 
 public class principal extends AppCompatActivity {
@@ -14,21 +30,21 @@ public class principal extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.actividad_principal);
-    }
-        /*binding = ActivityMainBinding.inflate(getLayoutInflater());
+ /*       setContentView(R.layout.actividad_principal);
+    }*/
+        binding = ActividadPrincipalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new HomeFragment());
 
-        binding.bottomNavigationView.setBackground(null);
-        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+        binding.actividadPBottomNV.setBackground(null);
+        binding.actividadPBottomNV.setOnItemSelectedListener(item -> {
 
             switch (item.getItemId()) {
                 case R.id.home:
-                    replaceFragment(new HomeFragment());
+                    replaceFragment(new debateFragment());
                     break;
                 case R.id.shorts:
-                    replaceFragment(new ShortsFragment());
+                    //replaceFragment(new ShortsFragment());
                     break;
                 case R.id.subscriptions:
                     replaceFragment(new SubscriptionFragment());
@@ -41,7 +57,7 @@ public class principal extends AppCompatActivity {
             return true;
         });
 
-        binding.fab.setOnClickListener(new View.OnClickListener() {
+        binding.actividadPFloatingAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showBottomDialog();
@@ -52,7 +68,7 @@ public class principal extends AppCompatActivity {
     private  void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, fragment);
+        fragmentTransaction.replace(R.id.actividadP_frameL, fragment);
         fragmentTransaction.commit();
     }
 
@@ -60,7 +76,7 @@ public class principal extends AppCompatActivity {
 
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.bottomsheetlayout);
+        dialog.setContentView(R.layout.desplegable_publicar);
 
         LinearLayout videoLayout = dialog.findViewById(R.id.layoutVideo);
         LinearLayout shortsLayout = dialog.findViewById(R.id.layoutShorts);
@@ -72,7 +88,7 @@ public class principal extends AppCompatActivity {
             public void onClick(View v) {
 
                 dialog.dismiss();
-                Toast.makeText(MainActivity.this,"Upload a Video is clicked",Toast.LENGTH_SHORT).show();
+                Toast.makeText(principal.this,"Upload a Video is clicked",Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -82,7 +98,7 @@ public class principal extends AppCompatActivity {
             public void onClick(View v) {
 
                 dialog.dismiss();
-                Toast.makeText(MainActivity.this,"Create a short is Clicked",Toast.LENGTH_SHORT).show();
+                Toast.makeText(principal.this,"Create a short is Clicked",Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -92,7 +108,7 @@ public class principal extends AppCompatActivity {
             public void onClick(View v) {
 
                 dialog.dismiss();
-                Toast.makeText(MainActivity.this,"Go live is Clicked",Toast.LENGTH_SHORT).show();
+                Toast.makeText(principal.this,"Go live is Clicked",Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -110,5 +126,5 @@ public class principal extends AppCompatActivity {
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
 
-    }*/
+    }
 }
