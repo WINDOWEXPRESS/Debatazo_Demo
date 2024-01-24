@@ -1,4 +1,4 @@
-package com.example.bottomnavigationdemo;
+package com.example.debatazo.debaterecycler;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class SubscriptionFragment extends Fragment {
+import com.example.debatazo.R;
 
+
+public class debateFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_subscription, container, false);
+        return inflater.inflate(R.layout.fragment_debate, container, false);
     }
 }

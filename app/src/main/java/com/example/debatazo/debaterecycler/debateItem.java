@@ -1,4 +1,4 @@
-package com.example.bottomnavigationdemo;
+package com.example.debatazo.debaterecycler;
 
 import java.util.Date;
 

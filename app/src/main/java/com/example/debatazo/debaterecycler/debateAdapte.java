@@ -1,9 +1,8 @@
-package com.example.bottomnavigationdemo;
+package com.example.debatazo.debaterecycler;
 
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +12,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.debatazo.R;
+import com.example.debatazo.imagenCircular;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
