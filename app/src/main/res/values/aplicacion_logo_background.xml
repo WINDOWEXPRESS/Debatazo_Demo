@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="aplicacion_logo_background">#FAFBFD</color>
+    <color name="aplicacion_logo_background">#FFFFFFFF</color>
 </resources>

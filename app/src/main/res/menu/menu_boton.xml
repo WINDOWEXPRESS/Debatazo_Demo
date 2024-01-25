@@ -3,26 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/home"
-        android:title="@string/principal"
-        android:icon="@drawable/principal"/>
+        android:id="@+id/menuB_principal"
+        android:icon="@drawable/principal"
+        android:title="@string/principal" />
 
     <item
-        android:id="@+id/shorts"
-        android:title="@string/debate"
+        android:id="@+id/menuB_debate"
         android:icon="@drawable/debate"
-        />
+        android:title="@string/debate" />
 
     <item
-        android:title=""/>
+        android:enabled="false"
+        android:title="" />
 
     <item
-        android:id="@+id/subscriptions"
-        android:title="@string/valoracion"
-        android:icon="@drawable/valoracion" />
+        android:id="@+id/menuB_valoracion"
+        android:icon="@drawable/valoracion"
+        android:title="@string/valoracion" />
     <item
-        android:id="@+id/library"
-        android:title="@string/usuario"
-        android:icon="@drawable/usuario" />
+        android:id="@+id/menuB_usuario"
+        android:icon="@drawable/usuario"
+        android:title="@string/usuario" />
 
 </menu>

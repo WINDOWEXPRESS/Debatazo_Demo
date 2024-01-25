@@ -9,13 +9,14 @@
     <string name="usuario">Usuario</string>
     <string name="actividadP_floatingAB_layoutA"><![CDATA[@id/actividadP_bottomAB]]></string>
     <string name="title_activity_login">LoginActivity</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="prompt_email">Email o nombre</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in">Inicia sesion</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="title_activity_inicia_sesion">IniciaSesion</string>
 
 </resources>

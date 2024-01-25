@@ -14,20 +14,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.debatazo.R;
-import com.example.debatazo.imagenCircular;
+import com.example.debatazo.ImagenCircular;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class debateAdapte extends RecyclerView.Adapter<debateAdapte.debateViewHolder> {
+public class DebateAdapte extends RecyclerView.Adapter<DebateAdapte.debateViewHolder> {
 
-    private List<debateItem> listaDebate;
-    public debateAdapte(List<debateItem> listaDebate) {
+    private List<DebateItem> listaDebate;
+    public DebateAdapte(List<DebateItem> listaDebate) {
         this.listaDebate = listaDebate;
     }
     public static class debateViewHolder extends RecyclerView.ViewHolder{
-        imagenCircular perfil;
+        ImagenCircular perfil;
         TextView nombre;
         TextView fecha;
         TextView contenido;
@@ -46,14 +46,14 @@ public class debateAdapte extends RecyclerView.Adapter<debateAdapte.debateViewHo
     @Override
     public debateViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.debate_recycler_view,parent,false
+                R.layout.fragmento_debate_recycler_view,parent,false
         );
         return new debateViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull debateViewHolder holder, int position) {
-        debateItem debateItem = listaDebate.get(position);
+        DebateItem debateItem = listaDebate.get(position);
         URL perfilUrl = null,contenidoUrl = null;
         Bitmap perfilBitmap = null,contenidoBitmap = null;
         try {

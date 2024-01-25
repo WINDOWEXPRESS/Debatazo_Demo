@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.example.debatazo.imagenCircular
+        <com.example.debatazo.ImagenCircular
             android:id="@+id/debateRV_imagenC_usuario"
             android:layout_width="100dp"
             android:layout_height="100dp"

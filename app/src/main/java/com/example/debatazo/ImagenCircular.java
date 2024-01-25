@@ -12,16 +12,16 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
 import android.util.AttributeSet;
-public class imagenCircular extends androidx.appcompat.widget.AppCompatImageView {
-    public imagenCircular(Context context) {
+public class ImagenCircular extends androidx.appcompat.widget.AppCompatImageView {
+    public ImagenCircular(Context context) {
         super(context);
     }
 
-    public imagenCircular(Context context, AttributeSet attrs) {
+    public ImagenCircular(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public imagenCircular(Context context, AttributeSet attrs, int defStyle) {
+    public ImagenCircular(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
