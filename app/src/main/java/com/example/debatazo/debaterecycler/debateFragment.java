@@ -3,6 +3,7 @@ package com.example.debatazo.debaterecycler;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -24,12 +25,14 @@ public class debateFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.fragment_debate,container,false);
 
+        View layout = inflater.inflate(R.layout.fragment_debate,container,false);
         debateList = generaDebates();
         debateRecyclerV = layout.findViewById(R.id.fragmentD_recyclerV);
+        debateRecyclerV.setLayoutManager(new LinearLayoutManager(getActivity()));
         debateAd = new debateAdapte(debateList);
         debateRecyclerV.setAdapter(debateAd);
+
 
         return layout;
     }
