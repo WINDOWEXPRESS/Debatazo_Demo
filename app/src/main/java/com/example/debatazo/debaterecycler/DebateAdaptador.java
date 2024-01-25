@@ -1,6 +1,5 @@
 package com.example.debatazo.debaterecycler;
 
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +16,10 @@ import com.squareup.picasso.Picasso;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class debateAdapte extends RecyclerView.Adapter<debateAdapte.debateViewHolder> {
+public class DebateAdaptador extends RecyclerView.Adapter<DebateAdaptador.debateViewHolder> {
 
-    private List<debateItem> listaDebate;
-    public debateAdapte(List<debateItem> listaDebate) {
+    private List<DebateProducto> listaDebate;
+    public DebateAdaptador(List<DebateProducto> listaDebate) {
         this.listaDebate = listaDebate;
     }
     public static class debateViewHolder extends RecyclerView.ViewHolder{
@@ -43,25 +42,23 @@ public class debateAdapte extends RecyclerView.Adapter<debateAdapte.debateViewHo
     @Override
     public debateViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.debate_recycler_view,parent,false
+                R.layout.fragmento_debate_recycler_view,parent,false
         );
         return new debateViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull debateViewHolder holder, int position) {
-        debateItem debateItem = listaDebate.get(position);
+        DebateProducto debateProducto = listaDebate.get(position);
 
-        Picasso.get().load(debateItem.getImagenUsuario()).into(holder.perfil);
-        holder.nombre.setText(debateItem.getNombreUsuario());
-        holder.fecha.setText(new SimpleDateFormat("dd/mm/yyyy").format(debateItem.getFechaPublicacion()));
-        holder.contenido.setText(debateItem.getContenido());
-        Picasso.get().load(debateItem.getImagenUrl()).into(holder.image);
+        Picasso.get().load(debateProducto.getImagenUsuario()).into(holder.perfil);
+        holder.nombre.setText(debateProducto.getNombreUsuario());
+        holder.fecha.setText(new SimpleDateFormat("dd/mm/yyyy").format(debateProducto.getFechaPublicacion()));
+        holder.contenido.setText(debateProducto.getContenido());
+        Picasso.get().load(debateProducto.getImagenUrl()).into(holder.image);
     }
 
     @Override
-    public int getItemCount() {
-        return listaDebate.size();
-    }
+    public int getItemCount() {return listaDebate.size();}
 
 }

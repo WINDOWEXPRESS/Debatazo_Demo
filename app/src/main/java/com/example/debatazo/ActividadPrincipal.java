@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.view.View;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -17,13 +16,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.debatazo.debaterecycler.DebateFragmento;
+import com.example.debatazo.perfilylogin.PerfilFragment;
 import com.example.debatazo.databinding.ActividadPrincipalBinding;
-import com.example.debatazo.debaterecycler.debateFragment;
 
+public class ActividadPrincipal extends AppCompatActivity {
 
-public class principal extends AppCompatActivity {
-
-    ActividadPrincipalBinding binding;
+   ActividadPrincipalBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,35 +30,30 @@ public class principal extends AppCompatActivity {
 
         binding = ActividadPrincipalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new HomeFragment());
+        replaceFragment(new PrincipalFragmento());
 
         binding.actividadPBottomNV.setBackground(null);
         binding.actividadPBottomNV.setOnItemSelectedListener(item -> {
 
             switch (item.getItemId()) {
-                case R.id.menu_principal:
-                    replaceFragment(new HomeFragment());
+                case R.id.menuB_principal:
+                    replaceFragment(new PrincipalFragmento());
                     break;
-                case R.id.menu_debate:
-                    replaceFragment(new debateFragment());
+                case R.id.menuB_debate:
+                    replaceFragment(new DebateFragmento());
                     break;
-                case R.id.menu_valoracion:
-                    replaceFragment(new SubscriptionFragment());
+                case R.id.menuB_valoracion:
+                    replaceFragment(new ValoracionFragmento());
                     break;
-                case R.id.menu_usuario:
-                    replaceFragment(new LibraryFragment());
+                case R.id.menuB_usuario:
+                    replaceFragment(new PerfilFragment());
                     break;
             }
 
             return true;
         });
 
-        binding.actividadPFloatingAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showBottomDialog();
-            }
-        });
+        binding.actividadPFloatingAB.setOnClickListener(view -> showBottomDialog());
 
     }
     private  void replaceFragment(Fragment fragment) {
@@ -75,50 +69,39 @@ public class principal extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.desplegable_publicar);
 
-        LinearLayout videoLayout = dialog.findViewById(R.id.layoutVideo);
-        LinearLayout shortsLayout = dialog.findViewById(R.id.layoutShorts);
-        LinearLayout liveLayout = dialog.findViewById(R.id.layoutLive);
+        LinearLayout debate = dialog.findViewById(R.id.layoutVideo);
+        LinearLayout valoracion = dialog.findViewById(R.id.layoutShorts);
+        LinearLayout proximamente = dialog.findViewById(R.id.layoutLive);
         ImageView cancelButton = dialog.findViewById(R.id.cancelButton);
 
-        videoLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        debate.setOnClickListener(v -> {
 
-                dialog.dismiss();
-                Toast.makeText(principal.this,"Upload a Video is clicked",Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+            Toast.makeText(ActividadPrincipal.this,"A jorge le encanta toast",Toast.LENGTH_SHORT).show();
 
-            }
         });
 
-        shortsLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        valoracion.setOnClickListener(v -> {
 
-                dialog.dismiss();
-                Toast.makeText(principal.this,"Create a short is Clicked",Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+            Toast.makeText(ActividadPrincipal.this,"A jorge le encanta toast",Toast.LENGTH_SHORT).show();
 
-            }
         });
 
-        liveLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        proximamente.setOnClickListener(v -> {
 
-                dialog.dismiss();
-                Toast.makeText(principal.this,"Go live is Clicked",Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+            Toast.makeText(ActividadPrincipal.this,"A jorge le encanta toast",Toast.LENGTH_SHORT).show();
 
-            }
         });
 
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
+        cancelButton.setOnClickListener(view -> dialog.dismiss());
 
         dialog.show();
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        // Establece el fondo del cuadro de diálogo como transparente.
+        // Esto puede ser útil para crear cuadros de diálogo con esquinas redondeadas o formas personalizadas.
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);

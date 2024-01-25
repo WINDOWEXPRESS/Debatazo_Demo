@@ -17,33 +17,31 @@ import java.util.Date;
 import java.util.List;
 
 
-public class debateFragment extends Fragment {
-    public debateFragment(){}
-    private List<debateItem> debateList;
+public class DebateFragmento extends Fragment {
+    public DebateFragmento(){}
+    private List<DebateProducto> debateList;
     private RecyclerView debateRecyclerV;
-    private debateAdapte debateAd;
+    private DebateAdaptador debateAdap;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View layout = inflater.inflate(R.layout.fragment_debate,container,false);
+        View layout = inflater.inflate(R.layout.fragmento_debate,container,false);
         debateList = generaDebates();
         debateRecyclerV = layout.findViewById(R.id.fragmentD_recyclerV);
         debateRecyclerV.setLayoutManager(new LinearLayoutManager(getActivity()));
-        debateAd = new debateAdapte(debateList);
-        debateRecyclerV.setAdapter(debateAd);
-
-
+        debateAdap = new DebateAdaptador(debateList);
+        debateRecyclerV.setAdapter(debateAdap);
         return layout;
     }
-    private  List<debateItem> generaDebates(){
-        List<debateItem> debateItems = new ArrayList<debateItem>();
-        debateItems.add(new debateItem(1,1,"https://i.imgur.com/c4ujVR1.png", new Date(),
+    private  List<DebateProducto> generaDebates(){
+        List<DebateProducto> DebateProductos = new ArrayList<DebateProducto>();
+        DebateProductos.add(new DebateProducto(1,1,"https://i.imgur.com/c4ujVR1.png", new Date(),
                 "juan","Tomate es mas sano que Manzana", "https://i.imgur.com/Y7rr3sW.png"
                 ));
-        debateItems.add(new debateItem(1,1,"https://i.imgur.com/rC1asEd.png", new Date(),
+        DebateProductos.add(new DebateProducto(1,1,"https://i.imgur.com/rC1asEd.png", new Date(),
                 "Ana","Rock es la musica mas mejor del mundo entero!!!", "https://i.imgur.com/Y7rr3sW.png"
         ));
-        return  debateItems;
+        return DebateProductos;
     }
 }
