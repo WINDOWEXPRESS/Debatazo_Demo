@@ -10,9 +10,7 @@ import android.view.View;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
@@ -30,8 +28,7 @@ public class principal extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
- /*       setContentView(R.layout.actividad_principal);
-    }*/
+
         binding = ActividadPrincipalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new HomeFragment());
@@ -40,16 +37,16 @@ public class principal extends AppCompatActivity {
         binding.actividadPBottomNV.setOnItemSelectedListener(item -> {
 
             switch (item.getItemId()) {
-                case R.id.home:
+                case R.id.menu_principal:
+                    replaceFragment(new HomeFragment());
+                    break;
+                case R.id.menu_debate:
                     replaceFragment(new debateFragment());
                     break;
-                case R.id.shorts:
-                    //replaceFragment(new ShortsFragment());
-                    break;
-                case R.id.subscriptions:
+                case R.id.menu_valoracion:
                     replaceFragment(new SubscriptionFragment());
                     break;
-                case R.id.library:
+                case R.id.menu_usuario:
                     replaceFragment(new LibraryFragment());
                     break;
             }

@@ -1,9 +1,6 @@
 package com.example.debatazo.debaterecycler;
 
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.debatazo.R;
-import com.example.debatazo.imagenCircular;
+import com.google.android.material.imageview.ShapeableImageView;
+import com.squareup.picasso.Picasso;
 
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -27,7 +24,7 @@ public class debateAdapte extends RecyclerView.Adapter<debateAdapte.debateViewHo
         this.listaDebate = listaDebate;
     }
     public static class debateViewHolder extends RecyclerView.ViewHolder{
-        imagenCircular perfil;
+        ShapeableImageView perfil;
         TextView nombre;
         TextView fecha;
         TextView contenido;
@@ -54,25 +51,17 @@ public class debateAdapte extends RecyclerView.Adapter<debateAdapte.debateViewHo
     @Override
     public void onBindViewHolder(@NonNull debateViewHolder holder, int position) {
         debateItem debateItem = listaDebate.get(position);
-        URL perfilUrl = null,contenidoUrl = null;
-        Bitmap perfilBitmap = null,contenidoBitmap = null;
-        try {
-            perfilUrl = new URL(debateItem.imagenUsuario);
-            perfilBitmap = BitmapFactory.decodeStream(perfilUrl.openStream());
-            contenidoUrl = new URL(debateItem.imagenUrl);
-            contenidoBitmap = BitmapFactory.decodeStream(contenidoUrl.openStream());
-        }catch (Exception e){}
 
-        holder.perfil.setImageBitmap(perfilBitmap);
-        holder.nombre.setText(debateItem.nombreUsuario);
-        holder.fecha.setText(new SimpleDateFormat("dd/mm/yyyy").format(debateItem.fechaPublicacion));
-        holder.contenido.setText(debateItem.contenido);
-        holder.image.setImageBitmap(contenidoBitmap);
+        Picasso.get().load(debateItem.getImagenUsuario()).into(holder.perfil);
+        holder.nombre.setText(debateItem.getNombreUsuario());
+        holder.fecha.setText(new SimpleDateFormat("dd/mm/yyyy").format(debateItem.getFechaPublicacion()));
+        holder.contenido.setText(debateItem.getContenido());
+        Picasso.get().load(debateItem.getImagenUrl()).into(holder.image);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return listaDebate.size();
     }
 
 }
