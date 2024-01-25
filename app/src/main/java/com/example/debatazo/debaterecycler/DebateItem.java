@@ -2,7 +2,7 @@ package com.example.debatazo.debaterecycler;
 
 import java.util.Date;
 
-public class debateItem {
+public class DebateItem {
     Integer idUsuario;
     Integer idDebate;
     String imagenUsuario;
@@ -11,7 +11,7 @@ public class debateItem {
     String contenido;
     String imagenUrl;
 
-    public debateItem(Integer idUsuario, Integer idDebate, String imagenUsuario, Date fechaPublicacion, String nombreUsuario, String contenido, String imagenUrl) {
+    public DebateItem(Integer idUsuario, Integer idDebate, String imagenUsuario, Date fechaPublicacion, String nombreUsuario, String contenido, String imagenUrl) {
         this.idUsuario = idUsuario;
         this.idDebate = idDebate;
         this.imagenUsuario = imagenUsuario;

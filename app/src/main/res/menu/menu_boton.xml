@@ -2,24 +2,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-   <item
-       android:id="@+id/menu_principal"
-       android:icon="@drawable/principal"
-       android:title="@string/principal"/>
     <item
-        android:id="@+id/menu_debate"
+        android:id="@+id/menuB_principal"
+        android:icon="@drawable/principal"
+        android:title="@string/principal" />
+
+    <item
+        android:id="@+id/menuB_debate"
         android:icon="@drawable/debate"
         android:title="@string/debate" />
+
     <item
-        android:id="@+id/menu_add"
         android:enabled="false"
-        android:title="@string/space" />
+        android:title="" />
+
     <item
-        android:id="@+id/menu_valoracion"
+        android:id="@+id/menuB_valoracion"
         android:icon="@drawable/valoracion"
         android:title="@string/valoracion" />
     <item
-        android:id="@+id/menu_usuario"
+        android:id="@+id/menuB_usuario"
         android:icon="@drawable/usuario"
         android:title="@string/usuario" />
 

@@ -16,8 +16,8 @@
     </style>
 
     <style name="DialogAnimation">
-        <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
-        <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
+        <item name="android:windowEnterAnimation">@anim/deslizar_hacia_dentro_parte_abajo</item>
+        <item name="android:windowExitAnimation">@anim/deslizar_hacia_fuera_parte_abajo</item>
     </style>
 
 </resources>
