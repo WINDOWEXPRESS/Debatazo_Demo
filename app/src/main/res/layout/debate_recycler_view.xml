@@ -17,12 +17,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.example.debatazo.imagenCircular
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/debateRV_imagenC_usuario"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/valoracion" />
+            app:shapeAppearanceOverlay="@style/roundedImageView"
+            android:src="@drawable/usuario"
+            />
 
         <LinearLayout
             android:id="@+id/debateRV_linearL_contenidoU"
