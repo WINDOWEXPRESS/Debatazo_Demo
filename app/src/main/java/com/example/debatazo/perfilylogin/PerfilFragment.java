@@ -1,5 +1,6 @@
 package com.example.debatazo.perfilylogin;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +8,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.debatazo.R;
+import com.example.debatazo.perfilylogin.ui.login.IniciaSesion;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,12 +58,24 @@ public class PerfilFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
+
+    private TextView texto;
+    private View rootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragmento_perfil, container, false);
+        if (rootView == null) {
+            rootView = inflater.inflate(R.layout.fragmento_perfil, container, false);
+        }
+        texto = rootView.findViewById(R.id.fragmentoP_textV_idUsuario);
+        texto.setOnClickListener(view -> {
+            Intent i = new Intent(getContext(),IniciaSesion.class);
+            startActivity(i);
+        });
+        return rootView;
     }
 }

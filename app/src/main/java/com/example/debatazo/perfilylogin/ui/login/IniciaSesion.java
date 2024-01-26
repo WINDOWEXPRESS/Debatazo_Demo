@@ -2,8 +2,8 @@ package com.example.debatazo.perfilylogin.ui.login;
 
 import android.app.Activity;
 
-//import androidx.lifecycle.Observer;
-//import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
@@ -27,7 +27,6 @@ import com.example.debatazo.R;
 import com.example.debatazo.databinding.ActividadIniciaSesionBinding;
 
 public class IniciaSesion extends AppCompatActivity {
-/*
     private LoginViewModel loginViewModel;
     private ActividadIniciaSesionBinding binding;
 
@@ -41,8 +40,8 @@ public class IniciaSesion extends AppCompatActivity {
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
-        final EditText usernameEditText = binding.username;
-        final EditText passwordEditText = binding.password;
+        final EditText usernameEditText = binding.actividadISEditTEmail;
+        final EditText passwordEditText = binding.actividadISEditTContrasenia;
         final Button loginButton = binding.login;
         final ProgressBar loadingProgressBar = binding.loading;
 
@@ -131,5 +130,5 @@ public class IniciaSesion extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
-    }*/
+    }
 }
