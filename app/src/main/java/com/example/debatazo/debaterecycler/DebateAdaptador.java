@@ -3,6 +3,7 @@ package com.example.debatazo.debaterecycler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,11 +19,19 @@ import java.util.List;
 
 public class DebateAdaptador extends RecyclerView.Adapter<DebateAdaptador.debateViewHolder> {
 
+    public interface ItemClickListener {
+        void onClick(View view, int position, DebateProducto producto);
+    }
+    private ItemClickListener clickListener;
+
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
     private List<DebateProducto> listaDebate;
     public DebateAdaptador(List<DebateProducto> listaDebate) {
         this.listaDebate = listaDebate;
     }
-    public static class debateViewHolder extends RecyclerView.ViewHolder{
+    public class debateViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ShapeableImageView perfil;
         TextView nombre;
         TextView fecha;
@@ -36,6 +45,12 @@ public class DebateAdaptador extends RecyclerView.Adapter<DebateAdaptador.debate
             fecha = itemView.findViewById(R.id.debateRV_textV_fecha);
             contenido = itemView.findViewById(R.id.debateRV_textV_contenido);
             image = itemView.findViewById(R.id.debateRV_imageV);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (clickListener != null) clickListener.onClick(view, getAdapterPosition(),listaDebate.get(getAdapterPosition()));
         }
     }
     @NonNull

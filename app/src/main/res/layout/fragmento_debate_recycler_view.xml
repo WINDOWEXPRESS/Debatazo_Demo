@@ -5,11 +5,14 @@
     android:id="@+id/debateRV_linearL_principal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/border"
     android:orientation="vertical"
     android:paddingStart="10dp"
     android:paddingTop="5dp"
     android:paddingEnd="10dp"
-    android:paddingBottom="3dp">
+    android:paddingBottom="10dp">
 
     <LinearLayout
         android:id="@+id/debateRV_linearL_usuario"
@@ -22,9 +25,8 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/roundedImageView"
             android:src="@drawable/usuario"
-            />
+            app:shapeAppearanceOverlay="@style/roundedImageView" />
 
         <LinearLayout
             android:id="@+id/debateRV_linearL_contenidoU"
@@ -61,9 +63,9 @@
 
     <ImageView
         android:id="@+id/debateRV_imageV"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_marginTop="5dp"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         tools:srcCompat="@tools:sample/avatars" />
 </LinearLayout>

@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".debaterecycler.detalle.DetalleDebate">
+    tools:context=".debaterecycler.detalle.DetalleDebato">
 
 </androidx.constraintlayout.widget.ConstraintLayout>
