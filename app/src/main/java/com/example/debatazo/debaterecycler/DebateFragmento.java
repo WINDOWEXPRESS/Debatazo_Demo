@@ -1,5 +1,6 @@
 package com.example.debatazo.debaterecycler;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.debatazo.R;
+import com.example.debatazo.debaterecycler.detalle.DetalleDebate;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,7 +34,13 @@ public class DebateFragmento extends Fragment {
         debateRecyclerV.setLayoutManager(new LinearLayoutManager(getActivity()));
         debateAdap = new DebateAdaptador(debateList);
         debateRecyclerV.setAdapter(debateAdap);
+        debateAdap.setClickListener((vista,posicion,producto) ->{
+            Intent intent;
+            intent = new Intent(getActivity(), DetalleDebate.class);
+            startActivity(intent);
+        });
         return layout;
+
     }
     private  List<DebateProducto> generaDebates(){
         List<DebateProducto> DebateProductos = new ArrayList<DebateProducto>();
@@ -40,7 +48,7 @@ public class DebateFragmento extends Fragment {
                 "juan","Tomate es mas sano que Manzana", "https://i.imgur.com/Y7rr3sW.png"
                 ));
         DebateProductos.add(new DebateProducto(1,1,"https://i.imgur.com/rC1asEd.png", new Date(),
-                "Ana","Rock es la musica mas mejor del mundo entero!!!", "https://i.imgur.com/Y7rr3sW.png"
+                "Ana","Rock es la musica mejor del mundo entero!!!", "https://i.imgur.com/QXom3DV.jpg"
         ));
         return DebateProductos;
     }
