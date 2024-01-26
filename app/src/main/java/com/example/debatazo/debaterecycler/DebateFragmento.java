@@ -48,7 +48,7 @@ public class DebateFragmento extends Fragment {
                 "juan","Tomate es mas sano que Manzana", "https://i.imgur.com/Y7rr3sW.png"
                 ));
         DebateProductos.add(new DebateProducto(1,1,"https://i.imgur.com/rC1asEd.png", new Date(),
-                "Ana","Rock es la musica mas mejor del mundo entero!!!", "https://i.imgur.com/Y7rr3sW.png"
+                "Ana","Rock es la musica mejor del mundo entero!!!", "https://i.imgur.com/QXom3DV.jpg"
         ));
         return DebateProductos;
     }
