@@ -1,12 +1,9 @@
 package com.example.debatazo.debaterecycler;
 
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,20 +11,28 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.debatazo.R;
-import com.example.debatazo.ImagenCircular;
+import com.google.android.material.imageview.ShapeableImageView;
+import com.squareup.picasso.Picasso;
 
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class DebateAdapte extends RecyclerView.Adapter<DebateAdapte.debateViewHolder> {
+public class DebateAdaptador extends RecyclerView.Adapter<DebateAdaptador.debateViewHolder> {
 
-    private List<DebateItem> listaDebate;
-    public DebateAdapte(List<DebateItem> listaDebate) {
+    public interface ItemClickListener {
+        void onClick(View view, int position, DebateProducto producto);
+    }
+    private ItemClickListener clickListener;
+
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
+    private List<DebateProducto> listaDebate;
+    public DebateAdaptador(List<DebateProducto> listaDebate) {
         this.listaDebate = listaDebate;
     }
-    public static class debateViewHolder extends RecyclerView.ViewHolder{
-        ImagenCircular perfil;
+    public class debateViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        ShapeableImageView perfil;
         TextView nombre;
         TextView fecha;
         TextView contenido;
@@ -40,6 +45,12 @@ public class DebateAdapte extends RecyclerView.Adapter<DebateAdapte.debateViewHo
             fecha = itemView.findViewById(R.id.debateRV_textV_fecha);
             contenido = itemView.findViewById(R.id.debateRV_textV_contenido);
             image = itemView.findViewById(R.id.debateRV_imageV);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (clickListener != null) clickListener.onClick(view, getAdapterPosition(),listaDebate.get(getAdapterPosition()));
         }
     }
     @NonNull
@@ -53,26 +64,16 @@ public class DebateAdapte extends RecyclerView.Adapter<DebateAdapte.debateViewHo
 
     @Override
     public void onBindViewHolder(@NonNull debateViewHolder holder, int position) {
-        DebateItem debateItem = listaDebate.get(position);
-        URL perfilUrl = null,contenidoUrl = null;
-        Bitmap perfilBitmap = null,contenidoBitmap = null;
-        try {
-            perfilUrl = new URL(debateItem.imagenUsuario);
-            perfilBitmap = BitmapFactory.decodeStream(perfilUrl.openStream());
-            contenidoUrl = new URL(debateItem.imagenUrl);
-            contenidoBitmap = BitmapFactory.decodeStream(contenidoUrl.openStream());
-        }catch (Exception e){}
+        DebateProducto debateProducto = listaDebate.get(position);
 
-        holder.perfil.setImageBitmap(perfilBitmap);
-        holder.nombre.setText(debateItem.nombreUsuario);
-        holder.fecha.setText(new SimpleDateFormat("dd/mm/yyyy").format(debateItem.fechaPublicacion));
-        holder.contenido.setText(debateItem.contenido);
-        holder.image.setImageBitmap(contenidoBitmap);
+        Picasso.get().load(debateProducto.getImagenUsuario()).into(holder.perfil);
+        holder.nombre.setText(debateProducto.getNombreUsuario());
+        holder.fecha.setText(new SimpleDateFormat("dd/mm/yyyy").format(debateProducto.getFechaPublicacion()));
+        holder.contenido.setText(debateProducto.getContenido());
+        Picasso.get().load(debateProducto.getImagenUrl()).into(holder.image);
     }
 
     @Override
-    public int getItemCount() {
-        return 0;
-    }
+    public int getItemCount() {return listaDebate.size();}
 
 }

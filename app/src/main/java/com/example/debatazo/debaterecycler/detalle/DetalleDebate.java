@@ -11,6 +11,6 @@ public class DetalleDebate extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detalle_debate);
+        setContentView(R.layout.actividad_detalle_debate);
     }
 }
