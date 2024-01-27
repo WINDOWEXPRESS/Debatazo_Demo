@@ -71,6 +71,7 @@ public class PerfilFragment extends Fragment {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragmento_perfil, container, false);
         }
+
         texto = rootView.findViewById(R.id.fragmentoP_textV_idUsuario);
         texto.setOnClickListener(view -> {
             Intent i = new Intent(getContext(),IniciaSesion.class);
