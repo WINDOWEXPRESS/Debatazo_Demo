@@ -8,9 +8,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.debatazo.R;
+import com.example.debatazo.perfilylogin.configuracion.Configuracion;
+import com.example.debatazo.perfilylogin.datospersonal.ActividadDatosPersonal;
 import com.example.debatazo.perfilylogin.ui.login.IniciaSesion;
 
 /**
@@ -63,7 +66,8 @@ public class PerfilFragment extends Fragment {
 
     private TextView texto;
     private View rootView;
-
+    private ImageView configuracion ;
+    private ImageView perfil ;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,6 +79,16 @@ public class PerfilFragment extends Fragment {
         texto = rootView.findViewById(R.id.fragmentoP_textV_idUsuario);
         texto.setOnClickListener(view -> {
             Intent i = new Intent(getContext(),IniciaSesion.class);
+            startActivity(i);
+        });
+        configuracion = rootView.findViewById(R.id.fragmentoP_imageV_configuracion);
+        configuracion.setOnClickListener(view -> {
+            Intent i = new Intent(getContext(), Configuracion.class);
+            startActivity(i);
+        });
+        perfil = rootView.findViewById(R.id.fragmentoP_imageV_perfil);
+        perfil.setOnClickListener(view -> {
+            Intent i = new Intent(getContext(), ActividadDatosPersonal.class);
             startActivity(i);
         });
         return rootView;
