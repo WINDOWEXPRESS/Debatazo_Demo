@@ -68,6 +68,8 @@ public class PerfilFragment extends Fragment {
     private View rootView;
     private ImageView configuracion ;
     private ImageView perfil ;
+    private ImageView modoTema ;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -90,6 +92,17 @@ public class PerfilFragment extends Fragment {
         perfil.setOnClickListener(view -> {
             Intent i = new Intent(getContext(), ActividadDatosPersonal.class);
             startActivity(i);
+        });
+
+        modoTema = rootView.findViewById(R.id.fragmentoP_imageV_tema);
+        modoTema.setOnClickListener(view -> {
+            if (modoTema.getTag().equals("diurno")){
+                modoTema.setImageResource(R.drawable.tema_nocturno);
+                modoTema.setTag("nocturno");
+            }else {
+                modoTema.setImageResource(R.drawable.tema_diurno);
+                modoTema.setTag("diurno");
+            }
         });
         return rootView;
     }

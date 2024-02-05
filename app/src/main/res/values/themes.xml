@@ -15,7 +15,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="DialogAnimation">
+    <style name="DialogAnimacion">
         <item name="android:windowEnterAnimation">@anim/deslizar_hacia_dentro_parte_abajo</item>
         <item name="android:windowExitAnimation">@anim/deslizar_hacia_fuera_parte_abajo</item>
     </style>

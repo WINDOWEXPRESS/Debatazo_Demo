@@ -52,7 +52,8 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginEnd="10dp"
-                android:src="@drawable/tema_nocturno" />
+                android:src="@drawable/tema_nocturno"
+                android:tag="nocturno" />
 
             <ImageView
                 android:id="@+id/fragmentoP_imageV_configuracion"
@@ -70,7 +71,7 @@
             android:layout_weight="1"
             android:scaleType="centerCrop"
             android:src="@drawable/usuario"
-            app:shapeAppearanceOverlay="@style/roundedImageView" />
+            app:shapeAppearanceOverlay="@style/redondearImageView" />
 
         <LinearLayout
             android:id="@+id/fragmentoP_datosUsuario"
