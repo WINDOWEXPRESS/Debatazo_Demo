@@ -19,5 +19,8 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_inicia_sesion">IniciaSesion</string>
+    <string name="boton_volver">Boton volver</string>
+    <string name="boton_seguir">Seguir</string>
+    <string name="introduce_comentario">Introduce tu comentario</string>
 
 </resources>
