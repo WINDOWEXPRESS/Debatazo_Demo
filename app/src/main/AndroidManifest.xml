@@ -28,8 +28,7 @@
             android:exported="false" />
         <activity
             android:name=".perfilylogin.ui.login.IniciaSesion"
-            android:exported="false"
-            android:label="@string/title_activity_inicia_sesion" />
+            android:exported="false" />
         <activity
             android:name=".ActividadPrincipal"
             android:exported="true">

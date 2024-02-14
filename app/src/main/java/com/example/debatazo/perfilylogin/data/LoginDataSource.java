@@ -19,7 +19,7 @@ public class LoginDataSource {
                             "Jane Doe");
             return new Result.Success<>(fakeUser);
         } catch (Exception e) {
-            return new Result.Error(new IOException("Error logging in", e));
+            return new Result.Error(new IOException("Error al iniciar sesión", e));
         }
     }
 

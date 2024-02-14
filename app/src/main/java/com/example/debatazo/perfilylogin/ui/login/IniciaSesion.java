@@ -2,14 +2,10 @@ package com.example.debatazo.perfilylogin.ui.login;
 
 import android.app.Activity;
 
-import androidx.annotation.DrawableRes;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -18,15 +14,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,11 +29,11 @@ import com.example.debatazo.R;
 
 import com.example.debatazo.databinding.ActividadIniciaSesionBinding;
 import com.example.debatazo.perfilylogin.ActividadRegistrar;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class IniciaSesion extends AppCompatActivity {
     private LoginViewModel loginViewModel;
     private ActividadIniciaSesionBinding binding;
-    private boolean esOjoAbierto = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,11 +45,11 @@ public class IniciaSesion extends AppCompatActivity {
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
-        final EditText usernameEditText = binding.actividadISEditTEmail;
-        final EditText passwordEditText = binding.actividadISEditTContrasenia;
+        final EditText usernameEditText = binding.actividadISTextILEmail.getEditText();
+        final EditText passwordEditText = binding.actividadISTextILEmail.getEditText();
+        final TextInputLayout passwordTextInputLayout = binding.actividadISTextILContrasenia;
         final Button loginButton = binding.actividadISButtonResgistrar;
         final ProgressBar loadingProgressBar = binding.loading;
-        final ImageView verContraseniaEditText = binding.actividadISImageVVerContrasenia;
         final ImageView gmail = binding.actividadISImageVGmail;
         final ImageView wechat = binding.actividadISImageVWechat;
         final ImageView facebook = binding.actividadISImageVFacebook;
@@ -73,6 +67,8 @@ public class IniciaSesion extends AppCompatActivity {
                 }
                 if (loginFormState.getPasswordError() != null) {
                     passwordEditText.setError(getString(loginFormState.getPasswordError()));
+                    passwordTextInputLayout.setHelperText("holaa");
+                    //passwordTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_NONE);
                 }
             }
         });
@@ -118,37 +114,30 @@ public class IniciaSesion extends AppCompatActivity {
         passwordEditText.addTextChangedListener(afterTextChangedListener);
 
 
+        // Establece un listener para capturar el evento cuando se presiona una acción en el teclado virtual
         passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                // Verifica si la acción es "Done" en el teclado virtual
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    // Cuando se presiona "Done", se llama al método login del ViewModel
+                    // para intentar iniciar sesión con el nombre de usuario y la contraseña proporcionados
                     loginViewModel.login(usernameEditText.getText().toString(),
                             passwordEditText.getText().toString());
                 }
+                // Devuelve falso para indicar que el evento no está consumido y puede ser manejado por otros listeners
                 return false;
             }
         });
 
-        //funcion para ver contraseeña si cambiar eel icono de la imagen
-        verContraseniaEditText.setOnClickListener(view -> {
-            if (!esOjoAbierto){
-                verContraseniaEditText.setSelected(true);
-                esOjoAbierto = true;
-                passwordEditText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                verContraseniaEditText.setImageResource(R.drawable.ocultar);
-            }else {
-                verContraseniaEditText.setSelected(false);
-                esOjoAbierto = false;
-                passwordEditText.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                verContraseniaEditText.setImageResource(R.drawable.ver);
-
-            }
-        });
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
+                binding.actividadISLinearLOperaciones.setVisibility(View.INVISIBLE);
+                usernameEditText.setVisibility(View.INVISIBLE);
+                passwordEditText.setVisibility(View.INVISIBLE);
+
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
@@ -176,7 +165,7 @@ public class IniciaSesion extends AppCompatActivity {
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
+        String welcome = getString(R.string.bienvenido) + model.getDisplayName();
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
