@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Debatazo</string>
-    <!--    aActividad principal -->
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="publicar">Publicar</string>
     <string name="principal">Principal</string>
     <string name="debate">Debate</string>
@@ -17,4 +18,8 @@
     <string name="invalido_contrasenia">El longitud debe ser mayor de 5!</string>
     <!--    ViewModel   -->
     <string name="inicia_sesion_fallido">Inicia sesion fallido</string>
+    <string name="boton_volver">Boton volver</string>
+    <string name="boton_seguir">Seguir</string>
+    <string name="introduce_comentario">Introduce tu comentario</string>
+
 </resources>

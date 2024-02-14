@@ -38,7 +38,6 @@
                 android:id="@+id/debateRV_textV_nombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nombre"
                 android:textSize="24sp" />
 
             <TextView
@@ -46,19 +45,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Fecha"
-                android:textColor="#E32517"
                 android:textSize="20sp" />
         </LinearLayout>
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/debateRV_textV_contenido"
+        android:id="@+id/debateRV_textV_titulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Contenido"
         android:textSize="24sp" />
 
     <ImageView
