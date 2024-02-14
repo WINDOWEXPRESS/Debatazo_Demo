@@ -3,7 +3,6 @@ package com.example.debatazo.debaterecycler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,7 +34,7 @@ public class DebateAdaptador extends RecyclerView.Adapter<DebateAdaptador.debate
         ShapeableImageView perfil;
         TextView nombre;
         TextView fecha;
-        TextView contenido;
+        TextView titulo;
         ImageView image;
 
         public debateViewHolder(@NonNull View itemView) {
@@ -43,7 +42,7 @@ public class DebateAdaptador extends RecyclerView.Adapter<DebateAdaptador.debate
             perfil = itemView.findViewById(R.id.debateRV_imagenC_usuario);
             nombre = itemView.findViewById(R.id.debateRV_textV_nombre);
             fecha = itemView.findViewById(R.id.debateRV_textV_fecha);
-            contenido = itemView.findViewById(R.id.debateRV_textV_contenido);
+            titulo = itemView.findViewById(R.id.debateRV_textV_titulo);
             image = itemView.findViewById(R.id.debateRV_imageV);
             itemView.setOnClickListener(this);
         }
@@ -68,8 +67,8 @@ public class DebateAdaptador extends RecyclerView.Adapter<DebateAdaptador.debate
 
         Picasso.get().load(debateProducto.getImagenUsuario()).into(holder.perfil);
         holder.nombre.setText(debateProducto.getNombreUsuario());
-        holder.fecha.setText(new SimpleDateFormat("dd/mm/yyyy").format(debateProducto.getFechaPublicacion()));
-        holder.contenido.setText(debateProducto.getContenido());
+        holder.fecha.setText(debateProducto.getFechaPublicacion());
+        holder.titulo.setText(debateProducto.getTitulo());
         Picasso.get().load(debateProducto.getImagenUrl()).into(holder.image);
     }
 
