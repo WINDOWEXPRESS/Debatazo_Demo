@@ -14,6 +14,7 @@ import com.example.debatazo.R;
 public class LoginViewModel extends ViewModel {
 
     private static final int LONGITUD_MIN = 4;
+    private static final int LONGITUD_MAX = 20;
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
     private LoginRepository loginRepository;
@@ -93,6 +94,6 @@ public class LoginViewModel extends ViewModel {
 
     // A placeholder password validation check
     private boolean isPasswordValid(String password) {
-        return password != null && password.trim().length() >LONGITUD_MIN;
+        return password != null && (password.trim().length() > LONGITUD_MIN && password.trim().length() < LONGITUD_MAX);
     }
 }

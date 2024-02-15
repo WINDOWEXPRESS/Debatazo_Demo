@@ -15,10 +15,11 @@
         android:theme="@style/Theme.DebatezoDemo"
         tools:targetApi="31">
         <activity
-            android:name=".perfilylogin.configuracion.Configuracion"
+            android:name=".configuracion.Configuracion"
             android:exported="false" />
         <activity
-            android:name=".perfilylogin.datospersonal.ActividadDatosPersonal"
+            android:name=".datospersonal.ActividadDatosPersonal"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:exported="false" />
         <activity
             android:name=".perfilylogin.ActividadRegistrar"

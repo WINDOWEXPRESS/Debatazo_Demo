@@ -15,11 +15,13 @@
     <string name="accion_inicia_sesion_corto">Inicia sesion</string>
     <string name="bienvenido">Bienvenido !</string>
     <string name="invalido_email_usuario">Email invalido!</string>
-    <string name="invalido_contrasenia">El longitud debe ser mayor de 5!</string>
+    <string name="invalido_contrasenia">La longitud debe ser mayor de 5 y menor de 20.</string>
     <!--    ViewModel   -->
     <string name="inicia_sesion_fallido">Inicia sesion fallido</string>
     <string name="boton_volver">Boton volver</string>
     <string name="boton_seguir">Seguir</string>
     <string name="introduce_comentario">Introduce tu comentario</string>
+    <string name="limite_numerico_inicio">0/100</string>
+    <string name="limite_numerico">%d/100</string>
 
 </resources>

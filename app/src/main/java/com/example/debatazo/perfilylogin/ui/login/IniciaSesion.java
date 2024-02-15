@@ -46,7 +46,7 @@ public class IniciaSesion extends AppCompatActivity {
                 .get(LoginViewModel.class);
 
         final EditText usernameEditText = binding.actividadISTextILEmail.getEditText();
-        final EditText passwordEditText = binding.actividadISTextILEmail.getEditText();
+        final EditText passwordEditText = binding.actividadISTextILContrasenia.getEditText();
         final TextInputLayout passwordTextInputLayout = binding.actividadISTextILContrasenia;
         final Button loginButton = binding.actividadISButtonResgistrar;
         final ProgressBar loadingProgressBar = binding.loading;
@@ -67,8 +67,9 @@ public class IniciaSesion extends AppCompatActivity {
                 }
                 if (loginFormState.getPasswordError() != null) {
                     passwordEditText.setError(getString(loginFormState.getPasswordError()));
-                    passwordTextInputLayout.setHelperText("holaa");
-                    //passwordTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_NONE);
+                    passwordTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_NONE);
+                }else {
+                    passwordTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
                 }
             }
         });
@@ -86,8 +87,8 @@ public class IniciaSesion extends AppCompatActivity {
                 if (loginResult.getSuccess() != null) {
                     updateUiWithUser(loginResult.getSuccess());
                 }
-                setResult(Activity.RESULT_OK);
 
+                setResult(Activity.RESULT_OK);
                 //Complete and destroy login activity once successful
                 finish();
             }

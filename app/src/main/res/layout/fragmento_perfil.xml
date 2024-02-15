@@ -52,6 +52,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginEnd="10dp"
+                android:tooltipText="Tema"
                 android:src="@drawable/tema_nocturno"
                 android:tag="nocturno" />
 
@@ -59,6 +60,7 @@
                 android:id="@+id/fragmentoP_imageV_configuracion"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:tooltipText="Ajuste"
                 android:layout_marginEnd="10dp"
                 android:src="@drawable/configuracion" />
         </LinearLayout>
