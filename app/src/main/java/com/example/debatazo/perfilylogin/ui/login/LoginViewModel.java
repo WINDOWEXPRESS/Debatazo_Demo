@@ -47,7 +47,7 @@ public class LoginViewModel extends ViewModel {
             // Si la autenticación fue exitosa, se obtiene el usuario autenticado
             LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
             // Se actualiza el resultado del inicio de sesión con la información del usuario autenticado
-            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
+            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getUser_name())));
         } else {
             // Si la autenticación falló, se actualiza el resultado del inicio de sesión con un mensaje de error
             loginResult.setValue(new LoginResult(R.string.inicia_sesion_fallido));
