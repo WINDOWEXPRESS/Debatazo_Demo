@@ -1,4 +1,4 @@
-package com.example.debatazo.perfilylogin.ui.login;
+package com.example.debatazo.usuario.iniciarsesion.ui.login;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel;
 
 import android.util.Patterns;
 
-import com.example.debatazo.perfilylogin.data.LoginRepository;
-import com.example.debatazo.perfilylogin.data.Result;
-import com.example.debatazo.perfilylogin.data.model.LoggedInUser;
+import com.example.debatazo.usuario.iniciarsesion.data.LoginRepository;
+import com.example.debatazo.usuario.iniciarsesion.data.Result;
+import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
 import com.example.debatazo.R;
 
 public class LoginViewModel extends ViewModel {

@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.debatazo.debaterecycler.DebateFragmento;
-import com.example.debatazo.perfilylogin.PerfilFragment;
+import com.example.debatazo.usuario.PerfilFragment;
 import com.example.debatazo.databinding.ActividadPrincipalBinding;
 
 public class ActividadPrincipal extends AppCompatActivity {

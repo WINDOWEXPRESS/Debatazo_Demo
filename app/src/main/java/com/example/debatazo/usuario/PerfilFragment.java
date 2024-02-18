@@ -1,4 +1,4 @@
-package com.example.debatazo.perfilylogin;
+package com.example.debatazo.usuario;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.example.debatazo.R;
 import com.example.debatazo.configuracion.Configuracion;
 import com.example.debatazo.datospersonal.ActividadDatosPersonal;
-import com.example.debatazo.perfilylogin.ui.login.IniciaSesion;
+import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
 
 /**
  * A simple {@link Fragment} subclass.

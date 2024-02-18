@@ -1,6 +1,5 @@
 package com.example.debatazo.debaterecycler;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,7 +15,6 @@ import android.view.ViewGroup;
 
 import com.example.debatazo.R;
 import com.example.debatazo.debaterecycler.detalle.DetalleDebate;
-import com.example.debatazo.perfilylogin.data.Result;
 
 import java.util.ArrayList;
 import java.util.Date;

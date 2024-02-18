@@ -16,6 +16,7 @@
     <string name="bienvenido">Bienvenido !</string>
     <string name="invalido_email_usuario">Email invalido!</string>
     <string name="invalido_contrasenia">La longitud debe ser mayor de 5 y menor de 20.</string>
+    <string name="error_registrar_contrasenia">Error! La contraseña no coincide</string>
     <!--    ViewModel   -->
     <string name="inicia_sesion_fallido">Inicia sesion fallido</string>
     <string name="boton_volver">Boton volver</string>
@@ -23,5 +24,8 @@
     <string name="introduce_comentario">Introduce tu comentario</string>
     <string name="limite_numerico_inicio">0/100</string>
     <string name="limite_numerico">%d/100</string>
+
+    <!--    Datos Personal    -->
+    <string name="sin_rellenar">Sin rellenar</string>
 
 </resources>

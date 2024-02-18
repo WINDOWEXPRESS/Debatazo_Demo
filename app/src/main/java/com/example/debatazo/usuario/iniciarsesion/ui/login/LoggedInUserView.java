@@ -1,4 +1,4 @@
-package com.example.debatazo.perfilylogin.ui.login;
+package com.example.debatazo.usuario.iniciarsesion.ui.login;
 
 /**
  * Class exposing authenticated user details to the UI.

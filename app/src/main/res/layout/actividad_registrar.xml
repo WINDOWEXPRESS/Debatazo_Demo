@@ -8,7 +8,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".perfilylogin.ActividadRegistrar">
+    tools:context=".usuario.registrar.ActividadRegistrar">
 
     <ImageView
         android:id="@+id/actividadR_imageV_logoAplicacion"
@@ -41,7 +41,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout3"
+        android:id="@+id/actividadR_textIL_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -50,8 +50,6 @@
 
         app:boxBackgroundMode="outline"
         app:endIconTint="@color/azul_marino"
-
-        app:errorTextColor="@color/red"
 
         app:helperText="Introducir el email"
         app:helperTextEnabled="true"
@@ -62,8 +60,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/actividadR_textV_nombreAplicacion"
         app:startIconDrawable="@drawable/email"
-        app:startIconTint="@color/azul_marino"
-        tools:ignore="MissingConstraints">
+        app:startIconTint="@color/azul_marino">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -85,23 +82,22 @@
 
         app:counterMaxLength="20"
         app:endIconMode="password_toggle"
-
         app:endIconTint="@color/azul_marino"
-        app:errorTextColor="@color/azul_marino"
+
+        app:errorTextColor="@color/red"
+        app:errorEnabled="true"
 
         app:helperText="Introducir la contraseña"
-
         app:helperTextEnabled="true"
         app:helperTextTextColor="@color/azul_marino"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.842"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
+        app:layout_constraintTop_toBottomOf="@+id/actividadR_textIL_email"
         app:startIconDrawable="@drawable/contrasenia"
         app:startIconTint="@color/azul_marino"
         tools:ignore="MissingConstraints">
-
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -118,15 +114,13 @@
 
         app:boxBackgroundColor="@color/white"
         app:boxBackgroundMode="outline"
-
         app:counterEnabled="true"
         app:counterMaxLength="20"
 
         app:endIconMode="password_toggle"
         app:endIconTint="@color/azul_marino"
-
-        app:errorTextColor="@color/azul_marino"
-
+        app:errorTextColor="@color/red"
+        app:errorEnabled="true"
         app:helperText="Repitir la contraseña"
         app:helperTextEnabled="true"
 
@@ -136,18 +130,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/actividadR_textIL_contrasenia"
         app:startIconDrawable="@drawable/contrasenia"
-        app:startIconTint="@color/azul_marino"
-        tools:ignore="MissingConstraints">
+        app:startIconTint="@color/azul_marino">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textPassword"
-            android:paddingBottom="20dp"
             android:textSize="18dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:id="@+id/actividadR_textV_mensajeError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:textColor="@color/red"
+        app:layout_constraintStart_toStartOf="@+id/actividadR_textIL_repetirContrasenia"
+        app:layout_constraintTop_toBottomOf="@+id/actividadR_textIL_repetirContrasenia" />
     <CheckBox
         android:id="@+id/actividadR_checkB_terminosYCondiciones"
         android:layout_width="match_parent"
@@ -157,11 +157,11 @@
         android:buttonTint="#000000"
         android:text="He leído y acepto los términos y condiciones de uso"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@+id/actividadR_textIL_repetirContrasenia"
+        app:layout_constraintTop_toBottomOf="@+id/actividadR_textV_mensajeError"
         tools:layout_editor_absoluteX="0dp" />
 
     <Button
-        android:id="@+id/actividadR_button_resgistrar"
+        android:id="@+id/actividadR_button_registrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

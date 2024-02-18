@@ -1,4 +1,4 @@
-package com.example.debatazo.perfilylogin.ui.login;
+package com.example.debatazo.usuario.iniciarsesion.ui.login;
 
 import android.app.Activity;
 
@@ -29,7 +29,7 @@ import android.widget.Toast;
 import com.example.debatazo.R;
 
 import com.example.debatazo.databinding.ActividadIniciaSesionBinding;
-import com.example.debatazo.perfilylogin.ActividadRegistrar;
+import com.example.debatazo.usuario.registrar.ActividadRegistrar;
 import com.example.debatazo.savesharedpreference.SaveSharedPreference;
 import com.google.android.material.textfield.TextInputLayout;
 

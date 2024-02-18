@@ -22,13 +22,13 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:exported="false" />
         <activity
-            android:name=".perfilylogin.ActividadRegistrar"
+            android:name=".usuario.registrar.ActividadRegistrar"
             android:exported="false" />
         <activity
             android:name=".debaterecycler.detalle.DetalleDebate"
             android:exported="false" />
         <activity
-            android:name=".perfilylogin.ui.login.IniciaSesion"
+            android:name=".usuario.iniciarsesion.ui.login.IniciaSesion"
             android:exported="false" />
         <activity
             android:name=".ActividadPrincipal"
