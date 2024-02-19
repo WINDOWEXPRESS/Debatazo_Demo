@@ -5,19 +5,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitCliente {
     private static RetrofitCliente instancia;
-    private static ApiUsuario apiUsuario;
+    private static ApiServicioUsuario apiServicioUsuario;
 
     private RetrofitCliente(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://localhost:8080/")
+                .baseUrl("http://10.0.2.2:8080/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        apiUsuario = retrofit.create(ApiUsuario.class);
+        apiServicioUsuario = retrofit.create(ApiServicioUsuario.class);
     }
 
-    public static ApiUsuario getApiUsuarioServicio(){
-        return apiUsuario;
+    public static ApiServicioUsuario getApiUsuario(){
+        return apiServicioUsuario;
     }
 
     //Singleton

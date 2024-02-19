@@ -18,7 +18,7 @@
             android:name=".configuracion.Configuracion"
             android:exported="false" />
         <activity
-            android:name=".datospersonal.ActividadDatosPersonal"
+            android:name=".usuario.datospersonal.ActividadDatosPersonal"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:exported="false" />
         <activity

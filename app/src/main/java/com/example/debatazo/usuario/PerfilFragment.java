@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.example.debatazo.R;
 import com.example.debatazo.configuracion.Configuracion;
-import com.example.debatazo.datospersonal.ActividadDatosPersonal;
+import com.example.debatazo.usuario.datospersonal.ActividadDatosPersonal;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
 
 /**

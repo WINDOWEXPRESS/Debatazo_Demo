@@ -1,4 +1,4 @@
-package com.example.debatazo.datospersonal;
+package com.example.debatazo.usuario.datospersonal;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,19 +7,30 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.debatazo.R;
+import com.example.debatazo.databinding.ActividadDatosPersonalBinding;
 
 public class ActividadDatosPersonal extends AppCompatActivity {
+    private ActividadDatosPersonalBinding binding;
     private TextView limiteNumerico;
+    private TextView id;
+    private TextView nombreUsuario;
+    private TextView nombrePersonal;
+    private TextView edad;
+    private TextView sexo;
+    private ImageView perfil;
     private EditText descripcionPersonal;
     private ImageButton volver;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.actividad_datos_personal);
+        binding = ActividadDatosPersonalBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         vincularVista();
 
@@ -27,9 +38,10 @@ public class ActividadDatosPersonal extends AppCompatActivity {
             finish();
         });
 
-        maximoCaracteres(descripcionPersonal,limiteNumerico);
+        maximoCaracteres(descripcionPersonal, limiteNumerico);
     }
-    private void maximoCaracteres (EditText editText, TextView textView) {
+
+    private void maximoCaracteres(EditText editText, TextView textView) {
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -43,15 +55,23 @@ public class ActividadDatosPersonal extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                textView.setText(getString(R.string.limite_numerico,editable.length()));
+                textView.setText(getString(R.string.limite_numerico, editable.length()));
             }
         });
+
     }
 
-    private void vincularVista(){
-        limiteNumerico = findViewById(R.id.actividadDP_textV_limiteNumerico);
-        descripcionPersonal = findViewById(R.id.actividadDP_editTT_descripcionPersonal);
-        volver = findViewById(R.id.actividadDP_imageB_volver);
+    private void vincularVista() {
+        limiteNumerico = binding.actividadDPTextVLimiteNumerico;
+        descripcionPersonal = binding.actividadDPEditTTDescripcionPersonal;
+        volver = binding.actividadDPImageBVolver;
+        id = binding.actividadDPTextVId;
+        nombreUsuario = binding.actividadDPTextVNombreUsuario;
+        nombrePersonal = binding.actividadDPTextVNombrePersonal;
+        edad = binding.actividadDPTextVEdad;
+
+        sexo = binding.actividadDPTextVSexo;
+        perfil = binding.actividadDPImageVPerfil;
 
     }
 }
