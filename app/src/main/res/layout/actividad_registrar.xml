@@ -144,8 +144,9 @@
         android:id="@+id/actividadR_textV_mensajeError"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16dp"
         android:textColor="@color/red"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/actividadR_textIL_repetirContrasenia"
         app:layout_constraintStart_toStartOf="@+id/actividadR_textIL_repetirContrasenia"
         app:layout_constraintTop_toBottomOf="@+id/actividadR_textIL_repetirContrasenia" />
     <CheckBox

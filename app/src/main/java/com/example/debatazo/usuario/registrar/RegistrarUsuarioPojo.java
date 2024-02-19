@@ -8,17 +8,13 @@ public class RegistrarUsuarioPojo {
 
     private String passwd;
 
-    private String salt;
 
-    public RegistrarUsuarioPojo(String email, String passwd, String salt) {
+
+    public RegistrarUsuarioPojo(String email, String passwd) {
         this.email = email;
         this.passwd = passwd;
-        this.salt = salt;
     }
 
     // Getters y setters
 
-    public String getEmail() {
-        return email;
-    }
 }

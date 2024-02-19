@@ -17,9 +17,13 @@ public class RegistrarViewModel extends ViewModel {
     private static final int LONGITUD_MAX = 20;
     private RegistrarUsuarioRepo userRepository;
     private MutableLiveData<RegistrarFormulaEstado> registrarFormulaEstado = new MutableLiveData<>();
+    private MutableLiveData<Boolean> estadoMutableLiveDataRegistrarExitosa = new MutableLiveData<>();
 
     LiveData<RegistrarFormulaEstado> getRegistrarFormulaEstado() {
         return registrarFormulaEstado;
+    }
+    LiveData<Boolean> getEstadoLiveDataRegistrarExitosa() {
+        return estadoMutableLiveDataRegistrarExitosa;
     }
 
 
@@ -27,10 +31,15 @@ public class RegistrarViewModel extends ViewModel {
         userRepository = new RegistrarUsuarioRepo();
     }
 
+    public RegistrarUsuarioRepo getUserRepository() {
+        return userRepository;
+    }
+
     // Método para registrar un usuario
-    public void registrarUsuario(String email, String password, String salt) {
-        RegistrarUsuarioPojo user = new RegistrarUsuarioPojo(email, password,salt);
+    public void registrarUsuario(String email, String password) {
+        RegistrarUsuarioPojo user = new RegistrarUsuarioPojo(email, password);
         userRepository.registrarUsuario(user);
+        estadoMutableLiveDataRegistrarExitosa.setValue(userRepository.isEsRegistrarExitosa());
     }
 
     public void RegistrarDataChanged(String email, String contrasenia,String contraseniaRepetir,@Nullable Boolean esTerminoCheckeado) {

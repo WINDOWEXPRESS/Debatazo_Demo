@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.debatazo.R;
 import com.example.debatazo.databinding.ActividadIniciaSesionBinding;
@@ -21,6 +22,7 @@ public class ActividadRegistrar extends AppCompatActivity {
     private EditText email;
     private EditText contrasenia;
     private EditText contraseniaRepetir;
+    private TextView errorMensaje;
     private CheckBox terminosYCondiciones;
     private Button registrar;
 
@@ -63,9 +65,19 @@ public class ActividadRegistrar extends AppCompatActivity {
         email.addTextChangedListener(afterTextChangedListener);
         contrasenia.addTextChangedListener(afterTextChangedListener);
         contraseniaRepetir.addTextChangedListener(afterTextChangedListener);
+        registrarViewModel.getEstadoLiveDataRegistrarExitosa().observe(this,registrarExitosaEstado -> {
+            if (registrarExitosaEstado == null) {
+                return;
+            }
+            if (registrarExitosaEstado.booleanValue() == true){
+                finish();
+            }else {
+                errorMensaje.setText(registrarViewModel.getUserRepository().getMensaje());
+            }
 
+        });
         registrar.setOnClickListener(view -> {
-            registrarViewModel.registrarUsuario(email.getText().toString(),contrasenia.getText().toString(),"SOYSALT");
+            registrarViewModel.registrarUsuario(email.getText().toString(),contrasenia.getText().toString());
         });
     }
 
@@ -94,6 +106,7 @@ public class ActividadRegistrar extends AppCompatActivity {
         email = binding.actividadRTextILEmail.getEditText();
         contrasenia = binding.actividadRTextILContrasenia.getEditText();
         contraseniaRepetir = binding.actividadRTextILRepetirContrasenia.getEditText();
+        errorMensaje = binding.actividadRTextVMensajeError;
         terminosYCondiciones = binding.actividadRCheckBTerminosYCondiciones;
         registrar = binding.actividadRButtonRegistrar;
     }
