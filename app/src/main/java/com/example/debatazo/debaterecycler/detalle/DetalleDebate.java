@@ -37,12 +37,12 @@ public class DetalleDebate extends AppCompatActivity {
         bundle = getIntent().getExtras();
         producto = (DebateProducto)bundle.getSerializable(DebateFragmento.INTENT_KEY);
 
-        Picasso.get().load(producto.getImagenUsuario()).into(shapeableIV_usuario);
-        Picasso.get().load(producto.getImagenUrl()).into(imageV_imagenC);
-        textV_nombre.setText(producto.getNombreUsuario());
-        textV_fecha.setText(producto.getFechaPublicacion());
-        textV_titulo.setText(producto.getTitulo());
-        textV_contenido.setText(producto.getContenido());
+        Picasso.get().load(producto.getProfileImg()).into(shapeableIV_usuario);
+        Picasso.get().load(producto.getImgUrl()).into(imageV_imagenC);
+        textV_nombre.setText(producto.getUserName());
+        textV_fecha.setText(producto.getReleaseDate());
+        textV_titulo.setText(producto.getTitle());
+        textV_contenido.setText(producto.getDescription());
 
         imageButton.setOnClickListener(view -> {
             setResult(RESULT_CANCELED);

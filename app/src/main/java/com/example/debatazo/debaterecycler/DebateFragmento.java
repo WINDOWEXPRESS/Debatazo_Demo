@@ -22,6 +22,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class DebateFragmento extends Fragment {
     public DebateFragmento(){}
@@ -32,12 +36,21 @@ public class DebateFragmento extends Fragment {
     private ActivityResultLauncher<Intent> resultLauncher;
     public static final String INTENT_KEY = "SDJHSDYFGGEFTEGFUJ";
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View layout = inflater.inflate(R.layout.fragmento_debate,container,false);
 
-        debateList = generaDebates();
+        ServicioDebateProducto servicioDebateProducto = ServicioDebateProducto.getInstance();
+        Call<List<DebateProducto>> debateProductoCall = servicioDebateProducto.getRepor().getAll();
+        debateProductoCall.enqueue(new Callback<List<DebateProducto>>() {
+            @Override
+            public void onResponse(Call<List<DebateProducto>> call, Response<List<DebateProducto>> response) {
+                debateList = new ArrayList<>(response.body());
+            }
+            @Override
+            public void onFailure(Call<List<DebateProducto>> call, Throwable t) {
+            }
+        });
         debateRecyclerV = layout.findViewById(R.id.fragmentD_recyclerV);
         debateRecyclerV.setLayoutManager(new LinearLayoutManager(getActivity()));
         debateAdap = new DebateAdaptador(debateList);
@@ -53,14 +66,23 @@ public class DebateFragmento extends Fragment {
         return layout;
 
     }
-    private  List<DebateProducto> generaDebates(){
-        List<DebateProducto> DebateProductos = new ArrayList<DebateProducto>();
-        DebateProductos.add(new DebateProducto(1,1,"https://i.imgur.com/c4ujVR1.png", new Date(),
-                "juan","Tomate es mas sano que Manzana","El tomate es bajo en calorías y grasas, lo que puede ser beneficioso para aquellos que buscan mantener o perder peso. Puedes destacar cómo el consumo de tomates puede ser parte de una dieta equilibrada y baja en calorías", "https://i.imgur.com/Y7rr3sW.png"
-                ));
-        DebateProductos.add(new DebateProducto(1,1,"https://i.imgur.com/rC1asEd.png", new Date(),
-                "Ana","Rock es la musica mejor del mundo entero!!!","El rock ha resistido la prueba del tiempo y sigue siendo popular entre diversas generaciones. Su capacidad para evolucionar y adaptarse a lo largo de los años demuestra su impacto perdurable" ,"https://i.imgur.com/QXom3DV.jpg"
-        ));
-        return DebateProductos;
-    }
+    /*private  List<DebateProducto> getDebateList(){
+        ServicioDebateProducto servicioDebateProducto = ServicioDebateProducto.getInstance();
+        Call<List<DebateProducto>> debateProductoCall = servicioDebateProducto.getRepor().getAll();
+        debateProductoCall.enqueue(new Callback<List<DebateProducto>>() {
+            @Override
+            public void onResponse(Call<List<DebateProducto>> call, Response<List<DebateProducto>> response) {
+                if(response.isSuccessful()){
+                    debateList = response.body();
+                    System.out.println("????");
+                }else {
+                    System.out.println("::::::");
+                }
+            }
+            @Override
+            public void onFailure(Call<List<DebateProducto>> call, Throwable t) {
+                System.out.println("::::::"+t.getMessage());
+            }
+        });
+    }*/
 }

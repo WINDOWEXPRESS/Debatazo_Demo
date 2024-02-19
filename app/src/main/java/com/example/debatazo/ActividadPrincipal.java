@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.debatazo.debaterecycler.DebateFragment;
+import com.example.debatazo.debaterecycler.DebateFragmento;
 import com.example.debatazo.perfilylogin.PerfilFragment;
 import com.example.debatazo.databinding.ActividadPrincipalBinding;
 
@@ -41,7 +41,7 @@ public class ActividadPrincipal extends AppCompatActivity {
                     replaceFragment(new PrincipalFragmento());
                     break;
                 case R.id.menuB_debate:
-                    replaceFragment(new DebateFragment());
+                    replaceFragment(new DebateFragmento());
                     break;
                 case R.id.menuB_valoracion:
                     replaceFragment(new ValoracionFragmento());
