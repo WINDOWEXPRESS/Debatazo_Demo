@@ -25,7 +25,7 @@
             android:layout_weight="1"
             android:scaleType="centerCrop"
             android:src="@drawable/usuario"
-            app:shapeAppearanceOverlay="@style/roundedImageView" />
+            app:shapeAppearanceOverlay="@style/redondearImageView" />
 
         <LinearLayout
             android:id="@+id/debateRV_linearL_contenidoU"

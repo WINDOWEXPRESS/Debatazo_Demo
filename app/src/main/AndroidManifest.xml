@@ -3,10 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -17,21 +15,21 @@
         android:theme="@style/Theme.DebatezoDemo"
         tools:targetApi="31">
         <activity
-            android:name=".perfilylogin.configuracion.Configuracion"
+            android:name=".configuracion.Configuracion"
             android:exported="false" />
         <activity
-            android:name=".perfilylogin.datospersonal.ActividadDatosPersonal"
+            android:name=".usuario.datospersonal.ActividadDatosPersonal"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:exported="false" />
         <activity
-            android:name=".perfilylogin.ActividadRegistrar"
+            android:name=".usuario.registrar.ActividadRegistrar"
             android:exported="false" />
         <activity
             android:name=".debaterecycler.detalle.DetalleDebate"
             android:exported="false" />
         <activity
-            android:name=".perfilylogin.ui.login.IniciaSesion"
-            android:exported="false"
-            android:label="@string/title_activity_inicia_sesion" />
+            android:name=".usuario.iniciarsesion.ui.login.IniciaSesion"
+            android:exported="false" />
         <activity
             android:name=".ActividadPrincipal"
             android:exported="true">

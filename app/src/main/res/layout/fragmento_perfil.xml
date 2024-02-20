@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".perfilylogin.PerfilFragment">
+    tools:context=".usuario.PerfilFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -52,12 +52,15 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginEnd="10dp"
-                android:src="@drawable/tema_nocturno" />
+                android:tooltipText="Tema"
+                android:src="@drawable/tema_nocturno"
+                android:tag="nocturno" />
 
             <ImageView
                 android:id="@+id/fragmentoP_imageV_configuracion"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:tooltipText="Ajuste"
                 android:layout_marginEnd="10dp"
                 android:src="@drawable/configuracion" />
         </LinearLayout>
@@ -70,7 +73,7 @@
             android:layout_weight="1"
             android:scaleType="centerCrop"
             android:src="@drawable/usuario"
-            app:shapeAppearanceOverlay="@style/roundedImageView" />
+            app:shapeAppearanceOverlay="@style/redondearImageView" />
 
         <LinearLayout
             android:id="@+id/fragmentoP_datosUsuario"

@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.debatazo.debaterecycler.DebateFragmento;
-import com.example.debatazo.perfilylogin.PerfilFragment;
+import com.example.debatazo.usuario.PerfilFragment;
 import com.example.debatazo.databinding.ActividadPrincipalBinding;
 
 public class ActividadPrincipal extends AppCompatActivity {
@@ -65,15 +65,16 @@ public class ActividadPrincipal extends AppCompatActivity {
     }
 
     private void showBottomDialog() {
-
+        //Instancia dialog , la caracteristica de que sea sin titulo , y configurar el layout
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.desplegable_publicar);
 
-        LinearLayout debate = dialog.findViewById(R.id.layoutVideo);
-        LinearLayout valoracion = dialog.findViewById(R.id.layoutShorts);
-        LinearLayout proximamente = dialog.findViewById(R.id.layoutLive);
-        ImageView cancelButton = dialog.findViewById(R.id.cancelButton);
+        //Vinculo con los componentes de layout
+        LinearLayout debate = dialog.findViewById(R.id.desplegableP_lineaLH_crearDebate);
+        LinearLayout valoracion = dialog.findViewById(R.id.desplegableP_lineaLH_crearValoracion);
+        LinearLayout proximamente = dialog.findViewById(R.id.desplegableP_lineaLH_proximamente);
+        ImageView cancelButton = dialog.findViewById(R.id.desplegableP_imagenV_cancelar);
 
         debate.setOnClickListener(v -> {
 
@@ -104,7 +105,8 @@ public class ActividadPrincipal extends AppCompatActivity {
         // Establece el fondo del cuadro de diálogo como transparente.
         // Esto puede ser útil para crear cuadros de diálogo con esquinas redondeadas o formas personalizadas.
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        //tener la animacion de entrar y salir
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimacion;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
 
     }

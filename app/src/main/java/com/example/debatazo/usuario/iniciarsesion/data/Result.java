@@ -1,4 +1,4 @@
-package com.example.debatazo.perfilylogin.data;
+package com.example.debatazo.usuario.iniciarsesion.data;
 
 /**
  * A generic class that holds a result success w/ data or an error exception.

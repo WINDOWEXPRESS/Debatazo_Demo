@@ -9,13 +9,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".perfilylogin.ui.login.IniciaSesion">
+    tools:context=".usuario.iniciarsesion.ui.login.IniciaSesion">
 
     <ImageView
         android:id="@+id/actividadIS_imageV_logoAplicacion"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="1"
         android:src="@mipmap/aplicacion_logo_round"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="1"
         android:fontFamily="@font/designer"
         android:paddingTop="5dp"
@@ -40,63 +40,92 @@
         app:layout_constraintStart_toStartOf="@+id/actividadIS_imageV_logoAplicacion"
         app:layout_constraintTop_toBottomOf="@+id/actividadIS_imageV_logoAplicacion" />
 
-    <EditText
-        android:id="@+id/actividadIS_editT_email"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="212dp"
-        android:autofillHints="@string/prompt_email"
-        android:background="@drawable/personalizar_editex"
-        android:drawableLeft="@drawable/email"
-        android:drawablePadding="10dp"
-        android:hint="@string/prompt_email"
-        android:inputType="textEmailAddress"
-        android:padding="10dp"
-        android:selectAllOnFocus="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/actividadIS_editT_contrasenia"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/actividadIS_textIL_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:autofillHints="@string/prompt_password"
-        android:background="@drawable/personalizar_editex"
-        android:drawableLeft="@drawable/contrasenia"
-        android:drawablePadding="10dp"
-        android:hint="@string/prompt_password"
-        android:imeActionLabel="@string/action_sign_in_short"
-        android:imeOptions="actionDone"
-        android:inputType="textPassword"
-        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/pista_email"
+
+        app:boxBackgroundColor="@color/white"
         android:selectAllOnFocus="true"
+        app:boxBackgroundMode="outline"
+        app:endIconTint="@color/azul_marino"
+
+        app:helperText="Introducir el email"
+        app:helperTextEnabled="true"
+
+        app:helperTextTextColor="@color/azul_marino"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/actividadIS_editT_email" />
+        app:layout_constraintTop_toBottomOf="@+id/actividadIS_textV_nombreAplicacion"
+        app:startIconDrawable="@drawable/email"
+        app:startIconTint="@color/azul_marino"
 
+        tools:ignore="MissingConstraints">
 
-    <ImageView
-        android:id="@+id/actividadIS_imageV_verContrasenia"
-        android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textEmailAddress"
+            android:textSize="18dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/actividadIS_textIL_contrasenia"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="13dp"
-        android:src="@drawable/ver"
-        app:layout_constraintBottom_toBottomOf="@+id/actividadIS_editT_contrasenia"
-        app:layout_constraintEnd_toEndOf="@+id/actividadIS_editT_contrasenia"
-        app:layout_constraintTop_toTopOf="@+id/actividadIS_editT_contrasenia" />
+        android:autofillHints="@string/pista_contrasenia"
+        android:hint="@string/pista_contrasenia"
+
+        app:boxBackgroundColor="@color/white"
+
+        app:boxBackgroundMode="outline"
+        app:counterEnabled="true"
+
+        app:counterMaxLength="20"
+        app:endIconMode="password_toggle"
+        app:endIconTint="@color/azul_marino"
+
+        app:errorTextColor="@color/red"
+
+        app:helperText="Introducir la contraseña"
+
+        app:helperTextEnabled="true"
+        app:helperTextTextColor="@color/azul_marino"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.842"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/actividadIS_textIL_email"
+        app:startIconDrawable="@drawable/contrasenia"
+        app:startIconTint="@color/azul_marino"
+        app:errorEnabled="true"
+        tools:ignore="MissingConstraints">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/actividadIS_textIET_contrasenia"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textPassword"
+
+            android:textSize="18dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="@+id/actividadIS_editT_contrasenia"
-        app:layout_constraintStart_toStartOf="@+id/actividadIS_editT_contrasenia"
-        app:layout_constraintTop_toBottomOf="@+id/actividadIS_editT_contrasenia">
+        app:layout_constraintEnd_toEndOf="@+id/actividadIS_textIL_contrasenia"
+        app:layout_constraintStart_toStartOf="@+id/actividadIS_textIL_contrasenia"
+        app:layout_constraintTop_toBottomOf="@+id/actividadIS_textIL_contrasenia">
 
         <LinearLayout
+            android:id="@+id/actividadIS_linearL_operaciones"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -126,6 +155,7 @@
                     android:textSize="16sp" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -140,14 +170,15 @@
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
-            <TextView
-                android:id="@+id/actividadIS_textV_registrar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Registrate"
-                android:textColor="@color/azul_marino"
-                android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/actividadIS_textV_registrar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Registrate"
+                    android:textColor="@color/azul_marino"
+                    android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -159,7 +190,7 @@
             android:layout_marginTop="32dp"
             android:layout_marginBottom="32dp"
             android:enabled="false"
-            android:text="@string/action_sign_in" />
+            android:text="@string/accion_inicia_sesion" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -220,29 +251,27 @@
 
 
         </LinearLayout>
+
         <CheckBox
             android:id="@+id/actividadR_checkB_terminosYCondiciones"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:layout_weight="1"
             android:buttonTint="#000000"
-            android:layout_marginTop="30dp"
             android:text="He leído y acepto los términos y condiciones de uso"
             android:textSize="16sp" />
     </LinearLayout>
 
     <ProgressBar
         android:id="@+id/loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="216dp"
+        android:layout_height="111dp"
         android:layout_gravity="center"
-        android:layout_marginTop="64dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginTop="100dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/actividadIS_editT_contrasenia"
-        app:layout_constraintStart_toStartOf="@+id/actividadIS_editT_contrasenia"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintEnd_toEndOf="@+id/actividadIS_textV_nombreAplicacion"
+        app:layout_constraintStart_toStartOf="@+id/actividadIS_textV_nombreAplicacion"
+        app:layout_constraintTop_toBottomOf="@+id/actividadIS_textV_nombreAplicacion" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

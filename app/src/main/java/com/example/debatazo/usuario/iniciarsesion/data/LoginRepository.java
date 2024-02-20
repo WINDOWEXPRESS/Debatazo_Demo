@@ -1,6 +1,6 @@
-package com.example.debatazo.perfilylogin.data;
+package com.example.debatazo.usuario.iniciarsesion.data;
 
-import com.example.debatazo.perfilylogin.data.model.LoggedInUser;
+import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -15,6 +15,10 @@ public class LoginRepository {
     // If user credentials will be cached in local storage, it is recommended it be encrypted
     // @see https://developer.android.com/training/articles/keystore
     private LoggedInUser user = null;
+
+    public LoggedInUser getUser() {
+        return user;
+    }
 
     // private constructor : singleton access
     private LoginRepository(LoginDataSource dataSource) {
@@ -41,6 +45,7 @@ public class LoginRepository {
         this.user = user;
         // If user credentials will be cached in local storage, it is recommended it be encrypted
         // @see https://developer.android.com/training/articles/keystore
+
     }
 
     public Result<LoggedInUser> login(String username, String password) {
