@@ -7,14 +7,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServicioDebateProducto {
     private static ServicioDebateProducto instacia;
-    private static RepositorioDebateProducto repositorio;
+    private static DebateApi repositorio;
 
     private ServicioDebateProducto(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.115.205.105:8080/")
+                .baseUrl("http://10.0.2.2:8080/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        repositorio = retrofit.create(RepositorioDebateProducto.class);
+        repositorio = retrofit.create(DebateApi.class);
     }
     public  static ServicioDebateProducto getInstance(){
         if(instacia == null){
@@ -23,7 +23,7 @@ public class ServicioDebateProducto {
         return instacia;
     }
 
-    public RepositorioDebateProducto getRepor(){
+    public DebateApi getRepor(){
         if(repositorio == null){
             return null;
         }else{

@@ -1,6 +1,5 @@
 package com.example.debatazo.debaterecycler;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,7 +15,6 @@ import android.view.ViewGroup;
 
 import com.example.debatazo.R;
 import com.example.debatazo.debaterecycler.detalle.DetalleDebate;
-import com.example.debatazo.perfilylogin.data.Result;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,18 +37,21 @@ public class DebateFragmento extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View layout = inflater.inflate(R.layout.fragmento_debate,container,false);
+        Call<List<DebateProducto>> debateServicio = ServicioDebateProducto.getInstance().getRepor().getAll();
+        debateServicio.enqueue(new Callback<List<DebateProducto>>(){
 
-        ServicioDebateProducto servicioDebateProducto = ServicioDebateProducto.getInstance();
-        Call<List<DebateProducto>> debateProductoCall = servicioDebateProducto.getRepor().getAll();
-        debateProductoCall.enqueue(new Callback<List<DebateProducto>>() {
             @Override
             public void onResponse(Call<List<DebateProducto>> call, Response<List<DebateProducto>> response) {
-                debateList = new ArrayList<>(response.body());
+                debateList = response.body();
             }
+
             @Override
             public void onFailure(Call<List<DebateProducto>> call, Throwable t) {
+
             }
         });
+
+
         debateRecyclerV = layout.findViewById(R.id.fragmentD_recyclerV);
         debateRecyclerV.setLayoutManager(new LinearLayoutManager(getActivity()));
         debateAdap = new DebateAdaptador(debateList);
@@ -66,23 +67,4 @@ public class DebateFragmento extends Fragment {
         return layout;
 
     }
-    /*private  List<DebateProducto> getDebateList(){
-        ServicioDebateProducto servicioDebateProducto = ServicioDebateProducto.getInstance();
-        Call<List<DebateProducto>> debateProductoCall = servicioDebateProducto.getRepor().getAll();
-        debateProductoCall.enqueue(new Callback<List<DebateProducto>>() {
-            @Override
-            public void onResponse(Call<List<DebateProducto>> call, Response<List<DebateProducto>> response) {
-                if(response.isSuccessful()){
-                    debateList = response.body();
-                    System.out.println("????");
-                }else {
-                    System.out.println("::::::");
-                }
-            }
-            @Override
-            public void onFailure(Call<List<DebateProducto>> call, Throwable t) {
-                System.out.println("::::::"+t.getMessage());
-            }
-        });
-    }*/
 }
