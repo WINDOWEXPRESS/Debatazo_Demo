@@ -8,6 +8,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.debatazo.R;
+import com.example.debatazo.usuario.md5.SaltMD5Util;
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.codec.digest.Md5Crypt;
 
 
 import retrofit2.Callback;
@@ -36,9 +38,14 @@ public class RegistrarViewModel extends ViewModel {
     }
 
     // Método para registrar un usuario
-    public void registrarUsuario(String email, String password) {
-        RegistrarUsuarioPojo user = new RegistrarUsuarioPojo(email, password);
-        userRepository.registrarUsuario(user);
+    public void registrarUsuario(String email, String password, Callback<Boolean> callback) {
+        //encriptar la contraseña en md5
+        String passwordCodificado = SaltMD5Util.MD5(password);
+        //Guardar los datos en el pojo para pasarlo a repositorio
+        RegistrarUsuarioPojo user = new RegistrarUsuarioPojo(email, passwordCodificado);
+
+        userRepository.registrarUsuario(user,callback);
+
         estadoMutableLiveDataRegistrarExitosa.setValue(userRepository.isEsRegistrarExitosa());
     }
 

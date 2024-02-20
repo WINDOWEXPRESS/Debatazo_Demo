@@ -15,6 +15,11 @@ import com.example.debatazo.R;
 import com.example.debatazo.databinding.ActividadIniciaSesionBinding;
 import com.example.debatazo.databinding.ActividadRegistrarBinding;
 import com.google.android.material.textfield.TextInputLayout;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /*TODO HAY FALLO DE LOGICA  CUANDO APARECEN MENSAJES DE ERROR Y
    EN FUTURO PUEDE CAMBIAR POR BONTO ACTIVO  Y HACER LAS COMPROBACIONES CUANDO CLICKEAS*/
 public class ActividadRegistrar extends AppCompatActivity {
@@ -65,6 +70,7 @@ public class ActividadRegistrar extends AppCompatActivity {
         email.addTextChangedListener(afterTextChangedListener);
         contrasenia.addTextChangedListener(afterTextChangedListener);
         contraseniaRepetir.addTextChangedListener(afterTextChangedListener);
+
         registrarViewModel.getEstadoLiveDataRegistrarExitosa().observe(this,registrarExitosaEstado -> {
             if (registrarExitosaEstado == null) {
                 return;
@@ -72,12 +78,24 @@ public class ActividadRegistrar extends AppCompatActivity {
             if (registrarExitosaEstado.booleanValue() == true){
                 finish();
             }else {
-                errorMensaje.setText(registrarViewModel.getUserRepository().getMensaje());
+                errorMensaje.setText("Codigo: "+registrarViewModel.getUserRepository().getCodigo()+" "+registrarViewModel.getUserRepository().getMensaje());
             }
 
         });
         registrar.setOnClickListener(view -> {
-            registrarViewModel.registrarUsuario(email.getText().toString(),contrasenia.getText().toString());
+            String emailUsuario = email.getText().toString();
+            String contraseniaUsuario = contrasenia.getText().toString();
+            registrarViewModel.registrarUsuario(emailUsuario, contraseniaUsuario, new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+
+                }
+
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+
+                }
+            });
         });
     }
 

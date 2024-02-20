@@ -14,6 +14,7 @@ import retrofit2.Response;
 
 public class RegistrarUsuarioRepo extends ViewModel {
     private boolean esRegistrarExitosa;
+    private int codigo;
     private String mensaje;
 
     public boolean isEsRegistrarExitosa() {
@@ -24,8 +25,12 @@ public class RegistrarUsuarioRepo extends ViewModel {
         return mensaje;
     }
 
+    public int getCodigo() {
+        return codigo;
+    }
+
     // Método para registrar un usuario
-        public void registrarUsuario(RegistrarUsuarioPojo usuarioPojo) {
+        public void registrarUsuario(RegistrarUsuarioPojo usuarioPojo, Callback<Boolean> callback) {
 
             // Lógica para registrar el usuario en la base de datos o en una API
             // Llamar al callback con el resultado
@@ -35,21 +40,16 @@ public class RegistrarUsuarioRepo extends ViewModel {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()){
-                        try {
-                            System.out.println("Regitrar correctamente "+ response.body().string());
-                            esRegistrarExitosa = true;
-                            mensaje = response.body().string();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-
+                        esRegistrarExitosa = true;
                     }else {
                         esRegistrarExitosa = false;
                         try {
-                            mensaje = response.body().string();
+                            mensaje = response.errorBody().string();
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
+                        codigo = response.code();
+
                     }
 
                 }
@@ -57,7 +57,7 @@ public class RegistrarUsuarioRepo extends ViewModel {
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
                     esRegistrarExitosa = false;
-                    mensaje = t.getMessage();
+                    mensaje = "Error inesperado al registrar.";
                     call.cancel();
                 }
             });
