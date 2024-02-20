@@ -6,10 +6,15 @@ import androidx.lifecycle.ViewModel;
 
 import android.util.Patterns;
 
+import com.example.debatazo.usuario.iniciarsesion.data.LoginCallBack;
 import com.example.debatazo.usuario.iniciarsesion.data.LoginRepository;
 import com.example.debatazo.usuario.iniciarsesion.data.Result;
 import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
 import com.example.debatazo.R;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginViewModel extends ViewModel {
 
@@ -21,6 +26,10 @@ public class LoginViewModel extends ViewModel {
 
     LoginViewModel(LoginRepository loginRepository) {
         this.loginRepository = loginRepository;
+    }
+
+    public LoginRepository getLoginRepository() {
+        return loginRepository;
     }
 
     LiveData<LoginFormState> getLoginFormState() {
@@ -38,7 +47,7 @@ public class LoginViewModel extends ViewModel {
      * @param username El nombre de usuario proporcionado por el usuario.
      * @param password La contraseña proporcionada por el usuario.
      */
-    public void login(String username, String password) {
+    public void login(String username, String password ) {
         // Se realiza la autenticación y se obtiene el resultado
         Result<LoggedInUser> result = loginRepository.login(username, password);
 

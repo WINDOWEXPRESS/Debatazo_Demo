@@ -12,6 +12,7 @@ import com.example.debatazo.usuario.md5.SaltMD5Util;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.codec.digest.Md5Crypt;
 
 
+import okhttp3.ResponseBody;
 import retrofit2.Callback;
 
 public class RegistrarViewModel extends ViewModel {
@@ -19,15 +20,10 @@ public class RegistrarViewModel extends ViewModel {
     private static final int LONGITUD_MAX = 20;
     private RegistrarUsuarioRepo userRepository;
     private MutableLiveData<RegistrarFormulaEstado> registrarFormulaEstado = new MutableLiveData<>();
-    private MutableLiveData<Boolean> estadoMutableLiveDataRegistrarExitosa = new MutableLiveData<>();
 
     LiveData<RegistrarFormulaEstado> getRegistrarFormulaEstado() {
         return registrarFormulaEstado;
     }
-    LiveData<Boolean> getEstadoLiveDataRegistrarExitosa() {
-        return estadoMutableLiveDataRegistrarExitosa;
-    }
-
 
     public RegistrarViewModel() {
         userRepository = new RegistrarUsuarioRepo();
@@ -38,15 +34,13 @@ public class RegistrarViewModel extends ViewModel {
     }
 
     // Método para registrar un usuario
-    public void registrarUsuario(String email, String password, Callback<Boolean> callback) {
-        //encriptar la contraseña en md5
-        String passwordCodificado = SaltMD5Util.MD5(password);
+    public void registrarUsuario(String email, String password, Callback<ResponseBody> callback) {
+        //encriptar la contraseña en md5 Y QUE DENTRO DEMETODO TIENE UNA SAL CONSTANTE
+        String passwordCodificado = SaltMD5Util.generateSaltPassword(password);
         //Guardar los datos en el pojo para pasarlo a repositorio
         RegistrarUsuarioPojo user = new RegistrarUsuarioPojo(email, passwordCodificado);
 
         userRepository.registrarUsuario(user,callback);
-
-        estadoMutableLiveDataRegistrarExitosa.setValue(userRepository.isEsRegistrarExitosa());
     }
 
     public void RegistrarDataChanged(String email, String contrasenia,String contraseniaRepetir,@Nullable Boolean esTerminoCheckeado) {

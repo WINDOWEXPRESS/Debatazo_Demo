@@ -13,7 +13,7 @@
     <string name="pista_contrasenia">Contraseña</string>
     <string name="accion_inicia_sesion">Inicia sesion</string>
     <string name="accion_inicia_sesion_corto">Inicia sesion</string>
-    <string name="bienvenido">Bienvenido !</string>
+    <string name="bienvenido">Bienvenido </string>
     <string name="invalido_email_usuario">Email invalido!</string>
     <string name="invalido_contrasenia">La longitud debe ser mayor de 5 y menor de 20.</string>
     <string name="error_registrar_contrasenia">Error! La contraseña no coincide</string>

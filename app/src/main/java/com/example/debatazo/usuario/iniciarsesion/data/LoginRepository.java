@@ -16,6 +16,10 @@ public class LoginRepository {
     // @see https://developer.android.com/training/articles/keystore
     private LoggedInUser user = null;
 
+    public LoggedInUser getUser() {
+        return user;
+    }
+
     // private constructor : singleton access
     private LoginRepository(LoginDataSource dataSource) {
         this.dataSource = dataSource;

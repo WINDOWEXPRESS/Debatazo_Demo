@@ -20,8 +20,6 @@ public interface ApiServicioUsuario {
     Call<ResponseBody> registrarUsuario(@Body RegistrarUsuarioPojo usuarioPojo);
 
     //API PARA LOGIN
-    @POST("users/email")
-    Call<LoggedInUser> obtenerSalUsuario(@Body RequestBody email);
     @POST("users/login")
     Call<LoggedInUser> loginUsuario(@Query("email") String email,@Query("passwd") String passwd);
 }

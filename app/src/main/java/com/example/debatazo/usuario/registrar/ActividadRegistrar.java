@@ -10,12 +10,14 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.debatazo.R;
 import com.example.debatazo.databinding.ActividadIniciaSesionBinding;
 import com.example.debatazo.databinding.ActividadRegistrarBinding;
 import com.google.android.material.textfield.TextInputLayout;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,13 +56,17 @@ public class ActividadRegistrar extends AppCompatActivity {
             }
             if (registrarFormulaEstado.getContraseniaError() != null) {
                 contrasenia.setError(getString(registrarFormulaEstado.getContraseniaError()));
+                terminosYCondiciones.setChecked(false);
             }
             if (registrarFormulaEstado.getContraseniaRepetidoError() != null) {
                 contraseniaRepetir.setError(getString(registrarFormulaEstado.getContraseniaRepetidoError()));
+                terminosYCondiciones.setChecked(false);
             }
             if (registrarFormulaEstado.getContraseniaNoCoincideError() != null){
                 contraseniaRepetir.setError(getString(R.string.error_registrar_contrasenia));
+                terminosYCondiciones.setChecked(false);
             }
+
         });
         terminosYCondiciones.setOnCheckedChangeListener((compoundButton, isChecked) -> {
             registrarViewModel.RegistrarDataChanged(email.getText().toString(),contrasenia.getText().toString(),contraseniaRepetir.getText().toString(),isChecked);
@@ -71,29 +77,23 @@ public class ActividadRegistrar extends AppCompatActivity {
         contrasenia.addTextChangedListener(afterTextChangedListener);
         contraseniaRepetir.addTextChangedListener(afterTextChangedListener);
 
-        registrarViewModel.getEstadoLiveDataRegistrarExitosa().observe(this,registrarExitosaEstado -> {
-            if (registrarExitosaEstado == null) {
-                return;
-            }
-            if (registrarExitosaEstado.booleanValue() == true){
-                finish();
-            }else {
-                errorMensaje.setText("Codigo: "+registrarViewModel.getUserRepository().getCodigo()+" "+registrarViewModel.getUserRepository().getMensaje());
-            }
-
-        });
         registrar.setOnClickListener(view -> {
             String emailUsuario = email.getText().toString();
             String contraseniaUsuario = contrasenia.getText().toString();
-            registrarViewModel.registrarUsuario(emailUsuario, contraseniaUsuario, new Callback<Boolean>() {
-                @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+            registrarViewModel.registrarUsuario(emailUsuario, contraseniaUsuario, new Callback<ResponseBody>(){
 
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    // Manejar el registro exitoso, por ejemplo, mostrar un mensaje de éxito
+                    Toast.makeText(ActividadRegistrar.this, "Usuario registrado con éxito", Toast.LENGTH_LONG).show();
+                    finish();
                 }
 
                 @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    // Manejar el error durante el registro, por ejemplo, mostrar un mensaje de error
+                    Toast.makeText(ActividadRegistrar.this, t.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    errorMensaje.setText("Error: " +t.getMessage().toString());
                 }
             });
         });

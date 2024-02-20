@@ -29,9 +29,14 @@ import android.widget.Toast;
 import com.example.debatazo.R;
 
 import com.example.debatazo.databinding.ActividadIniciaSesionBinding;
+import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
 import com.example.debatazo.usuario.registrar.ActividadRegistrar;
 import com.example.debatazo.savesharedpreference.SaveSharedPreference;
 import com.google.android.material.textfield.TextInputLayout;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class IniciaSesion extends AppCompatActivity {
     private LoginViewModel loginViewModel;
@@ -140,6 +145,8 @@ public class IniciaSesion extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String email = usernameEditText.getText().toString();
+                String password = passwordEditText.getText().toString();
                 /*//Hacer cargar el progressBar no funciona...
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 binding.actividadISLinearLOperaciones.setVisibility(View.INVISIBLE);
@@ -151,15 +158,14 @@ public class IniciaSesion extends AppCompatActivity {
                 //Si esta marcado el recordar se guarda con un sharedPreferences
                 if (recordar.isChecked()) {
                     // Obtener una instancia de SharedPreferences
-                    editor.putString(SaveSharedPreference.EMAIL, usernameEditText.getText().toString());
-                    editor.putString(SaveSharedPreference.CONTRASENIA, passwordEditText.getText().toString());
+                    editor.putString(SaveSharedPreference.EMAIL, email);
+                    editor.putString(SaveSharedPreference.CONTRASENIA, password);
                     editor.putBoolean(SaveSharedPreference.RECORDAR, true);
                 }else {
                     editor.clear();
                 }editor.apply(); // Guardar los cambios
 
-                loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                loginViewModel.login(email, password);
             }
         });
 
@@ -202,7 +208,7 @@ public class IniciaSesion extends AppCompatActivity {
 
 
     private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.bienvenido) + model.getUser_name();
+        String welcome = getString(R.string.bienvenido) +" "+model.getUser_name()+"!";
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }

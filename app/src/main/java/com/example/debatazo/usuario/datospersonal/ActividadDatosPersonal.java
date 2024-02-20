@@ -1,6 +1,7 @@
 package com.example.debatazo.usuario.datospersonal;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,6 +13,10 @@ import android.widget.TextView;
 
 import com.example.debatazo.R;
 import com.example.debatazo.databinding.ActividadDatosPersonalBinding;
+import com.example.debatazo.usuario.iniciarsesion.data.LoginRepository;
+import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModel;
+import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModelFactory;
+import com.squareup.picasso.Picasso;
 
 public class ActividadDatosPersonal extends AppCompatActivity {
     private ActividadDatosPersonalBinding binding;
@@ -24,8 +29,7 @@ public class ActividadDatosPersonal extends AppCompatActivity {
     private ImageView perfil;
     private EditText descripcionPersonal;
     private ImageButton volver;
-
-
+    private LoginViewModel loginViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +37,7 @@ public class ActividadDatosPersonal extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         vincularVista();
+        mostrarInformacion();
 
         volver.setOnClickListener(view -> {
             finish();
@@ -59,6 +64,7 @@ public class ActividadDatosPersonal extends AppCompatActivity {
             }
         });
 
+
     }
 
     private void vincularVista() {
@@ -66,12 +72,25 @@ public class ActividadDatosPersonal extends AppCompatActivity {
         descripcionPersonal = binding.actividadDPEditTTDescripcionPersonal;
         volver = binding.actividadDPImageBVolver;
         id = binding.actividadDPTextVId;
-        nombreUsuario = binding.actividadDPTextVNombreUsuario;
+        nombreUsuario = binding.actividadDPTextVNombre;
         nombrePersonal = binding.actividadDPTextVNombrePersonal;
         edad = binding.actividadDPTextVEdad;
-
         sexo = binding.actividadDPTextVSexo;
         perfil = binding.actividadDPImageVPerfil;
 
+    }
+    private void mostrarInformacion() {
+        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
+                .get(LoginViewModel.class);
+
+        if (loginViewModel.getLoginRepository().getUser()!= null){
+            descripcionPersonal.setText(loginViewModel.getLoginRepository().getUser().getSelf());
+            id.setText(loginViewModel.getLoginRepository().getUser().getUser_id());
+            nombreUsuario.setText(loginViewModel.getLoginRepository().getUser().getUser_name());
+            nombrePersonal.setText(loginViewModel.getLoginRepository().getUser().getFull_name());
+            edad.setText(loginViewModel.getLoginRepository().getUser().getAge());
+            sexo.setText(loginViewModel.getLoginRepository().getUser().getSex());
+            Picasso.get().load(loginViewModel.getLoginRepository().getUser().getProfile_img()).into(perfil);
+        }
     }
 }

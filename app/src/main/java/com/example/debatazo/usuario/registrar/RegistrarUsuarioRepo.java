@@ -17,9 +17,6 @@ public class RegistrarUsuarioRepo extends ViewModel {
     private int codigo;
     private String mensaje;
 
-    public boolean isEsRegistrarExitosa() {
-        return esRegistrarExitosa;
-    }
 
     public String getMensaje() {
         return mensaje;
@@ -30,7 +27,7 @@ public class RegistrarUsuarioRepo extends ViewModel {
     }
 
     // Método para registrar un usuario
-        public void registrarUsuario(RegistrarUsuarioPojo usuarioPojo, Callback<Boolean> callback) {
+        public void registrarUsuario(RegistrarUsuarioPojo usuarioPojo, Callback<ResponseBody> callback) {
 
             // Lógica para registrar el usuario en la base de datos o en una API
             // Llamar al callback con el resultado
@@ -39,17 +36,15 @@ public class RegistrarUsuarioRepo extends ViewModel {
             llamada.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    if (response.isSuccessful()){
-                        esRegistrarExitosa = true;
-                    }else {
-                        esRegistrarExitosa = false;
+                    if (response.isSuccessful()) {
+                        callback.onResponse(call,response);
+                    } else {
                         try {
-                            mensaje = response.errorBody().string();
+                            callback.onFailure(call,new Throwable(response.errorBody().string()));
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
                         codigo = response.code();
-
                     }
 
                 }
@@ -57,7 +52,7 @@ public class RegistrarUsuarioRepo extends ViewModel {
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
                     esRegistrarExitosa = false;
-                    mensaje = "Error inesperado al registrar.";
+                    callback.onFailure( call,new Throwable("Error inesperado al registrar."));
                     call.cancel();
                 }
             });
