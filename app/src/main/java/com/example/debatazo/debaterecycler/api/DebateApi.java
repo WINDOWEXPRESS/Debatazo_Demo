@@ -1,4 +1,6 @@
-package com.example.debatazo.debaterecycler;
+package com.example.debatazo.debaterecycler.api;
+
+import com.example.debatazo.debaterecycler.DebateProducto;
 
 import java.util.List;
 

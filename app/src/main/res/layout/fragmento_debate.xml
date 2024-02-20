@@ -14,4 +14,14 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:padding="5dp" />
+    <ProgressBar
+        android:id="@+id/fragmentD_progressB"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/lavender"
+        android:indeterminateTintMode="src_atop"
+        tools:visibility="visible" />
 </FrameLayout>
