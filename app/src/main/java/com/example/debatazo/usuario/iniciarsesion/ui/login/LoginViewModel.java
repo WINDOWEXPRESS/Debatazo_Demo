@@ -49,18 +49,31 @@ public class LoginViewModel extends ViewModel {
      */
     public void login(String username, String password ) {
         // Se realiza la autenticación y se obtiene el resultado
-        Result<LoggedInUser> result = loginRepository.login(username, password);
+        Result<LoggedInUser> result ;
+                loginRepository.login(username, password, new LoginCallBack() {
+            @Override
+            public Result<LoggedInUser> onSuccess(Result<LoggedInUser> user) {
+                // Se verifica el resultado obtenido
+                if (user instanceof Result.Success) {
+                    // Si la autenticación fue exitosa, se obtiene el usuario autenticado
+                    LoggedInUser data = ((Result.Success<LoggedInUser>) user).getData();
+                    // Se actualiza el resultado del inicio de sesión con la información del usuario autenticado
+                    loginResult.setValue(new LoginResult(new LoggedInUserView(data.getUser_name())));
+                } else {
+                    // Si la autenticación falló, se actualiza el resultado del inicio de sesión con un mensaje de error
+                    loginResult.setValue(new LoginResult(R.string.inicia_sesion_fallido));
+                }
+                return user;
+            }
 
-        // Se verifica el resultado obtenido
-        if (result instanceof Result.Success) {
-            // Si la autenticación fue exitosa, se obtiene el usuario autenticado
-            LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-            // Se actualiza el resultado del inicio de sesión con la información del usuario autenticado
-            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getUser_name())));
-        } else {
-            // Si la autenticación falló, se actualiza el resultado del inicio de sesión con un mensaje de error
-            loginResult.setValue(new LoginResult(R.string.inicia_sesion_fallido));
-        }
+            @Override
+            public Result<LoggedInUser> onFailure(Result<LoggedInUser> mensajeError) {
+                loginResult.setValue(new LoginResult(R.string.inicia_sesion_fallido));
+                return null;
+            }
+        });
+
+
     }
 
 

@@ -48,12 +48,24 @@ public class LoginRepository {
 
     }
 
-    public Result<LoggedInUser> login(String username, String password) {
+    public void login(String username, String password,LoginCallBack callBack) {
         // handle login
-        Result<LoggedInUser> result = dataSource.login(username, password);
-        if (result instanceof Result.Success) {
-            setLoggedInUser(((Result.Success<LoggedInUser>) result).getData());
-        }
-        return result;
+        Result<LoggedInUser> result ;
+                dataSource.login(username, password, new LoginCallBack() {
+                    @Override
+                    public Result<LoggedInUser> onSuccess(Result<LoggedInUser> user) {
+                        if (user instanceof Result.Success) {
+                            setLoggedInUser(((Result.Success<LoggedInUser>) user).getData());
+                        }
+                        callBack.onSuccess(user);
+                        return user;
+                    }
+
+                    @Override
+                    public Result<LoggedInUser> onFailure(Result<LoggedInUser> mensajeError) {
+                        callBack.onFailure(mensajeError);
+                        return null;
+                    }
+                });
     }
 }

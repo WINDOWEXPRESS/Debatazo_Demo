@@ -18,7 +18,7 @@ import retrofit2.Response;
  */
 public class LoginDataSource {
 
-    public Result<LoggedInUser> login(String email, String password) {
+    public void login(String email, String password, LoginCallBack callBack) {
         try {
 
             RetrofitCliente retrofitCliente = RetrofitCliente.getInstancia();
@@ -29,23 +29,23 @@ public class LoginDataSource {
                 @Override
                 public void onResponse(Call<LoggedInUser> call, Response<LoggedInUser> response) {
                     if (response.isSuccessful()) {
-                        user[0] = response.body();
+                        callBack.onSuccess(new Result.Success<>(response.body()));
 
                     } else {
-                        onFailure(call, new Throwable("Mensaje error " + response.errorBody()));
+                        callBack.onFailure(new Result.Error(new IOException("Mensaje error " + response.errorBody())));
 
                     }
                 }
 
                 @Override
                 public void onFailure(Call<LoggedInUser> call, Throwable t) {
-                    System.out.println("Mensaje error onFailure " + t.getCause() + " " + t.getMessage());
-
+                    callBack.onFailure(new Result.Error(new IOException("Mensaje error onFailure " + t.getCause() + " " + t.getMessage())));
                 }
             });
-            return new Result.Success<>(new LoggedInUser("Soy email","Anonimo10222","Pepe Lopez","https://i.imgur.com/zWlUBeC.png","20","VAGOOO","HOMBRE"));
+            //return new Result.Success<>(new LoggedInUser("Soy email","Anonimo10222","Pepe Lopez","https://i.imgur.com/zWlUBeC.png","20","VAGOOO","HOMBRE"));
         } catch (Exception e) {
-            return new Result.Error(new IOException("Error al iniciar sesión", e));
+            //return new Result.Error(new IOException("Error al iniciar sesión", e));
+            callBack.onFailure(new Result.Error(new IOException("Error al iniciar sesión", e)));
         }
     }
 
