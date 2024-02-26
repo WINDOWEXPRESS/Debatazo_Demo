@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/desplegableP_textV_crearValoracion"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,12 +20,17 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <ImageView
+            android:id="@+id/desplegableP_imagenV_cancelar"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:src="@drawable/cerrar_tabla_publicar" />
+
         <TextView
             android:id="@+id/desplegableP_textV_publicacion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:padding="8dp"
             android:text="Publicación"
@@ -32,87 +38,79 @@
             android:textColor="@color/black"
             android:textSize="25dp" />
 
-        <ImageView
-            android:id="@+id/desplegableP_imagenV_cancelar"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="5dp"
-            android:src="@drawable/cerrar_tabla_publicar" />
-
     </LinearLayout>
 
 
     <LinearLayout
-        android:id="@+id/desplegableP_lineaLH_crearDebate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:padding="10dp">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_upload_24" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:text="Crear un debate"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/desplegableP_lineaLH_crearValoracion"
+        android:id="@+id/desplegableP_lineaLH_opcion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="10dp">
 
-
-        <ImageView
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/desplegableP_textV_debate"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_whatshot_24" />
+            android:layout_weight="1"
+            android:background="#000000"
+            android:text="@string/debate"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/desplegableP_textV_valoracion"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:text="Crear una valoración"
+            android:layout_weight="1"
+            android:text="@string/valoracion"
+            android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/desplegableP_lineaLH_proximamente"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="30dp">
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_vibration_24" />
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/desplegableP_textV_proximamente"
-            android:layout_width="wrap_content"
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:text="Próximamente"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:text="TextView" />
 
+        <EditText
+            android:id="@+id/desplegableP_editTT_titulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Introducir titulo"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/desplegableP_editTT_descripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Introducir más contexto"
+            android:maxLength="250"
+            android:inputType="text|textMultiLine" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="182dp"
+            android:background="#E1DFDF"
+            app:srcCompat="@drawable/ic_baseline_add_24" />
+
+        <Button
+            android:id="@+id/desplegableP_button_publicarDebate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/publicar" />
     </LinearLayout>
 
 </LinearLayout>

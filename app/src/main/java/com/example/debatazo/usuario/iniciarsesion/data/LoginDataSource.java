@@ -17,26 +17,19 @@ import retrofit2.Response;
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
 public class LoginDataSource {
-
     public void login(String email, String password, LoginCallBack callBack) {
         try {
-
             RetrofitCliente retrofitCliente = RetrofitCliente.getInstancia();
             Call<LoggedInUser> llamada = retrofitCliente.getApiUsuario().loginUsuario(email, SaltMD5Util.generateSaltPassword(password));
-
-            final LoggedInUser[] user = new LoggedInUser[1];
             llamada.enqueue(new Callback<LoggedInUser>() {
                 @Override
                 public void onResponse(Call<LoggedInUser> call, Response<LoggedInUser> response) {
                     if (response.isSuccessful()) {
                         callBack.onSuccess(new Result.Success<>(response.body()));
-
                     } else {
                         callBack.onFailure(new Result.Error(new IOException("Mensaje error " + response.errorBody())));
-
                     }
                 }
-
                 @Override
                 public void onFailure(Call<LoggedInUser> call, Throwable t) {
                     callBack.onFailure(new Result.Error(new IOException("Mensaje error onFailure " + t.getCause() + " " + t.getMessage())));

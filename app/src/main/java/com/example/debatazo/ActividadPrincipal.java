@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.debatazo.debaterecycler.DebateFragmento;
@@ -70,29 +71,17 @@ public class ActividadPrincipal extends AppCompatActivity {
         dialog.setContentView(R.layout.desplegable_publicar);
 
         //Vinculo con los componentes de layout
-        LinearLayout debate = dialog.findViewById(R.id.desplegableP_lineaLH_crearDebate);
-        LinearLayout valoracion = dialog.findViewById(R.id.desplegableP_lineaLH_crearValoracion);
-        LinearLayout proximamente = dialog.findViewById(R.id.desplegableP_lineaLH_proximamente);
+        TextView debate = dialog.findViewById(R.id.desplegableP_textV_debate);
+        TextView valoracion = dialog.findViewById(R.id.desplegableP_textV_valoracion);
         ImageView cancelButton = dialog.findViewById(R.id.desplegableP_imagenV_cancelar);
 
         debate.setOnClickListener(v -> {
 
-            dialog.dismiss();
-            Toast.makeText(ActividadPrincipal.this,"A jorge le encanta toast",Toast.LENGTH_SHORT).show();
 
         });
 
         valoracion.setOnClickListener(v -> {
-
-            dialog.dismiss();
-            Toast.makeText(ActividadPrincipal.this,"A jorge le encanta toast",Toast.LENGTH_SHORT).show();
-
-        });
-
-        proximamente.setOnClickListener(v -> {
-
-            dialog.dismiss();
-            Toast.makeText(ActividadPrincipal.this,"A jorge le encanta toast",Toast.LENGTH_SHORT).show();
+            Toast.makeText(ActividadPrincipal.this,"Funcion sin implementar.",Toast.LENGTH_SHORT).show();
 
         });
 
