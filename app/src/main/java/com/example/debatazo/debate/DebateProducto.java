@@ -1,4 +1,4 @@
-package com.example.debatazo.debaterecycler;
+package com.example.debatazo.debate;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;

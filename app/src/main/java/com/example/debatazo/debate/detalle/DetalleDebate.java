@@ -1,4 +1,4 @@
-package com.example.debatazo.debaterecycler.detalle;
+package com.example.debatazo.debate.detalle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.debatazo.R;
-import com.example.debatazo.debaterecycler.DebateFragmento;
-import com.example.debatazo.debaterecycler.DebateProducto;
+import com.example.debatazo.debate.DebateFragmento;
+import com.example.debatazo.debate.DebateProducto;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.squareup.picasso.Picasso;
 

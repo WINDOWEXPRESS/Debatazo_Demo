@@ -38,7 +38,7 @@
             android:name=".usuario.registrar.ActividadRegistrar"
             android:exported="false" />
         <activity
-            android:name=".debaterecycler.detalle.DetalleDebate"
+            android:name=".debate.detalle.DetalleDebate"
             android:exported="false" />
         <activity
             android:name=".usuario.iniciarsesion.ui.login.IniciaSesion"

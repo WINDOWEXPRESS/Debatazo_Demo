@@ -1,4 +1,4 @@
-package com.example.debatazo.debaterecycler;
+package com.example.debatazo.debate;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +13,6 @@ import com.example.debatazo.R;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class DebateAdaptador extends RecyclerView.Adapter<DebateAdaptador.debateViewHolder> {

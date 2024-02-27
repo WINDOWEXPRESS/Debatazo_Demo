@@ -1,4 +1,4 @@
-package com.example.debatazo.debaterecycler;
+package com.example.debatazo.debate;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,15 +16,10 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.example.debatazo.R;
-import com.example.debatazo.debaterecycler.api.ServicioDebateProducto;
-import com.example.debatazo.debaterecycler.detalle.DetalleDebate;
-import com.example.debatazo.debaterecycler.modelview.DebateProductoModelView;
+import com.example.debatazo.debate.detalle.DetalleDebate;
+import com.example.debatazo.debate.modelview.DebateProductoModelView;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class DebateFragmento extends Fragment {
