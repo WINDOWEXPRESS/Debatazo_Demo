@@ -1,19 +1,25 @@
 package com.example.debatazo;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,8 +27,12 @@ import com.example.debatazo.debaterecycler.DebateFragmento;
 import com.example.debatazo.usuario.PerfilFragment;
 import com.example.debatazo.databinding.ActividadPrincipalBinding;
 
-public class ActividadPrincipal extends AppCompatActivity {
+import java.io.IOException;
 
+public class ActividadPrincipal extends AppCompatActivity {
+    // Definir una constante para el código de solicitud de la galería
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private  ImageView imagenPublicar;
    ActividadPrincipalBinding binding;
 
     @Override
@@ -74,9 +84,9 @@ public class ActividadPrincipal extends AppCompatActivity {
         TextView debate = dialog.findViewById(R.id.desplegableP_textV_debate);
         TextView valoracion = dialog.findViewById(R.id.desplegableP_textV_valoracion);
         ImageView cancelButton = dialog.findViewById(R.id.desplegableP_imagenV_cancelar);
+        imagenPublicar = dialog.findViewById(R.id.desplegableP_imageV_imagen);
 
         debate.setOnClickListener(v -> {
-
 
         });
 
@@ -84,7 +94,10 @@ public class ActividadPrincipal extends AppCompatActivity {
             Toast.makeText(ActividadPrincipal.this,"Funcion sin implementar.",Toast.LENGTH_SHORT).show();
 
         });
-
+        imagenPublicar.setOnClickListener(view -> {
+            // Método para abrir la galería cuando se hace clic en un botón
+            abrirGaleria();
+        });
         cancelButton.setOnClickListener(view -> dialog.dismiss());
 
         dialog.show();
@@ -97,5 +110,27 @@ public class ActividadPrincipal extends AppCompatActivity {
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimacion;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
 
+    }
+    private void abrirGaleria() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    // Manejar el resultado de la selección de la imagen
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri uri = data.getData();
+            try {
+                // Convertir la URI en un bitmap
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                // Establecer el bitmap en el ImageView
+                imagenPublicar.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

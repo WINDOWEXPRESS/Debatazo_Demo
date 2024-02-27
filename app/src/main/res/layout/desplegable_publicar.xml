@@ -76,12 +76,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-
         <EditText
             android:id="@+id/desplegableP_editTT_titulo"
             android:layout_width="match_parent"
@@ -99,8 +93,34 @@
             android:maxLength="250"
             android:inputType="text|textMultiLine" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/desplegableP_editTT_banda1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Titulo a favor"
+                android:inputType="text"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/desplegableP_editTT_banda2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Titulo en contra"
+                android:inputType="text"
+                android:singleLine="true" />
+        </LinearLayout>
+
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/desplegableP_imageV_imagen"
             android:layout_width="match_parent"
             android:layout_height="182dp"
             android:background="#E1DFDF"
@@ -111,6 +131,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/publicar" />
+
     </LinearLayout>
 
 </LinearLayout>
