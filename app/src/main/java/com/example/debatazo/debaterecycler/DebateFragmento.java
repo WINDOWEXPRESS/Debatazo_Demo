@@ -16,15 +16,10 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.example.debatazo.R;
-import com.example.debatazo.debaterecycler.api.ServicioDebateProducto;
-import com.example.debatazo.debaterecycler.detalle.DetalleDebate;
+import com.example.debatazo.debaterecycler.detalle.DebateDetalle;
 import com.example.debatazo.debaterecycler.modelview.DebateProductoModelView;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class DebateFragmento extends Fragment {
@@ -43,9 +38,6 @@ public class DebateFragmento extends Fragment {
         progressBar = layout.findViewById(R.id.fragmentD_progressB);
         debateRecyclerV = layout.findViewById(R.id.fragmentD_recyclerV);
 
-        /*progressBar.setVisibility(View.VISIBLE);
-        debateRecyclerV.setVisibility(View.INVISIBLE);*/
-
         DebateProductoModelView mv = new ViewModelProvider(this).get(DebateProductoModelView.class);
         mv.generaList().observe(getViewLifecycleOwner(),value->{
             debateList = value;
@@ -54,8 +46,8 @@ public class DebateFragmento extends Fragment {
             debateRecyclerV.setAdapter(debateAdap);
 
             debateAdap.setClickListener((vista,posicion,producto) ->{
-                intent = new Intent(getActivity(), DetalleDebate.class);
-                intent.putExtra(INTENT_KEY,producto);
+                intent = new Intent(getActivity(), DebateDetalle.class);
+                intent.putExtra(INTENT_KEY,producto.getDebateId());
                 resultLauncher.launch(intent);
             });
             progressBar.setVisibility(View.INVISIBLE);

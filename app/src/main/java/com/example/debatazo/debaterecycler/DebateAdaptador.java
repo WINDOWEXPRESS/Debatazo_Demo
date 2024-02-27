@@ -13,7 +13,6 @@ import com.example.debatazo.R;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class DebateAdaptador extends RecyclerView.Adapter<DebateAdaptador.debateViewHolder> {
@@ -67,7 +66,9 @@ public class DebateAdaptador extends RecyclerView.Adapter<DebateAdaptador.debate
         holder.nombre.setText(debateProducto.getUserName());
         holder.fecha.setText(debateProducto.getReleaseDate());
         holder.titulo.setText(debateProducto.getTitle());
-        Picasso.get().load(debateProducto.getImgUrl()).into(holder.image);
+        if(!debateProducto.getImgUrl().isEmpty()){
+            Picasso.get().load(debateProducto.getImgUrl()).into(holder.image);
+        }
     }
 
     @Override
