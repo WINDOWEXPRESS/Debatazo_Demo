@@ -1,11 +1,11 @@
-package com.example.debatazo.debate.modelview;
+package com.example.debatazo.debaterecycler.modelview;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.debatazo.debate.DebateProducto;
-import com.example.debatazo.debate.api.ServicioDebateProducto;
+import com.example.debatazo.debaterecycler.DebateProducto;
+import com.example.debatazo.debaterecycler.api.ServicioDebateProducto;
 
 import java.util.List;
 

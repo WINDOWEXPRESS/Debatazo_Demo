@@ -1,4 +1,4 @@
-package com.example.debatazo.debate;
+package com.example.debatazo.debaterecycler;
 
 import android.view.LayoutInflater;
 import android.view.View;

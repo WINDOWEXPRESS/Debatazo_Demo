@@ -1,4 +1,4 @@
-package com.example.debatazo.debate.api;
+package com.example.debatazo.debaterecycler.api;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

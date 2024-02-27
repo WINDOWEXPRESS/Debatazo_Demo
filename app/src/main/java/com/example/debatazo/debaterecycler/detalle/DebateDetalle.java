@@ -17,8 +17,6 @@ import com.example.debatazo.debaterecycler.api.ServicioDebateProducto;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
