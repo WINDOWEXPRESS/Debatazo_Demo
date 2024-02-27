@@ -2,14 +2,12 @@ package com.example.debatazo.usuario.iniciarsesion.ui.login;
 
 import android.app.Activity;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,14 +27,9 @@ import android.widget.Toast;
 import com.example.debatazo.R;
 
 import com.example.debatazo.databinding.ActividadIniciaSesionBinding;
-import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
 import com.example.debatazo.usuario.registrar.ActividadRegistrar;
 import com.example.debatazo.savesharedpreference.SaveSharedPreference;
 import com.google.android.material.textfield.TextInputLayout;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class IniciaSesion extends AppCompatActivity {
     private LoginViewModel loginViewModel;
@@ -46,7 +39,7 @@ public class IniciaSesion extends AppCompatActivity {
     private EditText passwordEditText;
     private TextInputLayout passwordTextInputLayout;
     private Button loginButton;
-    private ProgressBar loadingProgressBar;
+    private ProgressBar cargando;
     private ImageView gmail;
     private ImageView wechat;
     private ImageView facebook;
@@ -88,23 +81,24 @@ public class IniciaSesion extends AppCompatActivity {
                 passwordTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
             }
         });
+        loginViewModel.getLoadingLiveData().observe(this, loading -> {
+            cargando.setVisibility(loading?View.VISIBLE:View.GONE);
+        });
 
-
+        //OBSERVAR EL RESULTADO DE LOGIN
         loginViewModel.getLoginResult().observe(this, loginResult -> {
             if (loginResult == null) {
                 return;
             }
-            loadingProgressBar.setVisibility(View.GONE);
             if (loginResult.getError() != null) {
                 showLoginFailed(loginResult.getError());
             }
+            //Complete and destroy login activity once successful
             if (loginResult.getSuccess() != null) {
                 updateUiWithUser(loginResult.getSuccess());
+                setResult(Activity.RESULT_OK);
+                finish();
             }
-
-            setResult(Activity.RESULT_OK);
-            //Complete and destroy login activity once successful
-            finish();
         });
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
@@ -147,32 +141,25 @@ public class IniciaSesion extends AppCompatActivity {
             }
         });
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = usernameEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
-                /*//Hacer cargar el progressBar no funciona...
-                loadingProgressBar.setVisibility(View.VISIBLE);
-                binding.actividadISLinearLOperaciones.setVisibility(View.INVISIBLE);
-                binding.actividadISTextILEmail.setVisibility(View.INVISIBLE);
-                binding.actividadISTextILContrasenia.setVisibility(View.INVISIBLE);*/
-                SharedPreferences sharedPreferences = getSharedPreferences(SaveSharedPreference.PREFS_NOMBRE, MODE_PRIVATE);
-                // Editar los valores de SharedPreferences
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                //Si esta marcado el recordar se guarda con un sharedPreferences
-                if (recordar.isChecked()) {
-                    // Obtener una instancia de SharedPreferences
-                    editor.putString(SaveSharedPreference.EMAIL, email);
-                    editor.putString(SaveSharedPreference.CONTRASENIA, password);
-                    editor.putBoolean(SaveSharedPreference.RECORDAR, true);
-                } else {
-                    editor.clear();
-                }
-                editor.apply(); // Guardar los cambios
+        loginButton.setOnClickListener(v -> {
+            String email = usernameEditText.getText().toString();
+            String password = passwordEditText.getText().toString();
 
-                loginViewModel.login(email, password);
+            SharedPreferences sharedPreferences = getSharedPreferences(SaveSharedPreference.PREFS_NOMBRE, MODE_PRIVATE);
+            // Editar los valores de SharedPreferences
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            //Si esta marcado el recordar se guarda con un sharedPreferences
+            if (recordar.isChecked()) {
+                // Obtener una instancia de SharedPreferences
+                editor.putString(SaveSharedPreference.EMAIL, email);
+                editor.putString(SaveSharedPreference.CONTRASENIA, password);
+                editor.putBoolean(SaveSharedPreference.RECORDAR, true);
+            } else {
+                editor.clear();
             }
+            editor.apply(); // Guardar los cambios
+
+            loginViewModel.login(email, password);
         });
 
         olvidarContrasenia.setOnClickListener(view -> {
@@ -203,7 +190,7 @@ public class IniciaSesion extends AppCompatActivity {
         passwordEditText = binding.actividadISTextILContrasenia.getEditText();
         passwordTextInputLayout = binding.actividadISTextILContrasenia;
         loginButton = binding.actividadISButtonResgistrar;
-        loadingProgressBar = binding.loading;
+        cargando = binding.actividadISProgressBCargando;
         gmail = binding.actividadISImageVGmail;
         wechat = binding.actividadISImageVWechat;
         facebook = binding.actividadISImageVFacebook;

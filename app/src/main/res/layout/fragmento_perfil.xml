@@ -89,7 +89,7 @@
                 android:id="@+id/fragmentoP_textV_nombreUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Conectar ahora"
+                android:text="@string/conectar_ahora"
                 android:textColor="@color/black"
                 android:textSize="24dp" />
 
@@ -102,7 +102,7 @@
                 android:focusableInTouchMode="true"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:singleLine="true"
-                android:text="Desbloquea todas las funciones y disfruta de la experiencia completa"
+                android:text="@string/mensaje_campo_id_usuario"
                 android:textSize="16sp">
 
                 <requestFocus />

@@ -22,21 +22,26 @@ public class LoginViewModel extends ViewModel {
     private static final int LONGITUD_MAX = 20;
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
+    private MutableLiveData<Boolean> loadingLiveData = new MutableLiveData<>();
+
+    public LiveData<Boolean> getLoadingLiveData() {
+        return loadingLiveData;
+    }
     private LoginRepository loginRepository;
 
-    LoginViewModel(LoginRepository loginRepository) {
+
+    public LoginViewModel(LoginRepository loginRepository) {
         this.loginRepository = loginRepository;
     }
-
     public LoginRepository getLoginRepository() {
         return loginRepository;
     }
 
-    LiveData<LoginFormState> getLoginFormState() {
+    public LiveData<LoginFormState> getLoginFormState() {
         return loginFormState;
     }
 
-    LiveData<LoginResult> getLoginResult() {
+    public LiveData<LoginResult> getLoginResult() {
         return loginResult;
     }
 
@@ -49,8 +54,7 @@ public class LoginViewModel extends ViewModel {
      */
     public void login(String username, String password ) {
         // Se realiza la autenticación y se obtiene el resultado
-        Result<LoggedInUser> result ;
-                loginRepository.login(username, password, new LoginCallBack() {
+                loginRepository.login(username, password,loadingLiveData, new LoginCallBack() {
             @Override
             public Result<LoggedInUser> onSuccess(Result<LoggedInUser> user) {
                 // Se verifica el resultado obtenido
@@ -72,8 +76,6 @@ public class LoginViewModel extends ViewModel {
                 return null;
             }
         });
-
-
     }
 
 

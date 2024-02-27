@@ -34,5 +34,8 @@
     <string name="si">Sí</string>
     <string name="cerrar_sesion">Cerrar Sesión</string>
     <string name="mensaje_cerrar_sesion">¿Estás seguro de que deseas cerrar sesión?</string>
+    <!--    PERFIL FRAGMENT-->
+    <string name="conectar_ahora">Conectar ahora</string>
+    <string name="mensaje_campo_id_usuario">Desbloquea todas las funciones y disfruta de la experiencia completa</string>
 
 </resources>

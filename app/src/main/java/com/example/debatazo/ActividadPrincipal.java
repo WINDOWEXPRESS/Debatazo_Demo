@@ -36,8 +36,9 @@ import java.io.IOException;
 public class ActividadPrincipal extends AppCompatActivity {
     // Definir una constante para el código de solicitud de la galería
     private static final int PICK_IMAGE_REQUEST = 1;
-    private  ImageView imagenPublicar;
-   ActividadPrincipalBinding binding;
+    private ImageView imagenPublicar;
+    private PerfilFragment perfilFragment = new PerfilFragment();;
+    ActividadPrincipalBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,7 @@ public class ActividadPrincipal extends AppCompatActivity {
                     replaceFragment(new ValoracionFragmento());
                     break;
                 case R.id.menuB_usuario:
-                    replaceFragment(new PerfilFragment());
+                    replaceFragment(perfilFragment);
                     break;
             }
 
@@ -74,9 +75,9 @@ public class ActividadPrincipal extends AppCompatActivity {
             LoginViewModel loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                     .get(LoginViewModel.class);
             //Si ya ha iniciado sesion entonces mostrar el dialog
-            if (loginViewModel.getLoginRepository().isLoggedIn()){
+            if (loginViewModel.getLoginRepository().isLoggedIn()) {
                 showBottomDialog();
-            }else {
+            } else {
                 //Ir a actividad de inicia sesion
                 Intent i = new Intent(view.getContext(), IniciaSesion.class);
                 startActivity(i);
@@ -84,7 +85,8 @@ public class ActividadPrincipal extends AppCompatActivity {
         });
 
     }
-    private  void replaceFragment(Fragment fragment) {
+
+    private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.actividadP_frameL, fragment);
@@ -108,7 +110,7 @@ public class ActividadPrincipal extends AppCompatActivity {
         });
 
         valoracion.setOnClickListener(v -> {
-            Toast.makeText(ActividadPrincipal.this,"Proximamente.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(ActividadPrincipal.this, "Proximamente.", Toast.LENGTH_SHORT).show();
 
         });
         imagenPublicar.setOnClickListener(view -> {
@@ -118,7 +120,7 @@ public class ActividadPrincipal extends AppCompatActivity {
         cancelButton.setOnClickListener(view -> dialog.dismiss());
 
         dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         // Establece el fondo del cuadro de diálogo como transparente.
         // Esto puede ser útil para crear cuadros de diálogo con esquinas redondeadas o formas personalizadas.
@@ -128,6 +130,7 @@ public class ActividadPrincipal extends AppCompatActivity {
         dialog.getWindow().setGravity(Gravity.BOTTOM);
 
     }
+
     private void abrirGaleria() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");

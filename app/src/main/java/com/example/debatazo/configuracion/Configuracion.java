@@ -3,6 +3,7 @@ package com.example.debatazo.configuracion;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -48,6 +49,7 @@ public class Configuracion extends AppCompatActivity {
             // Llamar al método de logout de ViewModel (Repositorio)
             loginViewModel.getLoginRepository().logout();
             cerrarSesion.setEnabled(false);
+            setResult(Activity.RESULT_OK);
         });
         builder.setNegativeButton(R.string.no, (dialog, which) -> {
             // El usuario canceló el cierre de sesión, no hacemos nada

@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +36,7 @@ public class ActividadRegistrar extends AppCompatActivity {
     private TextView errorMensaje;
     private CheckBox terminosYCondiciones;
     private Button registrar;
+    private ProgressBar cargando;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,7 @@ public class ActividadRegistrar extends AppCompatActivity {
         vincularVistas();
 
         RegistrarViewModel registrarViewModel = new RegistrarViewModel();
-        registrarViewModel.getRegistrarFormulaEstado().observe(this,registrarFormulaEstado -> {
+        registrarViewModel.getRegistrarFormulaEstado().observe(this, registrarFormulaEstado -> {
             if (registrarFormulaEstado == null) {
                 return;
             }
@@ -60,27 +63,28 @@ public class ActividadRegistrar extends AppCompatActivity {
                 contrasenia.setError(getString(registrarFormulaEstado.getContraseniaError()));
                 terminosYCondiciones.setChecked(false);
                 contraseniaTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_NONE);
-            }else {
+            } else {
                 contraseniaTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
             }
             if (registrarFormulaEstado.getContraseniaRepetidoError() != null || registrarFormulaEstado.getContraseniaNoCoincideError() != null) {
 
-                if (registrarFormulaEstado.getContraseniaNoCoincideError() != null){
+                if (registrarFormulaEstado.getContraseniaNoCoincideError() != null) {
                     contraseniaRepetir.setError(getString(R.string.error_registrar_contrasenia));
-                }else {
+                } else {
                     contraseniaRepetir.setError(getString(registrarFormulaEstado.getContraseniaRepetidoError()));
                 }
                 terminosYCondiciones.setChecked(false);
                 contraseniaRepetirTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_NONE);
-            }else {
+            } else {
                 contraseniaRepetirTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
             }
 
-
-
+        });
+        registrarViewModel.getLoadingLiveData().observe(this, loading -> {
+            cargando.setVisibility(loading ? View.VISIBLE : View.GONE);
         });
         terminosYCondiciones.setOnCheckedChangeListener((compoundButton, isChecked) -> {
-            registrarViewModel.RegistrarDataChanged(email.getText().toString(),contrasenia.getText().toString(),contraseniaRepetir.getText().toString(),isChecked);
+            registrarViewModel.RegistrarDataChanged(email.getText().toString(), contrasenia.getText().toString(), contraseniaRepetir.getText().toString(), isChecked);
         });
 
         TextWatcher afterTextChangedListener = getTextWatcher(registrarViewModel);
@@ -91,7 +95,7 @@ public class ActividadRegistrar extends AppCompatActivity {
         registrar.setOnClickListener(view -> {
             String emailUsuario = email.getText().toString();
             String contraseniaUsuario = contrasenia.getText().toString();
-            registrarViewModel.registrarUsuario(emailUsuario, contraseniaUsuario, new Callback<ResponseBody>(){
+            registrarViewModel.registrarUsuario(emailUsuario, contraseniaUsuario, new Callback<ResponseBody>() {
 
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -104,7 +108,7 @@ public class ActividadRegistrar extends AppCompatActivity {
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
                     // Manejar el error durante el registro, por ejemplo, mostrar un mensaje de error
                     Toast.makeText(ActividadRegistrar.this, t.getMessage().toString(), Toast.LENGTH_LONG).show();
-                    errorMensaje.setText("Error: " +t.getMessage().toString());
+                    errorMensaje.setText("Error: " + t.getMessage().toString());
                 }
             });
         });
@@ -125,13 +129,13 @@ public class ActividadRegistrar extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                registrarViewModel.RegistrarDataChanged(email.getText().toString(),contrasenia.getText().toString(),contraseniaRepetir.getText().toString(),null);
+                registrarViewModel.RegistrarDataChanged(email.getText().toString(), contrasenia.getText().toString(), contraseniaRepetir.getText().toString(), null);
             }
         };
         return afterTextChangedListener;
     }
 
-    public void vincularVistas(){
+    public void vincularVistas() {
         email = binding.actividadRTextILEmail.getEditText();
         contrasenia = binding.actividadRTextILContrasenia.getEditText();
         contraseniaTextInputLayout = binding.actividadRTextILContrasenia;
@@ -140,5 +144,6 @@ public class ActividadRegistrar extends AppCompatActivity {
         errorMensaje = binding.actividadRTextVMensajeError;
         terminosYCondiciones = binding.actividadRCheckBTerminosYCondiciones;
         registrar = binding.actividadRButtonRegistrar;
+        cargando = binding.actividadRProgressBCargando;
     }
 }
