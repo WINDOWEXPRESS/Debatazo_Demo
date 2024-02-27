@@ -42,6 +42,18 @@ public class IniciaSesion extends AppCompatActivity {
     private LoginViewModel loginViewModel;
     private ActividadIniciaSesionBinding binding;
 
+    private EditText usernameEditText;
+    private EditText passwordEditText;
+    private TextInputLayout passwordTextInputLayout;
+    private Button loginButton;
+    private ProgressBar loadingProgressBar;
+    private ImageView gmail;
+    private ImageView wechat;
+    private ImageView facebook;
+    private TextView olvidarContrasenia;
+    private TextView registrar;
+    private CheckBox recordar;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,57 +61,50 @@ public class IniciaSesion extends AppCompatActivity {
         binding = ActividadIniciaSesionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
-        final EditText usernameEditText = binding.actividadISTextILEmail.getEditText();
-        final EditText passwordEditText = binding.actividadISTextILContrasenia.getEditText();
-        final TextInputLayout passwordTextInputLayout = binding.actividadISTextILContrasenia;
-        final Button loginButton = binding.actividadISButtonResgistrar;
-        final ProgressBar loadingProgressBar = binding.loading;
-        final ImageView gmail = binding.actividadISImageVGmail;
-        final ImageView wechat = binding.actividadISImageVWechat;
-        final ImageView facebook = binding.actividadISImageVFacebook;
-        final TextView olvidarContrasenia = binding.actividadISTextVOlvidarContrasenia;
-        final TextView registrar = binding.actividadISTextVRegistrar;
-        final CheckBox recordar = binding.actividadISCheckBRecordar;
-        loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
-            @Override
-            public void onChanged(@Nullable LoginFormState loginFormState) {
-                if (loginFormState == null) {
-                    return;
-                }
-                loginButton.setEnabled(loginFormState.isDataValid());
-                if (loginFormState.getUsernameError() != null) {
-                    usernameEditText.setError(getString(loginFormState.getUsernameError()));
-                }
-                if (loginFormState.getPasswordError() != null) {
-                    passwordEditText.setError(getString(loginFormState.getPasswordError()));
-                    passwordTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_NONE);
-                } else {
-                    passwordTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
-                }
+        vincularVistas();
+        // Observa los cambios en el estado del formulario de inicio de sesión
+        loginViewModel.getLoginFormState().observe(this, loginFormState -> {
+            // Verifica si el estado del formulario es nulo
+            if (loginFormState == null) {
+                return; // Sal de la función si el estado del formulario es nulo
+            }
+            // Habilita o deshabilita el botón de inicio de sesión según si los datos son válidos
+            loginButton.setEnabled(loginFormState.isDataValid());
+            // Verifica si hay un error en el nombre de usuario y lo muestra si existe
+            if (loginFormState.getUsernameError() != null) {
+                usernameEditText.setError(getString(loginFormState.getUsernameError()));
+            }
+            // Verifica si hay un error en la contraseña y lo muestra si existe
+            if (loginFormState.getPasswordError() != null) {
+                passwordEditText.setError(getString(loginFormState.getPasswordError()));
+                // Configura el icono final del TextInputLayout según si hay un error en la contraseña
+                passwordTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_NONE);
+            } else {
+                // Configura el icono final del TextInputLayout como un icono de alternar contraseña si no hay errores
+                passwordTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
             }
         });
 
-        loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
-            @Override
-            public void onChanged(@Nullable LoginResult loginResult) {
-                if (loginResult == null) {
-                    return;
-                }
-                loadingProgressBar.setVisibility(View.GONE);
-                if (loginResult.getError() != null) {
-                    showLoginFailed(loginResult.getError());
-                }
-                if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess());
-                }
 
-                setResult(Activity.RESULT_OK);
-                //Complete and destroy login activity once successful
-                finish();
+        loginViewModel.getLoginResult().observe(this, loginResult -> {
+            if (loginResult == null) {
+                return;
             }
+            loadingProgressBar.setVisibility(View.GONE);
+            if (loginResult.getError() != null) {
+                showLoginFailed(loginResult.getError());
+            }
+            if (loginResult.getSuccess() != null) {
+                updateUiWithUser(loginResult.getSuccess());
+            }
+
+            setResult(Activity.RESULT_OK);
+            //Complete and destroy login activity once successful
+            finish();
         });
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
@@ -161,9 +166,10 @@ public class IniciaSesion extends AppCompatActivity {
                     editor.putString(SaveSharedPreference.EMAIL, email);
                     editor.putString(SaveSharedPreference.CONTRASENIA, password);
                     editor.putBoolean(SaveSharedPreference.RECORDAR, true);
-                }else {
+                } else {
                     editor.clear();
-                }editor.apply(); // Guardar los cambios
+                }
+                editor.apply(); // Guardar los cambios
 
                 loginViewModel.login(email, password);
             }
@@ -192,6 +198,20 @@ public class IniciaSesion extends AppCompatActivity {
 
     }
 
+    private void vincularVistas() {
+        usernameEditText = binding.actividadISTextILEmail.getEditText();
+        passwordEditText = binding.actividadISTextILContrasenia.getEditText();
+        passwordTextInputLayout = binding.actividadISTextILContrasenia;
+        loginButton = binding.actividadISButtonResgistrar;
+        loadingProgressBar = binding.loading;
+        gmail = binding.actividadISImageVGmail;
+        wechat = binding.actividadISImageVWechat;
+        facebook = binding.actividadISImageVFacebook;
+        olvidarContrasenia = binding.actividadISTextVOlvidarContrasenia;
+        registrar = binding.actividadISTextVRegistrar;
+        recordar = binding.actividadISCheckBRecordar;
+    }
+
     private void mostrarInfoConSharedPreference(EditText usernameEditText, EditText passwordEditText, CheckBox recordar) {
         // Obtener una instancia de SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences(SaveSharedPreference.PREFS_NOMBRE, MODE_PRIVATE);
@@ -208,7 +228,7 @@ public class IniciaSesion extends AppCompatActivity {
 
 
     private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.bienvenido) +" "+model.getUser_name()+"!";
+        String welcome = getString(R.string.bienvenido) + " " + model.getUser_name() + "!";
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }

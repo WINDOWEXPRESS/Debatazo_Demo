@@ -29,6 +29,8 @@ public class ActividadRegistrar extends AppCompatActivity {
     private EditText email;
     private EditText contrasenia;
     private EditText contraseniaRepetir;
+    TextInputLayout contraseniaTextInputLayout;
+    TextInputLayout contraseniaRepetirTextInputLayout;
     private TextView errorMensaje;
     private CheckBox terminosYCondiciones;
     private Button registrar;
@@ -57,15 +59,24 @@ public class ActividadRegistrar extends AppCompatActivity {
             if (registrarFormulaEstado.getContraseniaError() != null) {
                 contrasenia.setError(getString(registrarFormulaEstado.getContraseniaError()));
                 terminosYCondiciones.setChecked(false);
+                contraseniaTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_NONE);
+            }else {
+                contraseniaTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
             }
-            if (registrarFormulaEstado.getContraseniaRepetidoError() != null) {
-                contraseniaRepetir.setError(getString(registrarFormulaEstado.getContraseniaRepetidoError()));
+            if (registrarFormulaEstado.getContraseniaRepetidoError() != null || registrarFormulaEstado.getContraseniaNoCoincideError() != null) {
+
+                if (registrarFormulaEstado.getContraseniaNoCoincideError() != null){
+                    contraseniaRepetir.setError(getString(R.string.error_registrar_contrasenia));
+                }else {
+                    contraseniaRepetir.setError(getString(registrarFormulaEstado.getContraseniaRepetidoError()));
+                }
                 terminosYCondiciones.setChecked(false);
+                contraseniaRepetirTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_NONE);
+            }else {
+                contraseniaRepetirTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
             }
-            if (registrarFormulaEstado.getContraseniaNoCoincideError() != null){
-                contraseniaRepetir.setError(getString(R.string.error_registrar_contrasenia));
-                terminosYCondiciones.setChecked(false);
-            }
+
+
 
         });
         terminosYCondiciones.setOnCheckedChangeListener((compoundButton, isChecked) -> {
@@ -123,7 +134,9 @@ public class ActividadRegistrar extends AppCompatActivity {
     public void vincularVistas(){
         email = binding.actividadRTextILEmail.getEditText();
         contrasenia = binding.actividadRTextILContrasenia.getEditText();
+        contraseniaTextInputLayout = binding.actividadRTextILContrasenia;
         contraseniaRepetir = binding.actividadRTextILRepetirContrasenia.getEditText();
+        contraseniaRepetirTextInputLayout = binding.actividadRTextILRepetirContrasenia;
         errorMensaje = binding.actividadRTextVMensajeError;
         terminosYCondiciones = binding.actividadRCheckBTerminosYCondiciones;
         registrar = binding.actividadRButtonRegistrar;

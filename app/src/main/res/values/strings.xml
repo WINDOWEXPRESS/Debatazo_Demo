@@ -29,5 +29,10 @@
     <string name="limite_numerico_inicio">0/100</string>
     <string name="limite_numerico">%d/100</string>
     <string name="sin_rellenar">Sin rellenar</string>
+    <!--    Configuracion   -->
+    <string name="no">No</string>
+    <string name="si">Sí</string>
+    <string name="cerrar_sesion">Cerrar Sesión</string>
+    <string name="mensaje_cerrar_sesion">¿Estás seguro de que deseas cerrar sesión?</string>
 
 </resources>

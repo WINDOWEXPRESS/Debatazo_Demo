@@ -1,5 +1,7 @@
 package com.example.debatazo;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -22,9 +24,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.debatazo.databinding.ActividadPrincipalBinding;
-import com.example.debatazo.debate.DebateFragmento;
+import com.example.debatazo.debaterecycler.DebateFragmento;
 import com.example.debatazo.usuario.PerfilFragment;
+import com.example.debatazo.databinding.ActividadPrincipalBinding;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModel;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModelFactory;
@@ -34,8 +36,8 @@ import java.io.IOException;
 public class ActividadPrincipal extends AppCompatActivity {
     // Definir una constante para el código de solicitud de la galería
     private static final int PICK_IMAGE_REQUEST = 1;
-    private ImageView imagenPublicar;
-    ActividadPrincipalBinding binding;
+    private  ImageView imagenPublicar;
+   ActividadPrincipalBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,18 +71,20 @@ public class ActividadPrincipal extends AppCompatActivity {
 
         binding.actividadPFloatingAB.setOnClickListener(view -> {
             // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
-            LoginViewModel loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory()).get(LoginViewModel.class);
-            if (loginViewModel.getLoginRepository().isLoggedIn()) {
+            LoginViewModel loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
+                    .get(LoginViewModel.class);
+            //Si ya ha iniciado sesion entonces mostrar el dialog
+            if (loginViewModel.getLoginRepository().isLoggedIn()){
                 showBottomDialog();
-            } else {
+            }else {
+                //Ir a actividad de inicia sesion
                 Intent i = new Intent(view.getContext(), IniciaSesion.class);
                 startActivity(i);
             }
         });
 
     }
-
-    private void replaceFragment(Fragment fragment) {
+    private  void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.actividadP_frameL, fragment);
@@ -104,7 +108,7 @@ public class ActividadPrincipal extends AppCompatActivity {
         });
 
         valoracion.setOnClickListener(v -> {
-            Toast.makeText(ActividadPrincipal.this, "Funcion sin implementar.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ActividadPrincipal.this,"Proximamente.",Toast.LENGTH_SHORT).show();
 
         });
         imagenPublicar.setOnClickListener(view -> {
@@ -114,7 +118,7 @@ public class ActividadPrincipal extends AppCompatActivity {
         cancelButton.setOnClickListener(view -> dialog.dismiss());
 
         dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
 
         // Establece el fondo del cuadro de diálogo como transparente.
         // Esto puede ser útil para crear cuadros de diálogo con esquinas redondeadas o formas personalizadas.
@@ -124,7 +128,6 @@ public class ActividadPrincipal extends AppCompatActivity {
         dialog.getWindow().setGravity(Gravity.BOTTOM);
 
     }
-
     private void abrirGaleria() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");

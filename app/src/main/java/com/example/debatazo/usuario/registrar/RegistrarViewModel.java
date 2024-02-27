@@ -16,7 +16,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Callback;
 
 public class RegistrarViewModel extends ViewModel {
-    private static final int LONGITUD_MIN = 4;
+    private static final int LONGITUD_MIN = 5;
     private static final int LONGITUD_MAX = 20;
     private RegistrarUsuarioRepo userRepository;
     private MutableLiveData<RegistrarFormulaEstado> registrarFormulaEstado = new MutableLiveData<>();
@@ -63,6 +63,7 @@ public class RegistrarViewModel extends ViewModel {
         }else {
             registrarFormulaEstado.setValue(new RegistrarFormulaEstado(false));
         }
+
     }
 
     //Validacion email
