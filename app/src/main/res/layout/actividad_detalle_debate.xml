@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".debate.detalle.DetalleDebate">
+    tools:context=".debaterecycler.detalle.DebateDetalle">
 
     <LinearLayout
         android:id="@+id/detalleD_linearL_barraS"
@@ -85,6 +85,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:padding="10dp"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/detalleD_textV_titulo"
         app:layout_constraintStart_toStartOf="@+id/detalleD_textV_titulo"
@@ -95,6 +96,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:padding="10dp"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="@+id/detalleD_textV_contenido"
         app:layout_constraintStart_toStartOf="parent"
