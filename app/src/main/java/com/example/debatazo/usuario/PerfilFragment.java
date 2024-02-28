@@ -137,6 +137,7 @@ public class PerfilFragment extends Fragment {
             }
         });
         return rootView;
+
     }
     private void vincularVistas() {
         info = rootView.findViewById(R.id.fragmentoP_datosUsuario);
@@ -147,7 +148,8 @@ public class PerfilFragment extends Fragment {
         idUsuario = rootView.findViewById(R.id.fragmentoP_textV_idUsuario);
 
     }
-    private void mostrarDatos() {
+
+    public void mostrarDatos() {
         LoggedInUser user = loginViewModel.getLoginRepository().getUser();
         nombreUsuario.setText(user.getUser_name());
         idUsuario.setText("ID:" + user.getId());

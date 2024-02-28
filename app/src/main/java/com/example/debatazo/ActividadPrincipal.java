@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -69,7 +70,11 @@ public class ActividadPrincipal extends AppCompatActivity {
 
             return true;
         });
-
+        ActivityResultLauncher<Intent> lanzador = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == Activity.RESULT_OK) {
+                perfilFragment.mostrarDatos();
+            }
+        });
         binding.actividadPFloatingAB.setOnClickListener(view -> {
             // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
             LoginViewModel loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
@@ -80,7 +85,7 @@ public class ActividadPrincipal extends AppCompatActivity {
             } else {
                 //Ir a actividad de inicia sesion
                 Intent i = new Intent(view.getContext(), IniciaSesion.class);
-                startActivity(i);
+                lanzador.launch(i);
             }
         });
 

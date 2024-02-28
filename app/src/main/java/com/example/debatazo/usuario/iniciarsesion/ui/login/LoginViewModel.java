@@ -12,10 +12,6 @@ import com.example.debatazo.usuario.iniciarsesion.data.Result;
 import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
 import com.example.debatazo.R;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class LoginViewModel extends ViewModel {
 
     private static final int LONGITUD_MIN = 4;
