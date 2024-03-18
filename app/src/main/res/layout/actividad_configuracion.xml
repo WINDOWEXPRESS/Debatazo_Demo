@@ -95,7 +95,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/actividadC_button_cerrarSesion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Cerrar sesión" />

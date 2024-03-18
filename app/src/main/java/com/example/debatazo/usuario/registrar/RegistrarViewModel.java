@@ -16,21 +16,22 @@ import okhttp3.ResponseBody;
 import retrofit2.Callback;
 
 public class RegistrarViewModel extends ViewModel {
-    private static final int LONGITUD_MIN = 4;
+    private static final int LONGITUD_MIN = 5;
     private static final int LONGITUD_MAX = 20;
     private RegistrarUsuarioRepo userRepository;
     private MutableLiveData<RegistrarFormulaEstado> registrarFormulaEstado = new MutableLiveData<>();
+    private MutableLiveData<Boolean> loadingLiveData = new MutableLiveData<>();
 
-    LiveData<RegistrarFormulaEstado> getRegistrarFormulaEstado() {
+    public LiveData<Boolean> getLoadingLiveData() {
+        return loadingLiveData;
+    }
+
+    public LiveData<RegistrarFormulaEstado> getRegistrarFormulaEstado() {
         return registrarFormulaEstado;
     }
 
     public RegistrarViewModel() {
         userRepository = new RegistrarUsuarioRepo();
-    }
-
-    public RegistrarUsuarioRepo getUserRepository() {
-        return userRepository;
     }
 
     // Método para registrar un usuario
@@ -40,7 +41,7 @@ public class RegistrarViewModel extends ViewModel {
         //Guardar los datos en el pojo para pasarlo a repositorio
         RegistrarUsuarioPojo user = new RegistrarUsuarioPojo(email, passwordCodificado);
 
-        userRepository.registrarUsuario(user,callback);
+        userRepository.registrarUsuario(user,callback,loadingLiveData);
     }
 
     public void RegistrarDataChanged(String email, String contrasenia,String contraseniaRepetir,@Nullable Boolean esTerminoCheckeado) {
@@ -63,6 +64,7 @@ public class RegistrarViewModel extends ViewModel {
         }else {
             registrarFormulaEstado.setValue(new RegistrarFormulaEstado(false));
         }
+
     }
 
     //Validacion email

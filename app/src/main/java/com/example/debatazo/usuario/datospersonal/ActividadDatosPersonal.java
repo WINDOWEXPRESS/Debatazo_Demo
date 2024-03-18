@@ -80,17 +80,23 @@ public class ActividadDatosPersonal extends AppCompatActivity {
 
     }
     private void mostrarInformacion() {
+        // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
-
-        if (loginViewModel.getLoginRepository().getUser()!= null){
+        //TODO HAY QUE HACER PRUEBA CON ISLOGEDIN()
+        // Verificar si el usuario está autenticado y se ha obtenido información del usuario
+        if (loginViewModel.getLoginRepository().getUser() != null) {
+            // Mostrar la información del usuario en las vistas correspondientes
             descripcionPersonal.setText(loginViewModel.getLoginRepository().getUser().getSelf());
             id.setText(loginViewModel.getLoginRepository().getUser().getUser_id());
             nombreUsuario.setText(loginViewModel.getLoginRepository().getUser().getUser_name());
             nombrePersonal.setText(loginViewModel.getLoginRepository().getUser().getFull_name());
             edad.setText(loginViewModel.getLoginRepository().getUser().getAge());
             sexo.setText(loginViewModel.getLoginRepository().getUser().getSex());
+
+            // Cargar la imagen de perfil del usuario utilizando Picasso
             Picasso.get().load(loginViewModel.getLoginRepository().getUser().getProfile_img()).into(perfil);
         }
     }
+
 }

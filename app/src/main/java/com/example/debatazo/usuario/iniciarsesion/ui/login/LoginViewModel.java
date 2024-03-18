@@ -12,31 +12,32 @@ import com.example.debatazo.usuario.iniciarsesion.data.Result;
 import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
 import com.example.debatazo.R;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class LoginViewModel extends ViewModel {
 
     private static final int LONGITUD_MIN = 4;
     private static final int LONGITUD_MAX = 20;
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
+    private MutableLiveData<Boolean> loadingLiveData = new MutableLiveData<>();
+
+    public LiveData<Boolean> getLoadingLiveData() {
+        return loadingLiveData;
+    }
     private LoginRepository loginRepository;
 
-    LoginViewModel(LoginRepository loginRepository) {
+
+    public LoginViewModel(LoginRepository loginRepository) {
         this.loginRepository = loginRepository;
     }
-
     public LoginRepository getLoginRepository() {
         return loginRepository;
     }
 
-    LiveData<LoginFormState> getLoginFormState() {
+    public LiveData<LoginFormState> getLoginFormState() {
         return loginFormState;
     }
 
-    LiveData<LoginResult> getLoginResult() {
+    public LiveData<LoginResult> getLoginResult() {
         return loginResult;
     }
 
@@ -49,18 +50,28 @@ public class LoginViewModel extends ViewModel {
      */
     public void login(String username, String password ) {
         // Se realiza la autenticación y se obtiene el resultado
-        Result<LoggedInUser> result = loginRepository.login(username, password);
+                loginRepository.login(username, password,loadingLiveData, new LoginCallBack() {
+            @Override
+            public Result<LoggedInUser> onSuccess(Result<LoggedInUser> user) {
+                // Se verifica el resultado obtenido
+                if (user instanceof Result.Success) {
+                    // Si la autenticación fue exitosa, se obtiene el usuario autenticado
+                    LoggedInUser data = ((Result.Success<LoggedInUser>) user).getData();
+                    // Se actualiza el resultado del inicio de sesión con la información del usuario autenticado
+                    loginResult.setValue(new LoginResult(new LoggedInUserView(data.getUser_name())));
+                } else {
+                    // Si la autenticación falló, se actualiza el resultado del inicio de sesión con un mensaje de error
+                    loginResult.setValue(new LoginResult(R.string.inicia_sesion_fallido));
+                }
+                return user;
+            }
 
-        // Se verifica el resultado obtenido
-        if (result instanceof Result.Success) {
-            // Si la autenticación fue exitosa, se obtiene el usuario autenticado
-            LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-            // Se actualiza el resultado del inicio de sesión con la información del usuario autenticado
-            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getUser_name())));
-        } else {
-            // Si la autenticación falló, se actualiza el resultado del inicio de sesión con un mensaje de error
-            loginResult.setValue(new LoginResult(R.string.inicia_sesion_fallido));
-        }
+            @Override
+            public Result<LoggedInUser> onFailure(Result<LoggedInUser> mensajeError) {
+                loginResult.setValue(new LoginResult(R.string.inicia_sesion_fallido));
+                return null;
+            }
+        });
     }
 
 

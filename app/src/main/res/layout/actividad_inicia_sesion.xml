@@ -253,7 +253,7 @@
         </LinearLayout>
 
         <CheckBox
-            android:id="@+id/actividadR_checkB_terminosYCondiciones"
+            android:id="@+id/actividadIS_checkB_terminosYCondiciones"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -264,14 +264,15 @@
     </LinearLayout>
 
     <ProgressBar
-        android:id="@+id/loading"
-        android:layout_width="216dp"
-        android:layout_height="111dp"
+        android:id="@+id/actividadIS_progressB_cargando"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"
+        android:indeterminateTint="@color/azul_marino"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/actividadIS_textV_nombreAplicacion"
-        app:layout_constraintStart_toStartOf="@+id/actividadIS_textV_nombreAplicacion"
-        app:layout_constraintTop_toBottomOf="@+id/actividadIS_textV_nombreAplicacion" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

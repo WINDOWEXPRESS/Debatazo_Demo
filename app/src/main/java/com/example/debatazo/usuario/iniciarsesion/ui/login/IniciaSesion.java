@@ -2,14 +2,12 @@ package com.example.debatazo.usuario.iniciarsesion.ui.login;
 
 import android.app.Activity;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,18 +27,25 @@ import android.widget.Toast;
 import com.example.debatazo.R;
 
 import com.example.debatazo.databinding.ActividadIniciaSesionBinding;
-import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
 import com.example.debatazo.usuario.registrar.ActividadRegistrar;
 import com.example.debatazo.savesharedpreference.SaveSharedPreference;
 import com.google.android.material.textfield.TextInputLayout;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class IniciaSesion extends AppCompatActivity {
     private LoginViewModel loginViewModel;
     private ActividadIniciaSesionBinding binding;
+
+    private EditText usernameEditText;
+    private EditText passwordEditText;
+    private TextInputLayout passwordTextInputLayout;
+    private Button loginButton;
+    private ProgressBar cargando;
+    private ImageView gmail;
+    private ImageView wechat;
+    private ImageView facebook;
+    private TextView olvidarContrasenia;
+    private TextView registrar;
+    private CheckBox recordar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,55 +54,49 @@ public class IniciaSesion extends AppCompatActivity {
         binding = ActividadIniciaSesionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
-        final EditText usernameEditText = binding.actividadISTextILEmail.getEditText();
-        final EditText passwordEditText = binding.actividadISTextILContrasenia.getEditText();
-        final TextInputLayout passwordTextInputLayout = binding.actividadISTextILContrasenia;
-        final Button loginButton = binding.actividadISButtonResgistrar;
-        final ProgressBar loadingProgressBar = binding.loading;
-        final ImageView gmail = binding.actividadISImageVGmail;
-        final ImageView wechat = binding.actividadISImageVWechat;
-        final ImageView facebook = binding.actividadISImageVFacebook;
-        final TextView olvidarContrasenia = binding.actividadISTextVOlvidarContrasenia;
-        final TextView registrar = binding.actividadISTextVRegistrar;
-        final CheckBox recordar = binding.actividadISCheckBRecordar;
-        loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
-            @Override
-            public void onChanged(@Nullable LoginFormState loginFormState) {
-                if (loginFormState == null) {
-                    return;
-                }
-                loginButton.setEnabled(loginFormState.isDataValid());
-                if (loginFormState.getUsernameError() != null) {
-                    usernameEditText.setError(getString(loginFormState.getUsernameError()));
-                }
-                if (loginFormState.getPasswordError() != null) {
-                    passwordEditText.setError(getString(loginFormState.getPasswordError()));
-                    passwordTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_NONE);
-                } else {
-                    passwordTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
-                }
+        vincularVistas();
+        // Observa los cambios en el estado del formulario de inicio de sesión
+        loginViewModel.getLoginFormState().observe(this, loginFormState -> {
+            // Verifica si el estado del formulario es nulo
+            if (loginFormState == null) {
+                return; // Sal de la función si el estado del formulario es nulo
+            }
+            // Habilita o deshabilita el botón de inicio de sesión según si los datos son válidos
+            loginButton.setEnabled(loginFormState.isDataValid());
+            // Verifica si hay un error en el nombre de usuario y lo muestra si existe
+            if (loginFormState.getUsernameError() != null) {
+                usernameEditText.setError(getString(loginFormState.getUsernameError()));
+            }
+            // Verifica si hay un error en la contraseña y lo muestra si existe
+            if (loginFormState.getPasswordError() != null) {
+                passwordEditText.setError(getString(loginFormState.getPasswordError()));
+                // Configura el icono final del TextInputLayout según si hay un error en la contraseña
+                passwordTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_NONE);
+            } else {
+                // Configura el icono final del TextInputLayout como un icono de alternar contraseña si no hay errores
+                passwordTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
             }
         });
+        loginViewModel.getLoadingLiveData().observe(this, loading -> {
+            cargando.setVisibility(loading?View.VISIBLE:View.GONE);
+        });
 
-        loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
-            @Override
-            public void onChanged(@Nullable LoginResult loginResult) {
-                if (loginResult == null) {
-                    return;
-                }
-                loadingProgressBar.setVisibility(View.GONE);
-                if (loginResult.getError() != null) {
-                    showLoginFailed(loginResult.getError());
-                }
-                if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess());
-                }
-
+        //OBSERVAR EL RESULTADO DE LOGIN
+        loginViewModel.getLoginResult().observe(this, loginResult -> {
+            if (loginResult == null) {
+                return;
+            }
+            if (loginResult.getError() != null) {
+                showLoginFailed(loginResult.getError());
+            }
+            //Complete and destroy login activity once successful
+            if (loginResult.getSuccess() != null) {
+                updateUiWithUser(loginResult.getSuccess());
                 setResult(Activity.RESULT_OK);
-                //Complete and destroy login activity once successful
                 finish();
             }
         });
@@ -142,31 +141,25 @@ public class IniciaSesion extends AppCompatActivity {
             }
         });
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = usernameEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
-                /*//Hacer cargar el progressBar no funciona...
-                loadingProgressBar.setVisibility(View.VISIBLE);
-                binding.actividadISLinearLOperaciones.setVisibility(View.INVISIBLE);
-                binding.actividadISTextILEmail.setVisibility(View.INVISIBLE);
-                binding.actividadISTextILContrasenia.setVisibility(View.INVISIBLE);*/
-                SharedPreferences sharedPreferences = getSharedPreferences(SaveSharedPreference.PREFS_NOMBRE, MODE_PRIVATE);
-                // Editar los valores de SharedPreferences
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                //Si esta marcado el recordar se guarda con un sharedPreferences
-                if (recordar.isChecked()) {
-                    // Obtener una instancia de SharedPreferences
-                    editor.putString(SaveSharedPreference.EMAIL, email);
-                    editor.putString(SaveSharedPreference.CONTRASENIA, password);
-                    editor.putBoolean(SaveSharedPreference.RECORDAR, true);
-                }else {
-                    editor.clear();
-                }editor.apply(); // Guardar los cambios
+        loginButton.setOnClickListener(v -> {
+            String email = usernameEditText.getText().toString();
+            String password = passwordEditText.getText().toString();
 
-                loginViewModel.login(email, password);
+            SharedPreferences sharedPreferences = getSharedPreferences(SaveSharedPreference.PREFS_NOMBRE, MODE_PRIVATE);
+            // Editar los valores de SharedPreferences
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            //Si esta marcado el recordar se guarda con un sharedPreferences
+            if (recordar.isChecked()) {
+                // Obtener una instancia de SharedPreferences
+                editor.putString(SaveSharedPreference.EMAIL, email);
+                editor.putString(SaveSharedPreference.CONTRASENIA, password);
+                editor.putBoolean(SaveSharedPreference.RECORDAR, true);
+            } else {
+                editor.clear();
             }
+            editor.apply(); // Guardar los cambios
+
+            loginViewModel.login(email, password);
         });
 
         olvidarContrasenia.setOnClickListener(view -> {
@@ -192,6 +185,20 @@ public class IniciaSesion extends AppCompatActivity {
 
     }
 
+    private void vincularVistas() {
+        usernameEditText = binding.actividadISTextILEmail.getEditText();
+        passwordEditText = binding.actividadISTextILContrasenia.getEditText();
+        passwordTextInputLayout = binding.actividadISTextILContrasenia;
+        loginButton = binding.actividadISButtonResgistrar;
+        cargando = binding.actividadISProgressBCargando;
+        gmail = binding.actividadISImageVGmail;
+        wechat = binding.actividadISImageVWechat;
+        facebook = binding.actividadISImageVFacebook;
+        olvidarContrasenia = binding.actividadISTextVOlvidarContrasenia;
+        registrar = binding.actividadISTextVRegistrar;
+        recordar = binding.actividadISCheckBRecordar;
+    }
+
     private void mostrarInfoConSharedPreference(EditText usernameEditText, EditText passwordEditText, CheckBox recordar) {
         // Obtener una instancia de SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences(SaveSharedPreference.PREFS_NOMBRE, MODE_PRIVATE);
@@ -208,7 +215,7 @@ public class IniciaSesion extends AppCompatActivity {
 
 
     private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.bienvenido) +" "+model.getUser_name()+"!";
+        String welcome = getString(R.string.bienvenido) + " " + model.getUser_name() + "!";
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }

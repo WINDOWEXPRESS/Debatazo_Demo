@@ -1,9 +1,9 @@
 package com.example.debatazo.usuario.registrar;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.debatazo.usuario.apirest.RetrofitCliente;
-import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
 
 import java.io.IOException;
 
@@ -13,22 +13,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegistrarUsuarioRepo extends ViewModel {
-    private boolean esRegistrarExitosa;
-    private int codigo;
-    private String mensaje;
-
-
-    public String getMensaje() {
-        return mensaje;
-    }
-
-    public int getCodigo() {
-        return codigo;
-    }
 
     // Método para registrar un usuario
-        public void registrarUsuario(RegistrarUsuarioPojo usuarioPojo, Callback<ResponseBody> callback) {
-
+        public void registrarUsuario(RegistrarUsuarioPojo usuarioPojo, Callback<ResponseBody> callback, MutableLiveData<Boolean> loadingLiveData) {
+            loadingLiveData.setValue(true);
             // Lógica para registrar el usuario en la base de datos o en una API
             // Llamar al callback con el resultado
             RetrofitCliente retrofitCliente = RetrofitCliente.getInstancia();
@@ -36,6 +24,7 @@ public class RegistrarUsuarioRepo extends ViewModel {
             llamada.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    loadingLiveData.setValue(false);
                     if (response.isSuccessful()) {
                         callback.onResponse(call,response);
                     } else {
@@ -44,14 +33,13 @@ public class RegistrarUsuarioRepo extends ViewModel {
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
-                        codigo = response.code();
                     }
 
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    esRegistrarExitosa = false;
+                    loadingLiveData.setValue(false);
                     callback.onFailure( call,new Throwable("Error inesperado al registrar."));
                     call.cancel();
                 }

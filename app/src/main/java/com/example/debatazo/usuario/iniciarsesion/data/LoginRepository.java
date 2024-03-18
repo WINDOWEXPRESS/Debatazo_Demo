@@ -1,5 +1,7 @@
 package com.example.debatazo.usuario.iniciarsesion.data;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
 
 /**
@@ -48,12 +50,23 @@ public class LoginRepository {
 
     }
 
-    public Result<LoggedInUser> login(String username, String password) {
+    public void login(String username, String password, MutableLiveData<Boolean> loadingLiveData, LoginCallBack callBack) {
         // handle login
-        Result<LoggedInUser> result = dataSource.login(username, password);
-        if (result instanceof Result.Success) {
-            setLoggedInUser(((Result.Success<LoggedInUser>) result).getData());
-        }
-        return result;
+        dataSource.login(username, password, loadingLiveData, new LoginCallBack() {
+            @Override
+            public Result<LoggedInUser> onSuccess(Result<LoggedInUser> user) {
+                if (user instanceof Result.Success) {
+                    setLoggedInUser(((Result.Success<LoggedInUser>) user).getData());
+                }
+                callBack.onSuccess(user);
+                return user;
+            }
+
+            @Override
+            public Result<LoggedInUser> onFailure(Result<LoggedInUser> mensajeError) {
+                callBack.onFailure(mensajeError);
+                return null;
+            }
+        });
     }
 }
