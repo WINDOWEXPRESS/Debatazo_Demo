@@ -1,11 +1,11 @@
-package com.example.debatazo.perfilylogin.ui.login;
+package com.example.debatazo.usuario.iniciarsesion.ui.login;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 
-import com.example.debatazo.perfilylogin.data.LoginDataSource;
-import com.example.debatazo.perfilylogin.data.LoginRepository;
+import com.example.debatazo.usuario.iniciarsesion.data.LoginDataSource;
+import com.example.debatazo.usuario.iniciarsesion.data.LoginRepository;
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.
