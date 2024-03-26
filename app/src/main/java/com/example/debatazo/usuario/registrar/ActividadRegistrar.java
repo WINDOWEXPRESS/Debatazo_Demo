@@ -46,7 +46,9 @@ public class ActividadRegistrar extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         vincularVistas();
-
+    /*
+    TODO: POSIBLE CAMBIO DE UI : DEJAR CAMPOS DE CONTRASEÑA COMO UN TEXTO PLANO
+     */
         RegistrarViewModel registrarViewModel = new RegistrarViewModel();
         registrarViewModel.getRegistrarFormulaEstado().observe(this, registrarFormulaEstado -> {
             if (registrarFormulaEstado == null) {

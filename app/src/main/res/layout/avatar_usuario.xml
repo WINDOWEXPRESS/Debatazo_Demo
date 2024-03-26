@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gris"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/avatarU_imageV_mujer1"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:src="@drawable/avatar_mujer_1" />
+
+        <ImageView
+            android:id="@+id/avatarU_imageV_mujer2"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:src="@drawable/avatar_mujer_2" />
+
+        <ImageView
+            android:id="@+id/avatarU_imageV_mujer3"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:src="@drawable/avatar_mujer_3" />
+
+        <ImageView
+            android:id="@+id/avatarU_imageV_mujer4"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:src="@drawable/avatar_mujer_4" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/avatarU_imageV_hombre1"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:src="@drawable/avatar_hombre_1" />
+
+        <ImageView
+            android:id="@+id/avatarU_imageV_hombre2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:src="@drawable/avatar_hombre_2" />
+
+        <ImageView
+            android:id="@+id/avatarU_imageV_hombre3"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:src="@drawable/avatar_hombre_3" />
+
+        <ImageView
+            android:id="@+id/avatarU_imageV_galeria"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="20dp"
+            android:src="@drawable/aniadir" />
+
+    </LinearLayout>
+</LinearLayout>

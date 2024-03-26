@@ -37,5 +37,6 @@
     <!--    PERFIL FRAGMENT-->
     <string name="conectar_ahora">Conectar ahora</string>
     <string name="mensaje_campo_id_usuario">Desbloquea todas las funciones y disfruta de la experiencia completa</string>
+    <string name="seleccionar_fecha_de_nacimiento">Seleccionar fecha de nacimiento</string>
 
 </resources>
