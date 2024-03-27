@@ -46,9 +46,7 @@ public class ActividadRegistrar extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         vincularVistas();
-    /*
-    TODO: POSIBLE CAMBIO DE UI : DEJAR CAMPOS DE CONTRASEÑA COMO UN TEXTO PLANO
-     */
+
         RegistrarViewModel registrarViewModel = new RegistrarViewModel();
         registrarViewModel.getRegistrarFormulaEstado().observe(this, registrarFormulaEstado -> {
             if (registrarFormulaEstado == null) {
@@ -60,13 +58,11 @@ public class ActividadRegistrar extends AppCompatActivity {
             //comprobaciones si un campo no es valido imprime el error
             if (registrarFormulaEstado.getEmailError() != null) {
                 email.setError(getString(registrarFormulaEstado.getEmailError()));
+                terminosYCondiciones.setChecked(false);
             }
             if (registrarFormulaEstado.getContraseniaError() != null) {
                 contrasenia.setError(getString(registrarFormulaEstado.getContraseniaError()));
                 terminosYCondiciones.setChecked(false);
-                contraseniaTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_NONE);
-            } else {
-                contraseniaTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
             }
             if (registrarFormulaEstado.getContraseniaRepetidoError() != null || registrarFormulaEstado.getContraseniaNoCoincideError() != null) {
 
@@ -76,12 +72,10 @@ public class ActividadRegistrar extends AppCompatActivity {
                     contraseniaRepetir.setError(getString(registrarFormulaEstado.getContraseniaRepetidoError()));
                 }
                 terminosYCondiciones.setChecked(false);
-                contraseniaRepetirTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_NONE);
-            } else {
-                contraseniaRepetirTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
             }
 
         });
+        //Mostrar progressBar mientras carga
         registrarViewModel.getLoadingLiveData().observe(this, loading -> {
             cargando.setVisibility(loading ? View.VISIBLE : View.GONE);
         });
