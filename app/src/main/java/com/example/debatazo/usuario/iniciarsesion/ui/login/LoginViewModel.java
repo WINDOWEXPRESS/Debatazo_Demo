@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import android.util.Log;
 import android.util.Patterns;
 
 import com.example.debatazo.usuario.iniciarsesion.data.LoginCallBack;
@@ -88,12 +89,12 @@ public class LoginViewModel extends ViewModel {
             loginFormState.setValue(new LoginFormState(R.string.invalido_email_usuario, null));
         }
         // Verifica si la contraseña es válida
-        else if (!isPasswordValid(password)) {
+        if (!isPasswordValid(password)) {
             // Si la contraseña no es válida, establece un estado de formulario de inicio de sesión inválido con un mensaje de error de contraseña.
             loginFormState.setValue(new LoginFormState(null, R.string.invalido_contrasenia));
         }
         // Si tanto el nombre de usuario como la contraseña son válidos
-        else {
+        if (isUserNameValid(username) && isPasswordValid(password)){
             // Establece un estado de formulario de inicio de sesión válido.
             loginFormState.setValue(new LoginFormState(true));
         }
@@ -114,6 +115,7 @@ public class LoginViewModel extends ViewModel {
 
     // A placeholder password validation check
     private boolean isPasswordValid(String password) {
+        Log.println(Log.INFO,"CHEN","password == null : "+(password == null) +"password != null : "+(password != null) +"  password.isEmpty() : "+password.isEmpty());
         return password != null && (password.trim().length() > LONGITUD_MIN && password.trim().length() < LONGITUD_MAX);
     }
 }

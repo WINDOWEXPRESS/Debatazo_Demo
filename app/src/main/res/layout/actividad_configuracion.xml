@@ -20,18 +20,28 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Configuracion" />
+            <ImageButton
+                android:id="@+id/actividadC_imageV_volver"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:backgroundTint="@color/white"
+                android:contentDescription="@string/boton_volver"
+                android:scaleType="centerCrop"
+                android:src="@drawable/flecha_volver"
+                tools:ignore="TouchTargetSizeCheck" />
 
-            <ImageView
-                android:id="@+id/imageView3"
+            <TextView
+                android:id="@+id/actividadC_textV_configuracion"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/aniadir"
-                />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|start"
+                android:paddingStart="10dp"
+                android:text="Configuracion"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -41,17 +51,15 @@
 
             <TextView
                 android:id="@+id/textView14"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:text="Privacidad" />
+                android:padding="5dp"
+                android:text="Privacidad"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
-            <ImageView
-                android:id="@+id/imageView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/aniadir" />
         </LinearLayout>
 
         <LinearLayout
@@ -60,18 +68,16 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView15"
-                android:layout_width="wrap_content"
+                android:id="@+id/actividadC_textV_sugerencia"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:text="Sugerencia" />
+                android:padding="5dp"
+                android:text="Sugerencia"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
-            <ImageView
-                android:id="@+id/imageView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/aniadir" />
         </LinearLayout>
 
         <LinearLayout
@@ -79,18 +85,64 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView17"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Brillo" />
+                android:orientation="vertical">
 
-            <SeekBar
-                android:id="@+id/seekBar2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                <TextView
+                    android:id="@+id/actividadC_textV_Brillo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:text="Brillo"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/actividadC_linearLV_brillo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:visibility="invisible">
+
+                <SeekBar
+                    android:id="@+id/actividadC_SeekB_brillo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/aplicacion_logo_background"
+                    android:foregroundTint="@color/azul_marino"
+                    android:indeterminate="false"
+                    android:max="255"
+                    android:min="1"
+                    android:progressTint="#000000"
+                    android:clickable="false"
+                    android:thumbTint="@color/black"
+                    android:tickMarkTint="@color/black" />
+
+                <CheckBox
+                    android:id="@+id/actividadC_checkB_seguirSistema"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/black"
+                    android:text="Seguir Sistema"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
         </LinearLayout>
 

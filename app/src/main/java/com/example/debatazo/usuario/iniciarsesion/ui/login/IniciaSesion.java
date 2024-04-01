@@ -70,6 +70,7 @@ public class IniciaSesion extends AppCompatActivity {
             // Verifica si hay un error en el nombre de usuario y lo muestra si existe
             if (loginFormState.getUsernameError() != null) {
                 usernameEditText.setError(getString(loginFormState.getUsernameError()));
+
             }
             // Verifica si hay un error en la contraseña y lo muestra si existe
             if (loginFormState.getPasswordError() != null) {
@@ -104,8 +105,8 @@ public class IniciaSesion extends AppCompatActivity {
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                //loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
+               //         passwordEditText.getText().toString());
             }
 
             @Override

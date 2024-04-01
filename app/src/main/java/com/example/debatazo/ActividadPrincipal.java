@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,7 +26,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.debatazo.configuracion.BrilloUtils;
 import com.example.debatazo.debaterecycler.DebateFragmento;
+import com.example.debatazo.savesharedpreference.SaveSharedPreference;
 import com.example.debatazo.usuario.PerfilFragment;
 import com.example.debatazo.databinding.ActividadPrincipalBinding;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
@@ -38,7 +41,8 @@ public class ActividadPrincipal extends AppCompatActivity {
     // Definir una constante para el código de solicitud de la galería
     private static final int PICK_IMAGE_REQUEST = 1;
     private ImageView imagenPublicar;
-    private PerfilFragment perfilFragment = new PerfilFragment();;
+    private PerfilFragment perfilFragment = new PerfilFragment();
+    private SharedPreferences sharedPreferences;
     ActividadPrincipalBinding binding;
 
     @Override
@@ -49,6 +53,19 @@ public class ActividadPrincipal extends AppCompatActivity {
         binding = ActividadPrincipalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new PrincipalFragmento());
+
+        BrilloUtils brilloUtils = BrilloUtils.getInstancia();
+        sharedPreferences  = getSharedPreferences(SaveSharedPreference.PREFS_BRILLO, MODE_PRIVATE);
+        //Si el opcion de seguir el Brillo de sistema esta desactivado.
+        if(!sharedPreferences.getBoolean(SaveSharedPreference.BRILLO_SEGUIR_SISTEMA, true)){
+            brilloUtils.getBrilloAppLD().observe(this,integer -> {
+                brilloUtils.setAppBrillo(this,integer);
+            });
+        }
+
+        brilloUtils.getBrilloAppLD().observe(this,integer -> {
+            brilloUtils.setAppBrillo(this,integer);
+        });
 
         binding.actividadPBottomNV.setBackground(null);
         binding.actividadPBottomNV.setOnItemSelectedListener(item -> {
