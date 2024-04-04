@@ -54,18 +54,8 @@ public class ActividadPrincipal extends AppCompatActivity {
         setContentView(binding.getRoot());
         replaceFragment(new PrincipalFragmento());
 
-        BrilloUtils brilloUtils = BrilloUtils.getInstancia();
-        sharedPreferences  = getSharedPreferences(SaveSharedPreference.PREFS_BRILLO, MODE_PRIVATE);
-        //Si el opcion de seguir el Brillo de sistema esta desactivado.
-        if(!sharedPreferences.getBoolean(SaveSharedPreference.BRILLO_SEGUIR_SISTEMA, true)){
-            brilloUtils.getBrilloAppLD().observe(this,integer -> {
-                brilloUtils.setAppBrillo(this,integer);
-            });
-        }
-
-        brilloUtils.getBrilloAppLD().observe(this,integer -> {
-            brilloUtils.setAppBrillo(this,integer);
-        });
+        //ajuste de brillo
+        brilloApp();
 
         binding.actividadPBottomNV.setBackground(null);
         binding.actividadPBottomNV.setOnItemSelectedListener(item -> {
@@ -87,6 +77,7 @@ public class ActividadPrincipal extends AppCompatActivity {
 
             return true;
         });
+
         ActivityResultLauncher<Intent> lanzador = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK) {
                 perfilFragment.mostrarDatos();
@@ -174,5 +165,21 @@ public class ActividadPrincipal extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void brilloApp(){
+        BrilloUtils brilloUtils = BrilloUtils.getInstancia();
+        sharedPreferences  = getSharedPreferences(SaveSharedPreference.PREFS_BRILLO, MODE_PRIVATE);
+        //Si el opcion de seguir el Brillo de sistema esta desactivado.
+        if(!sharedPreferences.getBoolean(SaveSharedPreference.BRILLO_SEGUIR_SISTEMA, true)){
+            brilloUtils.getBrilloAppLD().observe(this,integer -> {
+                brilloUtils.setAppBrillo(this,integer);
+            });
+        }
+
+        brilloUtils.getBrilloAppLD().observe(this,integer -> {
+            brilloUtils.setAppBrillo(this,integer);
+        });
+
     }
 }
