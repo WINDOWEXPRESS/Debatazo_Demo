@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,8 +27,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.debatazo.debaterecycler.DebateFragmento;
+import com.example.debatazo.savesharedpreference.SaveSharedPreference;
 import com.example.debatazo.usuario.PerfilFragment;
 import com.example.debatazo.databinding.ActividadPrincipalBinding;
+import com.example.debatazo.token.Token;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModel;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModelFactory;
@@ -38,7 +41,7 @@ public class ActividadPrincipal extends AppCompatActivity {
     // Definir una constante para el código de solicitud de la galería
     private static final int PICK_IMAGE_REQUEST = 1;
     private ImageView imagenPublicar;
-    private PerfilFragment perfilFragment = new PerfilFragment();;
+    private PerfilFragment perfilFragment = new PerfilFragment();
     ActividadPrincipalBinding binding;
 
     @Override
@@ -50,6 +53,12 @@ public class ActividadPrincipal extends AppCompatActivity {
         setContentView(binding.getRoot());
         replaceFragment(new PrincipalFragmento());
 
+        SharedPreferences sharedPreferences = getSharedPreferences(SaveSharedPreference.PREFS_TOKEN,MODE_PRIVATE);
+        if(!sharedPreferences.getString(SaveSharedPreference.TOKEN_VALUE,"").isEmpty() &&
+                sharedPreferences.getInt(SaveSharedPreference.USER_ID,0) != 0
+        ){
+            Token.getInstance(sharedPreferences.getString(SaveSharedPreference.TOKEN_VALUE,""),sharedPreferences.getInt(SaveSharedPreference.USER_ID,0));
+        }
         binding.actividadPBottomNV.setBackground(null);
         binding.actividadPBottomNV.setOnItemSelectedListener(item -> {
 

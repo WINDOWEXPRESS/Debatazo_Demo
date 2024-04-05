@@ -29,7 +29,7 @@ public class DebateFragmento extends Fragment {
     private DebateAdaptador debateAdap;
     private Intent intent;
     private ActivityResultLauncher<Intent> resultLauncher;
-    public static final String INTENT_KEY = "SDJHSDYFGGEFTEGFUJ";
+    public static final String INTENT_KEY = "SECRE_KEYSSS";
     ProgressBar progressBar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

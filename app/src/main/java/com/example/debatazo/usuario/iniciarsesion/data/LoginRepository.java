@@ -1,5 +1,7 @@
 package com.example.debatazo.usuario.iniciarsesion.data;
 
+import android.content.Context;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
@@ -50,9 +52,9 @@ public class LoginRepository {
 
     }
 
-    public void login(String username, String password, MutableLiveData<Boolean> loadingLiveData, LoginCallBack callBack) {
+    public void login(String username, String password, Context context, MutableLiveData<Boolean> loadingLiveData, LoginCallBack callBack) {
         // handle login
-        dataSource.login(username, password, loadingLiveData, new LoginCallBack() {
+        dataSource.login(username, password,context,loadingLiveData, new LoginCallBack() {
             @Override
             public Result<LoggedInUser> onSuccess(Result<LoggedInUser> user) {
                 if (user instanceof Result.Success) {

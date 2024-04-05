@@ -16,7 +16,7 @@ import retrofit2.Response;
 public class DebateProductoModelView extends ViewModel {
     public MutableLiveData<List<DebateProducto>> listas;
 
-    private static  final  double SLEEP_TIME = 500;
+    private static  final  double SLEEP_TIME = 100;
 
     public LiveData<List<DebateProducto>> generaList(){
         if (listas == null){

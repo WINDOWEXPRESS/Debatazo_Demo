@@ -1,7 +1,9 @@
 package com.example.debatazo.usuario;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -18,7 +20,11 @@ import android.widget.TextView;
 
 import com.example.debatazo.R;
 import com.example.debatazo.configuracion.Configuracion;
+import com.example.debatazo.savesharedpreference.SaveSharedPreference;
+import com.example.debatazo.token.Token;
 import com.example.debatazo.usuario.datospersonal.ActividadDatosPersonal;
+import com.example.debatazo.usuario.iniciarsesion.data.LoginDataSource;
+import com.example.debatazo.usuario.iniciarsesion.data.LoginRepository;
 import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModel;
@@ -94,11 +100,26 @@ public class PerfilFragment extends Fragment {
         // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory()).get(LoginViewModel.class);
 
+        //Si existen token se auto loguea la cuenta.
+        if(Token.hasInstance()){
+            if (isAdded() && getActivity() != null) {
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SaveSharedPreference.PREFS_NOMBRE, Context.MODE_PRIVATE);
+                loginViewModel.login(
+                        sharedPreferences.getString(SaveSharedPreference.EMAIL,""),
+                        sharedPreferences.getString(SaveSharedPreference.CONTRASENIA,""),
+                        getContext()
+                );
+            } else {
+                throw new IllegalStateException("Fragment is not attached to an activity or activity is destroyed.");
+            }
+        }
+
         ActivityResultLauncher<Intent> lanzador = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK) {
                 mostrarDatos();
             }
         });
+
         ActivityResultLauncher<Intent> lanzadorLogOut = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK) {
                 resetearDatos();
@@ -114,7 +135,9 @@ public class PerfilFragment extends Fragment {
         });
 
         perfil.setOnClickListener(view -> {
+
             Intent i;
+
             if (loginViewModel.getLoginRepository().isLoggedIn()) {
                 i = new Intent(getContext(), ActividadDatosPersonal.class);
             } else {

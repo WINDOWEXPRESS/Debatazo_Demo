@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import android.content.Context;
 import android.util.Patterns;
 
 import com.example.debatazo.usuario.iniciarsesion.data.LoginCallBack;
@@ -45,12 +46,12 @@ public class LoginViewModel extends ViewModel {
      * Método para iniciar sesión con un nombre de usuario y contraseña.
      * Este método puede ser lanzado en un trabajo asíncrono separado.
      *
-     * @param username El nombre de usuario proporcionado por el usuario.
+     * @param email Email de usuario.
      * @param password La contraseña proporcionada por el usuario.
      */
-    public void login(String username, String password ) {
+    public void login(String email, String password,Context context) {
         // Se realiza la autenticación y se obtiene el resultado
-                loginRepository.login(username, password,loadingLiveData, new LoginCallBack() {
+                loginRepository.login(email, password,context,loadingLiveData, new LoginCallBack() {
             @Override
             public Result<LoggedInUser> onSuccess(Result<LoggedInUser> user) {
                 // Se verifica el resultado obtenido
@@ -78,12 +79,12 @@ public class LoginViewModel extends ViewModel {
     /**
      * Método para verificar si los datos de inicio de sesión son válidos.
      *
-     * @param username Nombre de usuario ingresado por el usuario.
+     * @param email Email de usuario.
      * @param password Contraseña ingresada por el usuario.
      */
-    public void loginDataChanged(String username, String password) {
+    public void loginDataChanged(String email, String password) {
         // Verifica si el nombre de usuario es válido
-        if (!isUserNameValid(username)) {
+        if (!isEmailValid(email)) {
             // Si el nombre de usuario no es válido, establece un estado de formulario de inicio de sesión inválido con un mensaje de error de nombre de usuario.
             loginFormState.setValue(new LoginFormState(R.string.invalido_email_usuario, null));
         }
@@ -101,14 +102,14 @@ public class LoginViewModel extends ViewModel {
 
 
     // A placeholder username validation check
-    private boolean isUserNameValid(String username) {
-        if (username == null) {
+    private boolean isEmailValid(String email) {
+        if (email == null) {
             return false;
         }
-        if (!username.contains("[@.]")) {
-            return Patterns.EMAIL_ADDRESS.matcher(username).matches();
+        if (!email.contains("[@.]")) {
+            return Patterns.EMAIL_ADDRESS.matcher(email).matches();
         } else {
-            return !username.trim().isEmpty();
+            return !email.trim().isEmpty();
         }
     }
 

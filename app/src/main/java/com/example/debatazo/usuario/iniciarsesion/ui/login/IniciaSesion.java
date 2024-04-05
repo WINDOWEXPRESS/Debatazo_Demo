@@ -134,7 +134,7 @@ public class IniciaSesion extends AppCompatActivity {
                     // Cuando se presiona "Done", se llama al método login del ViewModel
                     // para intentar iniciar sesión con el nombre de usuario y la contraseña proporcionados
                     loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
+                            passwordEditText.getText().toString(),IniciaSesion.this);
                 }
                 // Devuelve falso para indicar que el evento no está consumido y puede ser manejado por otros listeners
                 return false;
@@ -159,7 +159,7 @@ public class IniciaSesion extends AppCompatActivity {
             }
             editor.apply(); // Guardar los cambios
 
-            loginViewModel.login(email, password);
+            loginViewModel.login(email, password,IniciaSesion.this);
         });
 
         olvidarContrasenia.setOnClickListener(view -> {

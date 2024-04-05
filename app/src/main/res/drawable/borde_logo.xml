@@ -2,8 +2,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:gravity="bottom">
         <shape>
-            <size android:height="3dp"/>
-            <solid android:color="#000000"/>
+            <size android:height="4dp"/>
+            <solid android:color="#F0F3F4"/>
         </shape>
     </item>
 </layer-list>
