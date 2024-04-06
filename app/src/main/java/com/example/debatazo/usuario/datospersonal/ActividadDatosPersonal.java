@@ -85,17 +85,20 @@ public class ActividadDatosPersonal extends AppCompatActivity {
                 .get(LoginViewModel.class);
         //TODO HAY QUE HACER PRUEBA CON ISLOGEDIN()
         // Verificar si el usuario está autenticado y se ha obtenido información del usuario
-        if (loginViewModel.getLoginRepository().getUser() != null) {
-            // Mostrar la información del usuario en las vistas correspondientes
-            descripcionPersonal.setText(loginViewModel.getLoginRepository().getUser().getSelf());
-            id.setText(loginViewModel.getLoginRepository().getUser().getUser_id());
-            nombreUsuario.setText(loginViewModel.getLoginRepository().getUser().getUser_name());
-            nombrePersonal.setText(loginViewModel.getLoginRepository().getUser().getFull_name());
-            edad.setText(loginViewModel.getLoginRepository().getUser().getAge());
-            sexo.setText(loginViewModel.getLoginRepository().getUser().getSex());
 
-            // Cargar la imagen de perfil del usuario utilizando Picasso
-            Picasso.get().load(loginViewModel.getLoginRepository().getUser().getProfile_img()).into(perfil);
+        if (loginViewModel.getLoginRepository().getLoggedInUserLiveData().getValue() != null) {
+            // Mostrar la información del usuario en las vistas correspondientes
+            loginViewModel.getLoginRepository().getLoggedInUserLiveData().observe(this,loggedInUser -> {
+                descripcionPersonal.setText(loggedInUser.getSelf());
+                id.setText(loggedInUser.getUser_id());
+                nombreUsuario.setText(loggedInUser.getUser_name());
+                nombrePersonal.setText(loggedInUser.getFull_name());
+                edad.setText(loggedInUser.getAge());
+                sexo.setText(loggedInUser.getSex());
+
+                // Cargar la imagen de perfil del usuario utilizando Picasso
+                Picasso.get().load(loggedInUser.getProfile_img()).into(perfil);
+            });
         }
     }
 

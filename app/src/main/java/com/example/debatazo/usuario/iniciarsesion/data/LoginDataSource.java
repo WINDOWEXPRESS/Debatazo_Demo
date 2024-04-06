@@ -31,8 +31,10 @@ public class LoginDataSource {
                 @Override
                 public void onResponse(Call<Token> call, Response<Token> response) {
                     if(response.isSuccessful()){
-                        // Se hace el primero pedicio de token con login.
+                        // Se hace el primero pedicion de token con login.
+
                         loadingLiveData.setValue(false);
+
                         Token token = response.body();
                         SharedPreferences sharedPreferences = context.getSharedPreferences(SaveSharedPreference.PREFS_TOKEN,Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -40,7 +42,7 @@ public class LoginDataSource {
                         editor.putString(SaveSharedPreference.TOKEN_VALUE,token.value);
                         editor.apply();
 
-                        //Con los datos que responde por token se hace pedicion de perfi usario con token obtenido.
+                        //Con los datos que responde por token se hace pedicion de perfil usario con token obtenido.
                         Call<LoggedInUser> llamada = retrofitCliente.getApiUsuario().getProfile(token.value,token.userId);
                         llamada.enqueue(new Callback<LoggedInUser>() {
                             @Override
@@ -59,6 +61,7 @@ public class LoginDataSource {
                                 callBack.onFailure(new Result.Error(new IOException(errorMessage)));
                             }
                         });
+
                     }else{
                         String errorMessage = "Error al iniciar sesión: " + response.code() + " - " + response.message();
                         callBack.onFailure(new Result.Error(new IOException(errorMessage)));

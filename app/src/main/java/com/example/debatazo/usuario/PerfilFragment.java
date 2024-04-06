@@ -112,6 +112,7 @@ public class PerfilFragment extends Fragment {
             } else {
                 throw new IllegalStateException("Fragment is not attached to an activity or activity is destroyed.");
             }
+            mostrarDatos();
         }
 
         ActivityResultLauncher<Intent> lanzador = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -173,11 +174,13 @@ public class PerfilFragment extends Fragment {
     }
 
     public void mostrarDatos() {
-        LoggedInUser user = loginViewModel.getLoginRepository().getUser();
-        nombreUsuario.setText(user.getUser_name());
-        idUsuario.setText("ID:" + user.getId());
-        Picasso.get().load(user.getProfile_img()).into(perfil);
-        info.setClickable(false);
+        loginViewModel.getLoginRepository().getLoggedInUserLiveData().observe(getViewLifecycleOwner(),loggedInUser -> {
+            nombreUsuario.setText(loggedInUser.getUser_name());
+            idUsuario.setText("ID:" + loggedInUser.getId());
+            Picasso.get().load(loggedInUser.getProfile_img()).into(perfil);
+            info.setClickable(false);
+        });
+
     }
 
     private void resetearDatos() {

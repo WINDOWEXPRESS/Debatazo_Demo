@@ -2,6 +2,7 @@ package com.example.debatazo.usuario.iniciarsesion.data;
 
 import android.content.Context;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
@@ -18,10 +19,10 @@ public class LoginRepository {
 
     // If user credentials will be cached in local storage, it is recommended it be encrypted
     // @see https://developer.android.com/training/articles/keystore
-    private LoggedInUser user = null;
 
-    public LoggedInUser getUser() {
-        return user;
+    private MutableLiveData<LoggedInUser> loggedInUserMutableLiveData = new MutableLiveData<>();
+    public LiveData<LoggedInUser> getLoggedInUserLiveData() {
+        return loggedInUserMutableLiveData;
     }
 
     // private constructor : singleton access
@@ -37,19 +38,12 @@ public class LoginRepository {
     }
 
     public boolean isLoggedIn() {
-        return user != null;
+        return loggedInUserMutableLiveData.getValue() != null;
     }
 
     public void logout() {
-        user = null;
+        loggedInUserMutableLiveData.postValue(null);
         dataSource.logout();
-    }
-
-    private void setLoggedInUser(LoggedInUser user) {
-        this.user = user;
-        // If user credentials will be cached in local storage, it is recommended it be encrypted
-        // @see https://developer.android.com/training/articles/keystore
-
     }
 
     public void login(String username, String password, Context context, MutableLiveData<Boolean> loadingLiveData, LoginCallBack callBack) {
@@ -58,7 +52,7 @@ public class LoginRepository {
             @Override
             public Result<LoggedInUser> onSuccess(Result<LoggedInUser> user) {
                 if (user instanceof Result.Success) {
-                    setLoggedInUser(((Result.Success<LoggedInUser>) user).getData());
+                    loggedInUserMutableLiveData.postValue(((Result.Success<LoggedInUser>) user).getData());
                 }
                 callBack.onSuccess(user);
                 return user;
