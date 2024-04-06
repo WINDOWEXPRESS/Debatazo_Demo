@@ -42,7 +42,6 @@ public class ActividadPrincipal extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private ImageView imagenPublicar;
     private PerfilFragment perfilFragment = new PerfilFragment();
-    private SharedPreferences sharedPreferences;
     ActividadPrincipalBinding binding;
 
     @Override
@@ -55,7 +54,7 @@ public class ActividadPrincipal extends AppCompatActivity {
         replaceFragment(new PrincipalFragmento());
 
         //ajuste de brillo
-        brilloApp();
+        BrilloUtils.getInstancia().brilloAppVista(this);
 
         binding.actividadPBottomNV.setBackground(null);
         binding.actividadPBottomNV.setOnItemSelectedListener(item -> {
@@ -167,19 +166,4 @@ public class ActividadPrincipal extends AppCompatActivity {
         }
     }
 
-    private void brilloApp(){
-        BrilloUtils brilloUtils = BrilloUtils.getInstancia();
-        sharedPreferences  = getSharedPreferences(SaveSharedPreference.PREFS_BRILLO, MODE_PRIVATE);
-        //Si el opcion de seguir el Brillo de sistema esta desactivado.
-        if(!sharedPreferences.getBoolean(SaveSharedPreference.BRILLO_SEGUIR_SISTEMA, true)){
-            brilloUtils.getBrilloAppLD().observe(this,integer -> {
-                brilloUtils.setAppBrillo(this,integer);
-            });
-        }
-
-        brilloUtils.getBrilloAppLD().observe(this,integer -> {
-            brilloUtils.setAppBrillo(this,integer);
-        });
-
-    }
 }

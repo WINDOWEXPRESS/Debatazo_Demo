@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.debatazo.R;
+import com.example.debatazo.configuracion.BrilloUtils;
 import com.example.debatazo.configuracion.Configuracion;
 import com.example.debatazo.usuario.datospersonal.ActividadDatosPersonal;
 import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;

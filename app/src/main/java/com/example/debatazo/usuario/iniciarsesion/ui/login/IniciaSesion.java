@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.debatazo.R;
 
+import com.example.debatazo.configuracion.BrilloUtils;
 import com.example.debatazo.databinding.ActividadIniciaSesionBinding;
 import com.example.debatazo.usuario.registrar.ActividadRegistrar;
 import com.example.debatazo.savesharedpreference.SaveSharedPreference;
@@ -53,6 +54,9 @@ public class IniciaSesion extends AppCompatActivity {
 
         binding = ActividadIniciaSesionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        //ajuste de brillo
+        BrilloUtils.getInstancia().brilloAppVista(this);
 
         // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())

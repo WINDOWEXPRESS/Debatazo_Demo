@@ -29,6 +29,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.debatazo.R;
+import com.example.debatazo.configuracion.BrilloUtils;
 import com.example.debatazo.databinding.ActividadDatosPersonalBinding;
 import com.example.debatazo.usuario.EnumPerfil;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModel;
@@ -61,7 +62,12 @@ public class ActividadDatosPersonal extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         vincularVista();
+
+        //ajuste de brillo
+        BrilloUtils.getInstancia().brilloAppVista(this);
+
         mostrarInformacion();
+        
         perfil.setOnClickListener(view -> {
             mostrarDialogoPerfil();
         });

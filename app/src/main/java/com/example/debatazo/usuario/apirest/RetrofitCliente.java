@@ -7,12 +7,12 @@ public class RetrofitCliente {
     private static RetrofitCliente instancia;
     private static ApiServicioUsuario apiServicioUsuario;
 
-    private String URL_ORDENADOR_CHEN = "http://192.168.1.135:8080/";
+    private String URL_ORDENADOR_CHEN = "http://192.168.1.131:8080/";
     private String URL_EMULADOR = "http://10.0.2.2:8080/";
 
     private RetrofitCliente(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(URL_EMULADOR)
+                .baseUrl(URL_ORDENADOR_CHEN)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

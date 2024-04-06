@@ -1,14 +1,20 @@
 package com.example.debatazo.configuracion;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.provider.Settings;
 import android.view.WindowManager;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import com.example.debatazo.savesharedpreference.SaveSharedPreference;
 
 public class BrilloUtils {
     private static BrilloUtils instancia;
@@ -202,5 +208,21 @@ public class BrilloUtils {
 
     }
 
+    public void brilloAppVista(Context context){
+        SharedPreferences sharedPreferences;
 
+        BrilloUtils brilloUtils = BrilloUtils.getInstancia();
+        sharedPreferences  = context.getSharedPreferences(SaveSharedPreference.PREFS_BRILLO, MODE_PRIVATE);
+        //Si el opcion de seguir el Brillo de sistema esta desactivado.
+        if(!sharedPreferences.getBoolean(SaveSharedPreference.BRILLO_SEGUIR_SISTEMA, true)){
+            brilloUtils.getBrilloAppLD().observe((LifecycleOwner) context, integer -> {
+                brilloUtils.setAppBrillo(context,integer);
+            });
+        }
+
+        brilloUtils.getBrilloAppLD().observe((LifecycleOwner) context, integer -> {
+            brilloUtils.setAppBrillo(context,integer);
+        });
+
+    }
 }

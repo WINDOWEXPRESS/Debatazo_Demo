@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.debatazo.R;
+import com.example.debatazo.configuracion.BrilloUtils;
 import com.example.debatazo.databinding.ActividadIniciaSesionBinding;
 import com.example.debatazo.databinding.ActividadRegistrarBinding;
 import com.google.android.material.textfield.TextInputLayout;
@@ -46,6 +47,9 @@ public class ActividadRegistrar extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         vincularVistas();
+
+        //ajuste de brillo
+        BrilloUtils.getInstancia().brilloAppVista(this);
 
         RegistrarViewModel registrarViewModel = new RegistrarViewModel();
         registrarViewModel.getRegistrarFormulaEstado().observe(this, registrarFormulaEstado -> {
