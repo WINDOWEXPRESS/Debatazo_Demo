@@ -9,13 +9,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".perfilylogin.ui.login.IniciaSesion">
+    tools:context=".usuario.iniciarsesion.ui.login.IniciaSesion">
 
     <ImageView
         android:id="@+id/actividadIS_imageV_logoAplicacion"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="1"
         android:src="@mipmap/aplicacion_logo_round"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="1"
         android:fontFamily="@font/designer"
         android:paddingTop="5dp"
@@ -40,60 +40,157 @@
         app:layout_constraintStart_toStartOf="@+id/actividadIS_imageV_logoAplicacion"
         app:layout_constraintTop_toBottomOf="@+id/actividadIS_imageV_logoAplicacion" />
 
-    <EditText
-        android:id="@+id/actividadIS_editT_email"
-        android:layout_width="0dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/actividadIS_textIL_email"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="212dp"
-        android:autofillHints="@string/prompt_email"
-        android:drawableLeft="@drawable/email"
-        android:drawablePadding="10dp"
-        android:hint="@string/prompt_email"
-        android:inputType="textEmailAddress"
+        android:layout_marginTop="10dp"
+        android:hint="@string/pista_email"
+
+        app:boxBackgroundColor="@color/white"
         android:selectAllOnFocus="true"
+        app:boxBackgroundMode="outline"
+        app:endIconTint="@color/azul_marino"
+
+        app:helperText="Introducir el email"
+        app:helperTextEnabled="true"
+
+        app:helperTextTextColor="@color/azul_marino"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/actividadIS_textV_nombreAplicacion"
+        app:startIconDrawable="@drawable/email"
+        app:startIconTint="@color/azul_marino"
+
+        tools:ignore="MissingConstraints">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textEmailAddress"
+            android:textSize="18dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/actividadIS_textIL_contrasenia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="@string/pista_contrasenia"
+        android:hint="@string/pista_contrasenia"
+
+        app:boxBackgroundColor="@color/white"
+
+        app:boxBackgroundMode="outline"
+        app:counterEnabled="true"
+
+        app:counterMaxLength="20"
+        app:endIconMode="password_toggle"
+        app:endIconTint="@color/azul_marino"
+
+        app:errorTextColor="@color/red"
+
+        app:helperText="Introducir la contraseña"
+
+        app:helperTextEnabled="true"
+        app:helperTextTextColor="@color/azul_marino"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.842"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/actividadIS_textIL_email"
+        app:startIconDrawable="@drawable/contrasenia"
+        app:startIconTint="@color/azul_marino"
+        app:errorEnabled="true"
+        tools:ignore="MissingConstraints">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/actividadIS_textIET_contrasenia"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textPassword"
+
+            android:textSize="18dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="@+id/actividadIS_editT_contrasenia"
-        app:layout_constraintStart_toStartOf="@+id/actividadIS_editT_contrasenia"
-        app:layout_constraintTop_toBottomOf="@+id/actividadIS_editT_contrasenia">
+        app:layout_constraintEnd_toEndOf="@+id/actividadIS_textIL_contrasenia"
+        app:layout_constraintStart_toStartOf="@+id/actividadIS_textIL_contrasenia"
+        app:layout_constraintTop_toBottomOf="@+id/actividadIS_textIL_contrasenia">
 
         <LinearLayout
+            android:id="@+id/actividadIS_linearL_operaciones"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <CheckBox
-                android:id="@+id/actividadIS_checkB_recordar"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Recordar" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/actividadIS_textV_olvidarContrasenia"
-                android:layout_width="wrap_content"
+                <CheckBox
+                    android:id="@+id/actividadIS_checkB_recordar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:buttonTint="#000000"
+                    android:text="Recordar"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/actividadIS_textV_olvidarContrasenia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="¿Has olvidado su contraseña?"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/azul_marino"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="¿Has olvidado su contraseña?" />
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/actividadIS_textV_mensajeRegistrar"
+                    android:layout_width="462dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="¿No tienes una cuenta? "
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/actividadIS_textV_registrar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Registrate"
+                    android:textColor="@color/azul_marino"
+                    android:textSize="16sp" />
+            </LinearLayout>
         </LinearLayout>
 
         <Button
-            android:id="@+id/login"
+            android:id="@+id/actividadIS_button_resgistrar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="64dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
             android:enabled="false"
-            android:text="@string/action_sign_in" />
+            android:text="@string/accion_inicia_sesion" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -101,26 +198,28 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/actividadIS_imageV_horizontalIzquierda"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/barra_horizontal_tabla_publicar" />
+                android:src="@drawable/barra_horizontal_tabla_inicia_sesion" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/actividadIS_textV_otrosAcceso"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Otra forma de acceso"
-                android:textAlignment="center" />
+                android:text="Inicia Sesión"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/actividadIS_imageV_horizontalDerecha"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/barra_horizontal_tabla_publicar" />
+                android:src="@drawable/barra_horizontal_tabla_inicia_sesion" />
 
         </LinearLayout>
 
@@ -130,57 +229,50 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/actividadIS_imageV_gmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/gmail_nuevo" />
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/actividadIS_imageV_wechat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/wechat" />
+
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/actividadIS_imageV_facebook"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/facebook" />
+
+
         </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/actividadIS_checkB_terminosYCondiciones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_weight="1"
+            android:buttonTint="#000000"
+            android:text="He leído y acepto los términos y condiciones de uso"
+            android:textSize="16sp" />
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/actividadIS_editT_contrasenia"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:autofillHints="@string/prompt_password"
-        android:drawableLeft="@drawable/contrasenia"
-        android:drawableRight="@drawable/ocultar"
-        android:drawablePadding="10dp"
-        android:hint="@string/prompt_password"
-        android:imeActionLabel="@string/action_sign_in_short"
-        android:imeOptions="actionDone"
-        android:inputType="textPassword"
-        android:selectAllOnFocus="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/actividadIS_editT_email" />
-
     <ProgressBar
-        android:id="@+id/loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/actividadIS_progressB_cargando"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
-        android:layout_marginTop="64dp"
-        android:layout_marginBottom="64dp"
+        android:indeterminateTint="@color/azul_marino"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/password"
-        app:layout_constraintStart_toStartOf="@+id/password"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

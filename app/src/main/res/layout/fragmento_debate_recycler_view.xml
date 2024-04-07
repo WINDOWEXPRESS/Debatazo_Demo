@@ -21,11 +21,10 @@
             android:id="@+id/debateRV_imagenC_usuario"
             android:layout_width="150dp"
             android:layout_height="match_parent"
-
             android:layout_weight="1"
             android:scaleType="centerCrop"
             android:src="@drawable/usuario"
-            app:shapeAppearanceOverlay="@style/roundedImageView" />
+            app:shapeAppearanceOverlay="@style/redondearImageView" />
 
         <LinearLayout
             android:id="@+id/debateRV_linearL_contenidoU"

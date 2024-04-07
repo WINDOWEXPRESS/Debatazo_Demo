@@ -13,7 +13,6 @@ import com.example.debatazo.R;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class DebateAdaptador extends RecyclerView.Adapter<DebateAdaptador.debateViewHolder> {
@@ -27,9 +26,7 @@ public class DebateAdaptador extends RecyclerView.Adapter<DebateAdaptador.debate
         this.clickListener = itemClickListener;
     }
     private List<DebateProducto> listaDebate;
-    public DebateAdaptador(List<DebateProducto> listaDebate) {
-        this.listaDebate = listaDebate;
-    }
+    public DebateAdaptador(List<DebateProducto> listaDebate){this.listaDebate = listaDebate;}
     public class debateViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ShapeableImageView perfil;
         TextView nombre;
@@ -65,11 +62,13 @@ public class DebateAdaptador extends RecyclerView.Adapter<DebateAdaptador.debate
     public void onBindViewHolder(@NonNull debateViewHolder holder, int position) {
         DebateProducto debateProducto = listaDebate.get(position);
 
-        Picasso.get().load(debateProducto.getImagenUsuario()).into(holder.perfil);
-        holder.nombre.setText(debateProducto.getNombreUsuario());
-        holder.fecha.setText(debateProducto.getFechaPublicacion());
-        holder.titulo.setText(debateProducto.getTitulo());
-        Picasso.get().load(debateProducto.getImagenUrl()).into(holder.image);
+        Picasso.get().load(debateProducto.getProfileImg()).into(holder.perfil);
+        holder.nombre.setText(debateProducto.getUserName());
+        holder.fecha.setText(debateProducto.getReleaseDate());
+        holder.titulo.setText(debateProducto.getTitle());
+        if(!debateProducto.getImgUrl().isEmpty()){
+            Picasso.get().load(debateProducto.getImgUrl()).into(holder.image);
+        }
     }
 
     @Override

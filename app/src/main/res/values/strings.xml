@@ -1,26 +1,48 @@
 <resources>
-    <string name="app_name">Debatazo</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">DEBATAZO</string>
+    <!--ACTIVITY PRINCIPAL-->
     <string name="publicar">Publicar</string>
     <string name="principal">Principal</string>
     <string name="debate">Debate</string>
     <string name="valoracion">Valoracion</string>
     <string name="usuario">Usuario</string>
     <string name="actividadP_floatingAB_layoutA"><![CDATA[@id/actividadP_bottomAB]]></string>
-    <string name="space"> </string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="prompt_email">Email o nombre</string>
-    <string name="prompt_password">Contraseña</string>
-    <string name="action_sign_in">Inicia sesion</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
-    <string name="title_activity_inicia_sesion">IniciaSesion</string>
+    <!--    Registro ,login..   -->
+    <string name="pista_email">Email</string>
+    <string name="pista_contrasenia">Contraseña</string>
+    <string name="accion_inicia_sesion">Inicia sesion</string>
+    <string name="accion_inicia_sesion_corto">Inicia sesion</string>
+    <string name="bienvenido">Bienvenido </string>
+    <string name="invalido_email_usuario">Email invalido!</string>
+    <string name="invalido_contrasenia">La longitud debe ser mayor de 5 y menor de 20.</string>
+    <string name="error_registrar_contrasenia">Error! La contraseña no coincide</string>
+    <!--    LOGIN ViewModel   -->
+    <string name="inicia_sesion_fallido">Inicia sesion fallido</string>
+    <!--    contentDescription -->
     <string name="boton_volver">Boton volver</string>
+    <!--    DETALLE DEBATE-->
     <string name="boton_seguir">Seguir</string>
     <string name="introduce_comentario">Introduce tu comentario</string>
+
+    <string name="base_url_retrofit">http://10.0.2.2:8080</string>
+    <!--    DATOS PERSONAL-->
+    <string name="limite_numerico_inicio">0/100</string>
+    <string name="limite_numerico">%d/100</string>
+    <string name="sin_rellenar">Sin rellenar</string>
+
+    <!--    Sugerencia-->
+    <string name="limite_numerico_inicio_desplegableS">0/250</string>
+    <string name="limite_numerico_desplegableS">%d/250</string>
+    <string name="boton_enviar">Enviar</string>
+
+    <!--    Configuracion   -->
+    <string name="no">No</string>
+    <string name="si">Sí</string>
+    <string name="cerrar_sesion">Cerrar Sesión</string>
+    <string name="mensaje_cerrar_sesion">¿Estás seguro de que deseas cerrar sesión?</string>
+    <!--    PERFIL FRAGMENT-->
+    <string name="conectar_ahora">Conectar ahora</string>
+    <string name="mensaje_campo_id_usuario">Desbloquea todas las funciones y disfruta de la experiencia completa</string>
+    <string name="seleccionar_fecha_de_nacimiento">Seleccionar fecha de nacimiento</string>
 
 </resources>

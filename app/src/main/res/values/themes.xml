@@ -12,12 +12,21 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorSecondary</item>
         <item name="android:windowLightStatusBar">true</item>
-        <!-- Customize your theme here. -->
+        <item name="colorAccent">@color/black</item>
     </style>
 
-    <style name="DialogAnimation">
+    <style name="DialogAnimacion">
         <item name="android:windowEnterAnimation">@anim/deslizar_hacia_dentro_parte_abajo</item>
         <item name="android:windowExitAnimation">@anim/deslizar_hacia_fuera_parte_abajo</item>
     </style>
-
+    <!--Configuracion de color para dialog date pick-->
+    <style name="dialog_date" parent="Base.Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <!--Color boton-->
+        <item name="colorOnPrimary">@color/black</item>
+        <!--Color fondo de la parte arriba-->
+        <item name="colorAccent">@color/black</item>
+        <item name="colorSecondary">@color/black</item>
+    </style>
 </resources>
