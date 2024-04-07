@@ -123,12 +123,12 @@ public class LoginViewModel extends ViewModel {
             loginFormState.setValue(new LoginFormState(R.string.invalido_email_usuario, null));
         }
         // Verifica si la contraseña es válida
-        else if (!isPasswordValid(password)) {
+        if (!isPasswordValid(password)) {
             // Si la contraseña no es válida, establece un estado de formulario de inicio de sesión inválido con un mensaje de error de contraseña.
             loginFormState.setValue(new LoginFormState(null, R.string.invalido_contrasenia));
         }
         // Si tanto el nombre de usuario como la contraseña son válidos
-        else {
+        if (isEmailValid(email) && isPasswordValid(password)){
             // Establece un estado de formulario de inicio de sesión válido.
             loginFormState.setValue(new LoginFormState(true));
         }

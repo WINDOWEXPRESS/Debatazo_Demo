@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.debatazo.R;
 
+import com.example.debatazo.configuracion.BrilloUtils;
 import com.example.debatazo.databinding.ActividadIniciaSesionBinding;
 import com.example.debatazo.usuario.registrar.ActividadRegistrar;
 import com.example.debatazo.savesharedpreference.SaveSharedPreference;
@@ -54,6 +55,9 @@ public class IniciaSesion extends AppCompatActivity {
         binding = ActividadIniciaSesionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        //ajuste de brillo
+        BrilloUtils.getInstancia().brilloAppVista(this);
+
         // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
@@ -70,6 +74,7 @@ public class IniciaSesion extends AppCompatActivity {
             // Verifica si hay un error en el nombre de usuario y lo muestra si existe
             if (loginFormState.getUsernameError() != null) {
                 usernameEditText.setError(getString(loginFormState.getUsernameError()));
+
             }
             // Verifica si hay un error en la contraseña y lo muestra si existe
             if (loginFormState.getPasswordError() != null) {
@@ -104,8 +109,8 @@ public class IniciaSesion extends AppCompatActivity {
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                //loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
+               //         passwordEditText.getText().toString());
             }
 
             @Override

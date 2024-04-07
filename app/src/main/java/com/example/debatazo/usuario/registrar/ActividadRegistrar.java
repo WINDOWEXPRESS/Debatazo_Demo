@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.debatazo.R;
+import com.example.debatazo.configuracion.BrilloUtils;
 import com.example.debatazo.databinding.ActividadIniciaSesionBinding;
 import com.example.debatazo.databinding.ActividadRegistrarBinding;
 import com.google.android.material.textfield.TextInputLayout;
@@ -47,6 +48,9 @@ public class ActividadRegistrar extends AppCompatActivity {
 
         vincularVistas();
 
+        //ajuste de brillo
+        BrilloUtils.getInstancia().brilloAppVista(this);
+
         RegistrarViewModel registrarViewModel = new RegistrarViewModel();
         registrarViewModel.getRegistrarFormulaEstado().observe(this, registrarFormulaEstado -> {
             if (registrarFormulaEstado == null) {
@@ -58,13 +62,11 @@ public class ActividadRegistrar extends AppCompatActivity {
             //comprobaciones si un campo no es valido imprime el error
             if (registrarFormulaEstado.getEmailError() != null) {
                 email.setError(getString(registrarFormulaEstado.getEmailError()));
+                terminosYCondiciones.setChecked(false);
             }
             if (registrarFormulaEstado.getContraseniaError() != null) {
                 contrasenia.setError(getString(registrarFormulaEstado.getContraseniaError()));
                 terminosYCondiciones.setChecked(false);
-                contraseniaTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_NONE);
-            } else {
-                contraseniaTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
             }
             if (registrarFormulaEstado.getContraseniaRepetidoError() != null || registrarFormulaEstado.getContraseniaNoCoincideError() != null) {
 
@@ -74,12 +76,10 @@ public class ActividadRegistrar extends AppCompatActivity {
                     contraseniaRepetir.setError(getString(registrarFormulaEstado.getContraseniaRepetidoError()));
                 }
                 terminosYCondiciones.setChecked(false);
-                contraseniaRepetirTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_NONE);
-            } else {
-                contraseniaRepetirTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
             }
 
         });
+        //Mostrar progressBar mientras carga
         registrarViewModel.getLoadingLiveData().observe(this, loading -> {
             cargando.setVisibility(loading ? View.VISIBLE : View.GONE);
         });

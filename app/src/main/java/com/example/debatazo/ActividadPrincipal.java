@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.debatazo.configuracion.BrilloUtils;
 import com.example.debatazo.debaterecycler.DebateFragmento;
 import com.example.debatazo.savesharedpreference.SaveSharedPreference;
 import com.example.debatazo.usuario.PerfilFragment;
@@ -52,12 +53,13 @@ public class ActividadPrincipal extends AppCompatActivity {
     }*/
         binding = ActividadPrincipalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         replaceFragment(new PrincipalFragmento());
 
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory()).get(LoginViewModel.class);
-
         loginViewModel.autoLongin(this);
+
+        //ajuste de brillo
+        BrilloUtils.getInstancia().brilloAppVista(this);
 
         binding.actividadPBottomNV.setBackground(null);
         binding.actividadPBottomNV.setOnItemSelectedListener(item -> {

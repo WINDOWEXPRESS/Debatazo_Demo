@@ -11,4 +11,7 @@ public class SaveSharedPreference {
     public static final String TOKEN_VALUE = "CLAVE_TOKEN";
     public static final String USER_ID ="CALVE_USER_ID";
 
+    //Atributos para guardar informacion en sharedpreference en actividad Configuracion Brillo
+    public static final String PREFS_BRILLO =  "GUARDAR_PREFERENCIA_BRILLO";
+    public static final String BRILLO_SEGUIR_SISTEMA =  "CLAVE_BRILLO_SEGUIR_SISTEMA";
 }

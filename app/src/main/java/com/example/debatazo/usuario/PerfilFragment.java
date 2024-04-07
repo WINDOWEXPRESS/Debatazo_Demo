@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.debatazo.R;
+import com.example.debatazo.configuracion.BrilloUtils;
 import com.example.debatazo.configuracion.Configuracion;
 import com.example.debatazo.savesharedpreference.SaveSharedPreference;
 import com.example.debatazo.token.Token;
