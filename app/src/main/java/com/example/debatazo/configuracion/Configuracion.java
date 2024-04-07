@@ -7,23 +7,35 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.debatazo.ActividadPrincipal;
 import com.example.debatazo.R;
 import com.example.debatazo.savesharedpreference.SaveSharedPreference;
+import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModel;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModelFactory;
 
@@ -62,6 +74,60 @@ public class Configuracion extends AppCompatActivity {
             allowModifySettings( requestPermissionLauncher);
         });
 
+        //Metodo para ajuste de brillo de app
+        configuracionBrillo();
+
+        // Configurar estado de la opción "seguir sistema"
+        configurarSeguirSistemaCheckBox();
+
+        // Escuchar cambios en la barra de brillo
+        brilloSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            // Mientras se mueve ,ajusta el brillo
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                brilloUtils.setBrilloAppMLD(i);
+            }
+
+            // Cuando empieza a mover verifica si tiene permiso
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            // Cuando para de mover
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        sugerencia.setOnClickListener(view -> {
+            // Validar si el usuario está logueado si no esta pide que inicie sesion
+            if (!loginViewModel.getLoginRepository().isLoggedIn()) {
+                Intent i = new Intent(view.getContext(), IniciaSesion.class);
+                //lanzador.launch(i);
+                startActivity(i);
+            }else {
+                showSugerenciaDialog();
+            }
+        });
+
+
+        // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
+        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory()).get(LoginViewModel.class);
+
+        // Validar si el usuario está logueado y habilitar/deshabilitar el botón "Cerrar Sesión"
+        if (!loginViewModel.getLoginRepository().isLoggedIn()) {
+            cerrarSesion.setEnabled(false);
+        }
+
+        // Configurar el botón "Cerrar Sesión"
+        cerrarSesion.setOnClickListener(view -> {
+            showLogoutConfirmationDialog();
+        });
+
+    }
+
+    private void configuracionBrillo() {
         //Obtener instancia de BrilloUtils
         brilloUtils = BrilloUtils.getInstancia();
 
@@ -98,44 +164,6 @@ public class Configuracion extends AppCompatActivity {
                 brilloSeekBar.setProgress(brilloUtils.getBrilloAppLD().getValue());
             }
         }
-
-
-        // Configurar estado de la opción "seguir sistema"
-        configurarSeguirSistemaCheckBox();
-
-        // Escuchar cambios en la barra de brillo
-        brilloSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            // Mientras se mueve ,ajusta el brillo
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                brilloUtils.setBrilloAppMLD(i);
-            }
-
-            // Cuando empieza a mover verifica si tiene permiso
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            // Cuando para de mover
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-        // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
-        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory()).get(LoginViewModel.class);
-
-        // Validar si el usuario está logueado y habilitar/deshabilitar el botón "Cerrar Sesión"
-        if (!loginViewModel.getLoginRepository().isLoggedIn()) {
-            cerrarSesion.setEnabled(false);
-        }
-
-        // Configurar el botón "Cerrar Sesión"
-        cerrarSesion.setOnClickListener(view -> {
-            showLogoutConfirmationDialog();
-        });
-
     }
 
     private void vincularVistas() {
@@ -222,5 +250,53 @@ public class Configuracion extends AppCompatActivity {
             builder.setCancelable(false);
             builder.show();
         }
+    }
+
+    private void showSugerenciaDialog() {
+        //Instancia dialog , la caracteristica de que sea sin titulo , y configurar el layout
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.desplegable_sugerencia);
+
+        //Vinculo con los componentes de layout
+        EditText descripcion = dialog.findViewById(R.id.desplegableS_editTT_descripcion);
+        TextView maximoCaracteres = dialog.findViewById(R.id.desplegableS_textV_limiteNumerico);
+        Button enviar = dialog.findViewById(R.id.desplegableS_button_enviar);
+        ImageView cancelar = dialog.findViewById(R.id.desplegableS_imagenV_cancelar);
+
+        maximoCaracteres(descripcion,maximoCaracteres);
+
+        enviar.setOnClickListener(v -> {
+
+        });
+
+        cancelar.setOnClickListener(view -> dialog.dismiss());
+
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        // Establece el fondo del cuadro de diálogo como transparente.
+        // Esto puede ser útil para crear cuadros de diálogo con esquinas redondeadas o formas personalizadas.
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //tener la animacion de entrar y salir
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimacion;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+
+    }
+    private void maximoCaracteres(EditText editText, TextView textView) {
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // No necesitas realizar ninguna acción antes de que cambie el texto.
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // No necesitas realizar ninguna acción mientras cambia el texto.
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                textView.setText(getString(R.string.limite_numerico_desplegableS, editable.length()));
+            }
+        });
     }
 }

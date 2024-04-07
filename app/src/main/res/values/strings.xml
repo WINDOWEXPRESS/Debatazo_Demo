@@ -29,6 +29,12 @@
     <string name="limite_numerico_inicio">0/100</string>
     <string name="limite_numerico">%d/100</string>
     <string name="sin_rellenar">Sin rellenar</string>
+
+    <!--    Sugerencia-->
+    <string name="limite_numerico_inicio_desplegableS">0/250</string>
+    <string name="limite_numerico_desplegableS">%d/250</string>
+    <string name="boton_enviar">Enviar</string>
+
     <!--    Configuracion   -->
     <string name="no">No</string>
     <string name="si">Sí</string>
