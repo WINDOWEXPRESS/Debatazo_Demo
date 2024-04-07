@@ -1,5 +1,7 @@
 package com.example.debatazo.usuario.apirest;
 
+import com.example.debatazo.R;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -12,7 +14,7 @@ public class RetrofitCliente {
 
     private RetrofitCliente(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(URL_ORDENADOR_CHEN)
+                .baseUrl(URL_EMULADOR)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
