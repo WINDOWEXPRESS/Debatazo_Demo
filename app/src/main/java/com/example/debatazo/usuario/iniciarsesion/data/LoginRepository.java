@@ -41,9 +41,9 @@ public class LoginRepository {
         return loggedInUserMutableLiveData.getValue() != null;
     }
 
-    public void logout() {
+    public void logout(Context context) {
         loggedInUserMutableLiveData.postValue(null);
-        dataSource.logout();
+        dataSource.logout(context);
     }
 
     public void login(String username, String password, Context context, MutableLiveData<Boolean> loadingLiveData, LoginCallBack callBack) {

@@ -5,8 +5,11 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Patterns;
 
+import com.example.debatazo.savesharedpreference.SaveSharedPreference;
+import com.example.debatazo.token.Token;
 import com.example.debatazo.usuario.iniciarsesion.data.LoginCallBack;
 import com.example.debatazo.usuario.iniciarsesion.data.LoginRepository;
 import com.example.debatazo.usuario.iniciarsesion.data.Result;
@@ -24,12 +27,14 @@ public class LoginViewModel extends ViewModel {
     public LiveData<Boolean> getLoadingLiveData() {
         return loadingLiveData;
     }
+
     private LoginRepository loginRepository;
 
 
     public LoginViewModel(LoginRepository loginRepository) {
         this.loginRepository = loginRepository;
     }
+
     public LoginRepository getLoginRepository() {
         return loginRepository;
     }
@@ -46,12 +51,12 @@ public class LoginViewModel extends ViewModel {
      * Método para iniciar sesión con un nombre de usuario y contraseña.
      * Este método puede ser lanzado en un trabajo asíncrono separado.
      *
-     * @param email Email de usuario.
+     * @param email    Email de usuario.
      * @param password La contraseña proporcionada por el usuario.
      */
-    public void login(String email, String password,Context context) {
+    public void login(String email, String password, Context context) {
         // Se realiza la autenticación y se obtiene el resultado
-                loginRepository.login(email, password,context,loadingLiveData, new LoginCallBack() {
+        loginRepository.login(email, password, context, loadingLiveData, new LoginCallBack() {
             @Override
             public Result<LoggedInUser> onSuccess(Result<LoggedInUser> user) {
                 // Se verifica el resultado obtenido
@@ -75,6 +80,35 @@ public class LoginViewModel extends ViewModel {
         });
     }
 
+    // Este funcion validad si existe instancia de token, si existe instancia de token se hacer login
+    public void autoLongin(Context context) {
+
+        // Obtener las preferencias compartidas
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SaveSharedPreference.PREFS_TOKEN, context.MODE_PRIVATE);
+
+        // Verificar si el token y el ID de usuario están disponibles en las preferencias compartidas
+        if (!sharedPreferences.getString(SaveSharedPreference.TOKEN_VALUE, "").isEmpty() &&
+                sharedPreferences.getInt(SaveSharedPreference.USER_ID, 0) != 0) {
+
+            // Obtener el token y el ID de usuario de las preferencias compartidas
+            String tokenValue = sharedPreferences.getString(SaveSharedPreference.TOKEN_VALUE, "");
+            int userId = sharedPreferences.getInt(SaveSharedPreference.USER_ID, 0);
+
+            // Configurar una instancia de Token con el token y el ID de usuario obtenidos
+            Token.getInstance().setValueAndUserId(tokenValue, userId);
+
+        //Si existen token se auto loguea la cuenta.
+        if (Token.hasInstance()) {
+
+            sharedPreferences = context.getSharedPreferences(SaveSharedPreference.PREFS_NOMBRE, Context.MODE_PRIVATE);
+        }
+            login(
+                sharedPreferences.getString(SaveSharedPreference.EMAIL, ""),
+                sharedPreferences.getString(SaveSharedPreference.CONTRASENIA, ""),
+                context
+            );
+        }
+    }
 
     /**
      * Método para verificar si los datos de inicio de sesión son válidos.

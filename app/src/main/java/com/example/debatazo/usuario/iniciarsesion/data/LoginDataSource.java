@@ -82,7 +82,9 @@ public class LoginDataSource {
         }
     }
 
-    public void logout() {
-        // TODO: revoke authentication
+    // Se pasa el context como parametro para hacer borrar de token y sharedPreferences para log out
+    public void logout(Context context) {
+        Token.removeInstance();
+        context.deleteSharedPreferences(SaveSharedPreference.PREFS_TOKEN);
     }
 }

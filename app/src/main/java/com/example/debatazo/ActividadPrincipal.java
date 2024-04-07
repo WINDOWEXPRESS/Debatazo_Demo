@@ -42,6 +42,7 @@ public class ActividadPrincipal extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private ImageView imagenPublicar;
     private PerfilFragment perfilFragment = new PerfilFragment();
+    private LoginViewModel loginViewModel;
     ActividadPrincipalBinding binding;
 
     @Override
@@ -51,14 +52,13 @@ public class ActividadPrincipal extends AppCompatActivity {
     }*/
         binding = ActividadPrincipalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         replaceFragment(new PrincipalFragmento());
 
-        SharedPreferences sharedPreferences = getSharedPreferences(SaveSharedPreference.PREFS_TOKEN,MODE_PRIVATE);
-        if(!sharedPreferences.getString(SaveSharedPreference.TOKEN_VALUE,"").isEmpty() &&
-                sharedPreferences.getInt(SaveSharedPreference.USER_ID,0) != 0
-        ){
-            Token.getInstance(sharedPreferences.getString(SaveSharedPreference.TOKEN_VALUE,""),sharedPreferences.getInt(SaveSharedPreference.USER_ID,0));
-        }
+        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory()).get(LoginViewModel.class);
+
+        loginViewModel.autoLongin(this);
+
         binding.actividadPBottomNV.setBackground(null);
         binding.actividadPBottomNV.setOnItemSelectedListener(item -> {
 
@@ -79,11 +79,13 @@ public class ActividadPrincipal extends AppCompatActivity {
 
             return true;
         });
-        ActivityResultLauncher<Intent> lanzador = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == Activity.RESULT_OK) {
-                perfilFragment.mostrarDatos();
-            }
-        });
+
+        //ActivityResultLauncher<Intent> lanzador = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            //if (result.getResultCode() == Activity.RESULT_OK) {
+                //perfilFragment.mostrarDatos();
+           // }
+        //});
+
         binding.actividadPFloatingAB.setOnClickListener(view -> {
             // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
             LoginViewModel loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
@@ -94,7 +96,7 @@ public class ActividadPrincipal extends AppCompatActivity {
             } else {
                 //Ir a actividad de inicia sesion
                 Intent i = new Intent(view.getContext(), IniciaSesion.class);
-                lanzador.launch(i);
+                startActivity(i);
             }
         });
 

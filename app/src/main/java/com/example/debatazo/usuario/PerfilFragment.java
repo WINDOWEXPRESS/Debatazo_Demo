@@ -100,26 +100,13 @@ public class PerfilFragment extends Fragment {
         // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory()).get(LoginViewModel.class);
 
-        //Si existen token se auto loguea la cuenta.
-        if(Token.hasInstance()){
-            if (isAdded() && getActivity() != null) {
-                SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SaveSharedPreference.PREFS_NOMBRE, Context.MODE_PRIVATE);
-                loginViewModel.login(
-                        sharedPreferences.getString(SaveSharedPreference.EMAIL,""),
-                        sharedPreferences.getString(SaveSharedPreference.CONTRASENIA,""),
-                        getContext()
-                );
-            } else {
-                throw new IllegalStateException("Fragment is not attached to an activity or activity is destroyed.");
-            }
-            mostrarDatos();
-        }
+        mostrarDatos();
 
-        ActivityResultLauncher<Intent> lanzador = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == Activity.RESULT_OK) {
-                mostrarDatos();
-            }
-        });
+        //ActivityResultLauncher<Intent> lanzador = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            //if (result.getResultCode() == Activity.RESULT_OK) {
+                //mostrarDatos();
+           //}
+        //});
 
         ActivityResultLauncher<Intent> lanzadorLogOut = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK) {
@@ -131,7 +118,7 @@ public class PerfilFragment extends Fragment {
         info.setOnClickListener(view -> {
             if (!loginViewModel.getLoginRepository().isLoggedIn()){
                 Intent i = new Intent(getContext(), IniciaSesion.class);
-                lanzador.launch(i);
+                startActivity(i);
             }
         });
 
@@ -144,7 +131,7 @@ public class PerfilFragment extends Fragment {
             } else {
                 i = new Intent(getContext(), IniciaSesion.class);
             }
-            lanzador.launch(i);
+            startActivity(i);
         });
         configuracion.setOnClickListener(view -> {
             Intent i = new Intent(getContext(), Configuracion.class);
@@ -174,13 +161,14 @@ public class PerfilFragment extends Fragment {
     }
 
     public void mostrarDatos() {
-        loginViewModel.getLoginRepository().getLoggedInUserLiveData().observe(getViewLifecycleOwner(),loggedInUser -> {
-            nombreUsuario.setText(loggedInUser.getUser_name());
-            idUsuario.setText("ID:" + loggedInUser.getId());
-            Picasso.get().load(loggedInUser.getProfile_img()).into(perfil);
-            info.setClickable(false);
-        });
-
+        if(loginViewModel != null){
+            loginViewModel.getLoginRepository().getLoggedInUserLiveData().observe(getViewLifecycleOwner(),loggedInUser -> {
+                nombreUsuario.setText(loggedInUser.getUser_name());
+                idUsuario.setText("ID:" + loggedInUser.getId());
+                Picasso.get().load(loggedInUser.getProfile_img()).into(perfil);
+                info.setClickable(false);
+            });
+        }
     }
 
     private void resetearDatos() {

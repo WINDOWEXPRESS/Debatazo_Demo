@@ -47,7 +47,7 @@ public class Configuracion extends AppCompatActivity {
         builder.setPositiveButton(R.string.si, (dialog, which) -> {
             // Aquí colocas el código para cerrar sesión
             // Llamar al método de logout de ViewModel (Repositorio)
-            loginViewModel.getLoginRepository().logout();
+            loginViewModel.getLoginRepository().logout(Configuracion.this);
             cerrarSesion.setEnabled(false);
             setResult(Activity.RESULT_OK);
         });
