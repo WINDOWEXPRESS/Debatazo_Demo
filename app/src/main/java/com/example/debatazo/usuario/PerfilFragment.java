@@ -103,19 +103,6 @@ public class PerfilFragment extends Fragment {
 
         mostrarDatos();
 
-        //ActivityResultLauncher<Intent> lanzador = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            //if (result.getResultCode() == Activity.RESULT_OK) {
-                //mostrarDatos();
-           //}
-        //});
-
-        ActivityResultLauncher<Intent> lanzadorLogOut = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == Activity.RESULT_OK) {
-                resetearDatos();
-            }
-        });
-
-
         info.setOnClickListener(view -> {
             if (!loginViewModel.getLoginRepository().isLoggedIn()){
                 Intent i = new Intent(getContext(), IniciaSesion.class);
@@ -136,7 +123,7 @@ public class PerfilFragment extends Fragment {
         });
         configuracion.setOnClickListener(view -> {
             Intent i = new Intent(getContext(), Configuracion.class);
-            lanzadorLogOut.launch(i);
+            startActivity(i);
         });
 
         modoTema.setOnClickListener(view -> {
@@ -164,10 +151,14 @@ public class PerfilFragment extends Fragment {
     public void mostrarDatos() {
         if(loginViewModel != null){
             loginViewModel.getLoginRepository().getLoggedInUserLiveData().observe(getViewLifecycleOwner(),loggedInUser -> {
-                nombreUsuario.setText(loggedInUser.getUser_name());
-                idUsuario.setText("ID:" + loggedInUser.getId());
-                Picasso.get().load(loggedInUser.getProfile_img()).into(perfil);
-                info.setClickable(false);
+                if(loggedInUser != null){
+                    nombreUsuario.setText(loggedInUser.getUser_name());
+                    idUsuario.setText("ID:" + loggedInUser.getId());
+                    Picasso.get().load(loggedInUser.getProfile_img()).into(perfil);
+                    info.setClickable(false);
+                }else {
+                    resetearDatos();
+                }
             });
         }
     }
