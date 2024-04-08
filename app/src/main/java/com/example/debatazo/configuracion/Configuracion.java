@@ -26,6 +26,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -47,6 +48,7 @@ public class Configuracion extends AppCompatActivity {
     private LinearLayout brilloLinearLayout;
     private TextView sugerencia;
     private TextView brilloTextView;
+    private ImageButton volver;
     private SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +110,10 @@ public class Configuracion extends AppCompatActivity {
             }else {
                 showSugerenciaDialog();
             }
+        });
+
+        volver.setOnClickListener(view -> {
+            finish();
         });
 
 
@@ -172,6 +178,7 @@ public class Configuracion extends AppCompatActivity {
         brilloLinearLayout = findViewById(R.id.actividadC_linearLV_brillo);
         sugerencia = findViewById(R.id.actividadC_textV_sugerencia);
         brilloTextView = findViewById(R.id.actividadC_textV_Brillo);
+        volver = findViewById(R.id.actividadC_imageV_volver);
     }
 
     private void showLogoutConfirmationDialog() {
