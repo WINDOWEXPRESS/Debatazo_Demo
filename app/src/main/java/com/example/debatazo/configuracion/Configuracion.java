@@ -32,7 +32,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.debatazo.ActividadPrincipal;
 import com.example.debatazo.R;
 import com.example.debatazo.savesharedpreference.SaveSharedPreference;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
@@ -267,7 +266,8 @@ public class Configuracion extends AppCompatActivity {
         maximoCaracteres(descripcion,maximoCaracteres);
 
         enviar.setOnClickListener(v -> {
-
+            if (descripcion.getText().length() != 0)
+                showSugerenciaConfirmationDialog(descripcion);
         });
 
         cancelar.setOnClickListener(view -> dialog.dismiss());
@@ -283,6 +283,7 @@ public class Configuracion extends AppCompatActivity {
         dialog.getWindow().setGravity(Gravity.BOTTOM);
 
     }
+
     private void maximoCaracteres(EditText editText, TextView textView) {
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -299,4 +300,38 @@ public class Configuracion extends AppCompatActivity {
             }
         });
     }
+
+    private void showSugerenciaConfirmationDialog(EditText descripcion) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.confirmacion_envio);
+        builder.setMessage(R.string.mensaje_confirmacion_sugerencia);
+        builder.setPositiveButton(R.string.si, (dialog, which) -> {
+
+            enviarCorreo(descripcion);
+
+        });
+        builder.setNegativeButton(R.string.no, (dialog, which) -> {
+            // No hacemos nada
+
+        });
+        builder.show();
+    }
+    private void enviarCorreo(EditText descripcion) {
+        String[] direccionesCorreo = {"770263108czy@gmail.com"};
+        String asunto = "Sugerencia de la aplicación";
+        String cuerpoMensaje = descripcion.getText().toString();
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("message/rfc822");
+        intent.putExtra(Intent.EXTRA_EMAIL, direccionesCorreo);
+        intent.putExtra(Intent.EXTRA_SUBJECT, asunto);
+        intent.putExtra(Intent.EXTRA_TEXT, cuerpoMensaje);
+
+        try {
+            startActivity(Intent.createChooser(intent, "Enviar correo electrónico"));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(this, "No hay clientes de correo instalados.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

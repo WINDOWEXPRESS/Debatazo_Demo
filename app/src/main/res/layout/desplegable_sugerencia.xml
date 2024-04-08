@@ -56,7 +56,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:text="¡Mejora tu experiencia! \nSugiere una función para nuestra app."
+            android:text="¡Mejora tu experiencia! \nDanos tu opinión para mejorar nuestra app."
             android:textColor="#000000"
             android:textSize="20sp" />
 
@@ -79,7 +79,7 @@
             android:background="@drawable/borde_descripcion_personal"
             android:focusable="auto"
             android:gravity="top"
-            android:hint="..."
+            android:hint="Escribe aquí cualquier sugerencia, observación, aviso etc."
             android:inputType="textMultiLine"
             android:maxLength="250"
             android:maxLines="10"

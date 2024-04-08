@@ -14,7 +14,7 @@ public class RetrofitCliente {
 
     private RetrofitCliente(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(URL_EMULADOR)
+                .baseUrl(URL_ORDENADOR_CHEN)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

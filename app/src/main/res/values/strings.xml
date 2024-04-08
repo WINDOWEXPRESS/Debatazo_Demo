@@ -34,6 +34,8 @@
     <string name="limite_numerico_inicio_desplegableS">0/250</string>
     <string name="limite_numerico_desplegableS">%d/250</string>
     <string name="boton_enviar">Enviar</string>
+    <string name="confirmacion_envio">Confirmación</string>
+    <string name="mensaje_confirmacion_sugerencia">¿Estás seguro de enviar esta sugerencia?</string>
 
     <!--    Configuracion   -->
     <string name="no">No</string>

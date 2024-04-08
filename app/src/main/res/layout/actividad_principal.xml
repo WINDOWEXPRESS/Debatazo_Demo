@@ -18,7 +18,6 @@
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:background="@drawable/borde_logo"
             android:orientation="horizontal"
             android:padding="3dp">
 
@@ -27,6 +26,7 @@
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_weight="1"
+                android:padding="3dp"
                 android:src="@mipmap/aplicacion_logo_round" />
 
             <TextView
@@ -41,6 +41,13 @@
                 android:textColor="@color/black"
                 android:textSize="50dp" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/fragmentoP_textV_borde_titulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/borde_logo" />
 
         <FrameLayout
             android:id="@+id/actividadP_frameL"
