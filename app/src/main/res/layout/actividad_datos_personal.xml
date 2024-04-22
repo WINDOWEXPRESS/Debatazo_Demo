@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".usuario.datospersonal.ActividadDatosPersonal">
+    tools:context=".token.usuario.datospersonal.ActividadDatosPersonal">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,7 +37,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="Datos personal"
-                android:textColor="@color/black"
                 android:textSize="34sp" />
 
         </LinearLayout>
@@ -67,7 +66,6 @@
                 android:layout_weight="1"
                 android:gravity="center|start"
                 android:text="Id"
-                android:textColor="#000000"
                 android:textSize="20sp" />
 
             <EditText
@@ -95,7 +93,6 @@
                 android:layout_weight="1"
                 android:gravity="center|start"
                 android:text="Nombre usuario"
-                android:textColor="#000000"
                 android:textSize="20sp" />
 
             <EditText
@@ -121,7 +118,6 @@
                 android:layout_weight="1"
                 android:gravity="center|start"
                 android:text="Nombre personal"
-                android:textColor="#000000"
                 android:textSize="20sp" />
 
             <EditText
@@ -149,7 +145,6 @@
                 android:layout_weight="1"
                 android:gravity="center|start"
                 android:text="Fecha"
-                android:textColor="#000000"
                 android:textSize="20sp" />
 
             <EditText
@@ -177,7 +172,6 @@
                 android:layout_weight="1"
                 android:gravity="center|start"
                 android:text="Sexo"
-                android:textColor="#000000"
                 android:textSize="20sp" />
 
             <Spinner
@@ -205,7 +199,6 @@
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
                 android:text="Descripción personal"
-                android:textColor="#000000"
                 android:textSize="20sp" />
 
             <TextView

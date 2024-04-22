@@ -82,7 +82,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Introducir titulo"
-            android:inputType="text" />
+            android:inputType="text"
+            android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/desplegableP_editTT_descripcion"
@@ -90,8 +91,9 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Introducir descripción"
+            android:inputType="text|textMultiLine"
             android:maxLength="250"
-            android:inputType="text|textMultiLine" />
+            android:minHeight="48dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -124,6 +126,7 @@
             android:layout_width="match_parent"
             android:layout_height="182dp"
             android:background="#E1DFDF"
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/ic_baseline_add_24" />
 
         <Button

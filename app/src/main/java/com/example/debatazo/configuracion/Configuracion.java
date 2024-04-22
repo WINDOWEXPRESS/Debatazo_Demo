@@ -35,9 +35,9 @@ import android.widget.Toast;
 
 import com.example.debatazo.R;
 import com.example.debatazo.savesharedpreference.SaveSharedPreference;
-import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
-import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModel;
-import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModelFactory;
+import com.example.debatazo.token.usuario.iniciarsesion.ui.login.IniciaSesion;
+import com.example.debatazo.token.usuario.iniciarsesion.ui.login.LoginViewModel;
+import com.example.debatazo.token.usuario.iniciarsesion.ui.login.LoginViewModelFactory;
 
 public class Configuracion extends AppCompatActivity {
     private Button cerrarSesion;

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".ActividadPrincipal">
 
 
@@ -24,10 +23,10 @@
             <ImageView
                 android:id="@+id/fragmentoP_imageV_logoAplicacion"
                 android:layout_width="0dp"
-                android:layout_height="45dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="3dp"
-                android:src="@mipmap/aplicacion_logo_round" />
+                app:srcCompat="@mipmap/aplicacion_logo_round"/>
 
             <TextView
                 android:id="@+id/fragmentoP_textV_nombreAplicacion"
@@ -38,7 +37,6 @@
                 android:fontFamily="@font/designer"
                 android:paddingTop="5dp"
                 android:text="@string/app_name"
-                android:textColor="@color/black"
                 android:textSize="50dp" />
         </LinearLayout>
 
