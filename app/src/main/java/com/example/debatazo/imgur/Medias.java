@@ -22,9 +22,7 @@ public class Medias {
     private ActivityResultLauncher<String> requestResultLauncher;
     private ActivityResultLauncher<Intent> resultLauncher;
     public Medias(){this.imageUri = null;}
-    public Uri getImageUri() {
-        return imageUri;
-    }
+    public Uri getImageUri() {return imageUri;}
 
     public void setImageUri(Uri imageUri) {
         this.imageUri = imageUri;
