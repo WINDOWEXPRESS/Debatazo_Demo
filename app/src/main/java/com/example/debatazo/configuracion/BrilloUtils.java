@@ -18,6 +18,8 @@ import com.example.debatazo.savesharedpreference.SaveSharedPreference;
 
 public class BrilloUtils {
     private static BrilloUtils instancia;
+    private final int VALOR_MINIMO = 1;
+    private final int VALOR_MAXIMO = 255;
 
     //Metodo singleton
     public static BrilloUtils getInstancia() {
@@ -109,19 +111,19 @@ public class BrilloUtils {
             WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
 
             // Excepcion
-            if (brilloAppMLD.getValue() < 1) {
+            if (brilloAppMLD.getValue() < VALOR_MINIMO) {
 
-                brilloAppMLD.setValue(1);
+                brilloAppMLD.setValue(VALOR_MINIMO);
 
             }
             // Excepcion
-            if (brilloAppMLD.getValue() > 255) {
+            if (brilloAppMLD.getValue() > VALOR_MAXIMO) {
 
-                brilloAppMLD.setValue(255);
+                brilloAppMLD.setValue(VALOR_MAXIMO);
 
             }
             //Los valores de brillo generalmente se expresan en un rango de 0 a 1
-            lp.screenBrightness = Float.valueOf(valor) * (1f / 255f);
+            lp.screenBrightness = Float.valueOf(valor) * (255f);
 
             activity.getWindow().setAttributes(lp);
 

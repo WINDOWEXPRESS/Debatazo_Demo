@@ -7,13 +7,10 @@
     tools:context=".configuracion.Configuracion">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,7 +47,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView14"
+                android:id="@+id/actividadC_textV_privacidad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -118,12 +115,12 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/aplicacion_logo_background"
+                    android:clickable="false"
                     android:foregroundTint="@color/azul_marino"
                     android:indeterminate="false"
                     android:max="255"
                     android:min="1"
                     android:progressTint="#000000"
-                    android:clickable="false"
                     android:thumbTint="@color/black"
                     android:tickMarkTint="@color/black" />
 
@@ -147,10 +144,27 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/actividadC_button_cerrarSesion"
+            android:id="@+id/aumentar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cerrar sesión" />
+            android:text="+" />
+
+        <Button
+            android:id="@+id/disminuir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="-" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/actividadC_button_cerrarSesion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="Cerrar sesión"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

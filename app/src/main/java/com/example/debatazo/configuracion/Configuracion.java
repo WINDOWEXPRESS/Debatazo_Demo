@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -48,6 +49,7 @@ public class Configuracion extends AppCompatActivity {
     private LinearLayout brilloLinearLayout;
     private TextView sugerencia;
     private TextView brilloTextView;
+    private TextView privacidad;
     private ImageButton volver;
     private SharedPreferences sharedPreferences;
     @Override
@@ -130,6 +132,62 @@ public class Configuracion extends AppCompatActivity {
             showLogoutConfirmationDialog();
         });
 
+        Button aumentar = findViewById(R.id.aumentar);;
+        Button disminuir = findViewById(R.id.disminuir);
+
+        final int[] brightnessValue = {255};
+
+        disminuir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (brightnessValue[0] >= 11) {
+                    brightnessValue[0] -= 10;
+                    changeScreenBrightness(Configuracion.this, brightnessValue[0]);
+
+                    // Convertir el valor de brillo (1-255) a porcentaje y mostrarlo en un Toast
+                    double k = (double) brightnessValue[0] / 255;
+                    privacidad.setText(
+                            "Brillo : " + Math.round(k * 100) + "%"
+
+                    );
+                }
+            }
+        });
+
+        aumentar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (brightnessValue[0] <= 245) {
+                    brightnessValue[0] += 10;
+                    changeScreenBrightness(Configuracion.this, brightnessValue[0]);
+
+                    // Convertir el valor de brillo (1-255) a porcentaje y mostrarlo en un Toast
+                    double k = (double) brightnessValue[0] / 255;
+                    privacidad.setText(
+                           "Brillo : " + Math.round(k * 100) + "%"
+
+                    );
+                }
+            }
+        });
+
+
+    }
+    private void changeScreenBrightness(Context context, int screenBrightnessValue) {
+        // Cambiar el modo de cambio de brillo de la pantalla a manual.
+        Settings.System.putInt(
+                context.getContentResolver(),
+                Settings.System.SCREEN_BRIGHTNESS_MODE,
+                Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL
+        );
+
+        // Aplicar el valor de brillo de la pantalla al sistema, esto cambiará
+        // el valor en Configuración ---> Pantalla ---> Nivel de brillo.
+        // También cambiará el brillo de la pantalla para el dispositivo.
+        Settings.System.putInt(
+                context.getContentResolver(),
+                Settings.System.SCREEN_BRIGHTNESS, screenBrightnessValue
+        );
     }
 
     private void configuracionBrillo() {
@@ -179,6 +237,8 @@ public class Configuracion extends AppCompatActivity {
         sugerencia = findViewById(R.id.actividadC_textV_sugerencia);
         brilloTextView = findViewById(R.id.actividadC_textV_Brillo);
         volver = findViewById(R.id.actividadC_imageV_volver);
+        privacidad = findViewById(R.id.actividadC_textV_privacidad);
+
     }
 
     private void showLogoutConfirmationDialog() {
@@ -324,7 +384,7 @@ public class Configuracion extends AppCompatActivity {
         builder.show();
     }
     private void enviarCorreo(EditText descripcion) {
-        String[] direccionesCorreo = {"770263108czy@gmail.com"};
+        String[] direccionesCorreo = {"debatazosugerencias@gmail.com"};
         String asunto = "Sugerencia de la aplicación";
         String cuerpoMensaje = descripcion.getText().toString();
 
