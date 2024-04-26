@@ -13,8 +13,6 @@ import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
  */
 public class LoginRepository {
 
-    private static volatile LoginRepository instance;
-
     private LoginDataSource dataSource;
 
     // If user credentials will be cached in local storage, it is recommended it be encrypted
@@ -25,6 +23,8 @@ public class LoginRepository {
         return loggedInUserMutableLiveData;
     }
 
+    //Singleton
+    private static volatile LoginRepository instance;
     // private constructor : singleton access
     private LoginRepository(LoginDataSource dataSource) {
         this.dataSource = dataSource;
@@ -46,9 +46,9 @@ public class LoginRepository {
         dataSource.logout(context);
     }
 
-    public void login(String username, String password, Context context, MutableLiveData<Boolean> loadingLiveData, LoginCallBack callBack) {
+    public void login(String username, String password, Context context,  LoginCallBack callBack) {
         // handle login
-        dataSource.login(username, password,context,loadingLiveData, new LoginCallBack() {
+        dataSource.login(username, password,context, new LoginCallBack() {
             @Override
             public Result<LoggedInUser> onSuccess(Result<LoggedInUser> user) {
                 if (user instanceof Result.Success) {

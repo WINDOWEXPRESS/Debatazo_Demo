@@ -14,7 +14,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.debatazo.savesharedpreference.SaveSharedPreference;
+import com.example.debatazo.savesharedpreference.SharedPreferenceUtils;
 
 public class BrilloUtils {
     private static BrilloUtils instancia;
@@ -136,19 +136,19 @@ public class BrilloUtils {
             WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
 
             // Excepcion
-            if (brilloAppMLD.getValue() < 1) {
+            if (brilloAppMLD.getValue() < VALOR_MINIMO) {
 
-                brilloAppMLD.setValue(1);
+                brilloAppMLD.setValue(VALOR_MINIMO);
 
             }
             // Excepcion
-            if (brilloAppMLD.getValue() > 255) {
+            if (brilloAppMLD.getValue() > VALOR_MAXIMO) {
 
-                brilloAppMLD.setValue(255);
+                brilloAppMLD.setValue(VALOR_MAXIMO);
 
             }
             //Los valores de brillo generalmente se expresan en un rango de 0 a 1
-            lp.screenBrightness = Float.valueOf(valor) * (1f / 255f);
+            lp.screenBrightness = Float.valueOf(valor) * (255f);
 
             activity.getWindow().setAttributes(lp);
         }
@@ -214,9 +214,9 @@ public class BrilloUtils {
         SharedPreferences sharedPreferences;
 
         BrilloUtils brilloUtils = BrilloUtils.getInstancia();
-        sharedPreferences  = context.getSharedPreferences(SaveSharedPreference.PREFS_BRILLO, MODE_PRIVATE);
+        sharedPreferences  = context.getSharedPreferences(SharedPreferenceUtils.PREFS_BRILLO, MODE_PRIVATE);
         //Si el opcion de seguir el Brillo de sistema esta desactivado.
-        if(!sharedPreferences.getBoolean(SaveSharedPreference.BRILLO_SEGUIR_SISTEMA, true)){
+        if(!sharedPreferences.getBoolean(SharedPreferenceUtils.BRILLO_SEGUIR_SISTEMA, true)){
             brilloUtils.getBrilloAppLD().observe((LifecycleOwner) context, integer -> {
                 brilloUtils.setAppBrillo(context,integer);
             });

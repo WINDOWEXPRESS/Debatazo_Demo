@@ -1,7 +1,5 @@
 package com.example.debatazo;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -9,9 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,10 +24,8 @@ import android.widget.Toast;
 
 import com.example.debatazo.configuracion.BrilloUtils;
 import com.example.debatazo.debaterecycler.DebateFragmento;
-import com.example.debatazo.savesharedpreference.SaveSharedPreference;
 import com.example.debatazo.usuario.PerfilFragment;
 import com.example.debatazo.databinding.ActividadPrincipalBinding;
-import com.example.debatazo.token.Token;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModel;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModelFactory;
@@ -56,7 +50,7 @@ public class ActividadPrincipal extends AppCompatActivity {
         replaceFragment(new PrincipalFragmento());
 
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory()).get(LoginViewModel.class);
-        loginViewModel.autoLongin(this);
+        loginViewModel.autoLogin(this);
 
         //ajuste de brillo
         BrilloUtils.getInstancia().brilloAppVista(this);

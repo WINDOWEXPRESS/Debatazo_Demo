@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DEBATAZO</string>
+    <string name="app_name" translatable="false">DEBATAZO</string>
     <!--ACTIVITY PRINCIPAL-->
     <string name="publicar">Publicar</string>
     <string name="principal">Principal</string>
@@ -8,7 +8,7 @@
     <string name="usuario">Usuario</string>
     <string name="actividadP_floatingAB_layoutA"><![CDATA[@id/actividadP_bottomAB]]></string>
     <!--    Registro ,login..   -->
-    <string name="pista_email">Email</string>
+    <string name="pista_email" translatable="false">Email</string>
     <string name="pista_contrasenia">Contraseña</string>
     <string name="accion_inicia_sesion">Inicia sesion</string>
     <string name="accion_inicia_sesion_corto">Inicia sesion</string>
@@ -24,15 +24,15 @@
     <string name="boton_seguir">Seguir</string>
     <string name="introduce_comentario">Introduce tu comentario</string>
 
-    <string name="base_url_retrofit">http://10.0.2.2:8080</string>
+    <string name="base_url_retrofit" translatable="false">http://10.0.2.2:8080</string>
     <!--    DATOS PERSONAL-->
-    <string name="limite_numerico_inicio">0/100</string>
-    <string name="limite_numerico">%d/100</string>
+    <string name="limite_numerico_inicio" translatable="false">0/100</string>
+    <string name="limite_numerico" translatable="false">%d/100</string>
     <string name="sin_rellenar">Sin rellenar</string>
 
     <!--    Sugerencia-->
-    <string name="limite_numerico_inicio_desplegableS">0/250</string>
-    <string name="limite_numerico_desplegableS">%d/250</string>
+    <string name="limite_numerico_inicio_desplegableS" translatable="false">0/250</string>
+    <string name="limite_numerico_desplegableS" translatable="false">%d/250</string>
     <string name="boton_enviar">Enviar</string>
     <string name="confirmacion_envio">Confirmación</string>
     <string name="mensaje_confirmacion_sugerencia">¿Estás seguro de enviar esta sugerencia?</string>
@@ -46,5 +46,6 @@
     <string name="conectar_ahora">Conectar ahora</string>
     <string name="mensaje_campo_id_usuario">Desbloquea todas las funciones y disfruta de la experiencia completa</string>
     <string name="seleccionar_fecha_de_nacimiento">Seleccionar fecha de nacimiento</string>
+    <string name="poltica_de_privacidad">Política de Privacidad</string>
 
 </resources>

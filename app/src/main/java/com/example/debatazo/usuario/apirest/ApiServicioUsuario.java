@@ -1,7 +1,7 @@
 package com.example.debatazo.usuario.apirest;
 
 import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
-import com.example.debatazo.token.Token;
+import com.example.debatazo.usuario.iniciarsesion.data.model.Token;
 import com.example.debatazo.usuario.registrar.RegistrarUsuarioPojo;
 
 import okhttp3.ResponseBody;

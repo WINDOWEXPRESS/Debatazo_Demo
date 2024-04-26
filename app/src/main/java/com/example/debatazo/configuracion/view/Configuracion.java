@@ -1,11 +1,10 @@
-package com.example.debatazo.configuracion;
+package com.example.debatazo.configuracion.view;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -35,7 +34,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.debatazo.R;
-import com.example.debatazo.savesharedpreference.SaveSharedPreference;
+import com.example.debatazo.configuracion.BrilloUtils;
+import com.example.debatazo.savesharedpreference.SharedPreferenceUtils;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModel;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModelFactory;
@@ -52,6 +52,7 @@ public class Configuracion extends AppCompatActivity {
     private TextView privacidad;
     private ImageButton volver;
     private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,12 +104,19 @@ public class Configuracion extends AppCompatActivity {
             }
         });
 
+        privacidad.setOnClickListener(view -> {
+
+            Intent redireccionar = new Intent(view.getContext(), Privacidad.class);
+            startActivity(redireccionar);
+
+        });
+
         sugerencia.setOnClickListener(view -> {
             // Validar si el usuario está logueado si no esta pide que inicie sesion
             if (!loginViewModel.getLoginRepository().isLoggedIn()) {
-                Intent i = new Intent(view.getContext(), IniciaSesion.class);
+                Intent redireccionar = new Intent(view.getContext(), IniciaSesion.class);
                 //lanzador.launch(i);
-                startActivity(i);
+                startActivity(redireccionar);
             }else {
                 showSugerenciaDialog();
             }
@@ -200,10 +208,10 @@ public class Configuracion extends AppCompatActivity {
         });
 
         // Obtener una referencia a SharedPreferences para almacenar y recuperar el valor del brillo de la pantalla
-        sharedPreferences = getSharedPreferences(SaveSharedPreference.PREFS_BRILLO, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(SharedPreferenceUtils.PREFS_BRILLO, MODE_PRIVATE);
 
         //Ajustar el estado correspondiente a valor guardado en sharedPreferences
-        seguirSistema.setChecked(sharedPreferences.getBoolean(SaveSharedPreference.BRILLO_SEGUIR_SISTEMA, false));
+        seguirSistema.setChecked(sharedPreferences.getBoolean(SharedPreferenceUtils.BRILLO_SEGUIR_SISTEMA, false));
 
         //Comprobacion de permiso cada vez que entre a configuracion
         if(Settings.System.canWrite(Configuracion.this)){
@@ -250,7 +258,7 @@ public class Configuracion extends AppCompatActivity {
             // Llamar al método de logout de ViewModel (Repositorio)
             loginViewModel.getLoginRepository().logout(Configuracion.this);
             cerrarSesion.setEnabled(false);
-            setResult(Activity.RESULT_OK);
+            //setResult(Activity.RESULT_OK);
         });
         builder.setNegativeButton(R.string.no, (dialog, which) -> {
             // El usuario canceló el cierre de sesión, no hacemos nada
@@ -266,7 +274,7 @@ public class Configuracion extends AppCompatActivity {
             // Verifica si el CheckBox está marcado o desmarcado
             if (isChecked) {// El CheckBox está marcado
                 //Guardar opcion en un SharedPreference
-                editor.putBoolean(SaveSharedPreference.BRILLO_SEGUIR_SISTEMA, true);
+                editor.putBoolean(SharedPreferenceUtils.BRILLO_SEGUIR_SISTEMA, true);
 
                 //Obtener el valor de brillo de sistema y configurarlo
                 //AQUI *2 PORQUE EL VALOR OBTENIDO NO SE PORQUE ES LA MITAD MENOR
@@ -279,7 +287,7 @@ public class Configuracion extends AppCompatActivity {
                 brilloSeekBar.setEnabled(false);
             } else {// El CheckBox está desmarcado
                 //Guardar opcion en un SharedPreference
-                editor.putBoolean(SaveSharedPreference.BRILLO_SEGUIR_SISTEMA, false);
+                editor.putBoolean(SharedPreferenceUtils.BRILLO_SEGUIR_SISTEMA, false);
 
                 brilloSeekBar.setEnabled(true);
             }

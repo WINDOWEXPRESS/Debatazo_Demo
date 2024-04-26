@@ -1,13 +1,8 @@
 package com.example.debatazo.usuario;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -19,14 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.debatazo.R;
-import com.example.debatazo.configuracion.BrilloUtils;
-import com.example.debatazo.configuracion.Configuracion;
-import com.example.debatazo.savesharedpreference.SaveSharedPreference;
-import com.example.debatazo.token.Token;
+import com.example.debatazo.configuracion.view.Configuracion;
 import com.example.debatazo.usuario.datospersonal.ActividadDatosPersonal;
-import com.example.debatazo.usuario.iniciarsesion.data.LoginDataSource;
-import com.example.debatazo.usuario.iniciarsesion.data.LoginRepository;
-import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModel;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModelFactory;

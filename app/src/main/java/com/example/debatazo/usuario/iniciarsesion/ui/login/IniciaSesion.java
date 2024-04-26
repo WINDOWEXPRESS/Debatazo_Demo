@@ -28,8 +28,9 @@ import com.example.debatazo.R;
 
 import com.example.debatazo.configuracion.BrilloUtils;
 import com.example.debatazo.databinding.ActividadIniciaSesionBinding;
+import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
 import com.example.debatazo.usuario.registrar.ActividadRegistrar;
-import com.example.debatazo.savesharedpreference.SaveSharedPreference;
+import com.example.debatazo.savesharedpreference.SharedPreferenceUtils;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class IniciaSesion extends AppCompatActivity {
@@ -63,18 +64,14 @@ public class IniciaSesion extends AppCompatActivity {
                 .get(LoginViewModel.class);
 
         vincularVistas();
+
         // Observa los cambios en el estado del formulario de inicio de sesión
         loginViewModel.getLoginFormState().observe(this, loginFormState -> {
-            // Verifica si el estado del formulario es nulo
-            if (loginFormState == null) {
-                return; // Sal de la función si el estado del formulario es nulo
-            }
             // Habilita o deshabilita el botón de inicio de sesión según si los datos son válidos
             loginButton.setEnabled(loginFormState.isDataValid());
             // Verifica si hay un error en el nombre de usuario y lo muestra si existe
             if (loginFormState.getUsernameError() != null) {
                 usernameEditText.setError(getString(loginFormState.getUsernameError()));
-
             }
             // Verifica si hay un error en la contraseña y lo muestra si existe
             if (loginFormState.getPasswordError() != null) {
@@ -86,6 +83,7 @@ public class IniciaSesion extends AppCompatActivity {
                 passwordTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
             }
         });
+
         loginViewModel.getLoadingLiveData().observe(this, loading -> {
             cargando.setVisibility(loading?View.VISIBLE:View.GONE);
         });
@@ -150,15 +148,15 @@ public class IniciaSesion extends AppCompatActivity {
             String email = usernameEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 
-            SharedPreferences sharedPreferences = getSharedPreferences(SaveSharedPreference.PREFS_NOMBRE, MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferenceUtils.PREFS_CUENTA, MODE_PRIVATE);
             // Editar los valores de SharedPreferences
             SharedPreferences.Editor editor = sharedPreferences.edit();
             //Si esta marcado el recordar se guarda con un sharedPreferences
             if (recordar.isChecked()) {
                 // Obtener una instancia de SharedPreferences
-                editor.putString(SaveSharedPreference.EMAIL, email);
-                editor.putString(SaveSharedPreference.CONTRASENIA, password);
-                editor.putBoolean(SaveSharedPreference.RECORDAR, true);
+                editor.putString(SharedPreferenceUtils.EMAIL, email);
+                editor.putString(SharedPreferenceUtils.CONTRASENIA, password);
+                editor.putBoolean(SharedPreferenceUtils.RECORDAR, true);
             } else {
                 editor.clear();
             }
@@ -206,12 +204,12 @@ public class IniciaSesion extends AppCompatActivity {
 
     private void mostrarInfoConSharedPreference(EditText usernameEditText, EditText passwordEditText, CheckBox recordar) {
         // Obtener una instancia de SharedPreferences
-        SharedPreferences sharedPreferences = getSharedPreferences(SaveSharedPreference.PREFS_NOMBRE, MODE_PRIVATE);
-        boolean esRecordar = sharedPreferences.getBoolean(SaveSharedPreference.RECORDAR, false);
+        SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferenceUtils.PREFS_CUENTA, MODE_PRIVATE);
+        boolean esRecordar = sharedPreferences.getBoolean(SharedPreferenceUtils.RECORDAR, false);
         //Si en SharedPreferences tiene datos de recordar y es verdad se autocompleta.
         if (esRecordar) {
-            String email = sharedPreferences.getString(SaveSharedPreference.EMAIL, "");
-            String contrasenia = sharedPreferences.getString(SaveSharedPreference.CONTRASENIA, "");
+            String email = sharedPreferences.getString(SharedPreferenceUtils.EMAIL, "");
+            String contrasenia = sharedPreferences.getString(SharedPreferenceUtils.CONTRASENIA, "");
             usernameEditText.setText(email);
             passwordEditText.setText(contrasenia);
             recordar.setChecked(true);
@@ -219,7 +217,7 @@ public class IniciaSesion extends AppCompatActivity {
     }
 
 
-    private void updateUiWithUser(LoggedInUserView model) {
+    private void updateUiWithUser(LoggedInUser model) {
         String welcome = getString(R.string.bienvenido) + " " + model.getUser_name() + "!";
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();

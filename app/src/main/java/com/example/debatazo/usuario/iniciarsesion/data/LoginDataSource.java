@@ -5,10 +5,10 @@ import android.content.SharedPreferences;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.debatazo.savesharedpreference.SaveSharedPreference;
+import com.example.debatazo.savesharedpreference.SharedPreferenceUtils;
 import com.example.debatazo.usuario.apirest.RetrofitCliente;
 import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
-import com.example.debatazo.token.Token;
+import com.example.debatazo.usuario.iniciarsesion.data.model.Token;
 import com.example.debatazo.usuario.md5.SaltMD5Util;
 
 import java.io.IOException;
@@ -21,9 +21,8 @@ import retrofit2.Response;
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
 public class LoginDataSource {
-    public void login(String email, String password, Context context , MutableLiveData<Boolean> loadingLiveData, LoginCallBack callBack) {
+    public void login(String email, String password, Context context ,  LoginCallBack callBack) {
         try {
-            loadingLiveData.setValue(true);
             RetrofitCliente retrofitCliente = RetrofitCliente.getInstancia();
             Call<Token> tokenLlamada = retrofitCliente.getApiUsuario().loginUsuario(email, SaltMD5Util.generateSaltPassword(password));
 
@@ -33,17 +32,15 @@ public class LoginDataSource {
                     if(response.isSuccessful()){
                         // Se hace el primero pedicion de token con login.
 
-                        loadingLiveData.setValue(false);
-
                         Token token = response.body();
-                        SharedPreferences sharedPreferences = context.getSharedPreferences(SaveSharedPreference.PREFS_TOKEN,Context.MODE_PRIVATE);
+                        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferenceUtils.PREFS_TOKEN,Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putInt(SaveSharedPreference.USER_ID,token.userId);
-                        editor.putString(SaveSharedPreference.TOKEN_VALUE,token.value);
+                        editor.putInt(SharedPreferenceUtils.USER_ID,token.userId);
+                        editor.putString(SharedPreferenceUtils.TOKEN_VALUE,token.tokenValue);
                         editor.apply();
 
                         //Con los datos que responde por token se hace pedicion de perfil usario con token obtenido.
-                        Call<LoggedInUser> llamada = retrofitCliente.getApiUsuario().getProfile(token.value,token.userId);
+                        Call<LoggedInUser> llamada = retrofitCliente.getApiUsuario().getProfile(token.tokenValue,token.userId);
                         llamada.enqueue(new Callback<LoggedInUser>() {
                             @Override
                             public void onResponse(Call<LoggedInUser> call, Response<LoggedInUser> response) {
@@ -56,7 +53,7 @@ public class LoginDataSource {
                             }
                             @Override
                             public void onFailure(Call<LoggedInUser> call, Throwable t) {
-                                loadingLiveData.setValue(false);
+
                                 String errorMessage = "Error al iniciar sesión onFailure: " + t.getMessage();
                                 callBack.onFailure(new Result.Error(new IOException(errorMessage)));
                             }
@@ -70,14 +67,12 @@ public class LoginDataSource {
 
                 @Override
                 public void onFailure(Call<Token> call, Throwable t) {
-                    loadingLiveData.setValue(false);
                     String errorMessage = "Error al iniciar sesión onFailure: " + t.getMessage();
                     callBack.onFailure(new Result.Error(new IOException(errorMessage)));
                 }
             });
 
         } catch (Exception e) {
-            loadingLiveData.setValue(false);
             callBack.onFailure(new Result.Error(new IOException("Error al iniciar sesión", e)));
         }
     }
@@ -85,6 +80,6 @@ public class LoginDataSource {
     // Se pasa el context como parametro para hacer borrar de token y sharedPreferences para log out
     public void logout(Context context) {
         Token.removeInstance();
-        context.deleteSharedPreferences(SaveSharedPreference.PREFS_TOKEN);
+        context.deleteSharedPreferences(SharedPreferenceUtils.PREFS_TOKEN);
     }
 }
