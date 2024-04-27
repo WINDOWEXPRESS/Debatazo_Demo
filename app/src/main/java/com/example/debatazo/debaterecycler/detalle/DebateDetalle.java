@@ -55,8 +55,8 @@ public class DebateDetalle extends AppCompatActivity {
                 if(response.isSuccessful()){
                     DebateDetalleObjeto detalle = response.body();
                     Picasso.get().load(detalle.getList().getProfileImg()).into(shapeableIV_usuario);
-                    if(!detalle.getList().getImgUrl().isEmpty()){
-                        Picasso.get().load(detalle.getList().getImgUrl()).into(imageV_imagenC);
+                    if(detalle.getList().getImageUrl() != null){
+                        Picasso.get().load(detalle.getList().getImageUrl()).into(imageV_imagenC);
                     }
 
                     textV_nombre.setText(detalle.getList().getUserName());

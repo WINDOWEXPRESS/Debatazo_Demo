@@ -3,20 +3,21 @@ package com.example.debatazo.imgur;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 
 public interface ImgurApi {
-        final String CLIENT_ID = "0e98f6e10d7e6e5";
+        final String CLIENT_ID = "c7632b8f539c192";
         @Multipart
-        @Headers({"Authorization: Client-ID" + CLIENT_ID})
-        @POST("/3/upload")
+        @Headers({"Authorization: Client-ID" + " " + CLIENT_ID})
+        @POST("image")
         Call<ImgurObject> uploadImage(
                 @Part MultipartBody.Part image,
-                @Part("name") RequestBody name
+                @Part("type") RequestBody type,
+                @Part("title") RequestBody title,
+                @Part("description") RequestBody description
         );
-
-
 }

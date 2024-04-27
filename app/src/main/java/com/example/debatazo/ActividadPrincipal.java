@@ -1,12 +1,23 @@
 package com.example.debatazo;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import android.Manifest;
+
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Bundle;
+import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -38,12 +49,13 @@ import com.example.debatazo.debaterecycler.api.ServicioDebateProducto;
 import com.example.debatazo.imgur.ImgurObject;
 import com.example.debatazo.imgur.ImgurService;
 import com.example.debatazo.imgur.Medias;
-
-import com.example.debatazo.savesharedpreference.SharedPreferenceUtils;
-import com.example.debatazo.usuario.PerfilFragment;
-import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
-import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModel;
-import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModelFactory;
+import com.example.debatazo.savesharedpreference.SaveSharedPreference;
+import com.example.debatazo.token.Token;
+import com.example.debatazo.token.usuario.PerfilFragment;
+import com.example.debatazo.databinding.ActividadPrincipalBinding;
+import com.example.debatazo.token.usuario.iniciarsesion.ui.login.IniciaSesion;
+import com.example.debatazo.token.usuario.iniciarsesion.ui.login.LoginViewModel;
+import com.example.debatazo.token.usuario.iniciarsesion.ui.login.LoginViewModelFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,6 +65,7 @@ import java.util.Set;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -206,9 +219,8 @@ public class ActividadPrincipal extends AppCompatActivity {
             }else{
                 // Si todos los campos estan llenos, publicar el debate
                 //Obtener el token y el id del usuario
-                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-                String token = sharedPref.getString(SharedPreferenceUtils.TOKEN_VALUE, "");
-                int userId = sharedPref.getInt(SharedPreferenceUtils.USER_ID, 0);
+                String token = Token.getInstance().getValue();
+                int userId = Token.getInstance().getUserId();
 
                 // Crear un nuevo DebateProducto con los datos del formulario
                 Set<BandObject> bands = new HashSet<>();
@@ -220,10 +232,10 @@ public class ActividadPrincipal extends AppCompatActivity {
                         bands);
                 if(medias.getImageUri() == null) {
                     // Si no se ha seleccionado una imagen, publicar el debate sin imagen
-                    publicarDebate(debateProducto,token,userId);
+                    publicarDebate(debateProducto,token,userId,dialog);
                 }else{
                     // Si se ha seleccionado una imagen, publicar el debate con imagen
-                    publicarDebateConImagen(debateProducto,token,userId);
+                    publicarDebateConImagen(debateProducto,token,userId,dialog);
                 }
             }
         });
@@ -253,17 +265,17 @@ public class ActividadPrincipal extends AppCompatActivity {
     private void showPermissionRationaleDialog(){
         // Crear el diálogo de permiso
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Se necesita permiso"); // Título del diálogo
-        builder.setMessage("Se necesita permiso para acceder a la galería"); // Mensaje del diálogo
+        builder.setTitle(medias.PERMISO_TITLE); // Título del diálogo
+        builder.setMessage(medias.NECESITA_BODY); // Mensaje del diálogo
         // Añadir botones para aceptar o cancelar el permiso
-        builder.setPositiveButton("aceptar", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getResources().getString(R.string.aceptar), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Solicitar el permiso de acceso a la galería
                 requestResultLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
             }
         });
-        builder.setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getResources().getString(R.string.cancelar), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Cerrar dialogo
@@ -273,57 +285,73 @@ public class ActividadPrincipal extends AppCompatActivity {
         builder.create().show(); // Mostrar el diálogo
     }
 
-    // Método para publicar el debate
-    private void publicarDebate(DebateProducto debateProducto,String token,int userId){
-        Call<String> debateCall = ServicioDebateProducto.getInstance().getRepor().publicarDebate(
+    //Método para publicar un debate utilizando el servicio de debate de productos.
+    private void publicarDebate(DebateProducto debateProducto, String token, int userId,Dialog dialog) {
+        // Crear una llamada para publicar el debate utilizando el servicio de debate de productos.
+        Call<ResponseBody> debateCall = ServicioDebateProducto.getInstance().getRepor().publicarDebate(
                 token,
                 debateProducto,
                 String.valueOf(userId)
         );
-        debateCall.enqueue(new Callback<String>() {
+
+        // Realizar la llamada asíncrona para publicar el debate.
+        debateCall.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                // Verificar si la respuesta es exitosa.
                 if (response.isSuccessful()) {
-                    Toast.makeText(ActividadPrincipal.this, response.body(), Toast.LENGTH_SHORT).show();
+                    try {
+                        // Mostrar el mensaje de respuesta en un Toast y cerrar dialog
+                        Toast.makeText(ActividadPrincipal.this, response.body().string(), Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+
+                    } catch (IOException e) {
+                        // Mostrar el mensaje de error en un Toast si ocurre un error de E/S.
+                        Toast.makeText(ActividadPrincipal.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
                 } else {
+                    // Mostrar el mensaje de error en un Toast si la respuesta no es exitosa.
                     Toast.makeText(ActividadPrincipal.this, response.errorBody().toString(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(ActividadPrincipal.this, "Error al publicar el debate", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Mostrar el mensaje de error en un Toast si la llamada falla.
+                System.out.println(t.toString());
+                Toast.makeText(ActividadPrincipal.this, t.toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }
-    private void publicarDebateConImagen(DebateProducto debateProducto,String token,int userId){
+    private void publicarDebateConImagen(DebateProducto debateProducto,String token,int userId,Dialog dialog){
         try {
-            // Copiar el contenido del flujo de entrada al archivo
-            File file = medias.copyStreamToFile(medias.getImageUri(), ActividadPrincipal.this);
-            // Crear RequestBody para la imagen
-            RequestBody imgBody = RequestBody.create(MediaType.parse("image/*"), file);
-            // Crear RequestBody para el nombre del archivo
-            RequestBody name = RequestBody.create(MediaType.parse("text/plain"),file.getName());
             // Crear MultipartBody.Part para la imagen
-            MultipartBody.Part part = MultipartBody.Part.createFormData("image", file.getName(),imgBody);
+            MultipartBody.Part part = medias.generateMultipartBody(medias.getImageUri(),ActividadPrincipal.this);
 
-            Call<ImgurObject> imgurCall = ImgurService.getInstance().getRepor().uploadImage(part,name);
+            // Crear los RequestBody de tipo texto plano
+            RequestBody title = medias.createTextPlainBody(medias.SIMPLE_TITLE);
+            RequestBody description = medias.createTextPlainBody(medias.SIMPLE_DESCRIPTION);
+            RequestBody type = medias.createTextPlainBody(medias.SIMPLE_TYPE);
+
+            Call<ImgurObject> imgurCall = ImgurService.getInstance().getRepor().uploadImage(part,type,title,description);
             imgurCall.enqueue(new Callback<ImgurObject>() {
 
                 @Override
                 public void onResponse(Call<ImgurObject> call, Response<ImgurObject> response) {
                     if (response.isSuccessful()) {
                         ImgurObject imgurObject = response.body();
-                        debateProducto.setImgUrl(imgurObject.getData().getLink());
-                        debateProducto.setImage_delete_hash(imgurObject.getData().getDeletehash());
-                        publicarDebate(debateProducto,token,userId);
+                        debateProducto.setImageUrl(imgurObject.getData().getLink());
+                        debateProducto.setImageDeleteHash(imgurObject.getData().getDeletehash());
+                        publicarDebate(debateProducto,token,userId,dialog);
                     }else{
-                        Toast.makeText(ActividadPrincipal.this, "Error al subir la imagen", Toast.LENGTH_SHORT).show();
+                        System.out.println(response.errorBody().toString());
+                        Toast.makeText(ActividadPrincipal.this, response.errorBody().toString(), Toast.LENGTH_SHORT).show();
                     }
                 }
                 @Override
                 public void onFailure(Call<ImgurObject> call, Throwable t) {
-                    Toast.makeText(ActividadPrincipal.this, "Error al subir la imagen", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ActividadPrincipal.this, t.toString(), Toast.LENGTH_SHORT).show();
                 }
             });
         }catch (IOException e){
