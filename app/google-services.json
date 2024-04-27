@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "830956734705",
+    "project_id": "debatazo-2cd8a",
+    "storage_bucket": "debatazo-2cd8a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:830956734705:android:0380ca62c0fd0260de0150",
+        "android_client_info": {
+          "package_name": "com.example.debatazo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBug3xRHbMD5wnG96DdskRA7tbOpoXa5Lg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -94,7 +94,7 @@ public class LoginViewModel extends ViewModel {
                 sharedPreferences.getInt(SharedPreferenceUtils.USER_ID, 0) != 0) {
 
             //Otiene correo y contraseña de usuario y hacer login
-            sharedPreferences = context.getSharedPreferences(SaveSharedPreference.PREFS_NOMBRE, Context.MODE_PRIVATE);
+            sharedPreferences = context.getSharedPreferences(SharedPreferenceUtils.PREFS_CUENTA, Context.MODE_PRIVATE);
             login(
                     sharedPreferences.getString(SharedPreferenceUtils.EMAIL, ""),
                     sharedPreferences.getString(SharedPreferenceUtils.CONTRASENIA, ""),

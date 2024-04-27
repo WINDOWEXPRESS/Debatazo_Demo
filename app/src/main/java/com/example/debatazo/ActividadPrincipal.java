@@ -1,23 +1,10 @@
 package com.example.debatazo;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 import android.Manifest;
-
 import android.app.AlertDialog;
-import android.content.Context;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-
-import android.content.SharedPreferences;
-import android.net.Uri;
-import android.os.Bundle;
-import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -49,20 +36,17 @@ import com.example.debatazo.debaterecycler.api.ServicioDebateProducto;
 import com.example.debatazo.imgur.ImgurObject;
 import com.example.debatazo.imgur.ImgurService;
 import com.example.debatazo.imgur.Medias;
-import com.example.debatazo.savesharedpreference.SaveSharedPreference;
-import com.example.debatazo.token.Token;
-import com.example.debatazo.token.usuario.PerfilFragment;
-import com.example.debatazo.databinding.ActividadPrincipalBinding;
-import com.example.debatazo.token.usuario.iniciarsesion.ui.login.IniciaSesion;
-import com.example.debatazo.token.usuario.iniciarsesion.ui.login.LoginViewModel;
-import com.example.debatazo.token.usuario.iniciarsesion.ui.login.LoginViewModelFactory;
+import com.example.debatazo.usuario.PerfilFragment;
+import com.example.debatazo.usuario.iniciarsesion.data.model.Token;
+import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
+import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModel;
+import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModelFactory;
 
-import java.io.File;
+
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -79,10 +63,8 @@ public class ActividadPrincipal extends AppCompatActivity {
     private LoginViewModel loginViewModel;
     private ActivityResultLauncher<String> requestResultLauncher;
     private ActivityResultLauncher<Intent> resultLauncher;
-    private Uri uriImagen;
     private Medias medias = new Medias();
 
-    private final static int IMG_VIEW_SIZE = 1000;
     ActividadPrincipalBinding binding;
 
     @Override

@@ -37,10 +37,10 @@ public class LoginDataSource {
 
                         loadingLiveData.setValue(false);
                         Token.getInstance().setValueAndUserId(response.body().getValue(),response.body().getUserId());
-                        SharedPreferences sharedPreferences = context.getSharedPreferences(SaveSharedPreference.PREFS_TOKEN,Context.MODE_PRIVATE);
+                        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferenceUtils.PREFS_TOKEN,Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putInt(SaveSharedPreference.USER_ID,Token.getInstance().getUserId());
-                        editor.putString(SaveSharedPreference.TOKEN_VALUE,Token.getInstance().getValue());
+                        editor.putInt(SharedPreferenceUtils.USER_ID,Token.getInstance().getUserId());
+                        editor.putString(SharedPreferenceUtils.TOKEN_VALUE,Token.getInstance().getValue());
                         editor.apply();
 
                         //Con los datos que responde por token se hace pedicion de perfil usario con token obtenido.

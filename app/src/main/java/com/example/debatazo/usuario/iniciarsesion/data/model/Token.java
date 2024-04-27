@@ -4,9 +4,6 @@ public class Token {
 
     public String value;
     public int userId;
-    private static Token instance;
-    private String value;
-    private int userId;
 
     //Singleton
     private static Token instance;
