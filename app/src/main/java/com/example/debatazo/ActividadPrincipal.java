@@ -1,28 +1,16 @@
 package com.example.debatazo;
 
-import androidx.annotation.Nullable;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 import android.Manifest;
-
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-
 import android.content.SharedPreferences;
-import android.net.Uri;
-import android.os.Bundle;
-import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.ViewGroup;
@@ -33,24 +21,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.debatazo.band.BandObject;
 import com.example.debatazo.configuracion.BrilloUtils;
+import com.example.debatazo.databinding.ActividadPrincipalBinding;
 import com.example.debatazo.debaterecycler.DebateFragmento;
-import com.example.debatazo.usuario.PerfilFragment;
 import com.example.debatazo.debaterecycler.DebateProducto;
 import com.example.debatazo.debaterecycler.api.ServicioDebateProducto;
 import com.example.debatazo.imgur.ImgurObject;
 import com.example.debatazo.imgur.ImgurService;
 import com.example.debatazo.imgur.Medias;
-import com.example.debatazo.savesharedpreference.SaveSharedPreference;
-import com.example.debatazo.token.usuario.PerfilFragment;
-import com.example.debatazo.databinding.ActividadPrincipalBinding;
+
+import com.example.debatazo.savesharedpreference.SharedPreferenceUtils;
+import com.example.debatazo.usuario.PerfilFragment;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModel;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModelFactory;
-import com.example.debatazo.token.usuario.iniciarsesion.ui.login.IniciaSesion;
-import com.example.debatazo.token.usuario.iniciarsesion.ui.login.LoginViewModel;
-import com.example.debatazo.token.usuario.iniciarsesion.ui.login.LoginViewModelFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -214,8 +207,8 @@ public class ActividadPrincipal extends AppCompatActivity {
                 // Si todos los campos estan llenos, publicar el debate
                 //Obtener el token y el id del usuario
                 SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-                String token = sharedPref.getString(SaveSharedPreference.TOKEN_VALUE, "");
-                int userId = sharedPref.getInt(SaveSharedPreference.USER_ID, 0);
+                String token = sharedPref.getString(SharedPreferenceUtils.TOKEN_VALUE, "");
+                int userId = sharedPref.getInt(SharedPreferenceUtils.USER_ID, 0);
 
                 // Crear un nuevo DebateProducto con los datos del formulario
                 Set<BandObject> bands = new HashSet<>();

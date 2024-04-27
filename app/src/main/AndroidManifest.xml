@@ -24,17 +24,17 @@
             android:name=".configuracion.view.Configuracion"
             android:exported="false" />
         <activity
-            android:name=".token.usuario.datospersonal.ActividadDatosPersonal"
+            android:name=".usuario.datospersonal.ActividadDatosPersonal"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:exported="false" />
         <activity
-            android:name=".token.usuario.registrar.ActividadRegistrar"
+            android:name=".usuario.registrar.ActividadRegistrar"
             android:exported="false" />
         <activity
             android:name=".debaterecycler.detalle.DebateDetalle"
             android:exported="false" />
         <activity
-            android:name=".token.usuario.iniciarsesion.ui.login.IniciaSesion"
+            android:name=".usuario.iniciarsesion.ui.login.IniciaSesion"
             android:exported="false" />
         <activity
             android:name=".ActividadPrincipal"
