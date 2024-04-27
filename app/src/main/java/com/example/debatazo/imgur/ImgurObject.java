@@ -1,11 +1,13 @@
 package com.example.debatazo.imgur;
 
+import android.text.BoringLayout;
+
 import okhttp3.MultipartBody;
 
 public class ImgurObject{
     private data data;
     private int status;
-    private String success;
+    private Boolean success;
 
     public ImgurObject.data getData() {
         return data;
@@ -15,11 +17,12 @@ public class ImgurObject{
         return status;
     }
 
-    public String getSuccess() {
+    public Boolean getSuccess() {
         return success;
     }
 
     public class data{
+        private String error;
         private String deletehash;
         private String link;
 
@@ -29,6 +32,10 @@ public class ImgurObject{
 
         public String getLink() {
             return link;
+        }
+
+        public String getError() {
+            return error;
         }
     }
 

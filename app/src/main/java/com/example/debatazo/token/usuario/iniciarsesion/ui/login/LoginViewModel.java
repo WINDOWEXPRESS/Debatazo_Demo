@@ -90,18 +90,8 @@ public class LoginViewModel extends ViewModel {
         if (!sharedPreferences.getString(SaveSharedPreference.TOKEN_VALUE, "").isEmpty() &&
                 sharedPreferences.getInt(SaveSharedPreference.USER_ID, 0) != 0) {
 
-            // Obtener el token y el ID de usuario de las preferencias compartidas
-            String tokenValue = sharedPreferences.getString(SaveSharedPreference.TOKEN_VALUE, "");
-            int userId = sharedPreferences.getInt(SaveSharedPreference.USER_ID, 0);
-
-            // Configurar una instancia de Token con el token y el ID de usuario obtenidos
-            Token.getInstance().setValueAndUserId(tokenValue, userId);
-
-        //Si existen token se auto loguea la cuenta.
-        if (Token.hasInstance()) {
-
+            //Otiene correo y contraseña de usuario y hacer login
             sharedPreferences = context.getSharedPreferences(SaveSharedPreference.PREFS_NOMBRE, Context.MODE_PRIVATE);
-        }
             login(
                 sharedPreferences.getString(SaveSharedPreference.EMAIL, ""),
                 sharedPreferences.getString(SaveSharedPreference.CONTRASENIA, ""),

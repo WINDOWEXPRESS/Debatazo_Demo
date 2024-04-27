@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">DEBATAZO</string>
     <!--ACTIVITY PRINCIPAL-->
+    <string name="aceptar">Aceptar</string>
+    <string name="cancelar">Cancelar</string>
     <string name="publicar">Publicar</string>
     <string name="principal">Principal</string>
     <string name="debate">Debate</string>

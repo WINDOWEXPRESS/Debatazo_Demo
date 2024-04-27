@@ -15,11 +15,11 @@ public class DebateProducto implements Serializable {
     private String userName;
     private String title;
     private String description;
-    private String imgUrl;
+    private String imageUrl;
     private Set<BandObject> bands;
-    private String image_delete_hash;
+    private String imageDeleteHast;
 
-    public DebateProducto(int userId, int debateId, String profileImg, Date releaseDate, String userName, String title, String description, String imgUrl) {
+    public DebateProducto(int userId, int debateId, String profileImg, Date releaseDate, String userName, String title, String description, String imageUrl) {
         this.userId = userId;
         this.debateId = debateId;
         this.profileImg = profileImg;
@@ -27,7 +27,7 @@ public class DebateProducto implements Serializable {
         this.userName = userName;
         this.title = title;
         this.description = description;
-        this.imgUrl = imgUrl;
+        this.imageUrl = imageUrl;
     }
 
     public DebateProducto(String title, String description, Set<BandObject> bands) {
@@ -64,15 +64,15 @@ public class DebateProducto implements Serializable {
         return description;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public void setImage_delete_hash(String image_delete_hash) {
-        this.image_delete_hash = image_delete_hash;
+    public void setImageDeleteHash(String imageDeleteHast) {
+        this.imageDeleteHast = imageDeleteHast;
     }
 }

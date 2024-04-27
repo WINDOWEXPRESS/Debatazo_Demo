@@ -34,16 +34,15 @@ public class LoginDataSource {
                         // Se hace el primero pedicion de token con login.
 
                         loadingLiveData.setValue(false);
-
-                        Token token = response.body();
+                        Token.getInstance().setValueAndUserId(response.body().getValue(),response.body().getUserId());
                         SharedPreferences sharedPreferences = context.getSharedPreferences(SaveSharedPreference.PREFS_TOKEN,Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putInt(SaveSharedPreference.USER_ID,token.userId);
-                        editor.putString(SaveSharedPreference.TOKEN_VALUE,token.value);
+                        editor.putInt(SaveSharedPreference.USER_ID,Token.getInstance().getUserId());
+                        editor.putString(SaveSharedPreference.TOKEN_VALUE,Token.getInstance().getValue());
                         editor.apply();
 
                         //Con los datos que responde por token se hace pedicion de perfil usario con token obtenido.
-                        Call<LoggedInUser> llamada = retrofitCliente.getApiUsuario().getProfile(token.value,token.userId);
+                        Call<LoggedInUser> llamada = retrofitCliente.getApiUsuario().getProfile(Token.getInstance().getValue(),Token.getInstance().getUserId());
                         llamada.enqueue(new Callback<LoggedInUser>() {
                             @Override
                             public void onResponse(Call<LoggedInUser> call, Response<LoggedInUser> response) {

@@ -5,8 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ImgurService {
     private static ImgurService instacia;
     private static ImgurApi repositorio;
-
-    private final String IMGUR_URL = "https://api.imgur.com";
+    private final String IMGUR_URL = "https://api.imgur.com/3/";
 
     private ImgurService(){
         Retrofit retrofit = new Retrofit.Builder()
