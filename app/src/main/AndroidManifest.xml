@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:ignore="ProtectedPermissions"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:usesCleartextTraffic="true"
@@ -23,17 +24,17 @@
             android:name=".configuracion.view.Configuracion"
             android:exported="false" />
         <activity
-            android:name=".usuario.datospersonal.ActividadDatosPersonal"
+            android:name=".token.usuario.datospersonal.ActividadDatosPersonal"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:exported="false" />
         <activity
-            android:name=".usuario.registrar.ActividadRegistrar"
+            android:name=".token.usuario.registrar.ActividadRegistrar"
             android:exported="false" />
         <activity
             android:name=".debaterecycler.detalle.DebateDetalle"
             android:exported="false" />
         <activity
-            android:name=".usuario.iniciarsesion.ui.login.IniciaSesion"
+            android:name=".token.usuario.iniciarsesion.ui.login.IniciaSesion"
             android:exported="false" />
         <activity
             android:name=".ActividadPrincipal"

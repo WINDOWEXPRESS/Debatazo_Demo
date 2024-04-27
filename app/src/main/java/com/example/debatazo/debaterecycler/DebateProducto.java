@@ -1,8 +1,11 @@
 package com.example.debatazo.debaterecycler;
 
+import com.example.debatazo.band.BandObject;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 
 public class DebateProducto implements Serializable {
     private int userId;
@@ -13,6 +16,8 @@ public class DebateProducto implements Serializable {
     private String title;
     private String description;
     private String imgUrl;
+    private Set<BandObject> bands;
+    private String image_delete_hash;
 
     public DebateProducto(int userId, int debateId, String profileImg, Date releaseDate, String userName, String title, String description, String imgUrl) {
         this.userId = userId;
@@ -23,6 +28,12 @@ public class DebateProducto implements Serializable {
         this.title = title;
         this.description = description;
         this.imgUrl = imgUrl;
+    }
+
+    public DebateProducto(String title, String description, Set<BandObject> bands) {
+        this.title = title;
+        this.description = description;
+        this.bands = bands;
     }
 
     public int getUserId() {
@@ -55,5 +66,13 @@ public class DebateProducto implements Serializable {
 
     public String getImgUrl() {
         return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public void setImage_delete_hash(String image_delete_hash) {
+        this.image_delete_hash = image_delete_hash;
     }
 }

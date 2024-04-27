@@ -36,7 +36,6 @@
                 android:gravity="center|start"
                 android:paddingStart="10dp"
                 android:text="Configuracion"
-                android:textColor="@color/black"
                 android:textSize="24sp" />
 
         </LinearLayout>
@@ -54,7 +53,6 @@
                 android:layout_weight="1"
                 android:padding="5dp"
                 android:text="Privacidad"
-                android:textColor="@color/black"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -72,7 +70,6 @@
                 android:layout_weight="1"
                 android:padding="5dp"
                 android:text="Sugerencia"
-                android:textColor="@color/black"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -96,7 +93,6 @@
                     android:layout_weight="1"
                     android:padding="5dp"
                     android:text="Brillo"
-                    android:textColor="@color/black"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -129,7 +125,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:backgroundTint="@color/black"
                     android:text="Seguir Sistema"
                     android:textSize="16sp" />
             </LinearLayout>

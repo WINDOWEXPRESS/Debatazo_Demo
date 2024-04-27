@@ -10,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -19,5 +20,5 @@ public interface DebateApi {
     @GET("debates/list/{id}")
     Call<DebateDetalleObjeto> getById(@Path("id") String id);
     @POST("debates/create")
-    Call<DebateProducto> publicarDebate(@Body DebateProducto debate, @Field("userId") String userId);
+    Call<String> publicarDebate(@Header("token") String token, @Body DebateProducto debate, @Field("userId") String userId);
 }
