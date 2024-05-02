@@ -27,13 +27,13 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.debatazo.band.BandObject;
-import com.example.debatazo.configuracion.BrilloUtils;
+import com.example.debatazo.utils.BrilloUtils;
 import com.example.debatazo.databinding.ActividadPrincipalBinding;
 import com.example.debatazo.debaterecycler.DebateFragmento;
 import com.example.debatazo.debaterecycler.DebateProducto;
 import com.example.debatazo.debaterecycler.api.ServicioDebateProducto;
 import com.example.debatazo.imgur.ImgurObject;
-import com.example.debatazo.imgur.ImgurService;
+import com.example.debatazo.imgur.api.ImgurService;
 import com.example.debatazo.imgur.Medias;
 import com.example.debatazo.usuario.PerfilFragment;
 import com.example.debatazo.usuario.iniciarsesion.data.model.Token;
@@ -58,11 +58,11 @@ public class ActividadPrincipal extends AppCompatActivity {
     // Definir una constante para el código de solicitud de la galería
 
     private ImageView imagenPublicar;
-    private PerfilFragment perfilFragment = new PerfilFragment();
+    private final PerfilFragment perfilFragment = new PerfilFragment();
     private LoginViewModel loginViewModel;
     private ActivityResultLauncher<String> requestResultLauncher;
     private ActivityResultLauncher<Intent> resultLauncher;
-    private Medias medias = new Medias();
+    private final Medias medias = new Medias();
 
     ActividadPrincipalBinding binding;
 
@@ -81,8 +81,8 @@ public class ActividadPrincipal extends AppCompatActivity {
         //ajuste de brillo
         BrilloUtils.getInstancia().brilloAppObserver(this);
 
-        binding.actividadPBottomNV.setBackground(null);
-        binding.actividadPBottomNV.setOnItemSelectedListener(item -> {
+        binding.aPrincipalBottomNV.setBackground(null);
+        binding.aPrincipalBottomNV.setOnItemSelectedListener(item -> {
 
             switch (item.getItemId()) {
                 case R.id.menuB_principal:
@@ -125,7 +125,7 @@ public class ActividadPrincipal extends AppCompatActivity {
             }
         });
 
-        binding.actividadPFloatingAB.setOnClickListener(view -> {
+        binding.aPrincipalBottomAB.setOnClickListener(view -> {
             // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
             LoginViewModel loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                     .get(LoginViewModel.class);
@@ -144,7 +144,7 @@ public class ActividadPrincipal extends AppCompatActivity {
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.actividadP_frameL, fragment);
+        fragmentTransaction.replace(R.id.aPrincipal_frameL, fragment);
         fragmentTransaction.commit();
     }
 
@@ -155,25 +155,22 @@ public class ActividadPrincipal extends AppCompatActivity {
         dialog.setContentView(R.layout.desplegable_publicar);
 
         //Vinculo con los componentes de layout
-        TextView debate = dialog.findViewById(R.id.desplegableP_textV_debate);
-        TextView valoracion = dialog.findViewById(R.id.desplegableP_textV_valoracion);
-        ImageView cancelButton = dialog.findViewById(R.id.desplegableP_imagenV_cancelar);
-        EditText titulo = dialog.findViewById(R.id.desplegableP_editTT_titulo);
-        EditText descripcion = dialog.findViewById(R.id.desplegableP_editTT_descripcion);
-        EditText banda_1 = dialog.findViewById(R.id.desplegableP_editTT_banda1);
-        EditText banda_2 = dialog.findViewById(R.id.desplegableP_editTT_banda2);
-        Button publicar = dialog.findViewById(R.id.desplegableP_button_publicarDebate);
+        TextView debate = dialog.findViewById(R.id.dPublicar_textV_debate);
+        TextView valoracion = dialog.findViewById(R.id.dPublicar_textV_valoracion);
+        ImageView cancelButton = dialog.findViewById(R.id.dPublicar_imagenV_cancelar);
+        EditText titulo = dialog.findViewById(R.id.dPublicar_editTT_titulo);
+        EditText descripcion = dialog.findViewById(R.id.dPublicar_editTT_descripcion);
+        EditText banda_1 = dialog.findViewById(R.id.dPublicar_editTT_banda1);
+        EditText banda_2 = dialog.findViewById(R.id.dPublicar_editTT_banda2);
+        Button publicar = dialog.findViewById(R.id.dPublicar_button_publicarDebate);
 
-        imagenPublicar = dialog.findViewById(R.id.desplegableP_imageV_imagen);
+        imagenPublicar = dialog.findViewById(R.id.dPublicar_imageV_imagen);
 
         debate.setOnClickListener(v -> {
 
         });
 
-        valoracion.setOnClickListener(v -> {
-            Toast.makeText(ActividadPrincipal.this, "Proximamente.", Toast.LENGTH_SHORT).show();
-
-        });
+        valoracion.setOnClickListener(v -> Toast.makeText(ActividadPrincipal.this, "Proximamente.", Toast.LENGTH_SHORT).show());
 
         imagenPublicar.setOnClickListener(view -> {
             // Método para abrir la galería cuando se hace clic en el botónç

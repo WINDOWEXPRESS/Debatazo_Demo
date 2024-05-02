@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DEBATAZO</string>
+    <string name="aceptar">Accept</string>
+    <string name="cancelar">Cancel</string>
     <string name="publicar">Publish</string>
     <string name="principal">Home</string>
     <string name="debate">Debate</string>
@@ -28,5 +29,32 @@
     <string name="conectar_ahora">Connect now</string>
     <string name="mensaje_campo_id_usuario">Unlock all the features and enjoy the full experience</string>
     <string name="seleccionar_fecha_de_nacimiento">Select birth date</string>
-    <string name="poltica_de_privacidad">Política de Privacidad</string>
+    <string name="poltica_de_privacidad">Privacy Policy</string>
+    <string name="sugerencia">Suggestion</string>
+    <string name="sugerencia_mensaje">Improve your experience!  Give us your feedback to improve our app</string>
+    <string name="sugerencia_hint">Write here any suggestions, remarks, warnings, etc.</string>
+    <string name="publicacion">Publicación</string>
+    <string name="publicacion_titulo">Introducir titulo</string>
+    <string name="publicacion_descripcion">Introducir descripción</string>
+    <string name="publicacion_titulo_a_favor">Titulo a favor</string>
+    <string name="pista_repetir_contrasenia">Repetir Contraseña</string>
+    <string name="terminos_condiciones">He leído y acepto los términos y condiciones de uso</string>
+    <string name="registrar">Registrar</string>
+    <string name="recordar">Recordar</string>
+    <string name="olvidado_su_contrasenia">¿Has olvidado su contraseña?</string>
+    <string name="no_tener_cuenta">¿No tienes una cuenta?</string>
+    <string name="registrate">Registrate</string>
+    <string name="configuracion">Configuracion</string>
+    <string name="privacidad">Privacidad</string>
+    <string name="brillo">Brillo</string>
+    <string name="seguir_sistema">Seguir Sistema</string>
+    <string name="datos_personal">Datos personal</string>
+    <string name="id">Id</string>
+    <string name="nombre_usuario">Nombre usuario</string>
+    <string name="nombre_personal">Nombre personal</string>
+    <string name="fecha">Fecha</string>
+    <string name="sexo">Sexo</string>
+    <string name="descripcion_personal">Descripción personal</string>
+    <string name="descripcion_personal_hint">Haz clic para rellenar tu perfil con aficiones, estilo de vida, etc.</string>
+    <string name="guardar">Guardar</string>
 </resources>

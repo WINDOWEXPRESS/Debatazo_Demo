@@ -1,4 +1,4 @@
-package com.example.debatazo.savesharedpreference;
+package com.example.debatazo.utils;
 
 
 public class SharedPreferenceUtils {

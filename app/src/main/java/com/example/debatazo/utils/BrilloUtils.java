@@ -1,4 +1,4 @@
-package com.example.debatazo.configuracion;
+package com.example.debatazo.utils;
 
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -23,7 +23,7 @@ public class BrilloUtils {
         return instancia;
     }
 
-    private MutableLiveData<Integer> brilloAppMLD = new MutableLiveData<>();
+    private final MutableLiveData<Integer> brilloAppMLD = new MutableLiveData<>();
 
     public LiveData<Integer> getBrilloAppLD() {
         return brilloAppMLD;
@@ -107,14 +107,14 @@ public class BrilloUtils {
             desactivarAutoBrillo(context);
 
             //Los valores de brillo generalmente se expresan en un rango de 0 a 1
-            lp.screenBrightness = Float.valueOf(valor) / (VALOR_MAXIMO);
+            lp.screenBrightness = (float) valor / (VALOR_MAXIMO);
             activity.getWindow().setAttributes(lp);
 
             activartAutoBrillo(context);
         } else {
 
             //Los valores de brillo generalmente se expresan en un rango de 0 a 1
-            lp.screenBrightness = Float.valueOf(valor) / (VALOR_MAXIMO);
+            lp.screenBrightness = (float) valor / (VALOR_MAXIMO);
             activity.getWindow().setAttributes(lp);
         }
         setBrilloAppMLD(valor);

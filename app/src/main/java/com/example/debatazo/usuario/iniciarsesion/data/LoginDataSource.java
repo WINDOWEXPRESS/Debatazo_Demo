@@ -4,10 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 
-import com.example.debatazo.savesharedpreference.SharedPreferenceUtils;
+import com.example.debatazo.utils.SharedPreferenceUtils;
 import com.example.debatazo.usuario.apirest.RetrofitCliente;
 import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
 import com.example.debatazo.usuario.iniciarsesion.data.model.Token;
@@ -31,7 +32,7 @@ public class LoginDataSource {
 
             tokenLlamada.enqueue(new Callback<Token>() {
                 @Override
-                public void onResponse(Call<Token> call, Response<Token> response) {
+                public void onResponse(@NonNull Call<Token> call, @NonNull Response<Token> response) {
                     if(response.isSuccessful()){
                         // Se hace el primero pedicion de token con login.
 
@@ -47,7 +48,7 @@ public class LoginDataSource {
                         Call<LoggedInUser> llamada = retrofitCliente.getApiUsuario().getProfile(Token.getInstance().getValue(),Token.getInstance().getUserId());
                         llamada.enqueue(new Callback<LoggedInUser>() {
                             @Override
-                            public void onResponse(Call<LoggedInUser> call, Response<LoggedInUser> response) {
+                            public void onResponse(@NonNull Call<LoggedInUser> call, @NonNull Response<LoggedInUser> response) {
                                 if (response.isSuccessful()) {
                                     callBack.onSuccess(new Result.Success<>(response.body()));
                                 } else {
@@ -56,7 +57,7 @@ public class LoginDataSource {
                                 }
                             }
                             @Override
-                            public void onFailure(Call<LoggedInUser> call, Throwable t) {
+                            public void onFailure(@NonNull Call<LoggedInUser> call, @NonNull Throwable t) {
                                 loadingLiveData.setValue(false);
                                 String errorMessage = "Error al iniciar sesión onFailure: " + t.getMessage();
                                 callBack.onFailure(new Result.Error(new IOException(errorMessage)));
@@ -70,7 +71,7 @@ public class LoginDataSource {
                 }
 
                 @Override
-                public void onFailure(Call<Token> call, Throwable t) {
+                public void onFailure(@NonNull Call<Token> call, @NonNull Throwable t) {
                     loadingLiveData.setValue(false);
                     String errorMessage = "Error al iniciar sesión onFailure: " + t.getMessage();
                     callBack.onFailure(new Result.Error(new IOException(errorMessage)));

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -78,7 +79,7 @@ public class PerfilFragment extends Fragment {
     private TextView idUsuario;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragmento_perfil, container, false);
@@ -127,10 +128,10 @@ public class PerfilFragment extends Fragment {
 
     }
     private void vincularVistas() {
-        info = rootView.findViewById(R.id.fragmentoP_datosUsuario);
-        perfil = rootView.findViewById(R.id.fragmentoP_imageV_perfil);
-        configuracion = rootView.findViewById(R.id.fragmentoP_imageV_configuracion);
-        modoTema = rootView.findViewById(R.id.fragmentoP_imageV_tema);
+        info = rootView.findViewById(R.id.fPerfil_datosUsuario);
+        perfil = rootView.findViewById(R.id.fPerfil_imageV_perfil);
+        configuracion = rootView.findViewById(R.id.fPerfil_imageV_configuracion);
+        modoTema = rootView.findViewById(R.id.fPerfil_imageV_tema);
         nombreUsuario = rootView.findViewById(R.id.fragmentoP_textV_nombreUsuario);
         idUsuario = rootView.findViewById(R.id.fragmentoP_textV_idUsuario);
 
@@ -141,7 +142,7 @@ public class PerfilFragment extends Fragment {
             loginViewModel.getLoginRepository().getLoggedInUserLiveData().observe(getViewLifecycleOwner(),loggedInUser -> {
                 if(loggedInUser != null){
                     nombreUsuario.setText(loggedInUser.getUser_name());
-                    idUsuario.setText("ID:" + loggedInUser.getId());
+                    idUsuario.setText(String.format("ID:%s", loggedInUser.getId()));
                     Picasso.get().load(loggedInUser.getProfile_img()).into(perfil);
                     info.setClickable(false);
                 }else {

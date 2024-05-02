@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/debateRV_linearL_principal"
+    android:id="@+id/fDDetalle_linearL_principal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
@@ -12,13 +12,13 @@
     android:padding="15dp">
 
     <LinearLayout
-        android:id="@+id/debateRV_linearL_usuario"
+        android:id="@+id/fDDetalle_linearL_usuario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/debateRV_imagenC_usuario"
+            android:id="@+id/fDDetalle_imagenC_usuario"
             android:layout_width="150dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -27,20 +27,20 @@
             app:shapeAppearanceOverlay="@style/redondearImageView" />
 
         <LinearLayout
-            android:id="@+id/debateRV_linearL_contenidoU"
+            android:id="@+id/fDDetalle_linearL_contenidoU"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/debateRV_textV_nombre"
+                android:id="@+id/fDDetalle_textV_nombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/debateRV_textV_fecha"
+                android:id="@+id/fDDetalle_textV_fecha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -50,17 +50,18 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/debateRV_textV_titulo"
+        android:id="@+id/fDDetalle_textV_titulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:textSize="24sp" />
 
     <ImageView
-        android:id="@+id/debateRV_imageV"
+        android:id="@+id/fDDetalle_imageV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:scaleType="centerCrop"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        android:contentDescription="Imagen debate" />
 </LinearLayout>

@@ -29,7 +29,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.debatazo.R;
-import com.example.debatazo.configuracion.BrilloUtils;
+import com.example.debatazo.utils.BrilloUtils;
 import com.example.debatazo.databinding.ActividadDatosPersonalBinding;
 
 import com.example.debatazo.usuario.EnumPerfil;
@@ -61,22 +61,18 @@ public class ActividadDatosPersonal extends AppCompatActivity {
         binding = ActividadDatosPersonalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        vincularVista();
+        vincularComponentes();
 
         //ajuste de brillo
         BrilloUtils.getInstancia().brilloAppObserver(this);
 
         mostrarInformacion();
 
-        perfil.setOnClickListener(view -> {
-            mostrarDialogoPerfil();
-        });
-        fecha.setOnClickListener(view -> {
-            showDatePickerDialog(this);
-        });
-        volver.setOnClickListener(view -> {
-            finish();
-        });
+        perfil.setOnClickListener(view -> mostrarDialogoPerfil());
+
+        fecha.setOnClickListener(view -> showDatePickerDialog(this));
+
+        volver.setOnClickListener(view -> finish());
 
         maximoCaracteres(descripcionPersonal, limiteNumerico);
 
@@ -84,19 +80,15 @@ public class ActividadDatosPersonal extends AppCompatActivity {
             AlertDialog.Builder confirmar = new AlertDialog.Builder(ActividadDatosPersonal.this);
             confirmar.setTitle("Confirmar");
             confirmar.setMessage("Deseas guardar los cambios?");
-            confirmar.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Acción a realizar al hacer clic en Aceptar
-                    dialog.dismiss(); // Cierra el AlertDialog
-                }
+
+            confirmar.setPositiveButton("Aceptar", (dialog, which) -> {
+                // Acción a realizar al hacer clic en Aceptar
+                dialog.dismiss(); // Cierra el AlertDialog
             });
-            confirmar.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Acción a realizar al hacer clic en Cancelar
-                    dialog.dismiss(); // Cierra el AlertDialog
-                }
+
+            confirmar.setNegativeButton("Cancelar", (dialog, which) -> {
+                // Acción a realizar al hacer clic en Cancelar
+                dialog.dismiss(); // Cierra el AlertDialog
             });
             AlertDialog alertDialog = confirmar.create();
             alertDialog.show();
@@ -124,17 +116,17 @@ public class ActividadDatosPersonal extends AppCompatActivity {
 
     }
 
-    private void vincularVista() {
-        limiteNumerico = binding.actividadDPTextVLimiteNumerico;
-        descripcionPersonal = binding.actividadDPEditTTDescripcionPersonal;
-        volver = binding.actividadDPImageBVolver;
-        id = binding.actividadDPEditTTId;
-        nombreUsuario = binding.actividadDPEditTTNombre;
-        nombrePersonal = binding.actividadDPEditTTNombrePersonal;
-        fecha = binding.actividadDPEditTTFecha;
-        sexo = binding.actividadDPSpinnerSexo;
-        perfil = binding.actividadDPImageVPerfil;
-        guardar = binding.actividadDPButtonGuardar;
+    private void vincularComponentes() {
+        limiteNumerico = binding.aDPersonalTextVLimiteNumerico;
+        descripcionPersonal = binding.aDPersonalEditTTDescripcionPersonal;
+        volver = binding.aDPersonalImageBVolver;
+        id = binding.aDPersonalEditTTId;
+        nombreUsuario = binding.aDPersonalEditTTNombre;
+        nombrePersonal = binding.aDPersonalEditTTNombrePersonal;
+        fecha = binding.aDPersonalEditTTFecha;
+        sexo = binding.aDPersonalSpinnerSexo;
+        perfil = binding.aDPersonalImageVPerfil;
+        guardar = binding.aDPersonalButtonGuardar;
 
     }
     private void mostrarInformacion() {
@@ -154,7 +146,7 @@ public class ActividadDatosPersonal extends AppCompatActivity {
                 nombrePersonal.setText(loggedInUser.getFull_name());
 
                 //fecha.setText(loginViewModel.getLoginRepository().getUser().getAge());
-                String sexoObtenido = loggedInUser.getSex().toString();
+                String sexoObtenido = loggedInUser.getSex();
                 mostrarSexo(sexoObtenido);
 
                 // Cargar la imagen de perfil del usuario utilizando Picasso
@@ -183,29 +175,24 @@ public class ActividadDatosPersonal extends AppCompatActivity {
         }
     }
     private void showDatePickerDialog(Context context) {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            final Calendar calendar = Calendar.getInstance();
-            // Establecer la fecha predeterminada (por ejemplo, 2000-01-31)
-            int anioPredeterminada = 2000;
-            int mesPredeterminada = 0; // Noviembre (los meses comienzan desde 0)
-            int diaPredeterminada = 31;
+        final Calendar calendar = Calendar.getInstance();
+        // Establecer la fecha predeterminada (por ejemplo, 2000-01-31)
+        int anioPredeterminada = 2000;
+        int mesPredeterminada = 0; // Noviembre (los meses comienzan desde 0)
+        int diaPredeterminada = 31;
 
-            DatePickerDialog dialog = new DatePickerDialog(context,R.style.dialog_date);
-            //dialog.setTitle(getString(R.string.seleccionar_fecha_de_nacimiento));
-            dialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    calendar.set(year, month, dayOfMonth);
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                    fecha.setText(format.format(calendar.getTime()));
-                }
-            });
-            DatePicker datePicker = dialog.getDatePicker();
-            //Iniciar fecha predeterminada
-            datePicker.init(anioPredeterminada,mesPredeterminada,diaPredeterminada,null);
-            datePicker.setMaxDate(calendar.getTimeInMillis());
-            dialog.show();
-        }
+        DatePickerDialog dialog = new DatePickerDialog(context,R.style.dialog_date);
+        //dialog.setTitle(getString(R.string.seleccionar_fecha_de_nacimiento));
+        dialog.setOnDateSetListener((view, year, month, dayOfMonth) -> {
+            calendar.set(year, month, dayOfMonth);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            fecha.setText(format.format(calendar.getTime()));
+        });
+        DatePicker datePicker = dialog.getDatePicker();
+        //Iniciar fecha predeterminada
+        datePicker.init(anioPredeterminada,mesPredeterminada,diaPredeterminada,null);
+        datePicker.setMaxDate(calendar.getTimeInMillis());
+        dialog.show();
     }
 
 
@@ -231,7 +218,7 @@ public class ActividadDatosPersonal extends AppCompatActivity {
         ImageView mujer2 = view.findViewById(EnumPerfil.MUJER2.REFERENCIA_ID);
         ImageView mujer3 = view.findViewById(EnumPerfil.MUJER3.REFERENCIA_ID);
         ImageView mujer4 = view.findViewById(EnumPerfil.MUJER4.REFERENCIA_ID);
-        ImageView galeria =  view.findViewById(R.id.avatarU_imageV_galeria);
+        ImageView galeria =  view.findViewById(R.id.aUsuario_imageV_galeria);
         hombre1.setOnClickListener(getOnClickListener(dialog,EnumPerfil.HOMBRE1));
         hombre2.setOnClickListener(getOnClickListener(dialog,EnumPerfil.HOMBRE2));
         hombre3.setOnClickListener(getOnClickListener(dialog,EnumPerfil.HOMBRE3));
@@ -239,9 +226,8 @@ public class ActividadDatosPersonal extends AppCompatActivity {
         mujer2.setOnClickListener(getOnClickListener(dialog,EnumPerfil.MUJER2));
         mujer3.setOnClickListener(getOnClickListener(dialog,EnumPerfil.MUJER3));
         mujer4.setOnClickListener(getOnClickListener(dialog,EnumPerfil.MUJER4));
-        galeria.setOnClickListener(view1 -> {
-            abrirGaleria();
-        });
+
+        galeria.setOnClickListener(view1 -> abrirGaleria());
     }
     private void abrirGaleria() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);

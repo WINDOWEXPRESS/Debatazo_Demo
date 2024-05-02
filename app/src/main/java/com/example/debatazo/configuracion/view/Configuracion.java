@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,8 +33,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.debatazo.R;
-import com.example.debatazo.configuracion.BrilloUtils;
-import com.example.debatazo.savesharedpreference.SharedPreferenceUtils;
+import com.example.debatazo.utils.BrilloUtils;
+import com.example.debatazo.utils.SharedPreferenceUtils;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModel;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModelFactory;
@@ -67,15 +66,12 @@ public class Configuracion extends AppCompatActivity {
                     if (Settings.System.canWrite(Configuracion.this)) {
                         // El usuario otorgó el permiso poner visible el ajuste de brillo
                         brilloLinearLayout.setVisibility(View.VISIBLE);
-                    } else {
-                        // El usuario denegó el permiso
                     }
+
                 });
 
         //Cuando usuario click brillo pregunta si permitir Modificar la configuración
-        brilloTextView.setOnClickListener(view -> {
-            allowModifySettings( requestPermissionLauncher);
-        });
+        brilloTextView.setOnClickListener(view -> allowModifySettings( requestPermissionLauncher));
 
         // Escuchar cambios del valor de BrilloAppLD
         brilloUtils.brilloAppObserver(Configuracion.this);
@@ -134,9 +130,7 @@ public class Configuracion extends AppCompatActivity {
         });
 
         //Salir de configuracion
-        volver.setOnClickListener(view -> {
-            finish();
-        });
+        volver.setOnClickListener(view -> finish());
 
         // Validar si el usuario está logueado y habilitar/deshabilitar el botón "Cerrar Sesión"
         if (!loginViewModel.getLoginRepository().isLoggedIn()) {
@@ -144,21 +138,19 @@ public class Configuracion extends AppCompatActivity {
         }
 
         // Configurar el botón "Cerrar Sesión"
-        cerrarSesion.setOnClickListener(view -> {
-            mostrarLogoutConfirmacionDialog();
-        });
+        cerrarSesion.setOnClickListener(view -> mostrarLogoutConfirmacionDialog());
 
     }
 
     private void vincularVistas() {
-        cerrarSesion = findViewById(R.id.actividadC_button_cerrarSesion);
-        brilloSeekBar = findViewById(R.id.actividadC_SeekB_brillo);
-        seguirSistema = findViewById(R.id.actividadC_checkB_seguirSistema);
-        brilloLinearLayout = findViewById(R.id.actividadC_linearLV_brillo);
-        sugerencia = findViewById(R.id.actividadC_textV_sugerencia);
-        brilloTextView = findViewById(R.id.actividadC_textV_Brillo);
-        volver = findViewById(R.id.actividadC_imageV_volver);
-        privacidad = findViewById(R.id.actividadC_textV_privacidad);
+        cerrarSesion = findViewById(R.id.aConfiguracion_button_cerrarSesion);
+        brilloSeekBar = findViewById(R.id.aConfiguracion_SeekB_brillo);
+        seguirSistema = findViewById(R.id.aConfiguracion_checkB_seguirSistema);
+        brilloLinearLayout = findViewById(R.id.aConfiguracion_linearLV_brillo);
+        sugerencia = findViewById(R.id.aConfiguracion_textV_sugerencia);
+        brilloTextView = findViewById(R.id.aConfiguracion_textV_Brillo);
+        volver = findViewById(R.id.aConfiguracion_imageV_volver);
+        privacidad = findViewById(R.id.aConfiguracion_textV_privacidad);
 
         // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory()).get(LoginViewModel.class);
@@ -237,24 +229,18 @@ public class Configuracion extends AppCompatActivity {
     private void allowModifySettings( ActivityResultLauncher<Intent> requestPermissionLauncher) {
         // Settings.System.canWrite(MainActivity.this)
         // 检测是否拥有写入系统 Settings 的权限
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.System.canWrite(Configuracion.this)) {
+        if (!Settings.System.canWrite(Configuracion.this)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.dialog_date);
             builder.setTitle("Permiso para modificar el brillo de la pantalla");
             builder.setMessage("Haga clic en PERMITIR para abrir");
+
             // 拒绝, 无法修改
-            builder.setNegativeButton("RECHAZAR", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(Configuracion.this, "Permiso denegado.", Toast.LENGTH_LONG).show();
-                }
-            });
-            builder.setPositiveButton("PERMITIR", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // 打开允许修改Setting 权限的界面
-                    Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS, Uri.parse("package:" + getPackageName()));
-                    requestPermissionLauncher.launch(intent);
-                }
+            builder.setNegativeButton("RECHAZAR", (dialog, which) -> Toast.makeText(Configuracion.this, "Permiso denegado.", Toast.LENGTH_LONG).show());
+
+            builder.setPositiveButton("PERMITIR", (dialog, which) -> {
+                // 打开允许修改Setting 权限的界面
+                Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS, Uri.parse("package:" + getPackageName()));
+                requestPermissionLauncher.launch(intent);
             });
             builder.setCancelable(false);
             builder.show();
@@ -268,10 +254,10 @@ public class Configuracion extends AppCompatActivity {
         dialog.setContentView(R.layout.desplegable_sugerencia);
 
         //Vinculo con los componentes de layout
-        EditText descripcion = dialog.findViewById(R.id.desplegableS_editTT_descripcion);
-        TextView maximoCaracteres = dialog.findViewById(R.id.desplegableS_textV_limiteNumerico);
-        Button enviar = dialog.findViewById(R.id.desplegableS_button_enviar);
-        ImageView cancelar = dialog.findViewById(R.id.desplegableS_imagenV_cancelar);
+        EditText descripcion = dialog.findViewById(R.id.dSugerencia_editTT_descripcion);
+        TextView maximoCaracteres = dialog.findViewById(R.id.dSugerencia_textV_limiteNumerico);
+        Button enviar = dialog.findViewById(R.id.dSugerencia_button_enviar);
+        ImageView cancelar = dialog.findViewById(R.id.dSugerencia_imagenV_volver);
 
         maximoCaracteres(descripcion,maximoCaracteres);
 
@@ -315,11 +301,7 @@ public class Configuracion extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.confirmacion_envio);
         builder.setMessage(R.string.mensaje_confirmacion_sugerencia);
-        builder.setPositiveButton(R.string.si, (dialog, which) -> {
-
-            enviarCorreo(descripcion);
-
-        });
+        builder.setPositiveButton(R.string.si, (dialog, which) -> enviarCorreo(descripcion));
         builder.setNegativeButton(R.string.no, (dialog, which) -> {
             // No hacemos nada
 

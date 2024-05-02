@@ -10,6 +10,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -26,5 +27,8 @@ public interface ApiServicioUsuario {
 
     @GET("users/profile/{id}")
     Call<LoggedInUser> getProfile(@Header("token") String token, @Path("id") int id);
+
+    @PUT("users/profile/update/{id}")
+    Call<LoggedInUser> updateProfile(@Header("token") String token, @Path("id") int id,@Body LoggedInUser user);
 
 }

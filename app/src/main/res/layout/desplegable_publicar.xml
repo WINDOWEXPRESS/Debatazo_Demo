@@ -1,55 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/desplegableP_lineaLH_crearValoracion"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dPublicar_lineaLH_crearValoracion"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo_tabla_publicar"
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/desplegableP_textV_barra"
+        android:id="@+id/dPublicar_textV_barra"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center|top"
         android:scaleType="centerCrop"
-        android:src="@drawable/barra_horizontal_tabla_publicar" />
+        android:src="@drawable/barra_horizontal_tabla_publicar"
+        android:importantForAccessibility="no" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
-            android:id="@+id/desplegableP_imagenV_cancelar"
+            android:id="@+id/dPublicar_imagenV_cancelar"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_gravity="center"
-            android:src="@drawable/cerrar_tabla_publicar" />
+            android:src="@drawable/cerrar_tabla_publicar"
+            android:contentDescription="Volver" />
 
         <TextView
-            android:id="@+id/desplegableP_textV_publicacion"
-            android:layout_width="wrap_content"
+            android:id="@+id/dPublicar_textV_publicacion"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="8dp"
-            android:text="Publicación"
+            android:text="@string/publicacion"
             android:textAlignment="viewStart"
             android:textColor="@color/black"
-            android:textSize="25dp" />
+            android:textSize="25sp" />
 
     </LinearLayout>
 
 
     <LinearLayout
-        android:id="@+id/desplegableP_lineaLH_opcion"
+        android:id="@+id/dPublicar_lineaLH_opcion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/desplegableP_textV_debate"
+            android:id="@+id/dPublicar_textV_debate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -60,7 +64,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/desplegableP_textV_valoracion"
+            android:id="@+id/dPublicar_textV_valoracion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -77,23 +81,25 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/desplegableP_editTT_titulo"
+            android:id="@+id/dPublicar_editTT_titulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Introducir titulo"
+            android:hint="@string/publicacion_titulo"
             android:inputType="text"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            android:importantForAutofill="no" />
 
         <EditText
-            android:id="@+id/desplegableP_editTT_descripcion"
+            android:id="@+id/dPublicar_editTT_descripcion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Introducir descripción"
+            android:hint="@string/publicacion_descripcion"
             android:inputType="text|textMultiLine"
             android:maxLength="250"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            android:importantForAutofill="no" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -101,36 +107,39 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/desplegableP_editTT_banda1"
+                android:id="@+id/dPublicar_editTT_banda1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Titulo a favor"
+                android:hint="@string/publicacion_titulo_a_favor"
                 android:inputType="text"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:importantForAutofill="no"/>
 
             <EditText
-                android:id="@+id/desplegableP_editTT_banda2"
+                android:id="@+id/dPublicar_editTT_banda2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Titulo en contra"
+                android:hint="@string/publicacion_titulo_en_contra"
                 android:inputType="text"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:importantForAutofill="no"/>
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/desplegableP_imageV_imagen"
+            android:id="@+id/dPublicar_imageV_imagen"
             android:layout_width="match_parent"
             android:layout_height="182dp"
             android:background="#E1DFDF"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_baseline_add_24" />
+            app:srcCompat="@drawable/ic_baseline_add_24"
+            android:importantForAccessibility="no" />
 
         <Button
-            android:id="@+id/desplegableP_button_publicarDebate"
+            android:id="@+id/dPublicar_button_publicarDebate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/publicar" />

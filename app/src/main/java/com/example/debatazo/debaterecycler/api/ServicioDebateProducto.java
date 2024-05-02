@@ -1,6 +1,6 @@
 package com.example.debatazo.debaterecycler.api;
 
-import com.example.debatazo.R;
+import static com.example.debatazo.utils.GlobalConstants.BASE_URI_SERVER;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -9,12 +9,9 @@ public class ServicioDebateProducto {
     private static ServicioDebateProducto instacia;
     private static DebateApi repositorio;
 
-    private String URL_ORDENADOR_CHEN = "http://192.168.1.149:8080/";
-    private String URL_EMULADOR = "http://10.0.2.2:8080/";
-    private String URL = "https://debatazo-2cd8a.ew.r.appspot.com/";
     private ServicioDebateProducto(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(URL)
+                .baseUrl(BASE_URI_SERVER)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         repositorio = retrofit.create(DebateApi.class);

@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -23,9 +22,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.debatazo.R;
 
-import com.example.debatazo.configuracion.BrilloUtils;
+import com.example.debatazo.utils.BrilloUtils;
 import com.example.debatazo.databinding.ActividadIniciaSesionBinding;
-import com.example.debatazo.savesharedpreference.SharedPreferenceUtils;
+import com.example.debatazo.utils.SharedPreferenceUtils;
 import com.example.debatazo.usuario.registrar.ActividadRegistrar;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -85,9 +84,7 @@ public class IniciaSesion extends AppCompatActivity {
             }
         });
 
-        loginViewModel.getLoadingLiveData().observe(this, loading -> {
-            cargando.setVisibility(loading?View.VISIBLE:View.GONE);
-        });
+        loginViewModel.getLoadingLiveData().observe(this, loading -> cargando.setVisibility(loading?View.VISIBLE:View.GONE));
 
         //OBSERVAR EL RESULTADO DE LOGIN
         loginViewModel.getLoginResult().observe(this, loginResult -> {
@@ -130,19 +127,16 @@ public class IniciaSesion extends AppCompatActivity {
         mostrarInfoConSharedPreference(usernameEditText, passwordEditText, recordar);
 
         // Establece un listener para capturar el evento cuando se presiona una acción en el teclado virtual
-        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                // Verifica si la acción es "Done" en el teclado virtual
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    // Cuando se presiona "Done", se llama al método login del ViewModel
-                    // para intentar iniciar sesión con el nombre de usuario y la contraseña proporcionados
-                    loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString(),IniciaSesion.this);
-                }
-                // Devuelve falso para indicar que el evento no está consumido y puede ser manejado por otros listeners
-                return false;
+        passwordEditText.setOnEditorActionListener((v, actionId, event) -> {
+            // Verifica si la acción es "Done" en el teclado virtual
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                // Cuando se presiona "Done", se llama al método login del ViewModel
+                // para intentar iniciar sesión con el nombre de usuario y la contraseña proporcionados
+                loginViewModel.login(usernameEditText.getText().toString(),
+                        passwordEditText.getText().toString(),IniciaSesion.this);
             }
+            // Devuelve falso para indicar que el evento no está consumido y puede ser manejado por otros listeners
+            return false;
         });
 
         loginButton.setOnClickListener(v -> {
@@ -166,20 +160,13 @@ public class IniciaSesion extends AppCompatActivity {
             loginViewModel.login(email, password,IniciaSesion.this);
         });
 
-        olvidarContrasenia.setOnClickListener(view -> {
-                    Toast.makeText(IniciaSesion.this, "Sin implementar ", Toast.LENGTH_LONG).show();
-                }
+        olvidarContrasenia.setOnClickListener(view ->
+                Toast.makeText(IniciaSesion.this, "Sin implementar ", Toast.LENGTH_LONG).show()
         );
 
-        gmail.setOnClickListener(view -> {
-            otraFormaDeAcceso(view);
-        });
-        wechat.setOnClickListener(view -> {
-            otraFormaDeAcceso(view);
-        });
-        facebook.setOnClickListener(view -> {
-            otraFormaDeAcceso(view);
-        });
+        gmail.setOnClickListener(view -> otraFormaDeAcceso());
+        wechat.setOnClickListener(view -> otraFormaDeAcceso());
+        facebook.setOnClickListener(view -> otraFormaDeAcceso());
 
         registrar.setOnClickListener(view -> {
             Intent i = new Intent(IniciaSesion.this, ActividadRegistrar.class);
@@ -190,17 +177,17 @@ public class IniciaSesion extends AppCompatActivity {
     }
 
     private void vincularVistas() {
-        usernameEditText = binding.actividadISTextILEmail.getEditText();
-        passwordEditText = binding.actividadISTextILContrasenia.getEditText();
-        passwordTextInputLayout = binding.actividadISTextILContrasenia;
-        loginButton = binding.actividadISButtonResgistrar;
-        cargando = binding.actividadISProgressBCargando;
-        gmail = binding.actividadISImageVGmail;
-        wechat = binding.actividadISImageVWechat;
-        facebook = binding.actividadISImageVFacebook;
-        olvidarContrasenia = binding.actividadISTextVOlvidarContrasenia;
-        registrar = binding.actividadISTextVRegistrar;
-        recordar = binding.actividadISCheckBRecordar;
+        usernameEditText = binding.aISesionTextILEmail.getEditText();
+        passwordEditText = binding.aISesionTextILContrasenia.getEditText();
+        passwordTextInputLayout = binding.aISesionTextILContrasenia;
+        loginButton = binding.aISesionButtonIniciaSesion;
+        cargando = binding.aISesionProgressBCargando;
+        gmail = binding.aISesionImageVGmail;
+        wechat = binding.aISesionImageVWechat;
+        facebook = binding.aISesionImageVFacebook;
+        olvidarContrasenia = binding.aISesionTextVOlvidarContrasenia;
+        registrar = binding.aISesionTextVRegistrar;
+        recordar = binding.aISesionCheckBRecordar;
     }
 
     private void mostrarInfoConSharedPreference(EditText usernameEditText, EditText passwordEditText, CheckBox recordar) {
@@ -228,7 +215,7 @@ public class IniciaSesion extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
 
-    private void otraFormaDeAcceso(View view) {
+    private void otraFormaDeAcceso() {
         Toast.makeText(IniciaSesion.this, "Sin implementar ", Toast.LENGTH_LONG).show();
     }
 }

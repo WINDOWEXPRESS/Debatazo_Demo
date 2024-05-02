@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.debatazo.R;
-import com.example.debatazo.configuracion.BrilloUtils;
+import com.example.debatazo.utils.BrilloUtils;
 import com.example.debatazo.databinding.ActividadRegistrarBinding;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -79,12 +79,11 @@ public class ActividadRegistrar extends AppCompatActivity {
 
         });
         //Mostrar progressBar mientras carga
-        registrarViewModel.getLoadingLiveData().observe(this, loading -> {
-            cargando.setVisibility(loading ? View.VISIBLE : View.GONE);
-        });
-        terminosYCondiciones.setOnCheckedChangeListener((compoundButton, isChecked) -> {
-            registrarViewModel.RegistrarDataChanged(email.getText().toString(), contrasenia.getText().toString(), contraseniaRepetir.getText().toString(), isChecked);
-        });
+        registrarViewModel.getLoadingLiveData().observe(this, loading -> cargando.setVisibility(loading ? View.VISIBLE : View.GONE));
+
+        terminosYCondiciones.setOnCheckedChangeListener((compoundButton, isChecked) ->
+                registrarViewModel.RegistrarDataChanged(email.getText().toString(), contrasenia.getText().toString(),
+                        contraseniaRepetir.getText().toString(), isChecked));
 
         TextWatcher afterTextChangedListener = getTextWatcher(registrarViewModel);
         email.addTextChangedListener(afterTextChangedListener);
@@ -97,17 +96,17 @@ public class ActividadRegistrar extends AppCompatActivity {
             registrarViewModel.registrarUsuario(emailUsuario, contraseniaUsuario, new Callback<ResponseBody>() {
 
                 @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                     // Manejar el registro exitoso, por ejemplo, mostrar un mensaje de éxito
                     Toast.makeText(ActividadRegistrar.this, "Usuario registrado con éxito", Toast.LENGTH_LONG).show();
                     finish();
                 }
 
                 @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                     // Manejar el error durante el registro, por ejemplo, mostrar un mensaje de error
-                    Toast.makeText(ActividadRegistrar.this, t.getMessage().toString(), Toast.LENGTH_LONG).show();
-                    errorMensaje.setText("Error: " + t.getMessage().toString());
+                    Toast.makeText(ActividadRegistrar.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                    errorMensaje.setText(String.format("Error: %s", t.getMessage()));
                 }
             });
         });
@@ -135,14 +134,14 @@ public class ActividadRegistrar extends AppCompatActivity {
     }
 
     public void vincularVistas() {
-        email = binding.actividadRTextILEmail.getEditText();
-        contrasenia = binding.actividadRTextILContrasenia.getEditText();
-        contraseniaTextInputLayout = binding.actividadRTextILContrasenia;
-        contraseniaRepetir = binding.actividadRTextILRepetirContrasenia.getEditText();
-        contraseniaRepetirTextInputLayout = binding.actividadRTextILRepetirContrasenia;
-        errorMensaje = binding.actividadRTextVMensajeError;
-        terminosYCondiciones = binding.actividadRCheckBTerminosYCondiciones;
-        registrar = binding.actividadRButtonRegistrar;
-        cargando = binding.actividadRProgressBCargando;
+        email = binding.aRegistrarTextILEmail.getEditText();
+        contrasenia = binding.aRegistrarTextILContrasenia.getEditText();
+        contraseniaTextInputLayout = binding.aRegistrarTextILContrasenia;
+        contraseniaRepetir = binding.aRegistrarTextILRepetirContrasenia.getEditText();
+        contraseniaRepetirTextInputLayout = binding.aRegistrarTextILRepetirContrasenia;
+        errorMensaje = binding.aRegistrarTextVMensajeError;
+        terminosYCondiciones = binding.aRegistrarCheckBTerminosYCondiciones;
+        registrar = binding.aRegistrarButtonRegistrar;
+        cargando = binding.aRegistrarProgressBCargando;
     }
 }

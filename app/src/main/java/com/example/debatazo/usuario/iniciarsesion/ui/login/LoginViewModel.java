@@ -9,21 +9,22 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.debatazo.R;
-import com.example.debatazo.savesharedpreference.SharedPreferenceUtils;
+import com.example.debatazo.utils.SharedPreferenceUtils;
 import com.example.debatazo.usuario.iniciarsesion.data.LoginCallBack;
 import com.example.debatazo.usuario.iniciarsesion.data.LoginRepository;
 import com.example.debatazo.usuario.iniciarsesion.data.Result;
 import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
-import com.example.debatazo.usuario.iniciarsesion.data.model.Token;
+
+import java.util.Objects;
 
 public class LoginViewModel extends ViewModel {
 
     private static final int LONGITUD_MIN = 4;
     private static final int LONGITUD_MAX = 20;
 
-    private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
-    private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
-    private MutableLiveData<Boolean> loadingLiveData = new MutableLiveData<>();
+    private final MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
+    private final MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> loadingLiveData = new MutableLiveData<>();
 
     public LiveData<Boolean> getLoadingLiveData() {
         return loadingLiveData;
@@ -37,7 +38,7 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-    private LoginRepository loginRepository;
+    private final LoginRepository loginRepository;
 
     public LoginRepository getLoginRepository() {
         return loginRepository;
@@ -87,10 +88,10 @@ public class LoginViewModel extends ViewModel {
     public void autoLogin(Context context) {
 
         // Obtener una referencia al archivo de preferencias compartidas para almacenar y recuperar el token de autenticación.
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferenceUtils.PREFS_TOKEN, context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferenceUtils.PREFS_TOKEN, Context.MODE_PRIVATE);
 
         // Verificar si el token y el ID de usuario están disponibles en las preferencias compartidas
-        if (!sharedPreferences.getString(SharedPreferenceUtils.TOKEN_VALUE, "").isEmpty() &&
+        if (!Objects.requireNonNull(sharedPreferences.getString(SharedPreferenceUtils.TOKEN_VALUE, "")).isEmpty() &&
                 sharedPreferences.getInt(SharedPreferenceUtils.USER_ID, 0) != 0) {
 
             //Otiene correo y contraseña de usuario y hacer login
