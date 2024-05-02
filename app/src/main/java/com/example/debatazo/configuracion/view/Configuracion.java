@@ -41,7 +41,6 @@ import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModel;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModelFactory;
 
 public class Configuracion extends AppCompatActivity {
-    private Button cerrarSesion;
     private SeekBar brilloSeekBar;
     private CheckBox seguirSistema;
     private LoginViewModel loginViewModel;
@@ -52,7 +51,7 @@ public class Configuracion extends AppCompatActivity {
     private TextView privacidad;
     private ImageButton volver;
     private SharedPreferences sharedPreferences;
-
+    private Button cerrarSesion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,11 +77,21 @@ public class Configuracion extends AppCompatActivity {
             allowModifySettings( requestPermissionLauncher);
         });
 
-        //Metodo para ajuste de brillo de app
-        configuracionBrillo();
+        // Escuchar cambios del valor de BrilloAppLD
+        brilloUtils.brilloAppObserver(Configuracion.this);
 
-        // Configurar estado de la opción "seguir sistema"
-        configurarSeguirSistemaCheckBox();
+        //Comprobacion de permiso cada vez que entre a configuracion
+        if(Settings.System.canWrite(Configuracion.this)) {
+            // El usuario otorgó el permiso poner visible el ajuste de brillo
+            brilloLinearLayout.setVisibility(View.VISIBLE);
+
+            //Metodo para ajuste de brillo de app
+            configuracionBrillo();
+
+            // Configurar estado de la opción "seguir sistema"
+            configurarSeguirSistemaCheckBox();
+        }
+
 
         // Escuchar cambios en la barra de brillo
         brilloSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -104,6 +113,7 @@ public class Configuracion extends AppCompatActivity {
             }
         });
 
+        //Abrir privacidad
         privacidad.setOnClickListener(view -> {
 
             Intent redireccionar = new Intent(view.getContext(), Privacidad.class);
@@ -111,6 +121,7 @@ public class Configuracion extends AppCompatActivity {
 
         });
 
+        //Sugerencia
         sugerencia.setOnClickListener(view -> {
             // Validar si el usuario está logueado si no esta pide que inicie sesion
             if (!loginViewModel.getLoginRepository().isLoggedIn()) {
@@ -122,13 +133,10 @@ public class Configuracion extends AppCompatActivity {
             }
         });
 
+        //Salir de configuracion
         volver.setOnClickListener(view -> {
             finish();
         });
-
-
-        // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
-        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory()).get(LoginViewModel.class);
 
         // Validar si el usuario está logueado y habilitar/deshabilitar el botón "Cerrar Sesión"
         if (!loginViewModel.getLoginRepository().isLoggedIn()) {
@@ -137,104 +145,9 @@ public class Configuracion extends AppCompatActivity {
 
         // Configurar el botón "Cerrar Sesión"
         cerrarSesion.setOnClickListener(view -> {
-            showLogoutConfirmationDialog();
+            mostrarLogoutConfirmacionDialog();
         });
 
-        Button aumentar = findViewById(R.id.aumentar);;
-        Button disminuir = findViewById(R.id.disminuir);
-
-        final int[] brightnessValue = {255};
-
-        disminuir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (brightnessValue[0] >= 11) {
-                    brightnessValue[0] -= 10;
-                    changeScreenBrightness(Configuracion.this, brightnessValue[0]);
-
-                    // Convertir el valor de brillo (1-255) a porcentaje y mostrarlo en un Toast
-                    double k = (double) brightnessValue[0] / 255;
-                    privacidad.setText(
-                            "Brillo : " + Math.round(k * 100) + "%"
-
-                    );
-                }
-            }
-        });
-
-        aumentar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (brightnessValue[0] <= 245) {
-                    brightnessValue[0] += 10;
-                    changeScreenBrightness(Configuracion.this, brightnessValue[0]);
-
-                    // Convertir el valor de brillo (1-255) a porcentaje y mostrarlo en un Toast
-                    double k = (double) brightnessValue[0] / 255;
-                    privacidad.setText(
-                           "Brillo : " + Math.round(k * 100) + "%"
-
-                    );
-                }
-            }
-        });
-
-
-    }
-    private void changeScreenBrightness(Context context, int screenBrightnessValue) {
-        // Cambiar el modo de cambio de brillo de la pantalla a manual.
-        Settings.System.putInt(
-                context.getContentResolver(),
-                Settings.System.SCREEN_BRIGHTNESS_MODE,
-                Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL
-        );
-
-        // Aplicar el valor de brillo de la pantalla al sistema, esto cambiará
-        // el valor en Configuración ---> Pantalla ---> Nivel de brillo.
-        // También cambiará el brillo de la pantalla para el dispositivo.
-        Settings.System.putInt(
-                context.getContentResolver(),
-                Settings.System.SCREEN_BRIGHTNESS, screenBrightnessValue
-        );
-    }
-
-    private void configuracionBrillo() {
-        //Obtener instancia de BrilloUtils
-        brilloUtils = BrilloUtils.getInstancia();
-
-        // Observar cambios en el valor brilloApp de la brilloUtils
-        brilloUtils.getBrilloAppLD().observe(this,integer -> {
-            brilloUtils.setAppBrillo(this,integer);
-        });
-
-        // Obtener una referencia a SharedPreferences para almacenar y recuperar el valor del brillo de la pantalla
-        sharedPreferences = getSharedPreferences(SharedPreferenceUtils.PREFS_BRILLO, MODE_PRIVATE);
-
-        //Ajustar el estado correspondiente a valor guardado en sharedPreferences
-        seguirSistema.setChecked(sharedPreferences.getBoolean(SharedPreferenceUtils.BRILLO_SEGUIR_SISTEMA, false));
-
-        //Comprobacion de permiso cada vez que entre a configuracion
-        if(Settings.System.canWrite(Configuracion.this)){
-
-            // El usuario otorgó el permiso poner visible el ajuste de brillo
-            brilloLinearLayout.setVisibility(View.VISIBLE);
-            if (seguirSistema.isChecked()){
-                brilloSeekBar.setEnabled(false);
-
-                //AQUI *2 PORQUE EL VALOR OBTENIDO NO SE PORQUE ES LA MITAD MENOR
-                brilloUtils.setBrilloSistemaMLD(brilloUtils.obtenerBrilloPantallaSystema(Configuracion.this)*2);
-                brilloSeekBar.setProgress(brilloUtils.getBrilloSistemaLD().getValue());
-            }else {
-                //Si no sigue el brillo de sistema.
-                // Obtener el valor de brillo de App si es null obtener por primera vez de brillo de sistema y configurarlo
-                if (brilloUtils.getBrilloAppLD().getValue()==null){
-                    //AQUI *2 PORQUE EL VALOR OBTENIDO NO SE PORQUE ES LA MITAD MENOR
-                    brilloUtils.setBrilloAppMLD(brilloUtils.obtenerBrilloPantallaSystema(Configuracion.this)*2);
-                }
-                brilloUtils.setAppBrillo(this,brilloUtils.getBrilloAppLD().getValue()*2);
-                brilloSeekBar.setProgress(brilloUtils.getBrilloAppLD().getValue());
-            }
-        }
     }
 
     private void vincularVistas() {
@@ -247,18 +160,21 @@ public class Configuracion extends AppCompatActivity {
         volver = findViewById(R.id.actividadC_imageV_volver);
         privacidad = findViewById(R.id.actividadC_textV_privacidad);
 
+        // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
+        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory()).get(LoginViewModel.class);
+        brilloUtils  = BrilloUtils.getInstancia();
+
     }
 
-    private void showLogoutConfirmationDialog() {
+    private void mostrarLogoutConfirmacionDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.cerrar_sesion);
         builder.setMessage(R.string.mensaje_cerrar_sesion);
         builder.setPositiveButton(R.string.si, (dialog, which) -> {
             // Aquí colocas el código para cerrar sesión
             // Llamar al método de logout de ViewModel (Repositorio)
-            loginViewModel.getLoginRepository().logout(Configuracion.this);
+            loginViewModel.logout(Configuracion.this);
             cerrarSesion.setEnabled(false);
-            //setResult(Activity.RESULT_OK);
         });
         builder.setNegativeButton(R.string.no, (dialog, which) -> {
             // El usuario canceló el cierre de sesión, no hacemos nada
@@ -266,7 +182,26 @@ public class Configuracion extends AppCompatActivity {
         });
         builder.show();
     }
-    private void configurarSeguirSistemaCheckBox    () {
+
+    private void configuracionBrillo() {
+
+        // Obtener una referencia a SharedPreferences para almacenar y recuperar el valor del brillo de la pantalla
+        sharedPreferences = getSharedPreferences(SharedPreferenceUtils.PREFS_BRILLO, MODE_PRIVATE);
+
+        //Ajustar el estado correspondiente a valor guardado en sharedPreferences
+        seguirSistema.setChecked(sharedPreferences.getBoolean(SharedPreferenceUtils.BRILLO_SEGUIR_SISTEMA, false));
+
+        // Obtener el valor de brillo de App si es null obtener por primera vez de brillo de sistema y configurarlo
+        if (brilloUtils.getBrilloAppLD().getValue()==null){
+            brilloUtils.setBrilloAppMLD(brilloUtils.obtenerBrilloPantallaSystema(Configuracion.this));
+        }
+        brilloUtils.setAppBrillo(this,brilloUtils.getBrilloAppLD().getValue());
+        brilloSeekBar.setProgress(brilloUtils.getBrilloAppLD().getValue());
+
+    }
+
+
+    private void configurarSeguirSistemaCheckBox() {
         seguirSistema.setOnCheckedChangeListener((compoundButton, isChecked) -> {
             // Editor de SharedPreferences
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -276,15 +211,14 @@ public class Configuracion extends AppCompatActivity {
                 //Guardar opcion en un SharedPreference
                 editor.putBoolean(SharedPreferenceUtils.BRILLO_SEGUIR_SISTEMA, true);
 
-                //Obtener el valor de brillo de sistema y configurarlo
-                //AQUI *2 PORQUE EL VALOR OBTENIDO NO SE PORQUE ES LA MITAD MENOR
-                brilloUtils.setBrilloSistemaMLD(brilloUtils.obtenerBrilloPantallaSystema(Configuracion.this)*2);
+                //Obtener el brillo de sistema y Configurarlo
+                int brilloSistema = brilloUtils.obtenerBrilloPantallaSystema(Configuracion.this);
+                brilloUtils.setAppBrillo(this,brilloSistema);
 
-                brilloUtils.setAppBrillo(this,brilloUtils.getBrilloSistemaLD().getValue());
-
-                //Activar barra de brillo y configurar el valor a lo de sistema
-                brilloSeekBar.setProgress(brilloUtils.getBrilloSistemaLD().getValue());
+                //Activar barra de brillo y configurar el valor a lo de sistema ¡¡¡AQUI *2 PORQUE EL VALOR OBTENIDO ESTA ENTRE 0 A 128 Y NO SE PORQUE!!!
+                brilloSeekBar.setProgress(brilloSistema*2);
                 brilloSeekBar.setEnabled(false);
+
             } else {// El CheckBox está desmarcado
                 //Guardar opcion en un SharedPreference
                 editor.putBoolean(SharedPreferenceUtils.BRILLO_SEGUIR_SISTEMA, false);
@@ -294,6 +228,7 @@ public class Configuracion extends AppCompatActivity {
             editor.apply(); // Guardar los cambios
         });
     }
+
 
     /**
      * Aplicación no firmada por el sistema que guía al usuario para autorizar
@@ -392,6 +327,7 @@ public class Configuracion extends AppCompatActivity {
         builder.show();
     }
     private void enviarCorreo(EditText descripcion) {
+
         String[] direccionesCorreo = {"debatazosugerencias@gmail.com"};
         String asunto = "Sugerencia de la aplicación";
         String cuerpoMensaje = descripcion.getText().toString();

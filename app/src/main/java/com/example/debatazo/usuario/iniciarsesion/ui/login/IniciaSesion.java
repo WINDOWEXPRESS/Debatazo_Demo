@@ -26,7 +26,6 @@ import com.example.debatazo.R;
 import com.example.debatazo.configuracion.BrilloUtils;
 import com.example.debatazo.databinding.ActividadIniciaSesionBinding;
 import com.example.debatazo.savesharedpreference.SharedPreferenceUtils;
-import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
 import com.example.debatazo.usuario.registrar.ActividadRegistrar;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -54,7 +53,7 @@ public class IniciaSesion extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         //ajuste de brillo
-        BrilloUtils.getInstancia().brilloAppVista(this);
+        BrilloUtils.getInstancia().brilloAppObserver(this);
 
         // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())

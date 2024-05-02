@@ -64,7 +64,7 @@ public class ActividadDatosPersonal extends AppCompatActivity {
         vincularVista();
 
         //ajuste de brillo
-        BrilloUtils.getInstancia().brilloAppVista(this);
+        BrilloUtils.getInstancia().brilloAppObserver(this);
 
         mostrarInformacion();
 

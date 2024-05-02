@@ -127,6 +127,9 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
+    public void logout(Context context) {
+        loginRepository.logout(context);
+    }
 
     // Una comprobación de validación del nombre de usuario
     private boolean esEmailValido(String email) {

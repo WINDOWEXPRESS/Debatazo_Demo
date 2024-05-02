@@ -48,7 +48,7 @@ public class ActividadRegistrar extends AppCompatActivity {
         vincularVistas();
 
         //ajuste de brillo
-        BrilloUtils.getInstancia().brilloAppVista(this);
+        BrilloUtils.getInstancia().brilloAppObserver(this);
 
         RegistrarViewModel registrarViewModel = new RegistrarViewModel();
         registrarViewModel.getRegistrarFormulaEstado().observe(this, registrarFormulaEstado -> {

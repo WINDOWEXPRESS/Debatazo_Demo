@@ -1,20 +1,14 @@
 package com.example.debatazo.configuracion;
 
-import static android.content.Context.MODE_PRIVATE;
-
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.provider.Settings;
 import android.view.WindowManager;
 
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
-import com.example.debatazo.savesharedpreference.SharedPreferenceUtils;
 
 public class BrilloUtils {
     private static BrilloUtils instancia;
@@ -29,19 +23,17 @@ public class BrilloUtils {
         return instancia;
     }
 
-    private MutableLiveData<Integer> brilloSistemaMLD = new MutableLiveData<>();
-
-    public LiveData<Integer> getBrilloSistemaLD() {
-        return brilloSistemaMLD;
-    }
-
     private MutableLiveData<Integer> brilloAppMLD = new MutableLiveData<>();
 
     public LiveData<Integer> getBrilloAppLD() {
         return brilloAppMLD;
     }
 
+    public void setBrilloAppMLD(int brilloAppMLD) {
+        this.brilloAppMLD.setValue(brilloAppMLD);
+    }
     // Determinar si está activado el ajuste automático del brillo
+
     public static boolean esAutoBrillo(Context context) {
 
         boolean esAutoBrillo = false;
@@ -63,8 +55,8 @@ public class BrilloUtils {
         return esAutoBrillo;
 
     }
-
     // Obtener brillo de la pantalla actual
+
     public int obtenerBrilloPantallaSystema(Context context) {
 
         int valorBrilloAhora = 0;
@@ -87,74 +79,48 @@ public class BrilloUtils {
 
     }
 
-    public void setBrilloSistemaMLD(int brilloSistemaMLD) {
-        this.brilloSistemaMLD.setValue(brilloSistemaMLD);
-    }
-
-    public void setBrilloAppMLD(int brilloAppMLD) {
-        this.brilloAppMLD.setValue(brilloAppMLD);
-    }
-
     // 设置亮度
     // 程序退出之后亮度失效
     public void setAppBrillo(Context context, int valor) {
+        // context casting a Activity
+        Activity activity = (Activity) context;
+
+        //obtiene los atributos de la ventana de la actividad actual
+        WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
+
+        // Excepcion
+        if (brilloAppMLD.getValue() < VALOR_MINIMO || valor < VALOR_MINIMO ) {
+
+            brilloAppMLD.setValue(VALOR_MINIMO);
+
+        }
+        // Excepcion
+        if (brilloAppMLD.getValue() > VALOR_MAXIMO || valor > VALOR_MINIMO ) {
+
+            brilloAppMLD.setValue(VALOR_MAXIMO);
+
+        }
 
         // Si el brillo automático está activado, desactívarlo,cuando termina vuelve a activarlo.
         if (esAutoBrillo(context)) {
 
             desactivarAutoBrillo(context);
 
-            // context casting a Activity
-            Activity activity = (Activity) context;
-
-            //obtiene los atributos de la ventana de la actividad actual
-            WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
-
-            // Excepcion
-            if (brilloAppMLD.getValue() < VALOR_MINIMO) {
-
-                brilloAppMLD.setValue(VALOR_MINIMO);
-
-            }
-            // Excepcion
-            if (brilloAppMLD.getValue() > VALOR_MAXIMO) {
-
-                brilloAppMLD.setValue(VALOR_MAXIMO);
-
-            }
             //Los valores de brillo generalmente se expresan en un rango de 0 a 1
-            lp.screenBrightness = Float.valueOf(valor) * (255f);
-
+            lp.screenBrightness = Float.valueOf(valor) / (VALOR_MAXIMO);
             activity.getWindow().setAttributes(lp);
 
             activartAutoBrillo(context);
-        }else {
-            // context casting a Activity
-            Activity activity = (Activity) context;
+        } else {
 
-            //obtiene los atributos de la ventana de la actividad actual
-            WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
-
-            // Excepcion
-            if (brilloAppMLD.getValue() < VALOR_MINIMO) {
-
-                brilloAppMLD.setValue(VALOR_MINIMO);
-
-            }
-            // Excepcion
-            if (brilloAppMLD.getValue() > VALOR_MAXIMO) {
-
-                brilloAppMLD.setValue(VALOR_MAXIMO);
-
-            }
             //Los valores de brillo generalmente se expresan en un rango de 0 a 1
-            lp.screenBrightness = Float.valueOf(valor) * (255f);
-
+            lp.screenBrightness = Float.valueOf(valor) / (VALOR_MAXIMO);
             activity.getWindow().setAttributes(lp);
         }
+        setBrilloAppMLD(valor);
     }
 
-    public void desactivarAutoBrillo(Context context) {
+    public static void desactivarAutoBrillo(Context context) {
 
         Settings.System.putInt(context.getContentResolver(),
 
@@ -164,7 +130,7 @@ public class BrilloUtils {
 
     }
 
-    public void activartAutoBrillo(Context context) {
+    public static void activartAutoBrillo(Context context) {
 
         Settings.System.putInt(context.getContentResolver(),
 
@@ -174,6 +140,23 @@ public class BrilloUtils {
 
     }
 
+    //observador a brillo para cualquier ventana
+    public void brilloAppObserver(Context context) {
+        BrilloUtils brilloUtils = BrilloUtils.getInstancia();
+
+        brilloUtils.getBrilloAppLD().observe((LifecycleOwner) context, integer -> {
+            // context casting a Activity
+            Activity activity = (Activity) context;
+            //obtiene los atributos de la ventana de la actividad actual
+            WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
+
+            lp.screenBrightness = Float.valueOf(integer) / (VALOR_MAXIMO);
+            activity.getWindow().setAttributes(lp);
+        });
+
+    }
+
+/*
     // 设置系统亮度
     // 程序退出之后亮度依旧有效
 
@@ -210,21 +193,23 @@ public class BrilloUtils {
 
     }
 
-    public void brilloAppVista(Context context){
-        SharedPreferences sharedPreferences;
+        //Este metodo cambia el brillo de systema directamente
+    private void changeScreenBrightness(Context context, int screenBrightnessValue) {
+        // Cambiar el modo de cambio de brillo de la pantalla a manual.
+        Settings.System.putInt(
+                context.getContentResolver(),
+                Settings.System.SCREEN_BRIGHTNESS_MODE,
+                Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL
+        );
 
-        BrilloUtils brilloUtils = BrilloUtils.getInstancia();
-        sharedPreferences  = context.getSharedPreferences(SharedPreferenceUtils.PREFS_BRILLO, MODE_PRIVATE);
-        //Si el opcion de seguir el Brillo de sistema esta desactivado.
-        if(!sharedPreferences.getBoolean(SharedPreferenceUtils.BRILLO_SEGUIR_SISTEMA, true)){
-            brilloUtils.getBrilloAppLD().observe((LifecycleOwner) context, integer -> {
-                brilloUtils.setAppBrillo(context,integer);
-            });
-        }
-
-        brilloUtils.getBrilloAppLD().observe((LifecycleOwner) context, integer -> {
-            brilloUtils.setAppBrillo(context,integer);
-        });
-
+        // Aplicar el valor de brillo de la pantalla al sistema, esto cambiará
+        // el valor en Configuración ---> Pantalla ---> Nivel de brillo.
+        // También cambiará el brillo de la pantalla para el dispositivo.
+        Settings.System.putInt(
+                context.getContentResolver(),
+                Settings.System.SCREEN_BRIGHTNESS, screenBrightnessValue
+        );
     }
+*/
+
 }

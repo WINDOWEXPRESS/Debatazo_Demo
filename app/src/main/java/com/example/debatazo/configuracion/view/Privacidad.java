@@ -4,6 +4,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,7 @@ public class Privacidad extends AppCompatActivity {
 
     private WebView webView ;
     private PrivacidadViewModel privacidadViewModel;
+    private ImageView volver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,10 +35,15 @@ public class Privacidad extends AppCompatActivity {
         String rutaPrivacidad = privacidadViewModel.obtenerUrlPrivacidad(idioma);
         mostrarWeb(rutaPrivacidad);
 
+        volver.setOnClickListener(view -> {
+            finish();
+        });
     }
 
     private void vincularVistas() {
         webView = findViewById(R.id.aPrivacidad_webV_html);
+        volver = findViewById(R.id.aPrivacidad_imageV_volver);
+
         // Obtener instancia del ViewModel
         privacidadViewModel = new ViewModelProvider(this).get(PrivacidadViewModel.class);
 

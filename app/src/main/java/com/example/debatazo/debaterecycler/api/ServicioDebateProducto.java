@@ -11,10 +11,10 @@ public class ServicioDebateProducto {
 
     private String URL_ORDENADOR_CHEN = "http://192.168.1.149:8080/";
     private String URL_EMULADOR = "http://10.0.2.2:8080/";
-
+    private String URL = "https://debatazo-2cd8a.ew.r.appspot.com/";
     private ServicioDebateProducto(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(URL_ORDENADOR_CHEN)
+                .baseUrl(URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         repositorio = retrofit.create(DebateApi.class);
