@@ -190,7 +190,7 @@ public class ActividadPrincipal extends AppCompatActivity {
                 abrirGaleria();
             }else{
                 // Si el permiso no está concedido, mostrar el diálogo de permiso
-                showPermissionRationaleDialog();
+                requestResultLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
             }
         });
 
@@ -248,30 +248,6 @@ public class ActividadPrincipal extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
         resultLauncher.launch(intent);
-    }
-
-   // Método para mostrar el diálogo de permiso de acceso a la galería
-    private void showPermissionRationaleDialog(){
-        // Crear el diálogo de permiso
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(medias.PERMISO_TITLE); // Título del diálogo
-        builder.setMessage(medias.NECESITA_BODY); // Mensaje del diálogo
-        // Añadir botones para aceptar o cancelar el permiso
-        builder.setPositiveButton(getResources().getString(R.string.aceptar), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Solicitar el permiso de acceso a la galería
-                requestResultLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
-            }
-        });
-        builder.setNegativeButton(getResources().getString(R.string.cancelar), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Cerrar dialogo
-                dialog.dismiss();
-            }
-        });
-        builder.create().show(); // Mostrar el diálogo
     }
 
     //Método para publicar un debate utilizando el servicio de debate de productos.

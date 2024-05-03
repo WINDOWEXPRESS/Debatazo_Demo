@@ -9,13 +9,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="595dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:orientation="horizontal"
             android:padding="3dp">
@@ -26,7 +26,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="3dp"
-                app:srcCompat="@mipmap/aplicacion_logo_round"/>
+                app:srcCompat="@mipmap/aplicacion_logo_round" />
 
             <TextView
                 android:id="@+id/fragmentoP_textV_nombreAplicacion"
@@ -43,14 +43,15 @@
         <TextView
             android:id="@+id/fragmentoP_textV_borde_titulo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="65dp"
             android:layout_weight="1"
             android:background="@drawable/borde_logo" />
 
         <FrameLayout
             android:id="@+id/actividadP_frameL"
             android:layout_width="match_parent"
-            android:layout_height="535dp" />
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <com.google.android.material.bottomappbar.BottomAppBar

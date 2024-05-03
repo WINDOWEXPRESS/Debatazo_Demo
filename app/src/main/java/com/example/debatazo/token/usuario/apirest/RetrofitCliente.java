@@ -13,7 +13,7 @@ public class RetrofitCliente {
 
     private RetrofitCliente(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(URL_EMULADOR_XING)
+                .baseUrl("https://debatazo-2cd8a.ew.r.appspot.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
