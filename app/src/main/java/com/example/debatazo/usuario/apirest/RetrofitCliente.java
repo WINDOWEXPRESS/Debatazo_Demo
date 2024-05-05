@@ -1,6 +1,7 @@
 package com.example.debatazo.usuario.apirest;
 
 import static com.example.debatazo.utils.GlobalConstants.BASE_URI_SERVER;
+import static com.example.debatazo.utils.GlobalConstants.URL_EMULADOR;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

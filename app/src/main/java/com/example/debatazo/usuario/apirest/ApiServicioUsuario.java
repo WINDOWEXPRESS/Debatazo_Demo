@@ -29,6 +29,6 @@ public interface ApiServicioUsuario {
     Call<LoggedInUser> getProfile(@Header("token") String token, @Path("id") int id);
 
     @PUT("users/profile/update/{id}")
-    Call<LoggedInUser> updateProfile(@Header("token") String token, @Path("id") int id,@Body LoggedInUser user);
+    Call<ResponseBody> updateProfile(@Header("token") String token, @Path("id") int id,@Body LoggedInUser user);
 
 }

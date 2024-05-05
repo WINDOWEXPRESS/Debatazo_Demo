@@ -3,6 +3,7 @@ package com.example.debatazo.usuario.iniciarsesion.ui.login;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Patterns;
+import android.widget.TextView;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -84,6 +85,11 @@ public class LoginViewModel extends ViewModel {
         });
     }
 
+    public void updatePerfil(LoggedInUser user, TextView mensajeError) {
+
+        // Se realiza la autenticación y se obtiene el resultado
+        loginRepository.updatePerfil(user,loadingLiveData,mensajeError);
+    }
     // Esta función valida la existencia de un token de instancia. Si el token de instancia existe, se inicia sesión automáticamente.
     public void autoLogin(Context context) {
 

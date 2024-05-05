@@ -81,7 +81,7 @@ public class ActividadPrincipal extends AppCompatActivity {
         //ajuste de brillo
         BrilloUtils.getInstancia().brilloAppObserver(this);
 
-        binding.aPrincipalBottomNV.setBackground(null);
+        binding.aPrincipalFloatingAB.setBackground(null);
         binding.aPrincipalBottomNV.setOnItemSelectedListener(item -> {
 
             switch (item.getItemId()) {
@@ -119,13 +119,13 @@ public class ActividadPrincipal extends AppCompatActivity {
                 // Obtener la URI de la imagen
                 medias.setImageUri(result.getData().getData());
                 // Establecer el tamaño de la vista de la imagen
-                imagenPublicar.getLayoutParams().height = medias.IMG_VIEW_SIZE;
+                imagenPublicar.getLayoutParams().height = medias.IMG_VIEW_SIZE/2;
                 // Mostrar la imagen
                 imagenPublicar.setImageURI(medias.getImageUri());
             }
         });
 
-        binding.aPrincipalBottomAB.setOnClickListener(view -> {
+        binding.aPrincipalFloatingAB.setOnClickListener(view -> {
             // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
             LoginViewModel loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                     .get(LoginViewModel.class);
@@ -175,11 +175,11 @@ public class ActividadPrincipal extends AppCompatActivity {
         imagenPublicar.setOnClickListener(view -> {
             // Método para abrir la galería cuando se hace clic en el botónç
             // Si el permiso de acceso a la galería está concedido, abrir la galería
-            if(medias.checkPermission(ActividadPrincipal.this)){
+            if(medias.checkPermission(this)){
                 abrirGaleria();
             }else{
                 // Si el permiso no está concedido, mostrar el diálogo de permiso
-                showPermissionRationaleDialog();
+                requestResultLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
             }
         });
 
@@ -239,29 +239,6 @@ public class ActividadPrincipal extends AppCompatActivity {
         resultLauncher.launch(intent);
     }
 
-   // Método para mostrar el diálogo de permiso de acceso a la galería
-    private void showPermissionRationaleDialog(){
-        // Crear el diálogo de permiso
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(medias.PERMISO_TITLE); // Título del diálogo
-        builder.setMessage(medias.NECESITA_BODY); // Mensaje del diálogo
-        // Añadir botones para aceptar o cancelar el permiso
-        builder.setPositiveButton(getResources().getString(R.string.aceptar), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Solicitar el permiso de acceso a la galería
-                requestResultLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
-            }
-        });
-        builder.setNegativeButton(getResources().getString(R.string.cancelar), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Cerrar dialogo
-                dialog.dismiss();
-            }
-        });
-        builder.create().show(); // Mostrar el diálogo
-    }
 
     //Método para publicar un debate utilizando el servicio de debate de productos.
     private void publicarDebate(DebateProducto debateProducto, String token, int userId,Dialog dialog) {
@@ -319,8 +296,10 @@ public class ActividadPrincipal extends AppCompatActivity {
                 public void onResponse(Call<ImgurObject> call, Response<ImgurObject> response) {
                     if (response.isSuccessful()) {
                         ImgurObject imgurObject = response.body();
+
                         debateProducto.setImageUrl(imgurObject.getData().getLink());
                         debateProducto.setImageDeleteHash(imgurObject.getData().getDeletehash());
+
                         publicarDebate(debateProducto,token,userId,dialog);
                     }else{
                         System.out.println(response.errorBody().toString());

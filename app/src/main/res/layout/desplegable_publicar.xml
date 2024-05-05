@@ -28,7 +28,7 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_gravity="center"
-            android:src="@drawable/cerrar_tabla_publicar"
+            android:src="@drawable/flecha_volver"
             android:contentDescription="Volver" />
 
         <TextView

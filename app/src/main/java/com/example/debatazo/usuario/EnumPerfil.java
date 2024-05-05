@@ -15,10 +15,14 @@ public enum EnumPerfil {
     public final int REFERENCIA_ID;
     public final int REFERENCIA_DRAWABLE;
     public final String URL;
+    
     EnumPerfil(int REFERENCIA_ID,int REFERENCIA_DRAWABLE,String URL) {
         this.REFERENCIA_ID = REFERENCIA_ID;
         this.REFERENCIA_DRAWABLE = REFERENCIA_DRAWABLE;
         this.URL = URL;
     }
 
+    public String getURL() {
+        return URL;
+    }
 }

@@ -8,9 +8,13 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +44,11 @@
                 tools:ignore="RtlSymmetry" />
 
         </LinearLayout>
-
+        <TextView
+            android:id="@+id/aConfiguracion_textV_borde_configuracion"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/borde_logo" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,6 +66,13 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/aConfiguracion_textV_bordePrivacidad"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"
+            android:background="@drawable/borde_logo" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,11 +90,43 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/aConfiguracion_textV_bordeSugerencia"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"
+            android:background="@drawable/borde_logo" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/aConfiguracion_textV_recuperarContrasenia"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Recuperar contraseña"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/aConfiguracion_textV_bordeContra"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"
+            android:background="@drawable/borde_logo" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -99,6 +146,8 @@
                     tools:ignore="NestedWeights" />
 
             </LinearLayout>
+
+
 
             <LinearLayout
                 android:id="@+id/aConfiguracion_linearLV_brillo"
@@ -135,18 +184,6 @@
 
         </LinearLayout>
 
-
-        <Button
-            android:id="@+id/aumentar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="+" />
-
-        <Button
-            android:id="@+id/disminuir"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="-" />
 
     </LinearLayout>
 

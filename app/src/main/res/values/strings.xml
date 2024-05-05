@@ -9,15 +9,24 @@
     <string name="valoracion">Valoracion</string>
     <string name="usuario">Usuario</string>
     <string name="actividadP_floatingAB_layoutA" translatable="false"><![CDATA[@id/aPrincipal_bottomAB]]></string>
+
     <!--    Registro ,login..   -->
     <string name="pista_email" translatable="false">Email</string>
     <string name="pista_contrasenia">Contraseña</string>
+    <string name="pista_repetir_contrasenia">Repetir Contraseña</string>
     <string name="accion_inicia_sesion">Inicia sesion</string>
     <string name="accion_inicia_sesion_corto">Inicia sesion</string>
     <string name="bienvenido">Bienvenido </string>
     <string name="invalido_email_usuario">Email invalido!</string>
     <string name="invalido_contrasenia">La longitud debe ser mayor de 5 y menor de 20.</string>
     <string name="error_registrar_contrasenia">Error! La contraseña no coincide</string>
+    <string name="terminos_condiciones">He leído y acepto los términos y condiciones de uso</string>
+    <string name="registrar">Registrar</string>
+    <string name="recordar">Recordar</string>
+    <string name="olvidado_su_contrasenia">¿Has olvidado su contraseña?</string>
+    <string name="no_tener_cuenta">¿No tienes una cuenta?</string>
+    <string name="registrate">Registrate</string>
+
     <!--    LOGIN ViewModel   -->
     <string name="inicia_sesion_fallido">Inicia sesion fallido</string>
     <!--    contentDescription -->
@@ -44,35 +53,35 @@
     <string name="si">Sí</string>
     <string name="cerrar_sesion">Cerrar Sesión</string>
     <string name="mensaje_cerrar_sesion">¿Estás seguro de que deseas cerrar sesión?</string>
-    <!--    PERFIL FRAGMENT-->
-    <string name="conectar_ahora">Conectar ahora</string>
-    <string name="mensaje_campo_id_usuario">Desbloquea todas las funciones y disfruta de la experiencia completa</string>
-    <string name="seleccionar_fecha_de_nacimiento">Seleccionar fecha de nacimiento</string>
     <string name="poltica_de_privacidad">Política de Privacidad</string>
-    <string name="sugerencia">Sugerencia</string>
-    <string name="sugerencia_mensaje">¡Mejora tu experiencia!  Danos tu opinión para mejorar nuestra app.</string>
-    <string name="sugerencia_hint">Escribe aquí cualquier sugerencia, observación, aviso etc.</string>
-    <string name="publicacion">Publicación</string>
-    <string name="publicacion_titulo">Introducir titulo</string>
-    <string name="publicacion_descripcion">Introducir descripción</string>
-    <string name="publicacion_titulo_a_favor">Titulo a favor</string>
-    <string name="publicacion_titulo_en_contra">Titulo en contra</string>
-    <string name="pista_repetir_contrasenia">Repetir Contraseña</string>
-    <string name="terminos_condiciones">He leído y acepto los términos y condiciones de uso</string>
-    <string name="registrar">Registrar</string>
-    <string name="recordar">Recordar</string>
-    <string name="olvidado_su_contrasenia">¿Has olvidado su contraseña?</string>
-    <string name="no_tener_cuenta">¿No tienes una cuenta?</string>
-    <string name="registrate">Registrate</string>
     <string name="configuracion">Configuracion</string>
     <string name="privacidad">Privacidad</string>
     <string name="brillo">Brillo</string>
     <string name="seguir_sistema">Seguir Sistema</string>
+
+    <!--SUGERENCIA-->
+    <string name="sugerencia">Sugerencia</string>
+    <string name="sugerencia_hint">Escribe aquí cualquier sugerencia, observación, aviso etc.</string>
+
+    <!--    PERFIL FRAGMENT-->
+    <string name="conectar_ahora">Conectar ahora</string>
+    <string name="mensaje_campo_id_usuario">Desbloquea todas las funciones y disfruta de la experiencia completa</string>
+    <string name="sugerencia_mensaje">¡Mejora tu experiencia!  Danos tu opinión para mejorar nuestra app.</string>
+
+    <!--PUBLICACION-->
+    <string name="publicacion">Publicación</string>
+    <string name="publicacion_titulo">Introducir título</string>
+    <string name="publicacion_descripcion">Introducir descripción(250 letras)</string>
+    <string name="publicacion_titulo_a_favor">Título a favor</string>
+    <string name="publicacion_titulo_en_contra">Título en contra</string>
+
+    <!--DATOS PERSONAL-->
+    <string name="seleccionar_fecha_de_nacimiento">Seleccionar fecha de nacimiento</string>
     <string name="datos_personal">Datos personal</string>
     <string name="id">Id</string>
     <string name="nombre_usuario">Nombre usuario</string>
     <string name="nombre_personal">Nombre personal</string>
-    <string name="fecha">Fecha</string>
+    <string name="fecha_nacicmiento">Fecha nacimiento</string>
     <string name="sexo">Sexo</string>
     <string name="descripcion_personal">Descripción personal</string>
     <string name="descripcion_personal_hint">Haz clic para rellenar tu perfil con aficiones, estilo de vida, etc.</string>

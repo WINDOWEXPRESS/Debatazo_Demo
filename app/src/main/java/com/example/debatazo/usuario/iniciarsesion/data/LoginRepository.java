@@ -1,11 +1,22 @@
 package com.example.debatazo.usuario.iniciarsesion.data;
 
 import android.content.Context;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.debatazo.usuario.apirest.RetrofitCliente;
 import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
+import com.example.debatazo.usuario.iniciarsesion.data.model.Token;
+
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -62,6 +73,36 @@ public class LoginRepository {
             public Result<LoggedInUser> onFailure(Result<LoggedInUser> mensajeError) {
                 callBack.onFailure(mensajeError);
                 return null;
+            }
+        });
+    }
+
+    public void updatePerfil(LoggedInUser user, MutableLiveData<Boolean> loadingLiveData, TextView mensajeError) {
+        loadingLiveData.setValue(true);
+        Call<ResponseBody> updateProfile = RetrofitCliente.getInstancia().getApiUsuario().updateProfile(Token.getInstance().getValue(),
+                Token.getInstance().getUserId(), user);
+        updateProfile.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                loadingLiveData.setValue(false);
+                if (response.isSuccessful()) {
+                    try {
+                        loggedInUserMutableLiveData.postValue(user);
+                        mensajeError.setText(response.body().string());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    String errorMessage = "Error: " + response.code() + " - " + response.message();
+                    mensajeError.setText(errorMessage);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                loadingLiveData.setValue(false);
+                String errorMessage = "Error: " + t.getCause() + " - " + t.getMessage();
+                mensajeError.setText(errorMessage);
             }
         });
     }

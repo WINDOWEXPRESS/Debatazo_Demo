@@ -11,12 +11,10 @@ import com.example.debatazo.debaterecycler.DebateProducto;
 import com.example.debatazo.debaterecycler.api.ServicioDebateProducto;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Tag;
 
 public class DebateProductoModelView extends ViewModel {
     public MutableLiveData<List<DebateProducto>> listas;
