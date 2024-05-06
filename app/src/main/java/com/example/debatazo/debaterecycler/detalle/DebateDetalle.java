@@ -1,5 +1,6 @@
 package com.example.debatazo.debaterecycler.detalle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,9 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.debatazo.R;
-import com.example.debatazo.debaterecycler.DebateAdaptador;
 import com.example.debatazo.debaterecycler.DebateFragmento;
-import com.example.debatazo.debaterecycler.DebateProducto;
 import com.example.debatazo.debaterecycler.api.ServicioDebateProducto;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.squareup.picasso.Picasso;
@@ -25,37 +24,34 @@ public class DebateDetalle extends AppCompatActivity {
 
     ImageButton imageButton;
     ShapeableImageView shapeableIV_usuario;
-    TextView textV_nombre,textV_fecha,textV_titulo,textV_contenido;
+    TextView textV_nombre, textV_fecha, textV_titulo, textV_contenido;
     ImageView imageV_imagenC;
     RecyclerView comentarios;
     Bundle bundle;
     ComentarioAdaptador adaptador;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.actividad_detalle_debate);
 
-        imageButton = findViewById(R.id.detalleD_imageB_volver);
-        shapeableIV_usuario = findViewById(R.id.detalleD_shapeableIV_usuario);
-        textV_nombre = findViewById(R.id.detalleD_textV_nombre);
-        textV_fecha = findViewById(R.id.detalleD_textV_fecha);
-        textV_titulo = findViewById(R.id.detalleD_textV_titulo);
-        textV_contenido = findViewById(R.id.detalleD_textV_contenido);
-        imageV_imagenC = findViewById(R.id.detalleD_imageV_imagenC);
-        comentarios = findViewById(R.id.detalleD_comentarios);
+        vincularComponentes();
 
         bundle = getIntent().getExtras();
-        int debateid = bundle.getInt(DebateFragmento.INTENT_KEY);
+        int debateid = 0;
+        if (bundle != null) {
+            debateid = bundle.getInt(DebateFragmento.INTENT_KEY);
+        }
 
         Call<DebateDetalleObjeto> debateDetalleService = ServicioDebateProducto.getInstance().getRepor().getById(String.valueOf(debateid));
 
         debateDetalleService.enqueue(new Callback<DebateDetalleObjeto>() {
             @Override
-            public void onResponse(Call<DebateDetalleObjeto> call, Response<DebateDetalleObjeto> response) {
-                if(response.isSuccessful()){
+            public void onResponse(@NonNull Call<DebateDetalleObjeto> call, @NonNull Response<DebateDetalleObjeto> response) {
+                if (response.isSuccessful()) {
                     DebateDetalleObjeto detalle = response.body();
                     Picasso.get().load(detalle.getList().getProfileImg()).into(shapeableIV_usuario);
-                    if(detalle.getList().getImageUrl() != null){
+                    if (detalle.getList().getImageUrl() != null) {
                         Picasso.get().load(detalle.getList().getImageUrl()).into(imageV_imagenC);
                     }
 
@@ -74,10 +70,22 @@ public class DebateDetalle extends AppCompatActivity {
                     });
                 }
             }
+
             @Override
-            public void onFailure(Call<DebateDetalleObjeto> call, Throwable t) {
+            public void onFailure(@NonNull Call<DebateDetalleObjeto> call, @NonNull Throwable t) {
 
             }
         });
+    }
+
+    private void vincularComponentes() {
+        imageButton = findViewById(R.id.aDDebate_imageB_volver);
+        shapeableIV_usuario = findViewById(R.id.aDDebate_shapeableIV_usuario);
+        textV_nombre = findViewById(R.id.aDDebate_textV_nombre);
+        textV_fecha = findViewById(R.id.aDDebate_textV_fecha);
+        textV_titulo = findViewById(R.id.aDDebate_textV_titulo);
+        textV_contenido = findViewById(R.id.aDDebate_textV_contenido);
+        imageV_imagenC = findViewById(R.id.aDDebate_imageV_imagenC);
+        comentarios = findViewById(R.id.aDDebate_comentarios);
     }
 }

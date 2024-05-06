@@ -23,7 +23,9 @@ import java.util.List;
 
 
 public class DebateFragmento extends Fragment {
-    public DebateFragmento(){}
+    public DebateFragmento() {
+    }
+
     private List<DebateProducto> debateList;
     private RecyclerView debateRecyclerV;
     private DebateAdaptador debateAdap;
@@ -31,30 +33,32 @@ public class DebateFragmento extends Fragment {
     private ActivityResultLauncher<Intent> resultLauncher;
     public static final String INTENT_KEY = "SECRE_KEYSSS";
     ProgressBar progressBar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View layout = inflater.inflate(R.layout.fragmento_debate,container,false);
+        View layout = inflater.inflate(R.layout.fragmento_debate, container, false);
         progressBar = layout.findViewById(R.id.fragmentD_progressB);
-        debateRecyclerV = layout.findViewById(R.id.fragmentD_recyclerV);
+        debateRecyclerV = layout.findViewById(R.id.fDebate_recyclerV);
 
         DebateProductoModelView mv = new ViewModelProvider(this).get(DebateProductoModelView.class);
-        mv.generaList().observe(getViewLifecycleOwner(),value->{
+        mv.generaList().observe(getViewLifecycleOwner(), value -> {
             debateList = value;
             debateRecyclerV.setLayoutManager(new LinearLayoutManager(getActivity()));
             debateAdap = new DebateAdaptador(debateList);
             debateRecyclerV.setAdapter(debateAdap);
 
-            debateAdap.setClickListener((vista,posicion,producto) ->{
+            debateAdap.setClickListener((vista, posicion, producto) -> {
                 intent = new Intent(getActivity(), DebateDetalle.class);
-                intent.putExtra(INTENT_KEY,producto.getDebateId());
+                intent.putExtra(INTENT_KEY, producto.getDebateId());
                 resultLauncher.launch(intent);
             });
             progressBar.setVisibility(View.INVISIBLE);
             debateRecyclerV.setVisibility(View.VISIBLE);
         });
 
-        resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),result -> {});
+        resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        });
         return layout;
 
     }

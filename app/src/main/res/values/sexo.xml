@@ -5,4 +5,9 @@
         <item>Hombre</item>
         <item>Mujer</item>
     </string-array>
+    <string-array name="sex_abrev_array">
+        <item>*</item>
+        <item>H</item>
+        <item>M</item>
+    </string-array>
 </resources>

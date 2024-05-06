@@ -8,10 +8,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".token.usuario.registrar.ActividadRegistrar">
+    tools:context=".usuario.registrar.ActividadRegistrar">
 
     <ImageView
-        android:id="@+id/actividadR_imageV_logoAplicacion"
+        android:id="@+id/aRegistrar_imageV_logoAplicacion"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="10dp"
@@ -20,10 +20,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="Logo" />
 
     <TextView
-        android:id="@+id/actividadR_textV_nombreAplicacion"
+        android:id="@+id/aRegistrar_textV_nombreAplicacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -31,21 +32,21 @@
         android:layout_weight="1"
         android:fontFamily="@font/designer"
         android:paddingTop="5dp"
-        android:text="DEBATAZO"
+        android:text="@string/app_name"
         android:textColor="@color/black"
-        android:textSize="50dp"
-        app:layout_constraintEnd_toEndOf="@+id/actividadR_imageV_logoAplicacion"
+        android:textSize="50sp"
+        app:layout_constraintEnd_toEndOf="@+id/aRegistrar_imageV_logoAplicacion"
         app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="@+id/actividadR_imageV_logoAplicacion"
-        app:layout_constraintTop_toBottomOf="@+id/actividadR_imageV_logoAplicacion" />
+        app:layout_constraintStart_toStartOf="@+id/aRegistrar_imageV_logoAplicacion"
+        app:layout_constraintTop_toBottomOf="@+id/aRegistrar_imageV_logoAplicacion" />
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/actividadR_textIL_email"
+        android:id="@+id/aRegistrar_textIL_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:hint="Email"
+        android:hint="@string/pista_email"
         app:boxBackgroundColor="@color/white"
 
         app:boxBackgroundMode="outline"
@@ -58,7 +59,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/actividadR_textV_nombreAplicacion"
+        app:layout_constraintTop_toBottomOf="@+id/aRegistrar_textV_nombreAplicacion"
         app:startIconDrawable="@drawable/email"
         app:startIconTint="@color/azul_marino">
 
@@ -66,15 +67,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textEmailAddress"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/actividadR_textIL_contrasenia"
+        android:id="@+id/aRegistrar_textIL_contrasenia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Contraseña"
+        android:hint="@string/pista_contrasenia"
         app:boxBackgroundColor="@color/white"
 
         app:boxBackgroundMode="outline"
@@ -93,7 +94,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.842"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/actividadR_textIL_email"
+        app:layout_constraintTop_toBottomOf="@+id/aRegistrar_textIL_email"
         app:startIconDrawable="@drawable/contrasenia"
         app:startIconTint="@color/azul_marino"
         tools:ignore="MissingConstraints">
@@ -101,15 +102,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textVisiblePassword"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/actividadR_textIL_repetirContrasenia"
+        android:id="@+id/aRegistrar_textIL_repetirContrasenia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Repetir Contraseña"
+        android:hint="@string/pista_repetir_contrasenia"
 
         app:boxBackgroundColor="@color/white"
         app:boxBackgroundMode="outline"
@@ -126,7 +127,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/actividadR_textIL_contrasenia"
+        app:layout_constraintTop_toBottomOf="@+id/aRegistrar_textIL_contrasenia"
         app:startIconDrawable="@drawable/contrasenia"
         app:startIconTint="@color/azul_marino">
 
@@ -134,46 +135,46 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textVisiblePassword"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/actividadR_textV_mensajeError"
+        android:id="@+id/aRegistrar_textV_mensajeError"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/red"
-        android:textSize="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/actividadR_textIL_repetirContrasenia"
-        app:layout_constraintStart_toStartOf="@+id/actividadR_textIL_repetirContrasenia"
-        app:layout_constraintTop_toBottomOf="@+id/actividadR_textIL_repetirContrasenia" />
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/aRegistrar_textIL_repetirContrasenia"
+        app:layout_constraintStart_toStartOf="@+id/aRegistrar_textIL_repetirContrasenia"
+        app:layout_constraintTop_toBottomOf="@+id/aRegistrar_textIL_repetirContrasenia" />
     <CheckBox
-        android:id="@+id/actividadR_checkB_terminosYCondiciones"
+        android:id="@+id/aRegistrar_checkB_terminosYCondiciones"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_weight="1"
         android:buttonTint="#000000"
-        android:text="He leído y acepto los términos y condiciones de uso"
+        android:text="@string/terminos_condiciones"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@+id/actividadR_textV_mensajeError"
+        app:layout_constraintTop_toBottomOf="@+id/aRegistrar_textV_mensajeError"
         tools:layout_editor_absoluteX="0dp" />
 
     <Button
-        android:id="@+id/actividadR_button_registrar"
+        android:id="@+id/aRegistrar_button_registrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="40dp"
         android:enabled="false"
-        android:text="Registrar"
+        android:text="@string/registrar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
-        android:id="@+id/actividadR_progressB_cargando"
+        android:id="@+id/aRegistrar_progressB_cargando"
         style="?android:attr/progressBarStyle"
         android:layout_width="100dp"
         android:layout_height="100dp"

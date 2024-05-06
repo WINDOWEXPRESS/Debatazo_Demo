@@ -14,48 +14,46 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="3dp">
 
             <ImageView
-                android:id="@+id/fragmentoP_imageV_logoAplicacion"
+                android:id="@+id/aPrincipal_imageV_logoAplicacion"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:padding="3dp"
-                app:srcCompat="@mipmap/aplicacion_logo_round" />
+                app:srcCompat="@mipmap/aplicacion_logo_round"
+                android:contentDescription="Logo" />
 
             <TextView
-                android:id="@+id/fragmentoP_textV_nombreAplicacion"
+                android:id="@+id/aPrincipal_textV_nombreAplicacion"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:fontFamily="@font/designer"
                 android:paddingTop="5dp"
                 android:text="@string/app_name"
-                android:textSize="50dp" />
+                android:textSize="50sp" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/fragmentoP_textV_borde_titulo"
             android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:layout_weight="1"
+            android:layout_height="1dp"
             android:background="@drawable/borde_logo" />
 
         <FrameLayout
-            android:id="@+id/actividadP_frameL"
+            android:id="@+id/aPrincipal_frameL"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/actividadP_bottomAB"
+        android:id="@+id/aPrincipal_bottomAB"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -64,7 +62,7 @@
         app:fabCradleRoundedCornerRadius="50dp">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/actividadP_bottomNV"
+            android:id="@+id/aPrincipal_bottomNV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
@@ -75,7 +73,7 @@
     </com.google.android.material.bottomappbar.BottomAppBar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/actividadP_floatingAB"
+        android:id="@+id/aPrincipal_floatingAB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/red"

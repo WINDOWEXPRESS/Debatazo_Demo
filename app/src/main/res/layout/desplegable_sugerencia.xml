@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/desplegableS_lineaLH_sugerencia"
+    android:id="@+id/dSugerencia_lineaLH_sugerencia"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo_tabla_publicar"
@@ -11,35 +10,38 @@
 
 
         <ImageView
-            android:id="@+id/desplegableS_textV_barra"
+            android:id="@+id/dSugerencia_textV_barra"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center|top"
             android:scaleType="centerCrop"
-            android:src="@drawable/barra_horizontal_tabla_publicar" />
+            android:src="@drawable/barra_horizontal_tabla_publicar"
+            android:contentDescription="Barrar" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
-                android:id="@+id/desplegableS_imagenV_cancelar"
+                android:id="@+id/dSugerencia_imagenV_volver"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
-                android:src="@drawable/cerrar_tabla_publicar" />
+                android:src="@drawable/flecha_volver"
+                android:contentDescription="@string/boton_volver" />
 
             <TextView
-                android:id="@+id/desplegableS_textV_sugerencia"
-                android:layout_width="wrap_content"
+                android:id="@+id/dSugerencia_textV_sugerencia"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="8dp"
-                android:text="Sugerencia"
+                android:text="@string/sugerencia"
                 android:textAlignment="viewStart"
                 android:textColor="@color/black"
-                android:textSize="25dp" />
+                android:textSize="25sp" />
 
         </LinearLayout>
 
@@ -49,43 +51,44 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/desplegableS_textV_descripcion"
+            android:id="@+id/dSugerencia_textV_descripcion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:text="¡Mejora tu experiencia! \nDanos tu opinión para mejorar nuestra app."
+            android:text="@string/sugerencia_mensaje"
             android:textColor="#000000"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/desplegableS_textV_limiteNumerico"
+            android:id="@+id/dSugerencia_textV_limiteNumerico"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/desplegableS_editTT_descripcion"
+            android:layout_alignBottom="@+id/dSugerencia_editTT_descripcion"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="5dp"
             android:text="@string/limite_numerico_inicio_desplegableS" />
 
         <EditText
-            android:id="@+id/desplegableS_editTT_descripcion"
+            android:id="@+id/dSugerencia_editTT_descripcion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/desplegableS_textV_descripcion"
+            android:layout_below="@+id/dSugerencia_textV_descripcion"
             android:layout_alignParentStart="true"
             android:background="@drawable/borde_descripcion_personal"
             android:focusable="auto"
             android:gravity="top"
-            android:hint="Escribe aquí cualquier sugerencia, observación, aviso etc."
+            android:hint="@string/sugerencia_hint"
             android:inputType="textMultiLine"
             android:maxLength="250"
             android:maxLines="10"
             android:minLines="6"
             android:padding="10dp"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"
+            android:autofillHints="0" />
     </RelativeLayout>
 
             <LinearLayout
@@ -96,7 +99,7 @@
 
 
             <Button
-                android:id="@+id/desplegableS_button_enviar"
+                android:id="@+id/dSugerencia_button_enviar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/boton_enviar" />

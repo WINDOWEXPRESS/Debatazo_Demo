@@ -9,10 +9,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".token.usuario.iniciarsesion.ui.login.IniciaSesion">
+    tools:context=".usuario.iniciarsesion.ui.login.IniciaSesion">
 
     <ImageView
-        android:id="@+id/actividadIS_imageV_logoAplicacion"
+        android:id="@+id/aISesion_imageV_logoAplicacion"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="10dp"
@@ -21,10 +21,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="Logo" />
 
     <TextView
-        android:id="@+id/actividadIS_textV_nombreAplicacion"
+        android:id="@+id/aISesion_textV_nombreAplicacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -32,16 +33,16 @@
         android:layout_weight="1"
         android:fontFamily="@font/designer"
         android:paddingTop="5dp"
-        android:text="DEBATAZO"
+        android:text="@string/app_name"
         android:textColor="@color/black"
-        android:textSize="50dp"
-        app:layout_constraintEnd_toEndOf="@+id/actividadIS_imageV_logoAplicacion"
+        android:textSize="50sp"
+        app:layout_constraintEnd_toEndOf="@+id/aISesion_imageV_logoAplicacion"
         app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="@+id/actividadIS_imageV_logoAplicacion"
-        app:layout_constraintTop_toBottomOf="@+id/actividadIS_imageV_logoAplicacion" />
+        app:layout_constraintStart_toStartOf="@+id/aISesion_imageV_logoAplicacion"
+        app:layout_constraintTop_toBottomOf="@+id/aISesion_imageV_logoAplicacion" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/actividadIS_textIL_email"
+        android:id="@+id/aISesion_textIL_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -59,7 +60,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/actividadIS_textV_nombreAplicacion"
+        app:layout_constraintTop_toBottomOf="@+id/aISesion_textV_nombreAplicacion"
         app:startIconDrawable="@drawable/email"
         app:startIconTint="@color/azul_marino"
 
@@ -69,12 +70,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textEmailAddress"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/actividadIS_textIL_contrasenia"
+        android:id="@+id/aISesion_textIL_contrasenia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autofillHints="@string/pista_contrasenia"
@@ -99,19 +100,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.842"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/actividadIS_textIL_email"
+        app:layout_constraintTop_toBottomOf="@+id/aISesion_textIL_email"
         app:startIconDrawable="@drawable/contrasenia"
         app:startIconTint="@color/azul_marino"
         app:errorEnabled="true"
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/actividadIS_textIET_contrasenia"
+            android:id="@+id/aISesion_textIET_contrasenia"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textPassword"
 
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -120,12 +121,12 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="@+id/actividadIS_textIL_contrasenia"
-        app:layout_constraintStart_toStartOf="@+id/actividadIS_textIL_contrasenia"
-        app:layout_constraintTop_toBottomOf="@+id/actividadIS_textIL_contrasenia">
+        app:layout_constraintEnd_toEndOf="@+id/aISesion_textIL_contrasenia"
+        app:layout_constraintStart_toStartOf="@+id/aISesion_textIL_contrasenia"
+        app:layout_constraintTop_toBottomOf="@+id/aISesion_textIL_contrasenia">
 
         <LinearLayout
-            android:id="@+id/actividadIS_linearL_operaciones"
+            android:id="@+id/aISesion_linearL_operaciones"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -136,20 +137,20 @@
                 android:orientation="horizontal">
 
                 <CheckBox
-                    android:id="@+id/actividadIS_checkB_recordar"
+                    android:id="@+id/aISesion_checkB_recordar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:buttonTint="#000000"
-                    android:text="Recordar"
+                    android:text="@string/recordar"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/actividadIS_textV_olvidarContrasenia"
+                    android:id="@+id/aISesion_textV_olvidarContrasenia"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="¿Has olvidado su contraseña?"
+                    android:text="@string/olvidado_su_contrasenia"
                     android:textAlignment="textEnd"
                     android:textColor="@color/azul_marino"
                     android:textSize="16sp" />
@@ -162,28 +163,28 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/actividadIS_textV_mensajeRegistrar"
+                    android:id="@+id/aISesion_textV_mensajeRegistrar"
                     android:layout_width="462dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="¿No tienes una cuenta? "
+                    android:text="@string/no_tener_cuenta"
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/actividadIS_textV_registrar"
+                    android:id="@+id/aISesion_textV_registrar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Registrate"
+                    android:text="@string/registrate"
                     android:textColor="@color/azul_marino"
                     android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
 
         <Button
-            android:id="@+id/actividadIS_button_resgistrar"
+            android:id="@+id/aISesion_button_iniciaSesion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -198,28 +199,30 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/actividadIS_imageV_horizontalIzquierda"
+                android:id="@+id/aISesion_imageV_horizontalIzquierda"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/barra_horizontal_tabla_inicia_sesion" />
+                android:src="@drawable/barra_horizontal_tabla_inicia_sesion"
+                android:importantForAccessibility="no" />
 
             <TextView
-                android:id="@+id/actividadIS_textV_otrosAcceso"
+                android:id="@+id/aISesion_textV_otrosAcceso"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Inicia Sesión"
+                android:text="@string/accion_inicia_sesion"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <ImageView
-                android:id="@+id/actividadIS_imageV_horizontalDerecha"
+                android:id="@+id/aISesion_imageV_horizontalDerecha"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/barra_horizontal_tabla_inicia_sesion" />
+                android:src="@drawable/barra_horizontal_tabla_inicia_sesion"
+                android:importantForAccessibility="no" />
 
         </LinearLayout>
 
@@ -229,33 +232,36 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/actividadIS_imageV_gmail"
+                android:id="@+id/aISesion_imageV_gmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/gmail_nuevo" />
+                android:src="@drawable/gmail_nuevo"
+                android:contentDescription="Gmail" />
 
             <ImageView
-                android:id="@+id/actividadIS_imageV_wechat"
+                android:id="@+id/aISesion_imageV_wechat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/wechat" />
+                android:src="@drawable/wechat"
+                android:contentDescription="Wechat" />
 
             <ImageView
-                android:id="@+id/actividadIS_imageV_facebook"
+                android:id="@+id/aISesion_imageV_facebook"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/facebook" />
+                android:src="@drawable/facebook"
+                android:contentDescription="Facebook" />
 
 
         </LinearLayout>
 
         <CheckBox
-            android:id="@+id/actividadIS_checkB_terminosYCondiciones"
+            android:id="@+id/aISesion_checkB_terminosYCondiciones"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="30dp"
             android:layout_weight="1"
             android:buttonTint="#000000"
@@ -264,7 +270,7 @@
     </LinearLayout>
 
     <ProgressBar
-        android:id="@+id/actividadIS_progressB_cargando"
+        android:id="@+id/aISesion_progressB_cargando"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"

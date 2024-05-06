@@ -4,42 +4,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".token.usuario.PerfilFragment">
+    tools:context=".usuario.PerfilFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="10dp"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="right"
+            android:gravity="end"
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/fragmentoP_imageV_tema"
+                android:id="@+id/fPerfil_imageV_tema"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginEnd="10dp"
                 android:tooltipText="Tema"
                 android:src="@drawable/tema_nocturno"
-                android:tag="nocturno" />
+                android:tag="nocturno"
+                android:contentDescription="Tema" />
 
             <ImageView
-                android:id="@+id/fragmentoP_imageV_configuracion"
+                android:id="@+id/fPerfil_imageV_configuracion"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:tooltipText="Ajuste"
                 android:layout_marginEnd="10dp"
-                android:src="@drawable/configuracion" />
+                android:src="@drawable/configuracion"
+                android:contentDescription="Ajuste" />
         </LinearLayout>
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/fragmentoP_imageV_perfil"
+            android:id="@+id/fPerfil_imageV_perfil"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginTop="30dp"
@@ -49,7 +52,7 @@
             app:shapeAppearanceOverlay="@style/redondearImageView" />
 
         <LinearLayout
-            android:id="@+id/fragmentoP_datosUsuario"
+            android:id="@+id/fPerfil_datosUsuario"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="30dp"
@@ -63,7 +66,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/conectar_ahora"
-                android:textSize="24dp" />
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/fragmentoP_textV_idUsuario"
@@ -82,7 +85,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/fragmentoP_datosPublicacion"
+            android:id="@+id/fPerfil_datosPublicacion"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="15dp"
@@ -97,7 +100,18 @@
                 android:paddingEnd="10dp">
 
                 <TextView
-                    android:id="@+id/fragmentoP_textV_numeroPublicarDebate"
+                    android:id="@+id/fPerfil_textV_numeroPublicarDebate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    tools:ignore="NestedWeights" />
+
+                <TextView
+                    android:id="@+id/fPerfil_textV_numeroPublicarDebateRespondido"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -107,7 +121,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/fragmentoP_textV_numeroPublicarDebateRespondido"
+                    android:id="@+id/fPerfil_textV_numeroPublicarValoracion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -117,17 +131,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/fragmentoP_textV_numeroPublicarValoracion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="0"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/fragmentoP_textV_numeroPublicarValoracionRespondido"
+                    android:id="@+id/fPerfil_textV_numeroPublicarValoracionRespondido"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -146,17 +150,18 @@
                 android:paddingEnd="10dp">
 
                 <TextView
-                    android:id="@+id/fragmentoP_textV_publicarDebate"
+                    android:id="@+id/fPerfil_textV_publicarDebate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Debate publicado"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:ignore="NestedWeights" />
 
                 <TextView
-                    android:id="@+id/fragmentoP_textV_publicarDebateRespondido"
+                    android:id="@+id/fPerfil_textV_publicarDebateRespondido"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -166,7 +171,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/fragmentoP_textV_publicarValoracion"
+                    android:id="@+id/fPerfil_textV_publicarValoracion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -176,7 +181,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/fragmentoP_textV_publicarValoracionRespondido"
+                    android:id="@+id/fPerfil_textV_publicarValoracionRespondido"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

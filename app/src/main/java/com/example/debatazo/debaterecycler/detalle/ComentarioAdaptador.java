@@ -17,24 +17,29 @@ import java.util.List;
 public class ComentarioAdaptador extends RecyclerView.Adapter<ComentarioAdaptador.CommentarioViewHolder> {
 
     private List<ComentarioObjeto> listaComentarios;
-    public ComentarioAdaptador(List<ComentarioObjeto> listaComentarios){this.listaComentarios = listaComentarios;}
-public class CommentarioViewHolder extends RecyclerView.ViewHolder{
-    ShapeableImageView perfil;
-    TextView nombre;
-    TextView descripcion;
 
-    public CommentarioViewHolder(@NonNull View itemView) {
-        super(itemView);
-        perfil = itemView.findViewById(R.id.comentario_imagenC_usuario);
-        nombre = itemView.findViewById(R.id.comentario_textV_nombre);
-        descripcion = itemView.findViewById(R.id.comentario_textV_descripciones);
+    public ComentarioAdaptador(List<ComentarioObjeto> listaComentarios) {
+        this.listaComentarios = listaComentarios;
     }
-}
+
+    public class CommentarioViewHolder extends RecyclerView.ViewHolder {
+        ShapeableImageView perfil;
+        TextView nombre;
+        TextView descripcion;
+
+        public CommentarioViewHolder(@NonNull View itemView) {
+            super(itemView);
+            perfil = itemView.findViewById(R.id.comentario_imagenC_usuario);
+            nombre = itemView.findViewById(R.id.comentario_textV_nombre);
+            descripcion = itemView.findViewById(R.id.comentario_textV_descripciones);
+        }
+    }
+
     @NonNull
     @Override
     public ComentarioAdaptador.CommentarioViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.comentario_filas,parent,false
+                R.layout.comentario_filas, parent, false
         );
         return new ComentarioAdaptador.CommentarioViewHolder(itemView);
     }
@@ -49,7 +54,9 @@ public class CommentarioViewHolder extends RecyclerView.ViewHolder{
     }
 
     @Override
-    public int getItemCount() {return listaComentarios.size();}
+    public int getItemCount() {
+        return listaComentarios.size();
+    }
 
 }
 
