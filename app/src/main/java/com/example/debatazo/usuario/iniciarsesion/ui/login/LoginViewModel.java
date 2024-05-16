@@ -3,6 +3,7 @@ package com.example.debatazo.usuario.iniciarsesion.ui.login;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Patterns;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.lifecycle.LiveData;
@@ -134,12 +135,20 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
+    public void recuperarPassword(String email, TextView mensaje) {
+        loginRepository.recuperarPassword(email,loadingLiveData,mensaje);
+    }
+    public void cambiarPassword(int id ,String password,TextView mensaje) {
+        loginRepository.cambiarPassword( id ,password,loadingLiveData,mensaje);
+    }
+
+
     public void logout(Context context) {
         loginRepository.logout(context);
     }
 
     // Una comprobación de validación del nombre de usuario
-    private boolean esEmailValido(String email) {
+    public boolean esEmailValido(String email) {
         if (email == null) {
             return false;
         }
@@ -151,7 +160,7 @@ public class LoginViewModel extends ViewModel {
     }
 
     // Un comprobación de validación de contraseña
-    private boolean esPasswordValido(String password) {
+    public boolean esPasswordValido(String password) {
         return password != null && (password.trim().length() > LONGITUD_MIN && password.trim().length() < LONGITUD_MAX);
     }
 }

@@ -6,7 +6,7 @@
     <string name="publicar">Publicar</string>
     <string name="principal">Principal</string>
     <string name="debate">Debate</string>
-    <string name="valoracion">Valoracion</string>
+    <string name="valoracion">Valoración</string>
     <string name="usuario">Usuario</string>
     <string name="actividadP_floatingAB_layoutA" translatable="false"><![CDATA[@id/aPrincipal_bottomAB]]></string>
 
@@ -54,7 +54,7 @@
     <string name="cerrar_sesion">Cerrar Sesión</string>
     <string name="mensaje_cerrar_sesion">¿Estás seguro de que deseas cerrar sesión?</string>
     <string name="poltica_de_privacidad">Política de Privacidad</string>
-    <string name="configuracion">Configuracion</string>
+    <string name="configuracion">Configuración</string>
     <string name="privacidad">Privacidad</string>
     <string name="brillo">Brillo</string>
     <string name="seguir_sistema">Seguir Sistema</string>

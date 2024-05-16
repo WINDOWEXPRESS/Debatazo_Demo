@@ -33,7 +33,7 @@
         android:fontFamily="@font/designer"
         android:paddingTop="5dp"
         android:text="@string/app_name"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorPrimary"
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="@+id/aRegistrar_imageV_logoAplicacion"
         app:layout_constraintHorizontal_bias="0.495"
@@ -67,6 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textEmailAddress"
+            android:backgroundTint="@android:color/transparent"
             android:textSize="18sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -102,6 +103,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textVisiblePassword"
+            android:backgroundTint="@android:color/transparent"
             android:textSize="18sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -135,6 +137,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textVisiblePassword"
+            android:backgroundTint="@android:color/transparent"
             android:textSize="18sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -148,13 +151,14 @@
         app:layout_constraintEnd_toEndOf="@+id/aRegistrar_textIL_repetirContrasenia"
         app:layout_constraintStart_toStartOf="@+id/aRegistrar_textIL_repetirContrasenia"
         app:layout_constraintTop_toBottomOf="@+id/aRegistrar_textIL_repetirContrasenia" />
+
     <CheckBox
         android:id="@+id/aRegistrar_checkB_terminosYCondiciones"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_weight="1"
-        android:buttonTint="#000000"
+        android:buttonTint="?attr/colorPrimary"
         android:text="@string/terminos_condiciones"
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@+id/aRegistrar_textV_mensajeError"

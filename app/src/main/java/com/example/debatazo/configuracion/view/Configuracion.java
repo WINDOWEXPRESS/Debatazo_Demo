@@ -31,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.debatazo.R;
+import com.example.debatazo.usuario.contraseniamanager.ContraseniaManager;
 import com.example.debatazo.utils.BrilloUtils;
 import com.example.debatazo.utils.SharedPreferenceUtils;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
@@ -46,6 +47,7 @@ public class Configuracion extends AppCompatActivity {
     private TextView sugerencia;
     private TextView brilloTextView;
     private TextView privacidad;
+    private TextView cambiarContrasenia;
     private ImageButton volver;
     private SharedPreferences sharedPreferences;
     private Button cerrarSesion;
@@ -127,6 +129,17 @@ public class Configuracion extends AppCompatActivity {
             }
         });
 
+        cambiarContrasenia.setOnClickListener(view -> {
+            if (loginViewModel.getLoginRepository().isLoggedIn()){
+                Intent i = new Intent(this, ContraseniaManager.class);
+                i.putExtra(ContraseniaManager.TIPO,ContraseniaManager.CAMBIAR_KEY);
+                startActivity(i);
+            }else {
+                Intent i = new Intent(this, IniciaSesion.class);
+                startActivity(i);
+            }
+        });
+
         //Salir de configuracion
         volver.setOnClickListener(view -> finish());
 
@@ -149,6 +162,7 @@ public class Configuracion extends AppCompatActivity {
         brilloTextView = findViewById(R.id.aConfiguracion_textV_Brillo);
         volver = findViewById(R.id.aConfiguracion_imageV_volver);
         privacidad = findViewById(R.id.aConfiguracion_textV_privacidad);
+        cambiarContrasenia = findViewById(R.id.aConfiguracion_textV_cambiarContrasenia);
 
         // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory()).get(LoginViewModel.class);
@@ -180,6 +194,9 @@ public class Configuracion extends AppCompatActivity {
 
         //Ajustar el estado correspondiente a valor guardado en sharedPreferences
         seguirSistema.setChecked(sharedPreferences.getBoolean(SharedPreferenceUtils.BRILLO_SEGUIR_SISTEMA, false));
+        if(seguirSistema.isChecked()){
+            brilloSeekBar.setEnabled(false);
+        }
 
         // Obtener el valor de brillo de App si es null obtener por primera vez de brillo de sistema y configurarlo
         if (brilloUtils.getBrilloAppLD().getValue()==null){

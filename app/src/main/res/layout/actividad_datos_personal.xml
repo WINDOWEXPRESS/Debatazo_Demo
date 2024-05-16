@@ -43,10 +43,11 @@
                     android:id="@+id/aDPersonal_imageB_volver"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:backgroundTint="@color/white"
+                    android:backgroundTint="?android:attr/colorBackground"
                     android:contentDescription="@string/boton_volver"
                     android:scaleType="centerCrop"
                     android:src="@drawable/flecha_volver"
+                    android:tint="?attr/colorPrimary"
                     tools:ignore="TouchTargetSizeCheck" />
 
                 <TextView
@@ -77,9 +78,7 @@
 
                 <TextView
                     android:id="@+id/aDPersonal_textV_idUsuario"
-
                     android:layout_width="match_parent"
-
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center|start"

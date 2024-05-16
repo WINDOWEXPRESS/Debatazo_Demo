@@ -31,4 +31,10 @@ public interface ApiServicioUsuario {
     @PUT("users/profile/update/{id}")
     Call<ResponseBody> updateProfile(@Header("token") String token, @Path("id") int id,@Body LoggedInUser user);
 
+    @PUT("users/passwd/forget/{email}/{passwd}/{passwordEncriptado}")
+    Call<ResponseBody> recoveryPassword(@Path("email") String email,@Path("passwd") String passwd,@Path("passwordEncriptado") String passwordEncriptado);
+
+    @PUT("users/passwd/change/{id}/{passwd}")
+    Call<ResponseBody> changePassword(@Path("id") int id,@Path("passwd") String passwd);
+
 }

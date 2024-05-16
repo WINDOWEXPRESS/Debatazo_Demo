@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo_tabla_publicar"
+    android:backgroundTint="?attr/colorOnPrimary"
+    android:backgroundTintMode="multiply"
     android:orientation="vertical">
 
     <ImageView
@@ -13,9 +15,10 @@
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center|top"
+        android:importantForAccessibility="no"
         android:scaleType="centerCrop"
         android:src="@drawable/barra_horizontal_tabla_publicar"
-        android:importantForAccessibility="no" />
+        android:tint="?attr/colorOnBackground" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,8 +31,10 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_gravity="center"
+            android:background="?android:attr/colorBackground"
+            android:contentDescription="Volver"
             android:src="@drawable/flecha_volver"
-            android:contentDescription="Volver" />
+            android:tint="?attr/colorPrimary" />
 
         <TextView
             android:id="@+id/dPublicar_textV_publicacion"
@@ -39,7 +44,7 @@
             android:padding="8dp"
             android:text="@string/publicacion"
             android:textAlignment="viewStart"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorPrimary"
             android:textSize="25sp" />
 
     </LinearLayout>
@@ -57,10 +62,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#000000"
+            android:background="?attr/colorOnBackground"
             android:text="@string/debate"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="?android:attr/colorBackground"
             android:textSize="20sp" />
 
         <TextView
@@ -71,7 +76,8 @@
             android:text="@string/valoracion"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:visibility="invisible" />
 
     </LinearLayout>
 
@@ -84,11 +90,12 @@
             android:id="@+id/dPublicar_editTT_titulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:breakStrategy="high_quality"
             android:ems="10"
             android:hint="@string/publicacion_titulo"
+            android:importantForAutofill="no"
             android:inputType="text"
-            android:minHeight="48dp"
-            android:importantForAutofill="no" />
+            android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/dPublicar_editTT_descripcion"
@@ -96,10 +103,10 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/publicacion_descripcion"
+            android:importantForAutofill="no"
             android:inputType="text|textMultiLine"
             android:maxLength="250"
-            android:minHeight="48dp"
-            android:importantForAutofill="no" />
+            android:minHeight="48dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -113,9 +120,9 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="@string/publicacion_titulo_a_favor"
+                android:importantForAutofill="no"
                 android:inputType="text"
-                android:singleLine="true"
-                android:importantForAutofill="no"/>
+                android:singleLine="true" />
 
             <EditText
                 android:id="@+id/dPublicar_editTT_banda2"
@@ -124,9 +131,9 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="@string/publicacion_titulo_en_contra"
+                android:importantForAutofill="no"
                 android:inputType="text"
-                android:singleLine="true"
-                android:importantForAutofill="no"/>
+                android:singleLine="true" />
         </LinearLayout>
 
         <ImageView
@@ -134,9 +141,9 @@
             android:layout_width="match_parent"
             android:layout_height="182dp"
             android:background="#E1DFDF"
+            android:importantForAccessibility="no"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_baseline_add_24"
-            android:importantForAccessibility="no" />
+            app:srcCompat="@drawable/ic_baseline_add_24" />
 
         <Button
             android:id="@+id/dPublicar_button_publicarDebate"

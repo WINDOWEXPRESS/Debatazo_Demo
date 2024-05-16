@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.debatazo.R;
 
+import com.example.debatazo.usuario.contraseniamanager.ContraseniaManager;
 import com.example.debatazo.utils.BrilloUtils;
 import com.example.debatazo.databinding.ActividadIniciaSesionBinding;
 import com.example.debatazo.utils.SharedPreferenceUtils;
@@ -54,9 +55,7 @@ public class IniciaSesion extends AppCompatActivity {
         //ajuste de brillo
         BrilloUtils.getInstancia().brilloAppObserver(this);
 
-        // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
-        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
-                .get(LoginViewModel.class);
+
 
         vincularVistas();
 
@@ -84,7 +83,7 @@ public class IniciaSesion extends AppCompatActivity {
             }
         });
 
-        loginViewModel.getLoadingLiveData().observe(this, loading -> cargando.setVisibility(loading?View.VISIBLE:View.GONE));
+        loginViewModel.getLoadingLiveData().observe(this, loading -> cargando.setVisibility(loading ? View.VISIBLE : View.GONE));
 
         //OBSERVAR EL RESULTADO DE LOGIN
         loginViewModel.getLoginResult().observe(this, loginResult -> {
@@ -106,7 +105,7 @@ public class IniciaSesion extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 //loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
-               //         passwordEditText.getText().toString());
+                //         passwordEditText.getText().toString());
             }
 
             @Override
@@ -133,7 +132,7 @@ public class IniciaSesion extends AppCompatActivity {
                 // Cuando se presiona "Done", se llama al método login del ViewModel
                 // para intentar iniciar sesión con el nombre de usuario y la contraseña proporcionados
                 loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString(),IniciaSesion.this);
+                        passwordEditText.getText().toString(), IniciaSesion.this);
             }
             // Devuelve falso para indicar que el evento no está consumido y puede ser manejado por otros listeners
             return false;
@@ -157,11 +156,14 @@ public class IniciaSesion extends AppCompatActivity {
             }
             editor.apply(); // Guardar los cambios
 
-            loginViewModel.login(email, password,IniciaSesion.this);
+            loginViewModel.login(email, password, IniciaSesion.this);
         });
 
-        olvidarContrasenia.setOnClickListener(view ->
-                Toast.makeText(IniciaSesion.this, "Sin implementar ", Toast.LENGTH_LONG).show()
+        olvidarContrasenia.setOnClickListener(view -> {
+                    Intent i = new Intent(this, ContraseniaManager.class);
+                    i.putExtra(ContraseniaManager.TIPO, ContraseniaManager.RECUPER_KEY);
+                    startActivity(i);
+                }
         );
 
         gmail.setOnClickListener(view -> otraFormaDeAcceso());
@@ -188,6 +190,10 @@ public class IniciaSesion extends AppCompatActivity {
         olvidarContrasenia = binding.aISesionTextVOlvidarContrasenia;
         registrar = binding.aISesionTextVRegistrar;
         recordar = binding.aISesionCheckBRecordar;
+
+        // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
+        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
+                .get(LoginViewModel.class);
     }
 
     private void mostrarInfoConSharedPreference(EditText usernameEditText, EditText passwordEditText, CheckBox recordar) {

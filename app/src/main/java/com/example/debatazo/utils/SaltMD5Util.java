@@ -1,9 +1,10 @@
-package com.example.debatazo.usuario.md5;
+package com.example.debatazo.utils;
 
 
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.codec.binary.Hex;
 
 import java.security.MessageDigest;
+import java.util.Random;
 
 /**
  * @Author 魏一鹤
@@ -47,6 +48,30 @@ public class SaltMD5Util {
         }
     }
 
+    // Método para generar una cadena aleatoria de longitud 'length'
+    public static String generateRandomCadena() {
+        int longitudCadena = 6;
+        // Caracteres válidos para la cadena aleatoria
+        String caracteresValidos = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        // Crear un objeto Random
+        Random random = new Random();
+
+        // StringBuilder para construir la cadena aleatoria
+        StringBuilder stringBuilder = new StringBuilder();
+
+        // Generar caracteres aleatorios hasta alcanzar la longitud deseada
+        for (int i = 0; i < longitudCadena; i++) {
+            // Obtener un índice aleatorio dentro del rango de caracteres válidos
+            int indice = random.nextInt(caracteresValidos.length());
+
+            // Agregar el carácter correspondiente al StringBuilder
+            stringBuilder.append(caracteresValidos.charAt(indice));
+        }
+
+        // Convertir el StringBuilder a una cadena y devolverla
+        return stringBuilder.toString();
+    }
 }
 
 
