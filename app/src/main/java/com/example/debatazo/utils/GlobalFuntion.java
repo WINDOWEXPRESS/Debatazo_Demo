@@ -20,7 +20,7 @@ public class GlobalFuntion {
         if(type == BandObject.P){
             spannable = customText(context.getResources().getString(R.string.a_favor), Color.GREEN);
         }else if(type == BandObject.N){
-            spannable = customText(context.getResources().getString(R.string.a_favor),Color.RED);
+            spannable = customText(context.getResources().getString(R.string.en_contra),Color.RED);
         }
         return spannable;
     }

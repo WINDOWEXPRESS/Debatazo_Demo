@@ -32,6 +32,7 @@ public class ComentarioAdaptador extends RecyclerView.Adapter<ComentarioAdaptado
     private int debateId;
     private BandObject selectBand;
     private FragmentManager fragmentManager;
+    private static final String MOSTRARMASDIALOG = "MostrarMDialog";
     public ComentarioAdaptador(List<ComentarioObjeto> listaComentarios,
                                Context context,
                                int debateId,
@@ -117,7 +118,7 @@ public class ComentarioAdaptador extends RecyclerView.Adapter<ComentarioAdaptado
 
     private void construirDialog(ComentarioObjeto comentarioObjeto){
         DialogMostrarMFragment dialogMostrarMMFragment = DialogMostrarMFragment.Instance(comentarioObjeto,debateId,selectBand);
-        dialogMostrarMMFragment.show(fragmentManager,"MostrarMDialog");
+        dialogMostrarMMFragment.show(fragmentManager,MOSTRARMASDIALOG);
 
     }
 }
