@@ -9,33 +9,47 @@
     android:padding="10dp">
 
     <LinearLayout
-        android:id="@+id/comentario_linearL_segunda"
+        android:id="@+id/comentario_linearL_usuario"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="horizontal">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/comentario_imagenC_usuario"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:id="@+id/comentario_imageC_usuario"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:scaleType="centerCrop"
             android:src="@drawable/usuario"
             app:shapeAppearanceOverlay="@style/redondearImageView" />
 
         <TextView
             android:id="@+id/comentario_textV_nombre"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:textSize="16sp" />
+            android:layout_weight="1"
+            android:ems="10"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/comentario_textV_descripciones"
+        android:id="@+id/comentario_linearL_descripcion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:paddingStart="50dp"
+        android:paddingEnd="5dp"
         android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/comentario_textV_mostrarM"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/mostrar_mas"
+        android:textColor="#094ED8"
+        android:textSize="14sp"
+        android:textStyle="bold|italic"
+        android:visibility="gone" />
 
 </LinearLayout>

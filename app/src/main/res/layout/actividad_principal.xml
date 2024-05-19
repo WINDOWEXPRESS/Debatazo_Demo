@@ -68,7 +68,7 @@
             android:layout_marginEnd="20dp"
             android:background="@drawable/fondo_transparente"
             app:labelVisibilityMode="labeled"
-            app:menu="@menu/menu_boton" />
+            app:menu="@menu/menu_boton"/>
 
     </com.google.android.material.bottomappbar.BottomAppBar>
 

@@ -1,5 +1,6 @@
 package com.example.debatazo.debaterecycler;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ public class DebateAdaptador extends RecyclerView.Adapter<DebateAdaptador.debate
         this.clickListener = itemClickListener;
     }
 
-    private final List<DebateProducto> listaDebate;
+    private List<DebateProducto> listaDebate;
 
     public DebateAdaptador(List<DebateProducto> listaDebate) {
         this.listaDebate = listaDebate;
@@ -52,8 +53,9 @@ public class DebateAdaptador extends RecyclerView.Adapter<DebateAdaptador.debate
 
         @Override
         public void onClick(View view) {
-            if (clickListener != null)
+            if (clickListener != null) {
                 clickListener.onClick(view, getAdapterPosition(), listaDebate.get(getAdapterPosition()));
+            }
         }
     }
 
@@ -82,6 +84,12 @@ public class DebateAdaptador extends RecyclerView.Adapter<DebateAdaptador.debate
     @Override
     public int getItemCount() {
         return listaDebate.size();
+    }
+
+    public void add(List<DebateProducto> debates){
+        int itemChanged = getItemCount();
+        listaDebate.addAll(debates);
+        notifyItemChanged(itemChanged);
     }
 
 }

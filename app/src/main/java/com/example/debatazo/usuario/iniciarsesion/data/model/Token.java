@@ -2,8 +2,8 @@ package com.example.debatazo.usuario.iniciarsesion.data.model;
 
 public class Token {
 
-    public String value;
-    public int userId;
+    private String value;
+    private int userId;
 
     //Singleton
     private static Token instance;

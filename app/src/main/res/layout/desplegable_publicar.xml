@@ -113,9 +113,10 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="@string/publicacion_titulo_a_favor"
+                android:importantForAutofill="no"
                 android:inputType="text"
                 android:singleLine="true"
-                android:importantForAutofill="no"/>
+                tools:ignore="TouchTargetSizeCheck" />
 
             <EditText
                 android:id="@+id/dPublicar_editTT_banda2"
@@ -124,9 +125,10 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="@string/publicacion_titulo_en_contra"
+                android:importantForAutofill="no"
                 android:inputType="text"
                 android:singleLine="true"
-                android:importantForAutofill="no"/>
+                tools:ignore="TouchTargetSizeCheck" />
         </LinearLayout>
 
         <ImageView

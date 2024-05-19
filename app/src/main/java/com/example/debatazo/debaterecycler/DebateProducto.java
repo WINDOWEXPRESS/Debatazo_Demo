@@ -18,6 +18,7 @@ public class DebateProducto implements Serializable {
     private String imageUrl;
     private Set<BandObject> bands;
     private String imageDeleteHast;
+    private String error;
 
     public DebateProducto(int userId, int debateId, String profileImg, Date releaseDate, String userName, String title, String description, String imageUrl) {
         this.userId = userId;
@@ -28,12 +29,18 @@ public class DebateProducto implements Serializable {
         this.title = title;
         this.description = description;
         this.imageUrl = imageUrl;
+        this.error = null;
     }
 
     public DebateProducto(String title, String description, Set<BandObject> bands) {
         this.title = title;
         this.description = description;
         this.bands = bands;
+        this.error = null;
+    }
+
+    public DebateProducto(String error) {
+        this.error = error;
     }
 
     public int getUserId() {
@@ -74,5 +81,9 @@ public class DebateProducto implements Serializable {
 
     public void setImageDeleteHash(String imageDeleteHast) {
         this.imageDeleteHast = imageDeleteHast;
+    }
+
+    public String getError() {
+        return error;
     }
 }

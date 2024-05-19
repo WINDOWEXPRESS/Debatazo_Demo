@@ -1,15 +1,44 @@
 package com.example.debatazo.band;
 
-public class BandObject {
-    public static final String P = "P";
-    public static final String N = "N";
+import java.io.Serializable;
+
+public class BandObject implements Serializable {
+    public static final char P = 'P';
+    public static final char N = 'N';
     private int id;
     private String description;
-    private String type;
+    private char type;
     private int num;
 
-    public BandObject(String description, String type){
+    private String error;
+
+    public BandObject(String description, char type){
         this.description = description;
         this.type = type;
+        this.error = null;
+    }
+
+    public BandObject(String error) {
+        this.error = error;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public char getType() {
+        return type;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public String getError() {
+        return error;
     }
 }

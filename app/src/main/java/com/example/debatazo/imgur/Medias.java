@@ -85,12 +85,12 @@ public class Medias {
 
     public MultipartBody.Part generateMultipartBody(Uri uri, Activity actividad) throws IOException {
         File file = copyStreamToFile(uri, actividad);
-        RequestBody imgBody = RequestBody.create(file,MediaType.parse("image/*") );
+        RequestBody imgBody = RequestBody.create(MediaType.parse("image/*"),file);
 
         return MultipartBody.Part.createFormData("image", file.getName(), imgBody);
     }
 
     public RequestBody createTextPlainBody(String text) {
-        return RequestBody.create(text,MediaType.parse("text/plain"));
+        return RequestBody.create(MediaType.parse("text/plain"),text);
     }
 }
