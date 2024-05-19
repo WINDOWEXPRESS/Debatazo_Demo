@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.debatazo.R;
-import com.example.debatazo.usuario.md5.SaltMD5Util;
+import com.example.debatazo.utils.SaltMD5Util;
 
 import okhttp3.ResponseBody;
 import retrofit2.Callback;

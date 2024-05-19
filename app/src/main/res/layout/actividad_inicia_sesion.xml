@@ -17,12 +17,12 @@
         android:layout_height="100dp"
         android:layout_marginTop="10dp"
         android:layout_weight="1"
+        android:contentDescription="Logo"
         android:src="@mipmap/aplicacion_logo_round"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="Logo" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/aISesion_textV_nombreAplicacion"
@@ -34,7 +34,7 @@
         android:fontFamily="@font/designer"
         android:paddingTop="5dp"
         android:text="@string/app_name"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSecondary"
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="@+id/aISesion_imageV_logoAplicacion"
         app:layout_constraintHorizontal_bias="0.495"
@@ -70,6 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textEmailAddress"
+            android:backgroundTint="@android:color/transparent"
             android:textSize="18sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -111,7 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textPassword"
-
+            android:backgroundTint="@android:color/transparent"
             android:textSize="18sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -141,7 +142,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:buttonTint="#000000"
+                    android:buttonTint="?attr/colorOnSecondary"
                     android:text="@string/recordar"
                     android:textSize="16sp" />
 
@@ -169,7 +170,7 @@
                     android:layout_weight="1"
                     android:text="@string/no_tener_cuenta"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/colorOnSecondary"
                     android:textSize="16sp" />
 
                 <TextView

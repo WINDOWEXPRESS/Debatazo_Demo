@@ -37,6 +37,7 @@
                 android:fontFamily="@font/designer"
                 android:paddingTop="5dp"
                 android:text="@string/app_name"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="50sp" />
         </LinearLayout>
 

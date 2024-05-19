@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -96,6 +98,7 @@ public class PerfilFragment extends Fragment {
             if (!loginViewModel.getLoginRepository().isLoggedIn()){
                 Intent i = new Intent(getContext(), IniciaSesion.class);
                 startActivity(i);
+
             }
         });
 
@@ -119,9 +122,11 @@ public class PerfilFragment extends Fragment {
             if (modoTema.getTag().equals("diurno")) {
                 modoTema.setImageResource(R.drawable.tema_nocturno);
                 modoTema.setTag("nocturno");
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             } else {
                 modoTema.setImageResource(R.drawable.tema_diurno);
                 modoTema.setTag("diurno");
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
         });
         return rootView;

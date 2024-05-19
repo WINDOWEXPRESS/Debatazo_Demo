@@ -12,7 +12,7 @@ import com.example.debatazo.utils.SharedPreferenceUtils;
 import com.example.debatazo.usuario.apirest.RetrofitCliente;
 import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
 import com.example.debatazo.usuario.iniciarsesion.data.model.Token;
-import com.example.debatazo.usuario.md5.SaltMD5Util;
+import com.example.debatazo.utils.SaltMD5Util;
 
 import java.io.IOException;
 
@@ -51,9 +51,11 @@ public class LoginDataSource {
                             public void onResponse(@NonNull Call<LoggedInUser> call, @NonNull Response<LoggedInUser> response) {
                                 if (response.isSuccessful()) {
                                     callBack.onSuccess(new Result.Success<>(response.body()));
+                                    loadingLiveData.setValue(false);
                                 } else {
                                     String errorMessage = "Error al iniciar sesión: " + response.code() + " - " + response.message();
                                     callBack.onFailure(new Result.Error(new IOException(errorMessage)));
+                                    loadingLiveData.setValue(false);
                                 }
                             }
                             @Override
@@ -65,6 +67,7 @@ public class LoginDataSource {
                         });
 
                     }else{
+                        loadingLiveData.setValue(false);
                         String errorMessage = "Error al iniciar sesión: " + response.code() + " - " + response.message();
                         callBack.onFailure(new Result.Error(new IOException(errorMessage)));
                     }
@@ -81,6 +84,7 @@ public class LoginDataSource {
         } catch (Exception e) {
             loadingLiveData.setValue(false);
             callBack.onFailure(new Result.Error(new IOException("Error al iniciar sesión", e)));
+            loadingLiveData.setValue(false);
         }
     }
 

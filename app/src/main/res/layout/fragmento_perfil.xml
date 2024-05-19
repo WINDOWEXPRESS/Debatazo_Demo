@@ -26,19 +26,21 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginEnd="10dp"
-                android:tooltipText="Tema"
+                android:contentDescription="Tema"
                 android:src="@drawable/tema_nocturno"
                 android:tag="nocturno"
-                android:contentDescription="Tema" />
+                android:tint="?attr/colorPrimary"
+                android:tooltipText="Tema" />
 
             <ImageView
                 android:id="@+id/fPerfil_imageV_configuracion"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:tooltipText="Ajuste"
                 android:layout_marginEnd="10dp"
+                android:contentDescription="Ajuste"
                 android:src="@drawable/configuracion"
-                android:contentDescription="Ajuste" />
+                android:tint="?attr/colorPrimary"
+                android:tooltipText="Ajuste" />
         </LinearLayout>
 
         <com.google.android.material.imageview.ShapeableImageView
