@@ -58,4 +58,12 @@
     <string name="descripcion_personal_hint">Click to fill in your profile with hobbies, lifestyle, etc.</string>
     <string name="guardar">Save</string>
     <string name="fecha_nacicmiento">Birthdate</string>
+    <string name="mostrar_mas"><u>Show more</u></string>
+    <string name="comentarios">Comments</string>
+    <string name="responder"> reply </string>
+    <string name="corazon_meGusta">Heart I Like</string>
+    <string name="enviar">Send</string>
+    <string name="a_favor">&#160;In Favor</string>
+    <string name="en_contra">&#160;Against</string>
+
 </resources>

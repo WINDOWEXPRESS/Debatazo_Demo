@@ -11,4 +11,7 @@
     <color name="red">#FF0000</color>
     <color name="azul_marino">#5B8CCA</color>
     <color name="gris">#4DCAC6BA</color>
+    <color name="rojo_suave">#FF7F7F</color>
+    <color name="verde_suave">#A8CF81</color>
+    <color name="trasparente">#00FFFFFF</color>
 </resources>

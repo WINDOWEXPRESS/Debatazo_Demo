@@ -1,9 +1,7 @@
 package com.example.debatazo;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -31,7 +29,7 @@ import com.example.debatazo.utils.BrilloUtils;
 import com.example.debatazo.databinding.ActividadPrincipalBinding;
 import com.example.debatazo.debaterecycler.DebateFragmento;
 import com.example.debatazo.debaterecycler.DebateProducto;
-import com.example.debatazo.debaterecycler.api.ServicioDebateProducto;
+import com.example.debatazo.debaterecycler.api.servicio.ServicioDebates;
 import com.example.debatazo.imgur.ImgurObject;
 import com.example.debatazo.imgur.api.ImgurService;
 import com.example.debatazo.imgur.Medias;
@@ -59,6 +57,8 @@ public class ActividadPrincipal extends AppCompatActivity {
 
     private ImageView imagenPublicar;
     private final PerfilFragment perfilFragment = new PerfilFragment();
+    private final DebateFragmento debateFragment = new DebateFragmento();
+    private Fragment currentFragment = null;
     private LoginViewModel loginViewModel;
     private ActivityResultLauncher<String> requestResultLauncher;
     private ActivityResultLauncher<Intent> resultLauncher;
@@ -83,13 +83,17 @@ public class ActividadPrincipal extends AppCompatActivity {
 
         binding.aPrincipalFloatingAB.setBackground(null);
         binding.aPrincipalBottomNV.setOnItemSelectedListener(item -> {
-
+            currentFragment = getCurrentFragment();
             switch (item.getItemId()) {
                 case R.id.menuB_principal:
                     replaceFragment(new PrincipalFragmento());
                     break;
                 case R.id.menuB_debate:
-                    replaceFragment(new DebateFragmento());
+                    if(currentFragment != null && currentFragment.getClass().equals(debateFragment.getClass())){
+                        replaceFragment(new DebateFragmento());
+                    }else {
+                        replaceFragment(debateFragment);
+                    }
                     break;
                 case R.id.menuB_valoracion:
                     replaceFragment(new ValoracionFragmento());
@@ -98,7 +102,6 @@ public class ActividadPrincipal extends AppCompatActivity {
                     replaceFragment(perfilFragment);
                     break;
             }
-
             return true;
         });
 
@@ -146,6 +149,10 @@ public class ActividadPrincipal extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.aPrincipal_frameL, fragment);
         fragmentTransaction.commit();
+    }
+    private Fragment getCurrentFragment(){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        return fragmentManager.findFragmentById(R.id.aPrincipal_frameL);
     }
 
     private void showBottomDialog() {
@@ -243,7 +250,7 @@ public class ActividadPrincipal extends AppCompatActivity {
     //Método para publicar un debate utilizando el servicio de debate de productos.
     private void publicarDebate(DebateProducto debateProducto, String token, int userId,Dialog dialog) {
         // Crear una llamada para publicar el debate utilizando el servicio de debate de productos.
-        Call<ResponseBody> debateCall = ServicioDebateProducto.getInstance().getRepor().publicarDebate(
+        Call<ResponseBody> debateCall = ServicioDebates.getInstance().getRepor().publicarDebate(
                 token,
                 debateProducto,
                 String.valueOf(userId)
@@ -302,7 +309,6 @@ public class ActividadPrincipal extends AppCompatActivity {
 
                         publicarDebate(debateProducto,token,userId,dialog);
                     }else{
-                        System.out.println(response.errorBody().toString());
                         Toast.makeText(ActividadPrincipal.this, response.errorBody().toString(), Toast.LENGTH_SHORT).show();
                     }
                 }

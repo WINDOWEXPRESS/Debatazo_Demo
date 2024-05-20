@@ -87,4 +87,15 @@
     <string name="descripcion_personal_hint">Haz clic para rellenar tu perfil con aficiones, estilo de vida, etc.</string>
     <string name="guardar">Guardar</string>
 
+    <!-- Comentario -->
+    <string name="mostrar_mas"><u>Mostrar Mas</u></string>
+    <string name="comentarios">Comentarios</string>
+    <string name="responder"> responde </string>
+
+    <!-- Debate detalle -->
+    <string name="corazon_meGusta">Corazon Me Gusta</string>
+    <string name="enviar">Enviar</string>
+    <string name="a_favor"> &#160;A Favor</string>
+    <string name="en_contra">&#160;En Contra</string>
+
 </resources>

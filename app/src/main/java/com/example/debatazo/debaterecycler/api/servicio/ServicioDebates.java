@@ -1,24 +1,26 @@
-package com.example.debatazo.debaterecycler.api;
+package com.example.debatazo.debaterecycler.api.servicio;
 
-import static com.example.debatazo.utils.GlobalConstants.BASE_URI_SERVER;
+import static com.example.debatazo.utils.GlobalConstants.URL_EMULADOR_XING;
+
+import com.example.debatazo.debaterecycler.api.repo.DebateApi;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ServicioDebateProducto {
-    private static ServicioDebateProducto instacia;
+public class ServicioDebates {
+    private static ServicioDebates instacia;
     private static DebateApi repositorio;
 
-    private ServicioDebateProducto(){
+    private ServicioDebates(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URI_SERVER)
+                .baseUrl(URL_EMULADOR_XING)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         repositorio = retrofit.create(DebateApi.class);
     }
-    public  static ServicioDebateProducto getInstance(){
+    public static ServicioDebates getInstance(){
         if(instacia == null){
-            instacia = new ServicioDebateProducto();
+            instacia = new ServicioDebates();
         }
         return instacia;
     }

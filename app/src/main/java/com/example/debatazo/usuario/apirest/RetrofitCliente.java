@@ -2,6 +2,7 @@ package com.example.debatazo.usuario.apirest;
 
 import static com.example.debatazo.utils.GlobalConstants.BASE_URI_SERVER;
 import static com.example.debatazo.utils.GlobalConstants.URL_EMULADOR;
+import static com.example.debatazo.utils.GlobalConstants.URL_EMULADOR_XING;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -12,7 +13,7 @@ public class RetrofitCliente {
 
     private RetrofitCliente(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URI_SERVER)
+                .baseUrl(URL_EMULADOR_XING)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
