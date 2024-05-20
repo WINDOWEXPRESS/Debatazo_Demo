@@ -18,54 +18,58 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout"
-        android:layout_width="391dp"
-        android:layout_height="615dp"
-        app:layout_constraintBottom_toTopOf="@+id/aDPersonal_textView_mensajeError"
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageButton
+            android:id="@+id/aDPersonal_imageB_volver"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:backgroundTint="?android:attr/colorBackground"
+            android:contentDescription="@string/boton_volver"
+            android:scaleType="centerCrop"
+            android:src="@drawable/flecha_volver"
+            app:tint="?attr/colorPrimary"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/aDPersonal_textV_datosPersonal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/datos_personal"
+            android:textSize="34sp" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="407dp"
+        android:layout_height="658dp"
+        app:layout_constraintBottom_toTopOf="@+id/aDPersonal_button_guardar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
+
         <LinearLayout
             android:id="@+id/linearLayout2"
-            android:layout_width="394dp"
-            android:layout_height="571dp"
+            android:layout_width="match_parent"
+            android:layout_height="670dp"
             android:orientation="vertical"
             android:padding="16dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/aDPersonal_imageB_volver"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:backgroundTint="?android:attr/colorBackground"
-                    android:contentDescription="@string/boton_volver"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/flecha_volver"
-                    android:tint="?attr/colorPrimary"
-                    tools:ignore="TouchTargetSizeCheck" />
-
-                <TextView
-                    android:id="@+id/aDPersonal_textV_datosPersonal"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="@string/datos_personal"
-                    android:textSize="34sp" />
-
-            </LinearLayout>
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/aDPersonal_imageV_perfil"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/usuario"
@@ -122,8 +126,8 @@
                     android:gravity="center|end"
                     android:hint="@string/sin_rellenar"
                     android:importantForAutofill="no"
-                    android:maxLength="100"
                     android:inputType="text"
+                    android:maxLength="100"
                     android:singleLine="true" />
             </LinearLayout>
 
@@ -242,32 +246,32 @@
                 android:padding="10dp"
                 android:scrollbars="vertical" />
 
+            <TextView
+                android:id="@+id/aDPersonal_textView_mensajeError"
+                android:layout_width="377dp"
+                android:layout_height="45dp"
+                android:layout_marginBottom="60dp"
+                android:gravity="center"
+                android:textColor="@color/red"
+                android:textSize="16sp" />
+
 
         </LinearLayout>
-    </RelativeLayout>
 
-    <TextView
-        android:id="@+id/aDPersonal_textView_mensajeError"
-        android:layout_width="356dp"
-        android:layout_height="45dp"
-        android:gravity="center"
-        android:textColor="@color/red"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/aDPersonal_button_guardar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
-        app:layout_constraintStart_toStartOf="parent" />
+    </RelativeLayout>
 
     <Button
         android:id="@+id/aDPersonal_button_guardar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="36dp"
         android:minHeight="48dp"
         android:text="@string/guardar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
