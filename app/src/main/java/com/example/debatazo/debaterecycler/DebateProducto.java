@@ -5,6 +5,7 @@ import com.example.debatazo.band.BandObject;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Set;
 
 public class DebateProducto implements Serializable {
@@ -56,7 +57,7 @@ public class DebateProducto implements Serializable {
     }
 
     public String getReleaseDate() {
-        return new SimpleDateFormat("dd/MM/yyyy").format(releaseDate);
+        return new SimpleDateFormat("dd/MM/yyyy", Locale.US).format(releaseDate);
     }
 
     public String getUserName() {

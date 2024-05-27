@@ -1,21 +1,35 @@
 package com.example.debatazo.debaterecycler.detalle;
 
+import static android.view.WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM;
+import static android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+import static android.view.WindowManager.LayoutParams.TYPE_APPLICATION;
+
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.PixelFormat;
+import android.graphics.Rect;
 import android.os.Bundle;
-import android.text.Layout;
+import android.os.Handler;
+
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
@@ -28,6 +42,8 @@ import com.example.debatazo.debaterecycler.detalle.modelview.EnviarComentarioMod
 import com.example.debatazo.debaterecycler.detalle.modelview.ListaComentarioModelView;
 import com.example.debatazo.debaterecycler.detalle.objecto.ComentarioObjeto;
 import com.example.debatazo.usuario.iniciarsesion.data.model.Token;
+import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
+import com.example.debatazo.utils.Dialogs;
 import com.example.debatazo.utils.GlobalConstants;
 import com.example.debatazo.utils.GlobalFuntion;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -36,7 +52,7 @@ import com.squareup.picasso.Picasso;
 public class DialogMostrarMFragment extends DialogFragment {
     ImageView desplegableMM_imageB_volver;
     ShapeableImageView desplegableMM_imageC_usuario;
-    TextView desplegableMM_textV_nombre,desplegableMM_textV_descripcion;
+    TextView desplegableMM_textV_nombre,desplegableMM_textV_descripcion,desplegableMM_textV_fechaP,desplegableMM_textV_carga;
     RecyclerView desplegableMM_recyclerV_comentarios;
     EditText desplegableMM_editT_entrada;
     Button desplegable_bt_enviar;
@@ -76,17 +92,25 @@ public class DialogMostrarMFragment extends DialogFragment {
 
         listaComentarioModelView.generaList().observe((LifecycleOwner) DialogMostrarMFragment.this, value ->{
             if(value.size() == 0){
+                desplegableMM_textV_carga.setText(getResources().getString(R.string.no_mas_elementos));
+                desplegableMM_textV_carga.setVisibility(View.VISIBLE);
+                new Handler().postDelayed(()->{
+                    desplegableMM_textV_carga.setVisibility(View.GONE);
+                },GlobalConstants.ANIMATION_DURATION);
             }else{
                 if(value.get(0).getError() == null){
                     if(mostrarMasAdap.getItemCount() > 0){
+                        desplegableMM_textV_carga.setVisibility(View.GONE);
                         mostrarMasAdap.add(value);
                     }else{
                        mostrarMasAdap.addAll(value);
                     }
                 }else{
-
+                    Dialogs dialogs = new Dialogs(Dialogs.E,value.get(0).getError());
+                    dialogs.showDialog(getContext());
                 }
             }
+            mostrarMasAdap.setEnabled(true);
         });
 
         enviarComentarioMV.getInstance().observe((LifecycleOwner) DialogMostrarMFragment.this, value ->{
@@ -102,10 +126,13 @@ public class DialogMostrarMFragment extends DialogFragment {
             }else{
 
             }
+            desplegable_bt_enviar.setEnabled(true);
         });
 
         Picasso.get().load(comentarioObjeto.getProfileImg()).into(desplegableMM_imageC_usuario);
         desplegableMM_textV_nombre.setText(comentarioObjeto.getUserName());
+        desplegableMM_textV_nombre.append(GlobalFuntion.usuarioEquipo(getContext(),comentarioObjeto.getType()));
+        desplegableMM_textV_fechaP.setText(comentarioObjeto.getReleaseDate());
         desplegableMM_textV_descripcion.setText(comentarioObjeto.getDescription());
 
         desplegableMM_recyclerV_comentarios.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -119,9 +146,7 @@ public class DialogMostrarMFragment extends DialogFragment {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(getContext().INPUT_METHOD_SERVICE);
             imm.showSoftInput(desplegableMM_editT_entrada, InputMethodManager.SHOW_IMPLICIT);
         });
-
-
-
+        
         enviarMensaje(desplegable_bt_enviar,desplegableMM_editT_entrada,enviarComentarioMV);
 
         desplegableMM_imageB_volver.setOnClickListener(v ->{
@@ -140,10 +165,12 @@ public class DialogMostrarMFragment extends DialogFragment {
                 int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
                 if(dy > 0){
                     if(
-                            currentTotalItemCount != totalItemCount
-                                    && (visibleItemCount + firstVisibleItemPosition) == totalItemCount - GlobalConstants.BASE
+                        currentTotalItemCount != totalItemCount
+                        && (visibleItemCount + firstVisibleItemPosition) == totalItemCount
                     ){
                         currentTotalItemCount = totalItemCount;
+                        desplegableMM_textV_carga.setText(getResources().getString(R.string.cargando));
+                        desplegableMM_textV_carga.setVisibility(View.VISIBLE);
                         listaComentarioModelView.loardChildren(mostrarMasAdap.getItemCount(),debateId,comentarioObjeto.getId());
                     }
                 }
@@ -154,23 +181,31 @@ public class DialogMostrarMFragment extends DialogFragment {
 
     private void enviarMensaje(Button button,EditText editText,EnviarComentarioModelView enviarComentarioMV){
         button.setOnClickListener(view ->{
-            GlobalFuntion.validadLogin(getContext());
-            if(selectPid == 0){
-                pid = comentarioObjeto.getId();
-            }else{
-                pid = selectPid;
-            }
-            if(!editText.getText().toString().isEmpty()){
-                ComentarioObjeto mesage = new ComentarioObjeto(editText.getText().toString(),pid);
-                enviarComentarioMV.enviarComentario(
-                        Token.getInstance().getValue(),
-                        mesage,
-                        debateId,
-                        Token.getInstance().getUserId(),
-                        (selectBand != null)? String.valueOf(selectBand.getId()) : null
-                );
-            }else{
-
+            if(!Token.hasInstance()){
+                Intent intent = new Intent(getContext(), IniciaSesion.class);
+                Dialogs dialogs = new Dialogs(Dialogs.W,String.valueOf(R.string.iniciar_sesision),intent,true,true);
+                dialogs.showConfirmDialog(getContext());
+            }else {
+                if (selectPid == 0) {
+                    pid = comentarioObjeto.getId();
+                } else {
+                    pid = selectPid;
+                }
+                if (!editText.getText().toString().trim().isEmpty()) {
+                    button.setEnabled(false);
+                    mostrarMasAdap.setEnabled(false);
+                    ComentarioObjeto mesage = new ComentarioObjeto(editText.getText().toString(), pid);
+                    enviarComentarioMV.enviarComentario(
+                            Token.getInstance().getValue(),
+                            mesage,
+                            debateId,
+                            Token.getInstance().getUserId(),
+                            (selectBand != null) ? String.valueOf(selectBand.getId()) : null
+                    );
+                } else {
+                    Dialogs dialogs = new Dialogs(Dialogs.E,getResources().getString(R.string.introduce_algo));
+                    dialogs.showDialog(getContext());
+                }
             }
         });
     }
@@ -192,10 +227,12 @@ public class DialogMostrarMFragment extends DialogFragment {
         desplegableMM_imageB_volver = layout.findViewById(R.id.desplegableMM_imageB_volver);
         desplegableMM_imageC_usuario = layout.findViewById(R.id.desplegableMM_imageC_usuario);
         desplegableMM_textV_nombre = layout.findViewById(R.id.desplegableMM_textV_nombre);
+        desplegableMM_textV_fechaP = layout.findViewById(R.id.desplegableMM_textV_fechaP);
         desplegableMM_textV_descripcion = layout.findViewById(R.id.desplegableMM_textV_descripcion);
         desplegableMM_recyclerV_comentarios = layout.findViewById(R.id.desplegableMM_recyclerV_comentarios);
         desplegableMM_editT_entrada = layout.findViewById(R.id.desplegableMM_editT_entrada);
         desplegable_bt_enviar = layout.findViewById(R.id.desplegable_bt_enviar);
+        desplegableMM_textV_carga = layout.findViewById(R.id.desplegableMM_textV_carga);
     }
 
     private void instanciarMV(){

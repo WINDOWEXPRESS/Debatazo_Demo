@@ -1,5 +1,7 @@
 package com.example.debatazo.utils;
 
+import java.util.regex.Pattern;
+
 public class GlobalConstants {
 
     public static final String BASE_URI_SERVER = "https://debatazo-2cd8a.ew.r.appspot.com/";
@@ -10,7 +12,9 @@ public class GlobalConstants {
     public static final int ERROR_CODE = -1;
     public static final int BASE = 3;
     public static final int NESTED = 800;
+    public static final int ANIMATION_DURATION = 1000;
     public static final int DIALOG_HEIGHT = 300;
+    public static final int DIALOG_SLEEP = 3000;
     public static final String INTENT_KEY = "SECRE_KEYS";
     public static final String TRUE = "1";
     public static final String FALSE = "0";

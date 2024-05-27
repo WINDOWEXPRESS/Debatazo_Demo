@@ -12,6 +12,9 @@ public class LoggedInUser {
     private  String birth_date;
     private  String self;
     private  String sex;
+    private int debate_create;
+    private int comment_debate;
+    private int debate_like;
 
     public LoggedInUser(String user_id, String user_name, String full_name, String profile_img, String birth_date, String self, String sex) {
         this.user_id = user_id;
@@ -81,5 +84,17 @@ public class LoggedInUser {
 
     public String getSelf() {
         return self;
+    }
+
+    public int getDebate_create() {
+        return debate_create;
+    }
+
+    public int getComment_debate() {
+        return comment_debate;
+    }
+
+    public int getDebate_like(){
+        return debate_like;
     }
 }

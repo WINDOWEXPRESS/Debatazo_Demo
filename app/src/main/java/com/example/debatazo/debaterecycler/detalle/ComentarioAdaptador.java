@@ -20,11 +20,16 @@ public class ComentarioAdaptador extends RecyclerView.Adapter<ComentarioAdaptado
     public interface ItemClickListener {
         void onClick(View view, int position, ComentarioObjeto comentarioObjeto);
     }
+    private boolean isEnabled = true;
 
     private ItemClickListener clickListener;
 
     public void setClickListener(ItemClickListener itemClickListener) {
         this.clickListener = itemClickListener;
+    }
+
+    public void setEnabled(boolean enabled){
+        this.isEnabled = enabled;
     }
 
     private List<ComentarioObjeto> listaComentarios;
@@ -47,25 +52,28 @@ public class ComentarioAdaptador extends RecyclerView.Adapter<ComentarioAdaptado
 
     public class CommentarioViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ShapeableImageView perfil;
-        TextView nombre;
-        TextView descripcion;
-        TextView mostrarMas;
+        TextView nombre, descripcion, mostrarMas, fechaPublica;
+        ;
 
         public CommentarioViewHolder(@NonNull View itemView) {
             super(itemView);
             perfil = itemView.findViewById(R.id.comentario_imageC_usuario);
             nombre = itemView.findViewById(R.id.comentario_textV_nombre);
-            descripcion = itemView.findViewById(R.id.comentario_linearL_descripcion);
+            fechaPublica = itemView.findViewById(R.id.comentario_textV_fechaP);
+            descripcion = itemView.findViewById(R.id.comentario_textV_descripcion);
             mostrarMas = itemView.findViewById(R.id.comentario_textV_mostrarM);
 
             perfil.setOnClickListener(this);
             nombre.setOnClickListener(this);
+            fechaPublica.setOnClickListener(this);
             descripcion.setOnClickListener(this);
         }
         @Override
         public void onClick(View view){
-            if(clickListener != null){
-                clickListener.onClick(view,getAdapterPosition(),listaComentarios.get(getAdapterPosition()));
+            if(isEnabled){
+                if(clickListener != null){
+                    clickListener.onClick(view,getAdapterPosition(),listaComentarios.get(getAdapterPosition()));
+                }
             }
         }
     }
@@ -84,8 +92,9 @@ public class ComentarioAdaptador extends RecyclerView.Adapter<ComentarioAdaptado
         ComentarioObjeto comentarioObjeto = listaComentarios.get(position);
 
         Picasso.get().load(comentarioObjeto.getProfileImg()).into(holder.perfil);
-        holder.nombre.setText(comentarioObjeto.getUserName());
+        holder.nombre.setText(comentarioObjeto.getUserName().concat(" "));
         holder.nombre.append(GlobalFuntion.usuarioEquipo(context,comentarioObjeto.getType()));
+        holder.fechaPublica.setText(comentarioObjeto.getReleaseDate());
         holder.descripcion.setText(comentarioObjeto.getDescription());
 
         if(comentarioObjeto.getChildren().size() > 0){
@@ -120,6 +129,10 @@ public class ComentarioAdaptador extends RecyclerView.Adapter<ComentarioAdaptado
         DialogMostrarMFragment dialogMostrarMMFragment = DialogMostrarMFragment.Instance(comentarioObjeto,debateId,selectBand);
         dialogMostrarMMFragment.show(fragmentManager,MOSTRARMASDIALOG);
 
+    }
+
+    public void cambiarSelectBand(BandObject band){
+        this.selectBand = band;
     }
 }
 

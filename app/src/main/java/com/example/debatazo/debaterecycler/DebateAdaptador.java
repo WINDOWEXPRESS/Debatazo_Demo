@@ -78,6 +78,8 @@ public class DebateAdaptador extends RecyclerView.Adapter<DebateAdaptador.debate
         holder.titulo.setText(debateProducto.getTitle());
         if (debateProducto.getImageUrl() != null) {
             Picasso.get().load(debateProducto.getImageUrl()).into(holder.image);
+        }else{
+            holder.image.setVisibility(View.GONE);
         }
     }
 

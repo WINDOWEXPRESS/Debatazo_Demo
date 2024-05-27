@@ -3,6 +3,8 @@ package com.example.debatazo.debaterecycler.api.servicio;
 import static com.example.debatazo.utils.GlobalConstants.BASE_URI_SERVER;
 import static com.example.debatazo.utils.GlobalConstants.URL_EMULADOR_XING;
 import com.example.debatazo.debaterecycler.api.repo.UserOperationsApi;
+import com.example.debatazo.utils.GlobalConstants;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

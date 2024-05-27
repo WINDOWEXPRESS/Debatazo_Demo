@@ -25,6 +25,7 @@ import com.example.debatazo.R;
 import com.example.debatazo.usuario.contraseniamanager.ContraseniaManager;
 import com.example.debatazo.utils.BrilloUtils;
 import com.example.debatazo.databinding.ActividadIniciaSesionBinding;
+import com.example.debatazo.utils.Dialogs;
 import com.example.debatazo.utils.SharedPreferenceUtils;
 import com.example.debatazo.usuario.registrar.ActividadRegistrar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -218,7 +219,8 @@ public class IniciaSesion extends AppCompatActivity {
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
-        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+        Dialogs dialogs = new Dialogs(Dialogs.E,getResources().getString(errorString));
+        dialogs.showDialog(IniciaSesion.this);
     }
 
     private void otraFormaDeAcceso() {

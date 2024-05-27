@@ -1,8 +1,11 @@
 package com.example.debatazo.usuario.apirest;
 
+import com.example.debatazo.debaterecycler.DebateProducto;
 import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
 import com.example.debatazo.usuario.iniciarsesion.data.model.Token;
 import com.example.debatazo.usuario.registrar.RegistrarUsuarioPojo;
+
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -36,5 +39,8 @@ public interface ApiServicioUsuario {
 
     @PUT("users/passwd/change/{id}/{passwd}")
     Call<ResponseBody> changePassword(@Path("id") int id,@Path("passwd") String passwd);
+
+    @GET("users/profile/{id}/debates")
+    Call<List<DebateProducto>> getUserDebateCreate(@Header("token") String token,@Header("offset") String offset, @Path("id") int id);
 
 }

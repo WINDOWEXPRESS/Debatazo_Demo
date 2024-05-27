@@ -63,7 +63,12 @@
     <string name="responder"> reply </string>
     <string name="corazon_meGusta">Heart I Like</string>
     <string name="enviar">Send</string>
-    <string name="a_favor">&#160;In Favor</string>
-    <string name="en_contra">&#160;Against</string>
-
+    <string name="a_favor">In Favor&#160;</string>
+    <string name="en_contra">Against&#160;</string>
+    <string name="campos_obligatorios">All fields are required</string>
+    <string name="iniciar_sesision">The session needs to be initialized</string>
+    <string name="total_votado">Total Voted:&#160;</string>
+    <string name="cargando">Loading</string>
+    <string name="no_mas_elementos">No more items to load</string>
+    <string name="introduce_algo"> Introduce something</string>
 </resources>

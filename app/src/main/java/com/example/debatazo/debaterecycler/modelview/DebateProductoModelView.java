@@ -5,14 +5,18 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.debatazo.R;
 import com.example.debatazo.debaterecycler.DebateProducto;
 import com.example.debatazo.debaterecycler.api.servicio.ServicioDebates;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.HttpException;
 import retrofit2.Response;
 
 public class DebateProductoModelView extends ViewModel {
@@ -44,7 +48,13 @@ public class DebateProductoModelView extends ViewModel {
                     }
                     @Override
                     public void onFailure(@NonNull Call<List<DebateProducto>> call, Throwable t) {
-                        error.add(new DebateProducto(t.getMessage()));
+                        if(t instanceof IOException){
+                            error.add(new DebateProducto("Conexion fallida"));
+                        }else if(t instanceof HttpException){
+                            error.add(new DebateProducto(t.getMessage()));
+                        }else{
+                            error.add(new DebateProducto("error desconocido:" + t.getMessage()));
+                        }
                         listas.postValue(error);
                     }
                 });

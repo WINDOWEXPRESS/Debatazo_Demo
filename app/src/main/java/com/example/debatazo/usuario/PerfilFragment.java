@@ -78,8 +78,9 @@ public class PerfilFragment extends Fragment {
     private ImageView perfil;
     private ImageView modoTema;
     private LoginViewModel loginViewModel;
-    private TextView nombreUsuario;
+    private TextView nombreUsuario, nPublicarD, nPublicarDRespondido, nPublicarDGustado;
     private TextView idUsuario;
+    public static final String TYPE_KEY = "TYPE_KEY";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -93,13 +94,14 @@ public class PerfilFragment extends Fragment {
         // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory()).get(LoginViewModel.class);
 
+        loginViewModel.autoLogin(getContext());
+
         mostrarDatos();
 
         info.setOnClickListener(view -> {
             if (!loginViewModel.getLoginRepository().isLoggedIn()){
                 Intent i = new Intent(getContext(), IniciaSesion.class);
                 startActivity(i);
-
             }
         });
 
@@ -166,7 +168,9 @@ public class PerfilFragment extends Fragment {
         modoTema = rootView.findViewById(R.id.fPerfil_imageV_tema);
         nombreUsuario = rootView.findViewById(R.id.fragmentoP_textV_nombreUsuario);
         idUsuario = rootView.findViewById(R.id.fragmentoP_textV_idUsuario);
-
+        nPublicarD = rootView.findViewById(R.id.fPerfil_textV_numeroPublicarDebate);
+        nPublicarDRespondido = rootView.findViewById(R.id.fPerfil_textV_numeroPublicarDebateRespondido);
+        nPublicarDGustado = rootView.findViewById(R.id.fPerfil_textV_numeroPublicarDebateGustado);
     }
 
     public void mostrarDatos() {
@@ -176,6 +180,9 @@ public class PerfilFragment extends Fragment {
                     nombreUsuario.setText(loggedInUser.getUser_name());
                     idUsuario.setText(String.format("ID:%s", loggedInUser.getId()));
                     Picasso.get().load(loggedInUser.getProfile_img()).into(perfil);
+                    nPublicarD.setText(String.valueOf(loggedInUser.getDebate_create()));
+                    nPublicarDRespondido.setText(String.valueOf(loggedInUser.getComment_debate()));
+                    nPublicarDGustado.setText(String.valueOf(loggedInUser.getDebate_like()));
                     info.setClickable(false);
                 }else {
                     resetearDatos();

@@ -1,8 +1,11 @@
 package com.example.debatazo.debaterecycler.api.repo;
 
 import com.example.debatazo.band.BandObject;
+import com.example.debatazo.debaterecycler.detalle.objecto.user_operations.UserLikeDebatesObject;
 import com.example.debatazo.debaterecycler.detalle.objecto.user_operations.UserSelectBandObjecto;
 import java.util.List;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -19,5 +22,8 @@ public interface UserOperationsApi {
                                              @Path("debateId") String debateId,
                                              @Path("userId") String userId,
                                              @Path("bandId") String bandId);
-
+    @POST("likes/like")
+    Call<ResponseBody> like(@Header("token") String token, @Body UserLikeDebatesObject userLikeDebatesObject);
+    @DELETE("likes/not_like/{debateId}/{userId}")
+    Call<ResponseBody> noLike(@Header("token") String token, @Path("debateId") String debateId, @Path("userId") String userId);
 }

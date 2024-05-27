@@ -7,33 +7,43 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.example.debatazo.R;
 import com.example.debatazo.band.BandObject;
 import com.example.debatazo.debaterecycler.api.servicio.ServicioDebates;
 import com.example.debatazo.debaterecycler.detalle.modelview.EnviarComentarioModelView;
 import com.example.debatazo.debaterecycler.detalle.modelview.ListaComentarioModelView;
+import com.example.debatazo.debaterecycler.detalle.modelview.UserLikeDebateModelView;
 import com.example.debatazo.debaterecycler.detalle.modelview.UserSelectBandModelView;
 import com.example.debatazo.debaterecycler.detalle.objecto.ComentarioObjeto;
 import com.example.debatazo.debaterecycler.detalle.objecto.DebateDetalleObjeto;
+import com.example.debatazo.debaterecycler.detalle.objecto.user_operations.UserLikeDebatesObject;
 import com.example.debatazo.debaterecycler.detalle.objecto.user_operations.UserSelectBandObjecto;
 import com.example.debatazo.usuario.iniciarsesion.data.model.Token;
+import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
+import com.example.debatazo.utils.Dialogs;
 import com.example.debatazo.utils.GlobalConstants;
-import com.example.debatazo.utils.GlobalFuntion;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -44,7 +54,8 @@ public class DebateDetalle extends AppCompatActivity {
 
     ImageButton imageButton,aDDebate_imageB_meGusta;
     ShapeableImageView shapeableIV_usuario;
-    TextView textV_nombre, textV_fecha, textV_titulo, textV_contenido;
+    TextView textV_nombre, textV_fecha, textV_titulo, textV_contenido,aDDebate_textV_nuMeGusta;
+    TextView aDDebate_textV_band_total,aDDebate_textV_band_favor,aDDebate_textV_band_contra,aDDebate_textV_carga;
     Button aDDebate_bt_band_favor, aDDebate_bt_band_contra, aDDebate_bt_enviar;
     ImageView imageV_imagenC;
     RecyclerView comentarios;
@@ -54,11 +65,14 @@ public class DebateDetalle extends AppCompatActivity {
     ListaComentarioModelView listaComentarioMV;
     EnviarComentarioModelView enviarComentarioMV;
     UserSelectBandModelView userSelectBandMV;
+    UserLikeDebateModelView userLikeDebateMV;
     NestedScrollView nestedScrollView;
-    private int debateid, currentTotalItemCount = 0, bandButtonWidth, pid = 0;
+    private int debateid, currentTotalItemCount = 0, bandButtonWidth, pid = 0, likes = 0;
     private static final int ANCHO = 50;
     private BandObject selectBand, currentSelectBand, favor, contra;
     private Call<DebateDetalleObjeto> debateDetalleService;
+    private Boolean hasLike,hasFollow;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,39 +94,62 @@ public class DebateDetalle extends AppCompatActivity {
 
         listaComentarioMV.generaList().observe(DebateDetalle.this, value ->{
             if(value.size() == 0){
-
-            }else{
-                if(value.get(0).getError() == null){
-                    if(adaptador.getItemCount() == 0){
+                aDDebate_textV_carga.setText(getResources().getString(R.string.no_mas_elementos));
+                aDDebate_textV_carga.setVisibility(View.VISIBLE);
+                new Handler().postDelayed(()->{
+                    aDDebate_textV_carga.setVisibility(View.GONE);
+                },GlobalConstants.ANIMATION_DURATION);
+            }else {
+                if (value.get(0).getError() == null) {
+                    if (adaptador.getItemCount() == 0) {
                         adaptador.addAll(value);
-                    }else {
+                    } else {
+                        aDDebate_textV_carga.setVisibility(View.GONE);
                         adaptador.add(value);
                     }
-                }else{
+                } else {
 
                 }
             }
+            adaptador.setEnabled(true);
         });
 
         userSelectBandMV.getInstance().observe(DebateDetalle.this, value ->{
-            selectBand = currentSelectBand;
-            insertaBands(value,(selectBand!= null)? selectBand.getId() : 0);
-            adaptador.clear();
-            listaComentarioMV.loardLista(0,debateid);
+            if(value.get(0).getError() == null){
+                selectBand = currentSelectBand;
+                adaptador.cambiarSelectBand(selectBand);
+                insertaBands(value,(selectBand!= null)? selectBand.getId() : 0);
+            }else{
+
+            }
+
+        });
+
+        userLikeDebateMV.getInstance().observe(DebateDetalle.this, value ->{
+            try {
+                int n = Integer.parseInt(value);
+                likes = n;
+                hasLike = !hasLike;
+                cambiarMeGusta(hasLike);
+                aDDebate_imageB_meGusta.setEnabled(true);
+            }catch (NumberFormatException e){
+
+            }
         });
 
         enviarComentarioMV.getInstance().observe(DebateDetalle.this,value ->{
             if(value.get(0).equals(GlobalConstants.TRUE)){
-                InputMethodManager imm = (InputMethodManager) this.getSystemService(INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.hideSoftInputFromWindow(aDDebate_editT_entrada.getWindowToken(), 0);
-                }
                 aDDebate_editT_entrada.clearFocus();
                 aDDebate_editT_entrada.setText("");
                 adaptador.clear();
                 listaComentarioMV.loardLista(0,debateid);
+                InputMethodManager imm = (InputMethodManager) this.getSystemService(INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(aDDebate_editT_entrada.getWindowToken(), 0);
+                }
             }else{
             }
+            aDDebate_bt_enviar.setEnabled(true);
         });
 
         if(Token.hasInstance()){
@@ -129,6 +166,8 @@ public class DebateDetalle extends AppCompatActivity {
 
         escucharBands();
 
+        escucharMeGusta();
+
         enviarComentario();
     }
 
@@ -142,11 +181,16 @@ public class DebateDetalle extends AppCompatActivity {
         imageV_imagenC = findViewById(R.id.aDDebate_imageV_imagenC);
         aDDebate_bt_band_favor = findViewById(R.id.aDDebate_bt_band_favor);
         aDDebate_bt_band_contra = findViewById(R.id.aDDebate_bt_band_contra);
-        comentarios = findViewById(R.id.aDDebate_comentarios);
+        comentarios = findViewById(R.id.aDDebate_recycleV_comentarios);
         nestedScrollView = findViewById(R.id.aDDebate_NestedSV);
         aDDebate_editT_entrada = findViewById(R.id.aDDebate_editT_entrada);
         aDDebate_imageB_meGusta = findViewById(R.id.aDDebate_imageB_meGusta);
+        aDDebate_textV_nuMeGusta = findViewById(R.id.aDDebate_textV_nuMeGusta);
         aDDebate_bt_enviar = findViewById(R.id.aDDebate_bt_enviar);
+        aDDebate_textV_band_total = findViewById(R.id.aDDebate_textV_band_total);
+        aDDebate_textV_band_favor = findViewById(R.id.aDDebate_textV_band_favor);
+        aDDebate_textV_band_contra = findViewById(R.id.aDDebate_textV_band_contra);
+        aDDebate_textV_carga = findViewById(R.id.aDDebate_textV_carga);
     }
 
     private void pedirDatos(){
@@ -164,9 +208,11 @@ public class DebateDetalle extends AppCompatActivity {
                     textV_fecha.setText(detalle.getList().getReleaseDate());
                     textV_titulo.setText(detalle.getList().getTitle());
                     textV_contenido.setText(detalle.getList().getDescription());
-                    cambiarMeGusta(detalle.isHasLike());
+                    hasLike = detalle.isHasLike();
 
                     insertaBands(detalle.getBands(),detalle.getBandSelected());
+                    likes = detalle.getLike();
+                    cambiarMeGusta(hasLike);
 
                     comentarios.setLayoutManager(new LinearLayoutManager(DebateDetalle.this));
                     adaptador = new ComentarioAdaptador(detalle.getComments(),DebateDetalle.this,debateid,selectBand,getSupportFragmentManager());
@@ -191,7 +237,13 @@ public class DebateDetalle extends AppCompatActivity {
             }
             @Override
             public void onFailure(@NonNull Call<DebateDetalleObjeto> call, @NonNull Throwable t){
-                Toast.makeText(DebateDetalle.this,t.getMessage(),Toast.LENGTH_SHORT);
+                Dialogs dialogs;
+                if(t instanceof IOException){
+                    dialogs = new Dialogs(Dialogs.E,"conexion fallida");
+                }else{
+                    dialogs = new Dialogs(Dialogs.E,"error desconocido");
+                }
+                dialogs.showDialog(DebateDetalle.this);
             }
         });
     }
@@ -204,6 +256,8 @@ public class DebateDetalle extends AppCompatActivity {
                 if (currentTotalItemCount != adaptador.getItemCount()
                         && ((scrollY + height) >= (contentHeight - GlobalConstants.NESTED))){
                     currentTotalItemCount = adaptador.getItemCount();
+                    aDDebate_textV_carga.setText(getResources().getString(R.string.cargando));
+                    aDDebate_textV_carga.setVisibility(View.VISIBLE);
                     listaComentarioMV.loardLista(adaptador.getItemCount(), debateid);
                 }
             }
@@ -236,16 +290,17 @@ public class DebateDetalle extends AppCompatActivity {
         listaComentarioMV = new ViewModelProvider(DebateDetalle.this).get(ListaComentarioModelView.class);
         enviarComentarioMV = new ViewModelProvider(DebateDetalle.this).get(EnviarComentarioModelView.class);
         userSelectBandMV = new ViewModelProvider(DebateDetalle.this).get(UserSelectBandModelView.class);
+        userLikeDebateMV = new ViewModelProvider(DebateDetalle.this).get(UserLikeDebateModelView.class);
     }
 
     private void insertaBands(List<BandObject> bands,int id){
         for(BandObject bandObject : bands){
             if(bandObject.getType() == BandObject.P){
                 favor = bandObject;
-                aDDebate_bt_band_favor.setText(bandObject.getDescription());
+                aDDebate_textV_band_favor.setText(bandObject.getDescription());
             }else if (bandObject.getType() == BandObject.N) {
                 contra = bandObject;
-                aDDebate_bt_band_contra.setText(bandObject.getDescription());
+                aDDebate_textV_band_contra.setText(bandObject.getDescription());
             }
             if(bandObject.getId() == id){
                 selectBand = bandObject;
@@ -256,26 +311,25 @@ public class DebateDetalle extends AppCompatActivity {
     }
 
     private void construirBand(){
-        String message;
+        int total = favor.getNum() + contra.getNum();
+        aDDebate_textV_band_total.setText(getResources().getString(R.string.total_votado).concat(String.valueOf(total)));
         if(selectBand != null){
-            if(selectBand.getDescription().equals(aDDebate_bt_band_favor.getText().toString())){
+            if(selectBand.getDescription().equals(aDDebate_textV_band_favor.getText().toString())){
                 aDDebate_bt_band_contra.setEnabled(false);
                 aDDebate_bt_band_favor.setEnabled(true);
                 cambiarBandAncho();
-            }else if(selectBand.getDescription().equals(aDDebate_bt_band_contra.getText().toString())){
+            }else if(selectBand.getDescription().equals(aDDebate_textV_band_contra.getText().toString())){
                 aDDebate_bt_band_favor.setEnabled(false);
                 aDDebate_bt_band_contra.setEnabled(true);
                 cambiarBandAncho();
             }
-            message =aDDebate_bt_band_favor.getText().toString()  +" "+ String.valueOf(favor.getNum());
-            aDDebate_bt_band_favor.setText(message);
-            message = String.valueOf(contra.getNum()) +" "+ aDDebate_bt_band_contra.getText().toString();
-            aDDebate_bt_band_contra.setText(message);
+            aDDebate_bt_band_favor.setText(getResources().getString(R.string.a_favor).concat(String.valueOf(favor.getNum())));
+            aDDebate_bt_band_contra.setText(getResources().getString(R.string.en_contra).concat(String.valueOf(contra.getNum())));
         }else{
             aDDebate_bt_band_contra.setEnabled(true);
             aDDebate_bt_band_favor.setEnabled(true);
-            aDDebate_bt_band_favor.setText(favor.getDescription());
-            aDDebate_bt_band_contra.setText(contra.getDescription());
+            aDDebate_bt_band_favor.setText(getResources().getString(R.string.a_favor));
+            aDDebate_bt_band_contra.setText(getResources().getString(R.string.en_contra));
             cambiarBandAncho();
         }
     }
@@ -301,25 +355,38 @@ public class DebateDetalle extends AppCompatActivity {
         manejador = (View buton)-> {
             UserSelectBandObjecto userSelectBandObjecto;
              if(buton.getId() == R.id.aDDebate_bt_band_favor){
-                 GlobalFuntion.validadLogin(DebateDetalle.this);
-                 userSelectBandObjecto = new UserSelectBandObjecto(debateid,Token.getInstance().getUserId(),favor.getId());
-                 if(selectBand == null){
-                     userSelectBandMV.selectBand(Token.getInstance().getValue(),userSelectBandObjecto);
-                     currentSelectBand = favor;
+                 if(!Token.hasInstance()){
+                     intent = new Intent(this, IniciaSesion.class);
+                     Dialogs dialogs = new Dialogs(Dialogs.W,String.valueOf(R.string.iniciar_sesision),intent,true,true);
+                     dialogs.showConfirmDialog(DebateDetalle.this);
                  }else{
-                     userSelectBandMV.deSelectBand(Token.getInstance().getValue(),userSelectBandObjecto);
-                     currentSelectBand = null;
+                     aDDebate_bt_band_contra.setEnabled(false);
+                     aDDebate_bt_band_favor.setEnabled(false);
+                     userSelectBandObjecto = new UserSelectBandObjecto(debateid,Token.getInstance().getUserId(),favor.getId());
+                     if(selectBand == null){
+                         userSelectBandMV.selectBand(Token.getInstance().getValue(),userSelectBandObjecto);
+                         currentSelectBand = favor;
+                     }else{
+                         userSelectBandMV.deSelectBand(Token.getInstance().getValue(),userSelectBandObjecto);
+                         currentSelectBand = null;
+                     }
                  }
-
              } else if (buton.getId() == R.id.aDDebate_bt_band_contra){
-                 GlobalFuntion.validadLogin(DebateDetalle.this);
-                 userSelectBandObjecto = new UserSelectBandObjecto(debateid,Token.getInstance().getUserId(),contra.getId());
-                 if(selectBand == null){
-                     userSelectBandMV.selectBand(Token.getInstance().getValue(),userSelectBandObjecto);
-                     currentSelectBand = contra;
+                 if(!Token.hasInstance()){
+                     intent = new Intent(this, IniciaSesion.class);
+                     Dialogs dialogs = new Dialogs(Dialogs.W,String.valueOf(R.string.iniciar_sesision),intent,true,true);
+                     dialogs.showConfirmDialog(DebateDetalle.this);
                  }else{
-                     userSelectBandMV.deSelectBand(Token.getInstance().getValue(),userSelectBandObjecto);
-                     currentSelectBand = null;
+                     aDDebate_bt_band_contra.setEnabled(false);
+                     aDDebate_bt_band_favor.setEnabled(false);
+                     userSelectBandObjecto = new UserSelectBandObjecto(debateid,Token.getInstance().getUserId(),contra.getId());
+                     if(selectBand == null){
+                         userSelectBandMV.selectBand(Token.getInstance().getValue(),userSelectBandObjecto);
+                         currentSelectBand = contra;
+                     }else{
+                         userSelectBandMV.deSelectBand(Token.getInstance().getValue(),userSelectBandObjecto);
+                         currentSelectBand = null;
+                     }
                  }
              }
         };
@@ -330,33 +397,70 @@ public class DebateDetalle extends AppCompatActivity {
 
     private void enviarComentario(){
         aDDebate_bt_enviar.setOnClickListener(view -> {
-            GlobalFuntion.validadLogin(DebateDetalle.this);
-            String description = aDDebate_editT_entrada.getText().toString();
-            if(!description.isEmpty()){
-                ComentarioObjeto comentarioObjeto = new ComentarioObjeto(description,pid);
-                enviarComentarioMV.enviarComentario(
-                        Token.getInstance().getValue(),
-                        comentarioObjeto,debateid,
-                        Token.getInstance().getUserId(),
-                        (selectBand != null)? String.valueOf(selectBand.getId()) : null
-                );
+            if(!Token.hasInstance()){
+                intent = new Intent(this, IniciaSesion.class);
+                Dialogs dialogs = new Dialogs(Dialogs.W,String.valueOf(R.string.iniciar_sesision),intent,true,true);
+                dialogs.showConfirmDialog(DebateDetalle.this);
             }else{
+                String description = aDDebate_editT_entrada.getText().toString();
+                if(!description.trim().isEmpty()){
+                    aDDebate_bt_enviar.setEnabled(false);
+                    adaptador.setEnabled(false);
+                    ComentarioObjeto comentarioObjeto = new ComentarioObjeto(description,pid);
+                    enviarComentarioMV.enviarComentario(
+                            Token.getInstance().getValue(),
+                            comentarioObjeto,debateid,
+                            Token.getInstance().getUserId(),
+                            (selectBand != null)? String.valueOf(selectBand.getId()) : null
+                    );
+                }else{
+                    Dialogs dialogs = new Dialogs(Dialogs.E,getResources().getString(R.string.introduce_algo));
+                    dialogs.showDialog(DebateDetalle.this);
+                }
             }
         });
     }
 
     private void escucharMeGusta(){
         aDDebate_imageB_meGusta.setOnClickListener(view ->{
-            GlobalFuntion.validadLogin(DebateDetalle.this);
-
+            if(!Token.hasInstance()){
+                intent = new Intent(this, IniciaSesion.class);
+                Dialogs dialogs = new Dialogs(Dialogs.W,String.valueOf(R.string.iniciar_sesision),intent,true,true);
+                dialogs.showConfirmDialog(DebateDetalle.this);
+            }else{
+                aDDebate_imageB_meGusta.setEnabled(false);
+                if(hasLike){
+                    userLikeDebateMV.desLikeDebate(Token.getInstance().getValue(), new UserLikeDebatesObject(debateid,Token.getInstance().getUserId()));
+                }else{
+                    userLikeDebateMV.likeDebate(Token.getInstance().getValue(), new UserLikeDebatesObject(debateid,Token.getInstance().getUserId()));
+                }
+            }
         });
     }
     private void cambiarMeGusta(boolean meGusta){
         if(meGusta){
-            aDDebate_imageB_meGusta.setImageResource(R.drawable.me_gusta_corazon);
-        }else if(!meGusta){
-            aDDebate_imageB_meGusta.setImageResource(R.drawable.no_me_gusta_corazon);
+            aDDebate_textV_nuMeGusta.setVisibility(View.VISIBLE);
+            aDDebate_textV_nuMeGusta.setText(String.valueOf(likes));
+            corazonAnimacion(aDDebate_imageB_meGusta);
+        }else{
+            aDDebate_textV_nuMeGusta.setVisibility(View.GONE);
+            aDDebate_textV_nuMeGusta.setText("");
+            corazonAnimacion(aDDebate_imageB_meGusta);
         }
     }
 
+    private void corazonAnimacion(ImageView view) {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(view, "rotationY", 0f, 180f);
+        animator.setDuration(GlobalConstants.ANIMATION_DURATION);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                view.setImageResource((hasLike)? R.drawable.me_gusta_corazon : R.drawable.no_me_gusta_corazon);
+            }
+        });
+
+        animator.start();
+    }
 }

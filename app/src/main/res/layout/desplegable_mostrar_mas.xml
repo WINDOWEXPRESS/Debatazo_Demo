@@ -54,11 +54,28 @@
             android:src="@drawable/usuario"
             app:shapeAppearanceOverlay="@style/redondearImageView" />
 
-        <TextView
-            android:id="@+id/desplegableMM_textV_nombre"
+        <LinearLayout
+            android:id="@+id/desplegableMM_lineaL_datoU"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="16sp" />
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/desplegableMM_textV_nombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/desplegableMM_textV_fechaP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14sp" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <TextView
@@ -72,7 +89,7 @@
     <TextView
         android:id="@+id/desplegableMM_textV_borderU"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="3dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/borde_logo" />
 
@@ -80,7 +97,26 @@
         android:id="@+id/desplegableMM_recyclerV_comentarios"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_weight="1" >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/desplegableMM_textV_carga"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="#B5AEAE"
+        android:paddingStart="15dp"
+        android:paddingTop="2dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="2dp"
+        android:textColor="#424242"
+        android:textSize="16sp"
+        android:visibility="gone"
+        tools:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/desplegableMM_linearL_comentarios"
