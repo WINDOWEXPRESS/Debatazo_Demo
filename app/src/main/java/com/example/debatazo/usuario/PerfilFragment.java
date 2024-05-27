@@ -1,6 +1,7 @@
 package com.example.debatazo.usuario;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -118,12 +119,38 @@ public class PerfilFragment extends Fragment {
             startActivity(i);
         });
 
+        int currentNightMode = getResources().getConfiguration().uiMode
+                & Configuration.UI_MODE_NIGHT_MASK;
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                modoTema.setImageResource(R.drawable.tema_diurno);
+                modoTema.setTag("diurno");
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+            // Night mode is not active, we're in day time
+            case Configuration.UI_MODE_NIGHT_YES:
+                modoTema.setImageResource(R.drawable.tema_nocturno);
+                modoTema.setTag("nocturno");
+                break;
+            // Night mode is active, we're at night!
+            case Configuration.UI_MODE_NIGHT_UNDEFINED:
+                modoTema.setImageResource(R.drawable.tema_dia_noche);
+                modoTema.setTag("auto");
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                break;
+            // We don't know what mode we're in, assume notnight
+        }
+
         modoTema.setOnClickListener(view -> {
             if (modoTema.getTag().equals("diurno")) {
                 modoTema.setImageResource(R.drawable.tema_nocturno);
                 modoTema.setTag("nocturno");
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            } else {
+            } else if (modoTema.getTag().equals("nocturno")){
+                modoTema.setImageResource(R.drawable.tema_dia_noche);
+                modoTema.setTag("auto");
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+            }else {
                 modoTema.setImageResource(R.drawable.tema_diurno);
                 modoTema.setTag("diurno");
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
