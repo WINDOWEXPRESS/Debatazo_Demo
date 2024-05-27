@@ -26,10 +26,16 @@ public class MostrarMasAdaptador extends RecyclerView.Adapter<MostrarMasAdaptado
         void onClick(View view, int position, ComentarioObjeto comentarioObjeto);
     }
 
+    private boolean isEnabled = true;
+
     private ComentarioAdaptador.ItemClickListener clickListener;
 
     public void setClickListener(ComentarioAdaptador.ItemClickListener itemClickListener) {
         this.clickListener = itemClickListener;
+    }
+
+    public void setEnabled(boolean enabled){
+        this.isEnabled = enabled;
     }
 
     private List<ComentarioObjeto> listaComentarios;
@@ -46,23 +52,24 @@ public class MostrarMasAdaptador extends RecyclerView.Adapter<MostrarMasAdaptado
 
     public class MostrarMasViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ShapeableImageView perfil;
-        TextView nombre;
-        TextView descripcion;
-        TextView mostrarMas;
+        TextView nombre, fechaP, descripcion, mostrarMas;
 
         public MostrarMasViewHolder(@NonNull View itemView) {
             super(itemView);
             perfil = itemView.findViewById(R.id.comentario_imageC_usuario);
             nombre = itemView.findViewById(R.id.comentario_textV_nombre);
-            descripcion = itemView.findViewById(R.id.comentario_linearL_descripcion);
+            fechaP = itemView.findViewById(R.id.comentario_textV_fechaP);
+            descripcion = itemView.findViewById(R.id.comentario_textV_descripcion);
             mostrarMas = itemView.findViewById(R.id.comentario_textV_mostrarM);
 
             itemView.setOnClickListener(this);
         }
         @Override
         public void onClick(View view){
-            if(clickListener != null){
-                clickListener.onClick(view,getAdapterPosition(),listaComentarios.get(getAdapterPosition()));
+            if(isEnabled){
+                if(clickListener != null){
+                    clickListener.onClick(view,getAdapterPosition(),listaComentarios.get(getAdapterPosition()));
+                }
             }
         }
     }
@@ -84,6 +91,7 @@ public class MostrarMasAdaptador extends RecyclerView.Adapter<MostrarMasAdaptado
         holder.nombre.setText(comentarioObjeto.getUserName());
         holder.nombre.append(GlobalFuntion.usuarioEquipo(context,comentarioObjeto.getType()));
         holder.nombre.append(usuarioResponde(comentarioObjeto.getPid()));
+        holder.fechaP.setText(comentarioObjeto.getReleaseDate());
         holder.descripcion.setText(comentarioObjeto.getDescription());
         holder.mostrarMas.setVisibility(View.GONE);
     }

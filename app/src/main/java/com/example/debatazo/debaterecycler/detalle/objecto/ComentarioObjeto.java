@@ -1,8 +1,12 @@
 package com.example.debatazo.debaterecycler.detalle.objecto;
 
+import android.annotation.SuppressLint;
+
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ComentarioObjeto implements Serializable {
     private int id;
@@ -54,9 +58,7 @@ public class ComentarioObjeto implements Serializable {
         return pid;
     }
 
-    public Date getReleaseDate() {
-        return releaseDate;
-    }
+    public String getReleaseDate() {return new SimpleDateFormat("dd/MM/yyyy", Locale.US).format(releaseDate);}
 
     public List<ComentarioObjeto> getChildren() {
         return children;

@@ -38,6 +38,7 @@ import com.example.debatazo.usuario.iniciarsesion.data.model.Token;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModel;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModelFactory;
+import com.example.debatazo.utils.Dialogs;
 
 
 import java.io.IOException;
@@ -63,6 +64,7 @@ public class ActividadPrincipal extends AppCompatActivity {
     private ActivityResultLauncher<String> requestResultLauncher;
     private ActivityResultLauncher<Intent> resultLauncher;
     private final Medias medias = new Medias();
+    private Dialogs dialogs;
 
     ActividadPrincipalBinding binding;
 
@@ -112,7 +114,8 @@ public class ActividadPrincipal extends AppCompatActivity {
                 abrirGaleria();
             } else {
                 // Si el permiso no está concedido, mostrar un mensaje de error
-                Toast.makeText(this, "No se ha concedido el permiso", Toast.LENGTH_SHORT).show();
+                dialogs = new Dialogs(Dialogs.W,getResources().getString(R.string.iniciar_sesision));
+                dialogs.showDialog(ActividadPrincipal.this);
             }
         });
 
@@ -138,7 +141,11 @@ public class ActividadPrincipal extends AppCompatActivity {
             } else {
                 //Ir a actividad de inicia sesion
                 Intent i = new Intent(view.getContext(), IniciaSesion.class);
-                startActivity(i);
+                dialogs = new Dialogs(
+                        Dialogs.W,
+                        getResources().getString(R.string.iniciar_sesision),
+                        i,true, true);
+                dialogs.showConfirmDialog(ActividadPrincipal.this);
             }
         });
 
@@ -198,10 +205,10 @@ public class ActividadPrincipal extends AppCompatActivity {
                     banda_2.getText().toString().isEmpty()
             ){
             //Si alguno de los campos esta vacio mostrar un mensaje de error
-                Toast.makeText(ActividadPrincipal.this, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
-
-
+                dialogs = new Dialogs(Dialogs.W,getResources().getString(R.string.campos_obligatorios));
+                dialogs.showDialog(ActividadPrincipal.this);
             }else{
+                publicar.setEnabled(false);
                 // Si todos los campos estan llenos, publicar el debate
                 //Obtener el token y el id del usuario
                 String token = Token.getInstance().getValue();
@@ -260,29 +267,44 @@ public class ActividadPrincipal extends AppCompatActivity {
         debateCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String title = "";
+                String mesage = "";
                 // Verificar si la respuesta es exitosa.
                 if (response.isSuccessful()) {
                     try {
                         // Mostrar el mensaje de respuesta en un Toast y cerrar dialog
-                        Toast.makeText(ActividadPrincipal.this, response.body().string(), Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
+                        title = "Exito";
+                        mesage = response.body().string();
 
                     } catch (IOException e) {
                         // Mostrar el mensaje de error en un Toast si ocurre un error de E/S.
-                        Toast.makeText(ActividadPrincipal.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        title = "Error";
+                        mesage = e.getMessage();
                     }
 
                 } else {
                     // Mostrar el mensaje de error en un Toast si la respuesta no es exitosa.
-                    Toast.makeText(ActividadPrincipal.this, response.errorBody().toString(), Toast.LENGTH_SHORT).show();
+                    title = "Error";
+                    mesage = response.errorBody().toString();
+                }
+
+                dialog.dismiss();
+                dialogs = new Dialogs(title,mesage);
+                dialogs.showDialog(ActividadPrincipal.this);
+                if(getCurrentFragment().getClass().equals(debateFragment.getClass())){
+                    replaceFragment(new DebateFragmento());
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                // Mostrar el mensaje de error en un Toast si la llamada falla.
-                System.out.println(t.toString());
-                Toast.makeText(ActividadPrincipal.this, t.toString(), Toast.LENGTH_SHORT).show();
+                if (t instanceof IOException){
+                    dialogs = new Dialogs(Dialogs.E, "Conexion fallido");
+                }else{
+                    dialogs = new Dialogs(Dialogs.E, "Error desconocido");
+                }
+                dialogs.showDialog(ActividadPrincipal.this);
+                dialog.dismiss();
             }
         });
     }
@@ -298,7 +320,8 @@ public class ActividadPrincipal extends AppCompatActivity {
 
             Call<ImgurObject> imgurCall = ImgurService.getInstance().getRepor().uploadImage(part,type,title,description);
             imgurCall.enqueue(new Callback<ImgurObject>() {
-
+                String tt = "";
+                String m = "";
                 @Override
                 public void onResponse(Call<ImgurObject> call, Response<ImgurObject> response) {
                     if (response.isSuccessful()) {
@@ -309,16 +332,25 @@ public class ActividadPrincipal extends AppCompatActivity {
 
                         publicarDebate(debateProducto,token,userId,dialog);
                     }else{
-                        Toast.makeText(ActividadPrincipal.this, response.errorBody().toString(), Toast.LENGTH_SHORT).show();
+                        tt = Dialogs.E;
+                        m = response.errorBody().toString();
+                        dialogs = new Dialogs(tt,m);
+                        dialogs.showDialog(ActividadPrincipal.this);
                     }
                 }
                 @Override
                 public void onFailure(Call<ImgurObject> call, Throwable t) {
-                    Toast.makeText(ActividadPrincipal.this, t.toString(), Toast.LENGTH_SHORT).show();
+                    tt = Dialogs.E;
+                    m = t.getMessage();
+                    dialogs = new Dialogs(tt,m);
+                    dialogs.showDialog(ActividadPrincipal.this);
+                    dialog.dismiss();
                 }
             });
         }catch (IOException e){
-            e.printStackTrace();
+            dialogs = new Dialogs(Dialogs.E,e.getMessage());
+            dialogs.showDialog(ActividadPrincipal.this);
+            dialog.dismiss();
         }
     }
 }

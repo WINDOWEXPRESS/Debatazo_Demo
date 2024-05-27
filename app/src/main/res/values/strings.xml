@@ -95,7 +95,15 @@
     <!-- Debate detalle -->
     <string name="corazon_meGusta">Corazon Me Gusta</string>
     <string name="enviar">Enviar</string>
-    <string name="a_favor"> &#160;A Favor</string>
-    <string name="en_contra">&#160;En Contra</string>
+    <string name="a_favor"> A Favor&#160;</string>
+    <string name="en_contra">En Contra&#160;</string>
+
+    <!-- Otros -->
+    <string name="campos_obligatorios">Todos los campos son obligatorios</string>
+    <string name="iniciar_sesision">Se necesita inciarlizarse la sesion</string>
+    <string name="total_votado"> Total Votado:&#160;</string>
+    <string name="cargando">Cargando</string>
+    <string name="no_mas_elementos">No hay más elementos para cargar</string>
+    <string name="introduce_algo"> Introduce algo</string>
 
 </resources>

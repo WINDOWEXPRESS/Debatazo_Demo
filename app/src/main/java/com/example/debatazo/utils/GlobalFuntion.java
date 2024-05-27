@@ -7,11 +7,16 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 
+import androidx.activity.result.contract.ActivityResultContracts;
+
 import com.example.debatazo.R;
 import com.example.debatazo.band.BandObject;
 import com.example.debatazo.debaterecycler.detalle.DebateDetalle;
 import com.example.debatazo.usuario.iniciarsesion.data.model.Token;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class GlobalFuntion {
 
@@ -20,7 +25,7 @@ public class GlobalFuntion {
         if(type == BandObject.P){
             spannable = customText(context.getResources().getString(R.string.a_favor), Color.GREEN);
         }else if(type == BandObject.N){
-            spannable = customText(context.getResources().getString(R.string.en_contra),Color.RED);
+            spannable = customText(context.getResources().getString(R.string.en_contra).concat(" "),Color.RED);
         }
         return spannable;
     }
@@ -30,12 +35,5 @@ public class GlobalFuntion {
         ForegroundColorSpan colorSpan = new ForegroundColorSpan(color);
         spannable.setSpan(colorSpan,0, text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return spannable;
-    }
-
-    public static void validadLogin(Context context){
-        if(!Token.hasInstance()){
-            Intent i = new Intent(context, IniciaSesion.class);
-            context.startActivity(i);
-        }
     }
 }

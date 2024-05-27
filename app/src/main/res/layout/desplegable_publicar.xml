@@ -31,7 +31,7 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_gravity="center"
-            android:background="?android:attr/colorBackground"
+            android:background="@color/trasparente"
             android:contentDescription="Volver"
             android:src="@drawable/flecha_volver"
             android:tint="?attr/colorPrimary" />
