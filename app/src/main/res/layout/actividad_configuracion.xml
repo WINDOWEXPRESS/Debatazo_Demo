@@ -30,8 +30,8 @@
                 android:contentDescription="@string/boton_volver"
                 android:scaleType="centerCrop"
                 android:src="@drawable/flecha_volver"
-                android:tint="?attr/colorOnSurface"
-                tools:ignore="TouchTargetSizeCheck" />
+                tools:ignore="TouchTargetSizeCheck"
+                app:tint="?attr/colorOnSurface" />
 
             <TextView
                 android:id="@+id/aConfiguracion_textV_configuracion"
@@ -111,7 +111,7 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:padding="5dp"
-                android:text="Cambiar contraseña"
+                android:text="@string/cambiar_contrase_a"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -148,8 +148,6 @@
 
             </LinearLayout>
 
-
-
             <LinearLayout
                 android:id="@+id/aConfiguracion_linearLV_brillo"
                 android:layout_width="match_parent"
@@ -163,15 +161,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@color/aplicacion_logo_background"
+                    android:background="@android:color/transparent"
                     android:clickable="false"
                     android:foregroundTint="@color/azul_marino"
                     android:indeterminate="false"
                     android:max="255"
                     android:min="1"
-                    android:progressTint="#000000"
-                    android:thumbTint="@color/black"
-                    android:tickMarkTint="@color/black"
+                    android:progressTint="?attr/colorPrimary"
+                    android:thumbTint="?attr/colorPrimary"
+                    android:tickMarkTint="?attr/colorPrimary"
                     tools:ignore="NestedWeights" />
 
                 <CheckBox

@@ -105,5 +105,8 @@
     <string name="cargando">Cargando</string>
     <string name="no_mas_elementos">No hay más elementos para cargar</string>
     <string name="introduce_algo"> Introduce algo</string>
+    <string name="volver">Volver</string>
+    <string name="logo">Logo</string>
+    <string name="cambiar_contrase_a">Cambiar contraseña</string>
 
 </resources>

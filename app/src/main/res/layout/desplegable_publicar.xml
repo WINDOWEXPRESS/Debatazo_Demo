@@ -18,7 +18,7 @@
         android:importantForAccessibility="no"
         android:scaleType="centerCrop"
         android:src="@drawable/barra_horizontal_tabla_publicar"
-        android:tint="?attr/colorOnBackground" />
+        app:tint="?attr/colorOnBackground" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,9 +32,9 @@
             android:layout_height="35dp"
             android:layout_gravity="center"
             android:background="@color/trasparente"
-            android:contentDescription="Volver"
+            android:contentDescription="@string/volver"
             android:src="@drawable/flecha_volver"
-            android:tint="?attr/colorPrimary" />
+            app:tint="?attr/colorPrimary" />
 
         <TextView
             android:id="@+id/dPublicar_textV_publicacion"
@@ -133,12 +133,8 @@
                 android:hint="@string/publicacion_titulo_en_contra"
                 android:importantForAutofill="no"
                 android:inputType="text"
-<<<<<<<<< Temporary merge branch 1
                 android:singleLine="true" />
-=========
-                android:singleLine="true"
-                tools:ignore="TouchTargetSizeCheck" />
->>>>>>>>> Temporary merge branch 2
+
         </LinearLayout>
 
         <ImageView

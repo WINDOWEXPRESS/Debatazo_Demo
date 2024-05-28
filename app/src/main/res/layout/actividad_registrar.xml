@@ -21,7 +21,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="Logo" />
+        android:contentDescription="@string/logo" />
 
     <TextView
         android:id="@+id/aRegistrar_textV_nombreAplicacion"
@@ -142,27 +142,17 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/aRegistrar_textV_mensajeError"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/red"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/aRegistrar_textIL_repetirContrasenia"
-        app:layout_constraintStart_toStartOf="@+id/aRegistrar_textIL_repetirContrasenia"
-        app:layout_constraintTop_toBottomOf="@+id/aRegistrar_textIL_repetirContrasenia" />
-
     <CheckBox
         android:id="@+id/aRegistrar_checkB_terminosYCondiciones"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="32dp"
         android:layout_weight="1"
         android:buttonTint="?attr/colorPrimary"
         android:text="@string/terminos_condiciones"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@+id/aRegistrar_textV_mensajeError"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintTop_toBottomOf="@+id/aRegistrar_textIL_repetirContrasenia"
+        tools:layout_editor_absoluteX="16dp" />
 
     <Button
         android:id="@+id/aRegistrar_button_registrar"

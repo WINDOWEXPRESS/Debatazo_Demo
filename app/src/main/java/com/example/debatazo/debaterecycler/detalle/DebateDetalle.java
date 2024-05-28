@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -96,9 +97,7 @@ public class DebateDetalle extends AppCompatActivity {
             if(value.size() == 0){
                 aDDebate_textV_carga.setText(getResources().getString(R.string.no_mas_elementos));
                 aDDebate_textV_carga.setVisibility(View.VISIBLE);
-                new Handler().postDelayed(()->{
-                    aDDebate_textV_carga.setVisibility(View.GONE);
-                },GlobalConstants.ANIMATION_DURATION);
+                new Handler().postDelayed(()-> aDDebate_textV_carga.setVisibility(View.GONE),GlobalConstants.ANIMATION_DURATION);
             }else {
                 if (value.get(0).getError() == null) {
                     if (adaptador.getItemCount() == 0) {
@@ -107,8 +106,6 @@ public class DebateDetalle extends AppCompatActivity {
                         aDDebate_textV_carga.setVisibility(View.GONE);
                         adaptador.add(value);
                     }
-                } else {
-
                 }
             }
             adaptador.setEnabled(true);
@@ -127,13 +124,12 @@ public class DebateDetalle extends AppCompatActivity {
 
         userLikeDebateMV.getInstance().observe(DebateDetalle.this, value ->{
             try {
-                int n = Integer.parseInt(value);
-                likes = n;
+                likes = Integer.parseInt(value);
                 hasLike = !hasLike;
                 cambiarMeGusta(hasLike);
                 aDDebate_imageB_meGusta.setEnabled(true);
             }catch (NumberFormatException e){
-
+                Log.println(Log.ERROR,"Error",e.toString());
             }
         });
 
@@ -147,7 +143,6 @@ public class DebateDetalle extends AppCompatActivity {
                 if (imm != null) {
                     imm.hideSoftInputFromWindow(aDDebate_editT_entrada.getWindowToken(), 0);
                 }
-            }else{
             }
             aDDebate_bt_enviar.setEnabled(true);
         });

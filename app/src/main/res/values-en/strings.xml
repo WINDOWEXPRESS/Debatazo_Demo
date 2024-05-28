@@ -71,4 +71,7 @@
     <string name="cargando">Loading</string>
     <string name="no_mas_elementos">No more items to load</string>
     <string name="introduce_algo"> Introduce something</string>
+    <string name="volver">Volver</string>
+    <string name="logo">Logo</string>
+    <string name="cambiar_contrase_a">Cambiar contraseña</string>
 </resources>

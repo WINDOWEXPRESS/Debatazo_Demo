@@ -33,7 +33,6 @@ public class ActividadRegistrar extends AppCompatActivity {
     private EditText contraseniaRepetir;
     TextInputLayout contraseniaTextInputLayout;
     TextInputLayout contraseniaRepetirTextInputLayout;
-    private TextView errorMensaje;
     private CheckBox terminosYCondiciones;
     private Button registrar;
     private ProgressBar cargando;
@@ -106,7 +105,6 @@ public class ActividadRegistrar extends AppCompatActivity {
                 public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                     // Manejar el error durante el registro, por ejemplo, mostrar un mensaje de error
                     Toast.makeText(ActividadRegistrar.this, t.getMessage(), Toast.LENGTH_LONG).show();
-                    errorMensaje.setText(String.format("Error: %s", t.getMessage()));
                 }
             });
         });
@@ -114,7 +112,7 @@ public class ActividadRegistrar extends AppCompatActivity {
 
     @NonNull
     private TextWatcher getTextWatcher(RegistrarViewModel registrarViewModel) {
-        TextWatcher afterTextChangedListener = new TextWatcher() {
+        return new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // ignore
@@ -130,7 +128,6 @@ public class ActividadRegistrar extends AppCompatActivity {
                 registrarViewModel.RegistrarDataChanged(email.getText().toString(), contrasenia.getText().toString(), contraseniaRepetir.getText().toString(), null);
             }
         };
-        return afterTextChangedListener;
     }
 
     public void vincularVistas() {
@@ -139,7 +136,6 @@ public class ActividadRegistrar extends AppCompatActivity {
         contraseniaTextInputLayout = binding.aRegistrarTextILContrasenia;
         contraseniaRepetir = binding.aRegistrarTextILRepetirContrasenia.getEditText();
         contraseniaRepetirTextInputLayout = binding.aRegistrarTextILRepetirContrasenia;
-        errorMensaje = binding.aRegistrarTextVMensajeError;
         terminosYCondiciones = binding.aRegistrarCheckBTerminosYCondiciones;
         registrar = binding.aRegistrarButtonRegistrar;
         cargando = binding.aRegistrarProgressBCargando;
