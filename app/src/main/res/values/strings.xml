@@ -105,5 +105,11 @@
     <string name="cargando">Cargando</string>
     <string name="no_mas_elementos">No hay más elementos para cargar</string>
     <string name="introduce_algo"> Introduce algo</string>
+    <string name="imagen_like"> imagen like de forma corazon</string>
+    <string name="imagen_comentario">imagen comentario</string>
+    <string name="mis_interacciones">Mis Interacciones</string>
+    <string name="debate_publicado">Debate\nPublicado</string>
+    <string name="debate_respondido">Debate\nRespondido</string>
+    <string name="debate_gustado">Debate\nGustado</string>
 
 </resources>

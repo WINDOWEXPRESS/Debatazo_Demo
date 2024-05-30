@@ -14,7 +14,7 @@ public class ServicioDebates {
 
     private ServicioDebates(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(URL_EMULADOR_XING)
+                .baseUrl(GlobalConstants.emulador)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         repositorio = retrofit.create(DebateApi.class);

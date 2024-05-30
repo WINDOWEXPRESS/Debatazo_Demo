@@ -8,6 +8,34 @@
     android:focusableInTouchMode="true"
     tools:context=".debaterecycler.detalle.DebateDetalle">
 
+    <ProgressBar
+        android:id="@+id/aDDebate_progressB"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/azul_marino"
+        android:indeterminateTintMode="src_atop"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/aDDebate_linearL_barraS"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/aDDebate_textV_fondo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/trasparente"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/aDDebate_linearL_barraS"
         android:layout_width="match_parent"
@@ -27,7 +55,8 @@
             android:contentDescription="@string/boton_volver"
             android:scaleType="centerCrop"
             android:src="@drawable/flecha_volver"
-            tools:ignore="TouchTargetSizeCheck" />
+            tools:ignore="TouchTargetSizeCheck"
+            app:tint="?attr/colorOnSurface" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/aDDebate_shapeableIV_usuario"
@@ -56,6 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp" />
+
         </LinearLayout>
 
         <Button
@@ -140,7 +170,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/total_votado"
                 android:textAlignment="center"
-                android:textColor="#191919"
                 android:textSize="18sp"
                 android:textStyle="italic" />
 
@@ -159,7 +188,6 @@
                     android:paddingEnd="5dp"
                     android:text="TextView"
                     android:textAlignment="center"
-                    android:textColor="#000000"
                     android:textSize="16sp" />
 
                 <TextView
@@ -171,7 +199,6 @@
                     android:paddingEnd="5dp"
                     android:text="TextView"
                     android:textAlignment="center"
-                    android:textColor="#000000"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -220,7 +247,6 @@
                 android:background="@drawable/borde_logo"
                 android:paddingLeft="5dp"
                 android:text="@string/comentarios"
-                android:textColor="#040404"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -253,7 +279,10 @@
                 android:textColor="#424242"
                 android:textSize="16sp"
                 android:visibility="gone"
-                tools:visibility="gone" />/>
+                tools:visibility="gone" /><![CDATA[
+
+            />
+        ]]>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

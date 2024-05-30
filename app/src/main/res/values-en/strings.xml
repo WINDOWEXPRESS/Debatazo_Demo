@@ -71,4 +71,10 @@
     <string name="cargando">Loading</string>
     <string name="no_mas_elementos">No more items to load</string>
     <string name="introduce_algo"> Introduce something</string>
+    <string name="imagen_like">heart-shaped like image</string>
+    <string name="imagen_comentario">comment image</string>
+    <string name="mis_interacciones">My Interactions</string>
+    <string name="debate_publicado">Debate\nPublished</string>
+    <string name="debate_respondido">Debate\nResponded</string>
+    <string name="debate_gustado">Debate\nLiked</string>
 </resources>

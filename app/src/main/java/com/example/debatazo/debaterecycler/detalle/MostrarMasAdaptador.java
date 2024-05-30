@@ -28,9 +28,9 @@ public class MostrarMasAdaptador extends RecyclerView.Adapter<MostrarMasAdaptado
 
     private boolean isEnabled = true;
 
-    private ComentarioAdaptador.ItemClickListener clickListener;
+    private MostrarMasAdaptador.ItemClickListener clickListener;
 
-    public void setClickListener(ComentarioAdaptador.ItemClickListener itemClickListener) {
+    public void setClickListener(MostrarMasAdaptador.ItemClickListener itemClickListener) {
         this.clickListener = itemClickListener;
     }
 

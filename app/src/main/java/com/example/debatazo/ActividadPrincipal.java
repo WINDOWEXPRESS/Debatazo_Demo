@@ -8,11 +8,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +58,8 @@ import retrofit2.Response;
 public class ActividadPrincipal extends AppCompatActivity {
     // Definir una constante para el código de solicitud de la galería
 
+    private TextView aPrincipal_textV_fondo;
+    private ProgressBar aPrincipal_progressB;
     private ImageView imagenPublicar;
     private final PerfilFragment perfilFragment = new PerfilFragment();
     private final DebateFragmento debateFragment = new DebateFragmento();
@@ -75,7 +79,10 @@ public class ActividadPrincipal extends AppCompatActivity {
     }*/
         binding = ActividadPrincipalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new PrincipalFragmento());
+        replaceFragment(new DebateFragmento());
+
+        aPrincipal_textV_fondo = findViewById(R.id.aPrincipal_textV_fondo);
+        aPrincipal_progressB = findViewById(R.id.aPrincipal_progressB);
 
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory()).get(LoginViewModel.class);
         loginViewModel.autoLogin(this);
@@ -84,6 +91,7 @@ public class ActividadPrincipal extends AppCompatActivity {
         BrilloUtils.getInstancia().brilloAppObserver(this);
 
         binding.aPrincipalFloatingAB.setBackground(null);
+        binding.aPrincipalBottomNV.setSelectedItemId(R.id.menuB_debate);
         binding.aPrincipalBottomNV.setOnItemSelectedListener(item -> {
             currentFragment = getCurrentFragment();
             switch (item.getItemId()) {
@@ -209,6 +217,10 @@ public class ActividadPrincipal extends AppCompatActivity {
                 dialogs.showDialog(ActividadPrincipal.this);
             }else{
                 publicar.setEnabled(false);
+                aPrincipal_textV_fondo.setVisibility(View.VISIBLE);
+                aPrincipal_textV_fondo.bringToFront();
+                aPrincipal_progressB.setVisibility(View.VISIBLE);
+                aPrincipal_progressB.bringToFront();
                 // Si todos los campos estan llenos, publicar el debate
                 //Obtener el token y el id del usuario
                 String token = Token.getInstance().getValue();
@@ -288,6 +300,9 @@ public class ActividadPrincipal extends AppCompatActivity {
                     mesage = response.errorBody().toString();
                 }
 
+                aPrincipal_textV_fondo.setVisibility(View.GONE);
+                aPrincipal_progressB.setVisibility(View.GONE);
+
                 dialog.dismiss();
                 dialogs = new Dialogs(title,mesage);
                 dialogs.showDialog(ActividadPrincipal.this);
@@ -303,6 +318,10 @@ public class ActividadPrincipal extends AppCompatActivity {
                 }else{
                     dialogs = new Dialogs(Dialogs.E, "Error desconocido");
                 }
+
+                aPrincipal_textV_fondo.setVisibility(View.GONE);
+                aPrincipal_progressB.setVisibility(View.GONE);
+
                 dialogs.showDialog(ActividadPrincipal.this);
                 dialog.dismiss();
             }

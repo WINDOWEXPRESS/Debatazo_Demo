@@ -37,14 +37,12 @@
                 android:id="@+id/fDDetalle_textV_nombre"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="@color/black"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/fDDetalle_textV_fecha"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="@color/black"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -57,7 +55,6 @@
         android:layout_marginTop="5dp"
         android:paddingStart="20dp"
         android:paddingEnd="10dp"
-        android:textColor="@color/black"
         android:textSize="20sp" />
 
     <ImageView
@@ -70,4 +67,46 @@
         android:contentDescription="Imagen debate"
         android:scaleType="fitStart"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <LinearLayout
+        android:id="@+id/fDDetalle_linearL_piel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/fDDetalle_imageV_corazon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="3dp"
+            android:contentDescription="@string/imagen_like"
+            app:srcCompat="@drawable/me_gusta_corazon"
+            tools:srcCompat="@drawable/me_gusta_corazon" />
+
+        <TextView
+            android:id="@+id/fDDetalle_textV_corazon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:textAlignment="viewStart" />
+
+        <ImageView
+            android:id="@+id/fDDetalle_imageV_comentario"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="3dp"
+            android:contentDescription="@string/imagen_comentario"
+            app:srcCompat="@drawable/comentar"
+            tools:srcCompat="@drawable/comentar" />
+
+        <TextView
+            android:id="@+id/fDDetalle_textV_comentario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:paddingLeft="0dp"
+            android:textAlignment="viewStart" />
+    </LinearLayout>
 </LinearLayout>
