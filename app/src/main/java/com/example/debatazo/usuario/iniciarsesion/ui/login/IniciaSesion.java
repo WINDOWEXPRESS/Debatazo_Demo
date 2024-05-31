@@ -56,8 +56,6 @@ public class IniciaSesion extends AppCompatActivity {
         //ajuste de brillo
         BrilloUtils.getInstancia().brilloAppObserver(this);
 
-
-
         vincularVistas();
 
         // Observa los cambios en el estado del formulario de inicio de sesión
@@ -84,7 +82,15 @@ public class IniciaSesion extends AppCompatActivity {
             }
         });
 
-        loginViewModel.getLoadingLiveData().observe(this, loading -> cargando.setVisibility(loading ? View.VISIBLE : View.GONE));
+        loginViewModel.getLoadingLiveData().observe(this, loading -> {
+            if(loading){
+                cargando.setVisibility(View.VISIBLE);
+                loginButton.setEnabled(false);
+            }else{
+                cargando.setVisibility(View.GONE);
+                loginButton.setEnabled(true);
+            }
+        });
 
         //OBSERVAR EL RESULTADO DE LOGIN
         loginViewModel.getLoginResult().observe(this, loginResult -> {
@@ -158,6 +164,7 @@ public class IniciaSesion extends AppCompatActivity {
             editor.apply(); // Guardar los cambios
 
             loginViewModel.login(email, password, IniciaSesion.this);
+
         });
 
         olvidarContrasenia.setOnClickListener(view -> {

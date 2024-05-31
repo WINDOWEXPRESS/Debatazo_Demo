@@ -14,7 +14,7 @@ public class ServicioComentarioProducto {
 
     private ServicioComentarioProducto(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(GlobalConstants.emulador)
+                .baseUrl(GlobalConstants.BASE_URI_SERVER)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         repositorio = retrofit.create(ComentarioApi.class);

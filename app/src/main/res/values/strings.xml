@@ -88,19 +88,19 @@
     <string name="guardar">Guardar</string>
 
     <!-- Comentario -->
-    <string name="mostrar_mas"><u>Mostrar Mas</u></string>
+    <string name="mostrar_mas"><u>Mostrar más</u></string>
     <string name="comentarios">Comentarios</string>
     <string name="responder"> responde </string>
 
     <!-- Debate detalle -->
-    <string name="corazon_meGusta">Corazon Me Gusta</string>
+    <string name="corazon_meGusta">Corazón Me Gusta</string>
     <string name="enviar">Enviar</string>
     <string name="a_favor"> A Favor&#160;</string>
     <string name="en_contra">En Contra&#160;</string>
 
     <!-- Otros -->
     <string name="campos_obligatorios">Todos los campos son obligatorios</string>
-    <string name="iniciar_sesision">Se necesita inciarlizarse la sesion</string>
+    <string name="iniciar_sesision">Se necesita inciarlizar la sesión</string>
     <string name="total_votado"> Total Votado:&#160;</string>
     <string name="cargando">Cargando</string>
     <string name="no_mas_elementos">No hay más elementos para cargar</string>
@@ -108,8 +108,8 @@
     <string name="volver">Volver</string>
     <string name="logo">Logo</string>
     <string name="cambiar_contrase_a">Cambiar contraseña</string>
-    <string name="imagen_like"> imagen like de forma corazon</string>
-    <string name="imagen_comentario">imagen comentario</string>
+    <string name="imagen_like">Imagen like de forma corazón</string>
+    <string name="imagen_comentario">Imagen comentario</string>
     <string name="mis_interacciones">Mis Interacciones</string>
     <string name="debate_publicado">Debate\nPublicado</string>
     <string name="debate_respondido">Debate\nRespondido</string>

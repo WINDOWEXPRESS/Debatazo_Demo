@@ -83,7 +83,8 @@ public class PerfilFragment extends Fragment {
     private LoginViewModel loginViewModel;
     private TextView nombreUsuario, nPublicarD, nPublicarDRespondido, nPublicarDGustado;
     private TextView idUsuario;
-    private LinearLayout fPerfil_datosP_debateP,fPerfil_datosP_debateR, fPerfil_datosP_debateG;
+    private TextView fPerfil_textV_numeroPublicarDebate ,fPerfil_textV_numeroPublicarDebateRespondido,fPerfil_textV_numeroPublicarDebateGustado;
+    private LinearLayout fPerfil_datosP_debateP,fPerfil_datosP_debateR, fPerfil_datosP_debateG ,fPerfil_datosPublicacion;
     private View.OnClickListener manejador;
     private ActivityResultLauncher<Intent> resultLauncher;
     public static final String TYPE_KEY = "TYPE_KEY";
@@ -181,9 +182,18 @@ public class PerfilFragment extends Fragment {
           }
         };
 
-        fPerfil_datosP_debateP.setOnClickListener(manejador);
-        fPerfil_datosP_debateR.setOnClickListener(manejador);
-        fPerfil_datosP_debateG.setOnClickListener(manejador);
+
+        fPerfil_datosPublicacion.setOnClickListener(view -> {
+            if (loginViewModel.getLoginRepository().isLoggedIn()){
+                fPerfil_datosP_debateP.setOnClickListener(manejador);
+                fPerfil_datosP_debateR.setOnClickListener(manejador);
+                fPerfil_datosP_debateG.setOnClickListener(manejador);
+            }else {
+                Intent i = new Intent(getContext(), IniciaSesion.class);
+                startActivity(i);
+            }
+        });
+
 
         resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {});
         return rootView;
@@ -202,6 +212,7 @@ public class PerfilFragment extends Fragment {
         fPerfil_datosP_debateP = rootView.findViewById(R.id.fPerfil_datosP_debateP);
         fPerfil_datosP_debateR = rootView.findViewById(R.id.fPerfil_datosP_debateR);
         fPerfil_datosP_debateG = rootView.findViewById(R.id.fPerfil_datosP_debateG);
+        fPerfil_datosPublicacion = rootView.findViewById(R.id.fPerfil_datosPublicacion);
     }
 
     public void mostrarDatos() {
@@ -226,6 +237,9 @@ public class PerfilFragment extends Fragment {
         nombreUsuario.setText(R.string.conectar_ahora);
         idUsuario.setText(R.string.mensaje_campo_id_usuario);
         perfil.setImageResource(R.drawable.usuario);
+        nPublicarD.setText("0");
+        nPublicarDRespondido.setText("0");
+        nPublicarDGustado.setText("0");
         info.setClickable(true);
     }
 }

@@ -15,7 +15,7 @@ public class RetrofitCliente {
 
     private RetrofitCliente(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(GlobalConstants.emulador)
+                .baseUrl(BASE_URI_SERVER)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
