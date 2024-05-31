@@ -36,9 +36,7 @@ public class DebateAdaptador extends RecyclerView.Adapter<DebateAdaptador.debate
 
     public class debateViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ShapeableImageView perfil;
-        TextView nombre;
-        TextView fecha;
-        TextView titulo;
+        TextView nombre, fecha, titulo, fDDetalle_textV_comentario,fDDetalle_textV_corazon;
         ImageView image;
 
         public debateViewHolder(@NonNull View itemView) {
@@ -48,6 +46,9 @@ public class DebateAdaptador extends RecyclerView.Adapter<DebateAdaptador.debate
             fecha = itemView.findViewById(R.id.fDDetalle_textV_fecha);
             titulo = itemView.findViewById(R.id.fDDetalle_textV_titulo);
             image = itemView.findViewById(R.id.fDDetalle_imageV);
+            fDDetalle_textV_corazon = itemView.findViewById(R.id.fDDetalle_textV_corazon);
+            fDDetalle_textV_comentario  = itemView.findViewById(R.id.fDDetalle_textV_comentario);
+
             itemView.setOnClickListener(this);
         }
 
@@ -81,6 +82,8 @@ public class DebateAdaptador extends RecyclerView.Adapter<DebateAdaptador.debate
         }else{
             holder.image.setVisibility(View.GONE);
         }
+        holder.fDDetalle_textV_corazon.setText(String.valueOf(debateProducto.getLike()));
+        holder.fDDetalle_textV_comentario.setText(String.valueOf(debateProducto.getComment()));
     }
 
     @Override

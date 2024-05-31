@@ -19,6 +19,8 @@ public class DebateProducto implements Serializable {
     private String imageUrl;
     private Set<BandObject> bands;
     private String imageDeleteHast;
+    private int like;
+    private int comment;
     private String error;
 
     public DebateProducto(int userId, int debateId, String profileImg, Date releaseDate, String userName, String title, String description, String imageUrl) {
@@ -82,6 +84,14 @@ public class DebateProducto implements Serializable {
 
     public void setImageDeleteHash(String imageDeleteHast) {
         this.imageDeleteHast = imageDeleteHast;
+    }
+
+    public int getLike() {
+        return like;
+    }
+
+    public int getComment() {
+        return comment;
     }
 
     public String getError() {

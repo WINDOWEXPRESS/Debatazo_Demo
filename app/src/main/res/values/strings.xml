@@ -108,5 +108,11 @@
     <string name="volver">Volver</string>
     <string name="logo">Logo</string>
     <string name="cambiar_contrase_a">Cambiar contraseña</string>
+    <string name="imagen_like"> imagen like de forma corazon</string>
+    <string name="imagen_comentario">imagen comentario</string>
+    <string name="mis_interacciones">Mis Interacciones</string>
+    <string name="debate_publicado">Debate\nPublicado</string>
+    <string name="debate_respondido">Debate\nRespondido</string>
+    <string name="debate_gustado">Debate\nGustado</string>
 
 </resources>

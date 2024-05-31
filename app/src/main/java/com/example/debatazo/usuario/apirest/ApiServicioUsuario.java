@@ -1,6 +1,7 @@
 package com.example.debatazo.usuario.apirest;
 
 import com.example.debatazo.debaterecycler.DebateProducto;
+import com.example.debatazo.debaterecycler.detalle.objecto.ComentarioObjeto;
 import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
 import com.example.debatazo.usuario.iniciarsesion.data.model.Token;
 import com.example.debatazo.usuario.registrar.RegistrarUsuarioPojo;
@@ -41,6 +42,10 @@ public interface ApiServicioUsuario {
     Call<ResponseBody> changePassword(@Path("id") int id,@Path("passwd") String passwd);
 
     @GET("users/profile/{id}/debates")
-    Call<List<DebateProducto>> getUserDebateCreate(@Header("token") String token,@Header("offset") String offset, @Path("id") int id);
+    Call<List<DebateProducto>> getDebateCreate(@Header("token") String token,@Header("offset") String offset, @Path("id") int id);
+    @GET("users/profile/{id}/like")
+    Call<List<DebateProducto>> getDebateLike(@Header("token") String token,@Header("offset") String offset, @Path("id") int id);
+    @GET("users/profile/{id}/comment/debate")
+    Call<List<DebateProducto>> getDebateComment(@Header("token") String token, @Header("offset") String offset, @Path("id") int id);
 
 }

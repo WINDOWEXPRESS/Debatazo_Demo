@@ -11,6 +11,7 @@ import java.util.Locale;
 public class ComentarioObjeto implements Serializable {
     private int id;
     private int userId;
+    private int debateId;
     private String profileImg;
     private String userName;
     private char type;
@@ -62,6 +63,10 @@ public class ComentarioObjeto implements Serializable {
 
     public List<ComentarioObjeto> getChildren() {
         return children;
+    }
+
+    public int getDebateId() {
+        return debateId;
     }
 
     public String getError() { return error; }

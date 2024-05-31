@@ -18,12 +18,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.view.ViewStructure;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +55,8 @@ public class DialogMostrarMFragment extends DialogFragment {
     ImageView desplegableMM_imageB_volver;
     ShapeableImageView desplegableMM_imageC_usuario;
     TextView desplegableMM_textV_nombre,desplegableMM_textV_descripcion,desplegableMM_textV_fechaP,desplegableMM_textV_carga;
+    TextView desplegableMM_textV_fondo;
+    ProgressBar desplegableMM_progressB;
     RecyclerView desplegableMM_recyclerV_comentarios;
     EditText desplegableMM_editT_entrada;
     Button desplegable_bt_enviar;
@@ -101,8 +105,13 @@ public class DialogMostrarMFragment extends DialogFragment {
                 if(value.get(0).getError() == null){
                     if(mostrarMasAdap.getItemCount() > 0){
                         desplegableMM_textV_carga.setVisibility(View.GONE);
+                        desplegableMM_textV_fondo.setVisibility(View.GONE);
+                        desplegableMM_progressB.setVisibility(View.GONE);
                         mostrarMasAdap.add(value);
                     }else{
+                        desplegableMM_textV_carga.setVisibility(View.GONE);
+                        desplegableMM_textV_fondo.setVisibility(View.GONE);
+                        desplegableMM_progressB.setVisibility(View.GONE);
                        mostrarMasAdap.addAll(value);
                     }
                 }else{
@@ -124,7 +133,8 @@ public class DialogMostrarMFragment extends DialogFragment {
                 mostrarMasAdap.clear();
                 listaComentarioModelView.loardChildren(0,debateId,comentarioObjeto.getId());
             }else{
-
+                Dialogs dialogs = new Dialogs(Dialogs.E,value.get(1));
+                dialogs.showDialog(getContext());
             }
             desplegable_bt_enviar.setEnabled(true);
         });
@@ -194,6 +204,10 @@ public class DialogMostrarMFragment extends DialogFragment {
                 if (!editText.getText().toString().trim().isEmpty()) {
                     button.setEnabled(false);
                     mostrarMasAdap.setEnabled(false);
+                    desplegableMM_textV_fondo.setVisibility(View.VISIBLE);
+                    desplegableMM_textV_fondo.bringToFront();
+                    desplegableMM_progressB.setVisibility(View.VISIBLE);
+                    desplegableMM_progressB.bringToFront();
                     ComentarioObjeto mesage = new ComentarioObjeto(editText.getText().toString(), pid);
                     enviarComentarioMV.enviarComentario(
                             Token.getInstance().getValue(),
@@ -233,6 +247,8 @@ public class DialogMostrarMFragment extends DialogFragment {
         desplegableMM_editT_entrada = layout.findViewById(R.id.desplegableMM_editT_entrada);
         desplegable_bt_enviar = layout.findViewById(R.id.desplegable_bt_enviar);
         desplegableMM_textV_carga = layout.findViewById(R.id.desplegableMM_textV_carga);
+        desplegableMM_progressB = layout.findViewById(R.id.desplegableMM_progressB);
+        desplegableMM_textV_fondo = layout.findViewById(R.id.desplegableMM_textV_fondo);
     }
 
     private void instanciarMV(){

@@ -1,6 +1,5 @@
 package com.example.debatazo.debaterecycler.api.servicio;
 
-import static com.example.debatazo.utils.GlobalConstants.BASE_URI_SERVER;
 import static com.example.debatazo.utils.GlobalConstants.URL_EMULADOR_XING;
 
 import com.example.debatazo.debaterecycler.api.repo.DebateApi;
@@ -15,7 +14,7 @@ public class ServicioDebates {
 
     private ServicioDebates(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URI_SERVER)
+                .baseUrl(GlobalConstants.emulador)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         repositorio = retrofit.create(DebateApi.class);

@@ -74,4 +74,10 @@
     <string name="volver">Volver</string>
     <string name="logo">Logo</string>
     <string name="cambiar_contrase_a">Cambiar contraseña</string>
+    <string name="imagen_like">heart-shaped like image</string>
+    <string name="imagen_comentario">comment image</string>
+    <string name="mis_interacciones">My Interactions</string>
+    <string name="debate_publicado">Debate\nPublished</string>
+    <string name="debate_respondido">Debate\nResponded</string>
+    <string name="debate_gustado">Debate\nLiked</string>
 </resources>

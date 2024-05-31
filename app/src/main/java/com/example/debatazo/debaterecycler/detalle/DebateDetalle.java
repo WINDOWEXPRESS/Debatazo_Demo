@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -24,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.debatazo.R;
@@ -55,12 +55,13 @@ public class DebateDetalle extends AppCompatActivity {
 
     ImageButton imageButton,aDDebate_imageB_meGusta;
     ShapeableImageView shapeableIV_usuario;
-    TextView textV_nombre, textV_fecha, textV_titulo, textV_contenido,aDDebate_textV_nuMeGusta;
+    TextView textV_nombre, textV_fecha, textV_titulo, textV_contenido,aDDebate_textV_nuMeGusta,aDDebate_textV_fondo;
     TextView aDDebate_textV_band_total,aDDebate_textV_band_favor,aDDebate_textV_band_contra,aDDebate_textV_carga;
     Button aDDebate_bt_band_favor, aDDebate_bt_band_contra, aDDebate_bt_enviar;
     ImageView imageV_imagenC;
     RecyclerView comentarios;
     EditText aDDebate_editT_entrada;
+    ProgressBar aDDebate_progressB;
     Bundle bundle;
     ComentarioAdaptador adaptador;
     ListaComentarioModelView listaComentarioMV;
@@ -97,7 +98,9 @@ public class DebateDetalle extends AppCompatActivity {
             if(value.size() == 0){
                 aDDebate_textV_carga.setText(getResources().getString(R.string.no_mas_elementos));
                 aDDebate_textV_carga.setVisibility(View.VISIBLE);
-                new Handler().postDelayed(()-> aDDebate_textV_carga.setVisibility(View.GONE),GlobalConstants.ANIMATION_DURATION);
+                new Handler().postDelayed(()->{
+                    aDDebate_textV_carga.setVisibility(View.GONE);
+                },GlobalConstants.ANIMATION_DURATION);
             }else {
                 if (value.get(0).getError() == null) {
                     if (adaptador.getItemCount() == 0) {
@@ -109,6 +112,8 @@ public class DebateDetalle extends AppCompatActivity {
                 }
             }
             adaptador.setEnabled(true);
+            aDDebate_textV_fondo.setVisibility(View.GONE);
+            aDDebate_progressB.setVisibility(View.GONE);
         });
 
         userSelectBandMV.getInstance().observe(DebateDetalle.this, value ->{
@@ -117,19 +122,22 @@ public class DebateDetalle extends AppCompatActivity {
                 adaptador.cambiarSelectBand(selectBand);
                 insertaBands(value,(selectBand!= null)? selectBand.getId() : 0);
             }else{
-
+                aDDebate_bt_band_contra.setEnabled(true);
+                aDDebate_bt_band_favor.setEnabled(true);
+                Dialogs dialogs = new Dialogs(Dialogs.E,value.get(0).getError());
+                dialogs.showDialog(DebateDetalle.this);
             }
-
         });
 
         userLikeDebateMV.getInstance().observe(DebateDetalle.this, value ->{
             try {
-                likes = Integer.parseInt(value);
+                int n = Integer.parseInt(value);
+                likes = n;
                 hasLike = !hasLike;
                 cambiarMeGusta(hasLike);
                 aDDebate_imageB_meGusta.setEnabled(true);
             }catch (NumberFormatException e){
-                Log.println(Log.ERROR,"Error",e.toString());
+                throw new RuntimeException(e);
             }
         });
 
@@ -143,6 +151,11 @@ public class DebateDetalle extends AppCompatActivity {
                 if (imm != null) {
                     imm.hideSoftInputFromWindow(aDDebate_editT_entrada.getWindowToken(), 0);
                 }
+            }else{
+                aDDebate_textV_fondo.setVisibility(View.GONE);
+                aDDebate_progressB.setVisibility(View.GONE);
+                Dialogs dialogs = new Dialogs(Dialogs.E,value.get(1));
+                dialogs.showDialog(DebateDetalle.this);
             }
             aDDebate_bt_enviar.setEnabled(true);
         });
@@ -186,6 +199,8 @@ public class DebateDetalle extends AppCompatActivity {
         aDDebate_textV_band_favor = findViewById(R.id.aDDebate_textV_band_favor);
         aDDebate_textV_band_contra = findViewById(R.id.aDDebate_textV_band_contra);
         aDDebate_textV_carga = findViewById(R.id.aDDebate_textV_carga);
+        aDDebate_progressB = findViewById(R.id.aDDebate_progressB);
+        aDDebate_textV_fondo = findViewById(R.id.aDDebate_textV_fondo);
     }
 
     private void pedirDatos(){
@@ -206,7 +221,7 @@ public class DebateDetalle extends AppCompatActivity {
                     hasLike = detalle.isHasLike();
 
                     insertaBands(detalle.getBands(),detalle.getBandSelected());
-                    likes = detalle.getLike();
+                    likes = detalle.getList().getLike();
                     cambiarMeGusta(hasLike);
 
                     comentarios.setLayoutManager(new LinearLayoutManager(DebateDetalle.this));
@@ -399,6 +414,10 @@ public class DebateDetalle extends AppCompatActivity {
             }else{
                 String description = aDDebate_editT_entrada.getText().toString();
                 if(!description.trim().isEmpty()){
+                    aDDebate_textV_fondo.setVisibility(View.VISIBLE);
+                    aDDebate_textV_fondo.bringToFront();
+                    aDDebate_progressB.setVisibility(View.VISIBLE);
+                    aDDebate_progressB.bringToFront();
                     aDDebate_bt_enviar.setEnabled(false);
                     adaptador.setEnabled(false);
                     ComentarioObjeto comentarioObjeto = new ComentarioObjeto(description,pid);
