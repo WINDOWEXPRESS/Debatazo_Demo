@@ -37,12 +37,14 @@
                 android:id="@+id/fDDetalle_textV_nombre"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/fDDetalle_textV_fecha"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -98,6 +100,7 @@
             android:layout_height="20dp"
             android:layout_marginEnd="3dp"
             android:contentDescription="@string/imagen_comentario"
+            app:tint="?attr/colorPrimary"
             app:srcCompat="@drawable/comentar"
             tools:srcCompat="@drawable/comentar" />
 

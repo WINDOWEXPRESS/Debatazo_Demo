@@ -6,8 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.debatazo.R;
 
 public class Dialogs{
@@ -60,7 +58,7 @@ public class Dialogs{
                         dialog.dismiss();
                     }
                 }
-            }, GlobalConstants.DIALOG_SLEEP);
+            }, GlobalConstants.DIALOG_SLEEP_TIME);
         }
     }
 

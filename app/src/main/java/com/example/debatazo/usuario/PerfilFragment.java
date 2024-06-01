@@ -83,7 +83,6 @@ public class PerfilFragment extends Fragment {
     private LoginViewModel loginViewModel;
     private TextView nombreUsuario, nPublicarD, nPublicarDRespondido, nPublicarDGustado;
     private TextView idUsuario;
-    private TextView fPerfil_textV_numeroPublicarDebate ,fPerfil_textV_numeroPublicarDebateRespondido,fPerfil_textV_numeroPublicarDebateGustado;
     private LinearLayout fPerfil_datosP_debateP,fPerfil_datosP_debateR, fPerfil_datosP_debateG ,fPerfil_datosPublicacion;
     private View.OnClickListener manejador;
     private ActivityResultLauncher<Intent> resultLauncher;

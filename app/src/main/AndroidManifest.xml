@@ -20,6 +20,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ActividadPrincipal"
+            android:exported="false" />
+        <activity
             android:name=".usuario.interaccion.ActividadMisInteraccion"
             android:exported="false" />
         <activity
@@ -52,7 +55,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActividadPrincipal"
+            android:name=".ActividadSplash"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
