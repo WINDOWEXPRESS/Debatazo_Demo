@@ -41,7 +41,8 @@
                 android:gravity="center|start"
                 android:paddingStart="10dp"
                 android:text="@string/configuracion"
-                android:textSize="24sp"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="34sp"
                 tools:ignore="RtlSymmetry" />
 
         </LinearLayout>

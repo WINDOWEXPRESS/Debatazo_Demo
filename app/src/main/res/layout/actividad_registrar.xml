@@ -50,7 +50,6 @@
         app:boxBackgroundColor="@color/white"
         app:boxBackgroundMode="outline"
         app:endIconTint="@color/azul_marino"
-
         app:helperText="Introducir el email"
         app:helperTextEnabled="true"
 
