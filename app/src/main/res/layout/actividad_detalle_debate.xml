@@ -186,7 +186,6 @@
                     android:layout_weight="1"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
-                    android:text="TextView"
                     android:textAlignment="center"
                     android:textSize="16sp" />
 
@@ -197,7 +196,6 @@
                     android:layout_weight="1"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
-                    android:text="TextView"
                     android:textAlignment="center"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -210,7 +208,7 @@
                 android:orientation="horizontal"
                 android:textAlignment="center">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/aDDebate_bt_band_favor"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
@@ -223,7 +221,7 @@
                     android:textColor="#206E23"
                     android:textSize="14sp" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/aDDebate_bt_band_contra"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
@@ -279,10 +277,7 @@
                 android:textColor="#424242"
                 android:textSize="16sp"
                 android:visibility="gone"
-                tools:visibility="gone" /><![CDATA[
-
-            />
-        ]]>
+                tools:visibility="gone" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
