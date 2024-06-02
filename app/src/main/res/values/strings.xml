@@ -114,5 +114,8 @@
     <string name="debate_publicado">Debate\nPublicado</string>
     <string name="debate_respondido">Debate\nRespondido</string>
     <string name="debate_gustado">Debate\nGustado</string>
+    <string name="cambiar_contrasenia">Cambiar Contraseña</string>
+    <string name="contrasenia_nueva">Contraseña nueva</string>
+    <string name="confirmar">Confirmar</string>
 
 </resources>

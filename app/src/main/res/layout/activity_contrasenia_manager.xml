@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -32,7 +33,7 @@
                 android:contentDescription="@string/boton_volver"
                 android:scaleType="centerCrop"
                 android:src="@drawable/flecha_volver"
-                android:tint="?attr/colorPrimary"
+                app:tint="?attr/colorPrimary"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
@@ -42,23 +43,22 @@
                 android:layout_weight="1"
                 android:gravity="center|start"
                 android:paddingStart="10dp"
-                android:text="Cambiar Contraseña"
-                android:textSize="30sp"
+                android:text="@string/cambiar_contrasenia"
                 android:textColor="?attr/colorPrimary"
+                android:textSize="30sp"
                 tools:ignore="RtlSymmetry" />
 
         </LinearLayout>
-
+        <TextView
+            android:id="@+id/aConfiguracion_textV_borde_configuracion"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/borde_logo" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/aConfiguracion_textV_borde_configuracion"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@drawable/borde_logo" />
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/aCManager_textIL_email"
@@ -92,7 +92,7 @@
                 android:id="@+id/aCManager_textIL_contrasenia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Contrasenña nueva"
+                android:hint="@string/contrasenia_nueva"
                 app:boxBackgroundColor="@color/white"
 
                 app:boxBackgroundMode="outline"
@@ -170,7 +170,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:text="Confirmar"
+            android:text="@string/confirmar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
