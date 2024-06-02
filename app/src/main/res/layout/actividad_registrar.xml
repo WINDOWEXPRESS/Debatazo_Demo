@@ -51,8 +51,8 @@
         app:boxBackgroundMode="outline"
         app:endIconTint="@color/azul_marino"
         app:helperText="Introducir el email"
-        app:helperTextEnabled="true"
 
+        app:helperTextEnabled="true"
         app:helperTextTextColor="@color/azul_marino"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -64,7 +64,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:backgroundTint="@android:color/transparent"
+            android:backgroundTint="@color/trasparente"
             android:inputType="textEmailAddress"
             android:textSize="18sp" />
 
