@@ -28,7 +28,7 @@
     <string name="registrate">Registrate</string>
 
     <!--    LOGIN ViewModel   -->
-    <string name="inicia_sesion_fallido">Inicia sesion fallido</string>
+    <string name="inicia_sesion_fallido">Error inesperado al inicia sesión.</string>
     <!--    contentDescription -->
     <string name="boton_volver">Boton volver</string>
     <!--    DETALLE DEBATE-->

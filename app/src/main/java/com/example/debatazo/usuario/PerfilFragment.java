@@ -9,14 +9,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.debatazo.ActividadPrincipal;
 import com.example.debatazo.R;
 import com.example.debatazo.configuracion.view.Configuracion;
 import com.example.debatazo.usuario.datospersonal.ActividadDatosPersonal;
@@ -24,6 +27,7 @@ import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModel;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModelFactory;
 import com.example.debatazo.usuario.interaccion.ActividadMisInteraccion;
+import com.example.debatazo.utils.Dialogs;
 import com.example.debatazo.utils.GlobalConstants;
 import com.squareup.picasso.Picasso;
 
@@ -167,32 +171,28 @@ public class PerfilFragment extends Fragment {
 
         manejador = view ->{
             Intent intent = new Intent(getActivity(), ActividadMisInteraccion.class);
-          if(view.getId() == R.id.fPerfil_datosP_debateP){
-              intent.putExtra(GlobalConstants.INTENT_KEY, ActividadMisInteraccion.KEY_DEBATE_P);
-              resultLauncher.launch(intent);
-          }
-          if(view.getId() == R.id.fPerfil_datosP_debateR){
-              intent.putExtra(GlobalConstants.INTENT_KEY, ActividadMisInteraccion.KEY_DEBATE_R);
-              resultLauncher.launch(intent);
-          }
-          if(view.getId() == R.id.fPerfil_datosP_debateG){
-              intent.putExtra(GlobalConstants.INTENT_KEY, ActividadMisInteraccion.KEY_DEBATE_G);
-              resultLauncher.launch(intent);
-          }
-        };
-
-
-        fPerfil_datosPublicacion.setOnClickListener(view -> {
-            if (loginViewModel.getLoginRepository().isLoggedIn()){
-                fPerfil_datosP_debateP.setOnClickListener(manejador);
-                fPerfil_datosP_debateR.setOnClickListener(manejador);
-                fPerfil_datosP_debateG.setOnClickListener(manejador);
+            if (loginViewModel.getLoginRepository().isLoggedIn()) {
+                if (view.getId() == R.id.fPerfil_datosP_debateP) {
+                    intent.putExtra(GlobalConstants.INTENT_KEY, ActividadMisInteraccion.KEY_DEBATE_P);
+                    resultLauncher.launch(intent);
+                }
+                if (view.getId() == R.id.fPerfil_datosP_debateR) {
+                    intent.putExtra(GlobalConstants.INTENT_KEY, ActividadMisInteraccion.KEY_DEBATE_R);
+                    resultLauncher.launch(intent);
+                }
+                if (view.getId() == R.id.fPerfil_datosP_debateG) {
+                    intent.putExtra(GlobalConstants.INTENT_KEY, ActividadMisInteraccion.KEY_DEBATE_G);
+                    resultLauncher.launch(intent);
+                }
             }else {
                 Intent i = new Intent(getContext(), IniciaSesion.class);
                 startActivity(i);
             }
-        });
+        };
 
+        fPerfil_datosP_debateP.setOnClickListener(manejador);
+        fPerfil_datosP_debateR.setOnClickListener(manejador);
+        fPerfil_datosP_debateG.setOnClickListener(manejador);
 
         resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {});
         return rootView;

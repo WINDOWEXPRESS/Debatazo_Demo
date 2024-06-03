@@ -53,7 +53,7 @@ public class DebateProductoModelView extends ViewModel {
                         }else if(t instanceof HttpException){
                             error.add(new DebateProducto(t.getMessage()));
                         }else{
-                            error.add(new DebateProducto("error desconocido:" + t.getMessage()));
+                            error.add(new DebateProducto("Error inesperado al cargar el contenido"));
                         }
                         listas.postValue(error);
                     }

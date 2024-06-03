@@ -10,8 +10,8 @@ import com.example.debatazo.R;
 
 public class Dialogs{
 
-    public static final String W = "Alerta";
-    public static final String E = "Error";
+    public static final String WORNING = "Alerta";
+    public static final String ERROR = "Error";
     private String title;
     private String mensaje;
     private boolean postive;

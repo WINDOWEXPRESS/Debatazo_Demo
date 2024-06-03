@@ -226,7 +226,7 @@ public class IniciaSesion extends AppCompatActivity {
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
-        Dialogs dialogs = new Dialogs(Dialogs.E,getResources().getString(errorString));
+        Dialogs dialogs = new Dialogs(Dialogs.ERROR,getResources().getString(errorString));
         dialogs.showDialog(IniciaSesion.this);
     }
 

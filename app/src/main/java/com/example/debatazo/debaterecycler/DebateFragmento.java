@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.debatazo.R;
 import com.example.debatazo.debaterecycler.detalle.DebateDetalle;
@@ -67,7 +66,7 @@ public class DebateFragmento extends Fragment {
                 }
                 if(value.get(0).getError() != null){
                     progressBar.setVisibility(View.INVISIBLE);
-                    dialogs = new Dialogs(Dialogs.E,value.get(0).getError());
+                    dialogs = new Dialogs(Dialogs.ERROR,value.get(0).getError());
                     dialogs.showDialog(getContext());
                 }else{
                     fDebate_textV_recarga.setVisibility(View.GONE);

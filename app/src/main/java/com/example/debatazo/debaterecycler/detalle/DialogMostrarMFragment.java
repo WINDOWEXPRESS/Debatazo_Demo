@@ -1,14 +1,6 @@
 package com.example.debatazo.debaterecycler.detalle;
 
-import static android.view.WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM;
-import static android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-import static android.view.WindowManager.LayoutParams.TYPE_APPLICATION;
-
-import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.PixelFormat;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -18,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.view.ViewStructure;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -27,7 +17,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -115,7 +104,7 @@ public class DialogMostrarMFragment extends DialogFragment {
                        mostrarMasAdap.addAll(value);
                     }
                 }else{
-                    Dialogs dialogs = new Dialogs(Dialogs.E,value.get(0).getError());
+                    Dialogs dialogs = new Dialogs(Dialogs.ERROR,value.get(0).getError());
                     dialogs.showDialog(getContext());
                 }
             }
@@ -133,7 +122,7 @@ public class DialogMostrarMFragment extends DialogFragment {
                 mostrarMasAdap.clear();
                 listaComentarioModelView.loardChildren(0,debateId,comentarioObjeto.getId());
             }else{
-                Dialogs dialogs = new Dialogs(Dialogs.E,value.get(1));
+                Dialogs dialogs = new Dialogs(Dialogs.ERROR,value.get(1));
                 dialogs.showDialog(getContext());
             }
             desplegable_bt_enviar.setEnabled(true);
@@ -193,7 +182,7 @@ public class DialogMostrarMFragment extends DialogFragment {
         button.setOnClickListener(view ->{
             if(!Token.hasInstance()){
                 Intent intent = new Intent(getContext(), IniciaSesion.class);
-                Dialogs dialogs = new Dialogs(Dialogs.W,String.valueOf(R.string.iniciar_sesision),intent,true,true);
+                Dialogs dialogs = new Dialogs(Dialogs.WORNING,String.valueOf(R.string.iniciar_sesision),intent,true,true);
                 dialogs.showConfirmDialog(getContext());
             }else {
                 if (selectPid == 0) {
@@ -217,7 +206,7 @@ public class DialogMostrarMFragment extends DialogFragment {
                             (selectBand != null) ? String.valueOf(selectBand.getId()) : null
                     );
                 } else {
-                    Dialogs dialogs = new Dialogs(Dialogs.E,getResources().getString(R.string.introduce_algo));
+                    Dialogs dialogs = new Dialogs(Dialogs.ERROR,getResources().getString(R.string.introduce_algo));
                     dialogs.showDialog(getContext());
                 }
             }

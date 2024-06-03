@@ -104,7 +104,8 @@ public class ActividadRegistrar extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                     // Manejar el error durante el registro, por ejemplo, mostrar un mensaje de error
-                    Toast.makeText(ActividadRegistrar.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(ActividadRegistrar.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(ActividadRegistrar.this,"Error inesperado al registrarse.", Toast.LENGTH_LONG).show();
                 }
             });
         });

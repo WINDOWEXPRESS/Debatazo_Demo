@@ -14,7 +14,7 @@
     <string name="invalido_email_usuario">Email invalid!</string>
     <string name="invalido_contrasenia">The length must be greater than 5 and less than 20.</string>
     <string name="error_registrar_contrasenia">Error! Password does not match</string>
-    <string name="inicia_sesion_fallido">Session start failed</string>
+    <string name="inicia_sesion_fallido">Unexpected error when logging in.</string>
     <string name="boton_volver">Return button</string>
     <string name="boton_seguir">Follow</string>
     <string name="introduce_comentario">Enter your comment</string>

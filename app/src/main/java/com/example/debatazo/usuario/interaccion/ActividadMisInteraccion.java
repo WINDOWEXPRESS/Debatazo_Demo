@@ -21,8 +21,6 @@ import com.example.debatazo.debaterecycler.detalle.DebateDetalle;
 import com.example.debatazo.utils.Dialogs;
 import com.example.debatazo.utils.GlobalConstants;
 
-import java.util.ArrayList;
-
 public class ActividadMisInteraccion extends AppCompatActivity {
     private ImageButton aMInteraccion_limageB_volver;
     private Bundle bundle;
@@ -73,7 +71,7 @@ public class ActividadMisInteraccion extends AppCompatActivity {
                         debateAdaptador.add(value);
                     }
                 }else{
-                    Dialogs dialogs = new Dialogs(Dialogs.E,value.get(0).getError());
+                    Dialogs dialogs = new Dialogs(Dialogs.ERROR,value.get(0).getError());
                     dialogs.showDialog(ActividadMisInteraccion.this);
                 }
             }

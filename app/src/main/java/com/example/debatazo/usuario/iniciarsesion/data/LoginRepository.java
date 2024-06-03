@@ -53,7 +53,7 @@ public class LoginRepository {
     }
 
     public void logout(Context context) {
-        loggedInUserMutableLiveData.postValue(null);
+        loggedInUserMutableLiveData.setValue(null);
         dataSource.logout(context);
     }
 

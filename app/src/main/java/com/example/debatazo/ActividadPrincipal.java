@@ -122,7 +122,7 @@ public class ActividadPrincipal extends AppCompatActivity {
                 abrirGaleria();
             } else {
                 // Si el permiso no está concedido, mostrar un mensaje de error
-                dialogs = new Dialogs(Dialogs.W,getResources().getString(R.string.iniciar_sesision));
+                dialogs = new Dialogs(Dialogs.WORNING,getResources().getString(R.string.iniciar_sesision));
                 dialogs.showDialog(ActividadPrincipal.this);
             }
         });
@@ -150,7 +150,7 @@ public class ActividadPrincipal extends AppCompatActivity {
                 //Ir a actividad de inicia sesion
                 Intent i = new Intent(view.getContext(), IniciaSesion.class);
                 dialogs = new Dialogs(
-                        Dialogs.W,
+                        Dialogs.WORNING,
                         getResources().getString(R.string.iniciar_sesision),
                         i,true, true);
                 dialogs.showConfirmDialog(ActividadPrincipal.this);
@@ -213,7 +213,7 @@ public class ActividadPrincipal extends AppCompatActivity {
                     banda_2.getText().toString().isEmpty()
             ){
             //Si alguno de los campos esta vacio mostrar un mensaje de error
-                dialogs = new Dialogs(Dialogs.W,getResources().getString(R.string.campos_obligatorios));
+                dialogs = new Dialogs(Dialogs.WORNING,getResources().getString(R.string.campos_obligatorios));
                 dialogs.showDialog(ActividadPrincipal.this);
             }else{
                 publicar.setEnabled(false);
@@ -314,9 +314,9 @@ public class ActividadPrincipal extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 if (t instanceof IOException){
-                    dialogs = new Dialogs(Dialogs.E, "Conexion fallido");
+                    dialogs = new Dialogs(Dialogs.ERROR, "Conexion fallido");
                 }else{
-                    dialogs = new Dialogs(Dialogs.E, "Error desconocido");
+                    dialogs = new Dialogs(Dialogs.ERROR, "Error desconocido");
                 }
 
                 aPrincipal_textV_fondo.setVisibility(View.GONE);
@@ -351,7 +351,7 @@ public class ActividadPrincipal extends AppCompatActivity {
 
                         publicarDebate(debateProducto,token,userId,dialog);
                     }else{
-                        tt = Dialogs.E;
+                        tt = Dialogs.ERROR;
                         m = response.errorBody().toString();
                         dialogs = new Dialogs(tt,m);
                         dialogs.showDialog(ActividadPrincipal.this);
@@ -359,7 +359,7 @@ public class ActividadPrincipal extends AppCompatActivity {
                 }
                 @Override
                 public void onFailure(Call<ImgurObject> call, Throwable t) {
-                    tt = Dialogs.E;
+                    tt = Dialogs.ERROR;
                     m = t.getMessage();
                     dialogs = new Dialogs(tt,m);
                     dialogs.showDialog(ActividadPrincipal.this);
@@ -367,7 +367,7 @@ public class ActividadPrincipal extends AppCompatActivity {
                 }
             });
         }catch (IOException e){
-            dialogs = new Dialogs(Dialogs.E,e.getMessage());
+            dialogs = new Dialogs(Dialogs.ERROR,e.getMessage());
             dialogs.showDialog(ActividadPrincipal.this);
             dialog.dismiss();
         }

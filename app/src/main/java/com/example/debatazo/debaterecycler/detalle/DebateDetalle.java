@@ -124,7 +124,7 @@ public class DebateDetalle extends AppCompatActivity {
             }else{
                 aDDebate_bt_band_contra.setEnabled(true);
                 aDDebate_bt_band_favor.setEnabled(true);
-                Dialogs dialogs = new Dialogs(Dialogs.E,value.get(0).getError());
+                Dialogs dialogs = new Dialogs(Dialogs.ERROR,value.get(0).getError());
                 dialogs.showDialog(DebateDetalle.this);
             }
         });
@@ -154,7 +154,7 @@ public class DebateDetalle extends AppCompatActivity {
             }else{
                 aDDebate_textV_fondo.setVisibility(View.GONE);
                 aDDebate_progressB.setVisibility(View.GONE);
-                Dialogs dialogs = new Dialogs(Dialogs.E,value.get(1));
+                Dialogs dialogs = new Dialogs(Dialogs.ERROR,value.get(1));
                 dialogs.showDialog(DebateDetalle.this);
             }
             aDDebate_bt_enviar.setEnabled(true);
@@ -249,9 +249,9 @@ public class DebateDetalle extends AppCompatActivity {
             public void onFailure(@NonNull Call<DebateDetalleObjeto> call, @NonNull Throwable t){
                 Dialogs dialogs;
                 if(t instanceof IOException){
-                    dialogs = new Dialogs(Dialogs.E,"conexion fallida");
+                    dialogs = new Dialogs(Dialogs.ERROR,"conexion fallida");
                 }else{
-                    dialogs = new Dialogs(Dialogs.E,"error desconocido");
+                    dialogs = new Dialogs(Dialogs.ERROR,"error desconocido");
                 }
                 dialogs.showDialog(DebateDetalle.this);
             }
@@ -367,7 +367,7 @@ public class DebateDetalle extends AppCompatActivity {
              if(buton.getId() == R.id.aDDebate_bt_band_favor){
                  if(!Token.hasInstance()){
                      intent = new Intent(this, IniciaSesion.class);
-                     Dialogs dialogs = new Dialogs(Dialogs.W,String.valueOf(R.string.iniciar_sesision),intent,true,true);
+                     Dialogs dialogs = new Dialogs(Dialogs.WORNING,String.valueOf(R.string.iniciar_sesision),intent,true,true);
                      dialogs.showConfirmDialog(DebateDetalle.this);
                  }else{
                      aDDebate_bt_band_contra.setEnabled(false);
@@ -384,7 +384,7 @@ public class DebateDetalle extends AppCompatActivity {
              } else if (buton.getId() == R.id.aDDebate_bt_band_contra){
                  if(!Token.hasInstance()){
                      intent = new Intent(this, IniciaSesion.class);
-                     Dialogs dialogs = new Dialogs(Dialogs.W,String.valueOf(R.string.iniciar_sesision),intent,true,true);
+                     Dialogs dialogs = new Dialogs(Dialogs.WORNING,String.valueOf(R.string.iniciar_sesision),intent,true,true);
                      dialogs.showConfirmDialog(DebateDetalle.this);
                  }else{
                      aDDebate_bt_band_contra.setEnabled(false);
@@ -409,7 +409,7 @@ public class DebateDetalle extends AppCompatActivity {
         aDDebate_bt_enviar.setOnClickListener(view -> {
             if(!Token.hasInstance()){
                 intent = new Intent(this, IniciaSesion.class);
-                Dialogs dialogs = new Dialogs(Dialogs.W,String.valueOf(R.string.iniciar_sesision),intent,true,true);
+                Dialogs dialogs = new Dialogs(Dialogs.WORNING,String.valueOf(R.string.iniciar_sesision),intent,true,true);
                 dialogs.showConfirmDialog(DebateDetalle.this);
             }else{
                 String description = aDDebate_editT_entrada.getText().toString();
@@ -428,7 +428,7 @@ public class DebateDetalle extends AppCompatActivity {
                             (selectBand != null)? String.valueOf(selectBand.getId()) : null
                     );
                 }else{
-                    Dialogs dialogs = new Dialogs(Dialogs.E,getResources().getString(R.string.introduce_algo));
+                    Dialogs dialogs = new Dialogs(Dialogs.ERROR,getResources().getString(R.string.introduce_algo));
                     dialogs.showDialog(DebateDetalle.this);
                 }
             }
@@ -439,7 +439,7 @@ public class DebateDetalle extends AppCompatActivity {
         aDDebate_imageB_meGusta.setOnClickListener(view ->{
             if(!Token.hasInstance()){
                 intent = new Intent(this, IniciaSesion.class);
-                Dialogs dialogs = new Dialogs(Dialogs.W,String.valueOf(R.string.iniciar_sesision),intent,true,true);
+                Dialogs dialogs = new Dialogs(Dialogs.WORNING,String.valueOf(R.string.iniciar_sesision),intent,true,true);
                 dialogs.showConfirmDialog(DebateDetalle.this);
             }else{
                 aDDebate_imageB_meGusta.setEnabled(false);
