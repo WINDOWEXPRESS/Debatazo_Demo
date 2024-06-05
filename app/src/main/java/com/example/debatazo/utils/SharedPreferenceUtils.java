@@ -11,6 +11,7 @@ public class SharedPreferenceUtils {
     //Atributos para guardar informacion de Token en sharedpreference
     public static final String PREFS_TOKEN = "GUARDAR_INFO_TOKEN";
     public static final String TOKEN_VALUE = "CLAVE_TOKEN";
+    public static final String EXPIRATION = "TOKEN_EXPIRACION";
     public static final String USER_ID ="CALVE_USER_ID";
 
     //Atributos para guardar informacion en sharedpreference en actividad Configuracion Brillo

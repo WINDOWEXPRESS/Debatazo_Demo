@@ -67,7 +67,17 @@ public class DebateFragmento extends Fragment {
                 }
                 if(value.get(0).getError() != null){
                     progressBar.setVisibility(View.INVISIBLE);
-                    dialogs = new Dialogs(Dialogs.E,value.get(0).getError());
+                    try {
+                        if(value.size() > 1){
+                            String mesage = getResources().getString(Integer.parseInt(value.get(0).getError()));
+                            dialogs = new Dialogs(getResources().getString(R.string.error),mesage.concat(" ").concat(value.get(1).getError()));
+                        }else{
+                            dialogs = new Dialogs(getResources().getString(R.string.error),value.get(0).getError());
+                        }
+                    }catch (NumberFormatException e){
+                        dialogs = new Dialogs(getResources().getString(R.string.error),getResources().getString(R.string.error_desconocido));
+                    }
+
                     dialogs.showDialog(getContext());
                 }else{
                     fDebate_textV_recarga.setVisibility(View.GONE);

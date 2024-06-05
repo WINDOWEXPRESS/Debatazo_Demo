@@ -80,7 +80,17 @@
     <string name="debate_publicado">Debate\nPublished</string>
     <string name="debate_respondido">Debate\nResponded</string>
     <string name="debate_gustado">Debate\nLiked</string>
-    <string name="cambiar_contrasenia">Cambiar Contraseña</string>
-    <string name="contrasenia_nueva">Contraseña nueva</string>
-    <string name="confirmar">Confirmar</string>
+    <string name="cambiar_contrasenia">Change Password</string>
+    <string name="contrasenia_nueva">New Password</string>
+    <string name="confirmar">Confirm</string>
+    <string name="advertencia">Warning</string>
+    <string name="error">Error</string>
+    <string name="conexion_fallido">Connection failed</string>
+    <string name="error_desconocido">Unknown error</string>
+    <string name="necesita_permiso">Permission Needed</string>
+    <string name="necesita_permiso_galeria">You need to go to settings to grant gallery access permission</string>
+    <string name="ir_configuracion">Go to Settings</string>
+    <string name="todavia_no_has_publicado_ningun_debate">You Haven\'t Published Any Debates Yet</string>
+    <string name="todavia_no_has_comentado_ningun_debate">You Haven\'t Commented on Any Debates Yet</string>
+    <string name="todavia_no_has_gustado_ningun_debate">You Haven\'t Liked Any Debates Yet</string>
 </resources>

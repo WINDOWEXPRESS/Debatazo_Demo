@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Selection;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -28,6 +29,7 @@ public class ActividadMisInteraccion extends AppCompatActivity {
     private Bundle bundle;
     private String seleccion;
     private TextView aMInteraccion_textV_debateP,aMInteraccion_textV_debateR,aMInteraccion_textV_debateG,aMInteraccion_textV_carga;
+    private TextView aMInteraccui_textV_noElemento;
     private RecyclerView aMInteraccion_recyclerV_contenidos;
     private ProgressBar aMInteraccion_progressB;
     private View.OnClickListener manejador;
@@ -57,6 +59,7 @@ public class ActividadMisInteraccion extends AppCompatActivity {
                 if(debateAdaptador == null){
                     debateAdaptador = new DebateAdaptador(value);
                     aMInteraccion_recyclerV_contenidos.setAdapter(debateAdaptador);
+                    mostrarNoElemento();
                 }else{
                     aMInteraccion_textV_carga.setText(getResources().getString(R.string.no_mas_elementos));
                     aMInteraccion_textV_carga.setVisibility(View.VISIBLE);
@@ -73,7 +76,7 @@ public class ActividadMisInteraccion extends AppCompatActivity {
                         debateAdaptador.add(value);
                     }
                 }else{
-                    Dialogs dialogs = new Dialogs(Dialogs.E,value.get(0).getError());
+                    Dialogs dialogs = new Dialogs(getResources().getString(R.string.error),value.get(0).getError());
                     dialogs.showDialog(ActividadMisInteraccion.this);
                 }
             }
@@ -81,11 +84,13 @@ public class ActividadMisInteraccion extends AppCompatActivity {
             aMInteraccion_progressB.setVisibility(View.GONE);
             aMInteraccion_recyclerV_contenidos.setVisibility(View.VISIBLE);
             activarClick();
-            debateAdaptador.setClickListener((vista, posicion, producto)->{
-                Intent intent = new Intent(ActividadMisInteraccion.this, DebateDetalle.class);
-                intent.putExtra(GlobalConstants.INTENT_KEY, producto.getDebateId());
-                resultLauncher.launch(intent);
-            });
+            if(debateAdaptador != null){
+                debateAdaptador.setClickListener((vista, posicion, producto)->{
+                    Intent intent = new Intent(ActividadMisInteraccion.this, DebateDetalle.class);
+                    intent.putExtra(GlobalConstants.INTENT_KEY, producto.getDebateId());
+                    resultLauncher.launch(intent);
+                });
+            }
         });
 
         seleccion = bundle.getString(GlobalConstants.INTENT_KEY);
@@ -105,6 +110,7 @@ public class ActividadMisInteraccion extends AppCompatActivity {
 
         manejador = view -> {
             limbiar_border();
+            limbiar_vista();
             currentTotalItemCount = 0;
             if(view.getId() == R.id.aMInteraccion_textV_debateP){
                 aMInteraccion_textV_debateP.setBackgroundResource(R.drawable.border_bottom);
@@ -172,6 +178,7 @@ public class ActividadMisInteraccion extends AppCompatActivity {
         aMInteraccion_recyclerV_contenidos = findViewById(R.id.aMInteraccion_recyclerV_contenidos);
         aMInteraccion_progressB = findViewById(R.id.aMInteraccion_progressB);
         aMInteraccion_textV_carga = findViewById(R.id.aMInteraccion_textV_carga);
+        aMInteraccui_textV_noElemento = findViewById(R.id.aMInteraccui_textV_noElemento);
     }
     private void vincularModelV(){
         misInteraccionMV = new ViewModelProvider(ActividadMisInteraccion.this).get(MisInteraccionModelView.class);
@@ -180,6 +187,11 @@ public class ActividadMisInteraccion extends AppCompatActivity {
         aMInteraccion_textV_debateP.setBackgroundResource(R.color.trasparente);
         aMInteraccion_textV_debateR.setBackgroundResource(R.color.trasparente);
         aMInteraccion_textV_debateG.setBackgroundResource(R.color.trasparente);
+    }
+
+    private void  limbiar_vista(){
+        aMInteraccion_recyclerV_contenidos.setVisibility(View.VISIBLE);
+        aMInteraccui_textV_noElemento.setVisibility(View.GONE);
     }
 
     private void animacion_carga(){
@@ -202,5 +214,22 @@ public class ActividadMisInteraccion extends AppCompatActivity {
         aMInteraccion_textV_debateP.setEnabled(true);
         aMInteraccion_textV_debateR.setEnabled(true);
         aMInteraccion_textV_debateG.setEnabled(true);
+    }
+    private void mostrarNoElemento(){
+        String mesage = "";
+        switch (seleccion){
+            case KEY_DEBATE_P:
+                mesage = getResources().getString(R.string.todavia_no_has_publicado_ningun_debate);
+                break;
+            case KEY_DEBATE_R:
+                mesage = getResources().getString(R.string.todavia_no_has_comentado_ningun_debate);
+                break;
+            case KEY_DEBATE_G:
+                mesage = getResources().getString(R.string.todavia_no_has_gustado_ningun_debate);
+                break;
+        }
+        aMInteraccui_textV_noElemento.setText(mesage);
+        aMInteraccui_textV_noElemento.setVisibility(View.VISIBLE);
+        aMInteraccion_recyclerV_contenidos.setVisibility(View.GONE);
     }
 }

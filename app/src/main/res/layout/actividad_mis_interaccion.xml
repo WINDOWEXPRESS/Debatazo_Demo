@@ -99,6 +99,13 @@
             android:layout_height="5dp"
             android:background="@drawable/borde_logo" />
 
+        <TextView
+            android:id="@+id/aMInteraccui_textV_noElemento"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:visibility="gone" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/aMInteraccion_recyclerV_contenidos"
             android:layout_width="match_parent"

@@ -139,9 +139,9 @@ public class LoginRepository {
         });
     }
 
-    public void cambiarPassword(int id,String password, MutableLiveData<Boolean> loadingLiveData, TextView mensajeError) {
+    public void cambiarPassword(String token,int id,String password, MutableLiveData<Boolean> loadingLiveData, TextView mensajeError) {
         loadingLiveData.setValue(true);
-        Call<ResponseBody> call = RetrofitCliente.getInstancia().getApiUsuario().changePassword(id,SaltMD5Util.generateSaltPassword(password));
+        Call<ResponseBody> call = RetrofitCliente.getInstancia().getApiUsuario().changePassword(token,id,SaltMD5Util.generateSaltPassword(password));
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

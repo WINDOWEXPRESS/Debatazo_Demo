@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.debatazo.R;
+import com.example.debatazo.debaterecycler.DebateProducto;
 import com.example.debatazo.debaterecycler.api.servicio.ServicioUserOperations;
 import com.example.debatazo.debaterecycler.detalle.objecto.user_operations.UserLikeDebatesObject;
 
@@ -14,6 +16,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.HttpException;
 import retrofit2.Response;
 
 public class UserLikeDebateModelView extends ViewModel {
@@ -46,7 +49,13 @@ public class UserLikeDebateModelView extends ViewModel {
                     }
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        respuesta.postValue(t.getMessage());
+                        if(t instanceof IOException){
+                            respuesta.postValue(String.valueOf(R.string.conexion_fallido).concat("<>"));
+                        }else if(t instanceof HttpException){
+                            respuesta.postValue(t.getMessage());
+                        }else{
+                            respuesta.postValue(String.valueOf(R.string.error_desconocido).concat("<>").concat(t.getMessage()));
+                        }
                     }
                 });
             } catch (InterruptedException e) {

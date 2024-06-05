@@ -49,11 +49,12 @@ public class DebateProductoModelView extends ViewModel {
                     @Override
                     public void onFailure(@NonNull Call<List<DebateProducto>> call, Throwable t) {
                         if(t instanceof IOException){
-                            error.add(new DebateProducto("Conexion fallida"));
+                            error.add(new DebateProducto(String.valueOf(R.string.conexion_fallido)));
                         }else if(t instanceof HttpException){
                             error.add(new DebateProducto(t.getMessage()));
                         }else{
-                            error.add(new DebateProducto("error desconocido:" + t.getMessage()));
+                            error.add(new DebateProducto(String.valueOf(R.string.error_desconocido)));
+                            error.add(new DebateProducto(t.getMessage()));
                         }
                         listas.postValue(error);
                     }

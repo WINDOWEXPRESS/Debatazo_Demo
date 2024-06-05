@@ -39,7 +39,7 @@ public interface ApiServicioUsuario {
     Call<ResponseBody> recoveryPassword(@Path("email") String email,@Path("passwd") String passwd,@Path("passwordEncriptado") String passwordEncriptado);
 
     @PUT("users/passwd/change/{id}/{passwd}")
-    Call<ResponseBody> changePassword(@Path("id") int id,@Path("passwd") String passwd);
+    Call<ResponseBody> changePassword(@Header("token") String token,@Path("id") int id,@Path("passwd") String passwd);
 
     @GET("users/profile/{id}/debates")
     Call<List<DebateProducto>> getDebateCreate(@Header("token") String token,@Header("offset") String offset, @Path("id") int id);

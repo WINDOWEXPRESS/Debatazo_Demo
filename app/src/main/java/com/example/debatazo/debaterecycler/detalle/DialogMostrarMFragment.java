@@ -115,7 +115,7 @@ public class DialogMostrarMFragment extends DialogFragment {
                        mostrarMasAdap.addAll(value);
                     }
                 }else{
-                    Dialogs dialogs = new Dialogs(Dialogs.E,value.get(0).getError());
+                    Dialogs dialogs = new Dialogs(getResources().getString(R.string.error),value.get(0).getError());
                     dialogs.showDialog(getContext());
                 }
             }
@@ -133,7 +133,7 @@ public class DialogMostrarMFragment extends DialogFragment {
                 mostrarMasAdap.clear();
                 listaComentarioModelView.loardChildren(0,debateId,comentarioObjeto.getId());
             }else{
-                Dialogs dialogs = new Dialogs(Dialogs.E,value.get(1));
+                Dialogs dialogs = new Dialogs(getResources().getString(R.string.error),value.get(1));
                 dialogs.showDialog(getContext());
             }
             desplegable_bt_enviar.setEnabled(true);
@@ -193,7 +193,7 @@ public class DialogMostrarMFragment extends DialogFragment {
         button.setOnClickListener(view ->{
             if(!Token.hasInstance()){
                 Intent intent = new Intent(getContext(), IniciaSesion.class);
-                Dialogs dialogs = new Dialogs(Dialogs.W,String.valueOf(R.string.iniciar_sesision),intent,true,true);
+                Dialogs dialogs = new Dialogs(getResources().getString(R.string.advertencia),String.valueOf(R.string.iniciar_sesision),intent,true,true);
                 dialogs.showConfirmDialog(getContext());
             }else {
                 if (selectPid == 0) {
@@ -217,7 +217,7 @@ public class DialogMostrarMFragment extends DialogFragment {
                             (selectBand != null) ? String.valueOf(selectBand.getId()) : null
                     );
                 } else {
-                    Dialogs dialogs = new Dialogs(Dialogs.E,getResources().getString(R.string.introduce_algo));
+                    Dialogs dialogs = new Dialogs(getResources().getString(R.string.error),getResources().getString(R.string.introduce_algo));
                     dialogs.showDialog(getContext());
                 }
             }

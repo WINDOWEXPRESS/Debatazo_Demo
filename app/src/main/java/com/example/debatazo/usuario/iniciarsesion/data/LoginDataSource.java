@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 
+import com.example.debatazo.utils.GlobalFuntion;
 import com.example.debatazo.utils.SharedPreferenceUtils;
 import com.example.debatazo.usuario.apirest.RetrofitCliente;
 import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
@@ -37,11 +38,13 @@ public class LoginDataSource {
                         // Se hace el primero pedicion de token con login.
 
                         loadingLiveData.setValue(false);
-                        Token.getInstance().setValueAndUserId(response.body().getValue(),response.body().getUserId());
+
+                        Token.getInstance().setValueAndUserId(response.body().getValue(),response.body().getUserId(), GlobalFuntion.getDateByString(response.body().getExpiration()));
                         SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferenceUtils.PREFS_TOKEN,Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putInt(SharedPreferenceUtils.USER_ID,Token.getInstance().getUserId());
                         editor.putString(SharedPreferenceUtils.TOKEN_VALUE,Token.getInstance().getValue());
+                        editor.putString(SharedPreferenceUtils.EXPIRATION,Token.getInstance().getExpiration());
                         editor.apply();
 
                         //Con los datos que responde por token se hace pedicion de perfil usario con token obtenido.

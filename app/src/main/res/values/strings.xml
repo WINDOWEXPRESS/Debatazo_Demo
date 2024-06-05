@@ -117,5 +117,14 @@
     <string name="cambiar_contrasenia">Cambiar Contraseña</string>
     <string name="contrasenia_nueva">Contraseña nueva</string>
     <string name="confirmar">Confirmar</string>
-
+    <string name="advertencia">Advertencia</string>
+    <string name="error">Error</string>
+    <string name="conexion_fallido">Conexion fallido</string>
+    <string name="error_desconocido">Error desconocido</string>
+    <string name="necesita_permiso"> Se necesita permiso</string>
+    <string name="necesita_permiso_galeria"> Se necesita ir al configuracion para concede el permiso de abir galeria</string>
+    <string name="ir_configuracion"> Ir A Configuracion </string>
+    <string name="todavia_no_has_publicado_ningun_debate">Todavia No Has Publicado Ningun Debate</string>
+    <string name="todavia_no_has_comentado_ningun_debate">Todavia No Has Comentado Ningun Debate</string>
+    <string name="todavia_no_has_gustado_ningun_debate">Todavia No Has Gustado Ningun Debate</string>
 </resources>

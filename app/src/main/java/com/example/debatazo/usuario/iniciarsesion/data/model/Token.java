@@ -1,9 +1,14 @@
 package com.example.debatazo.usuario.iniciarsesion.data.model;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class Token {
 
     private String value;
     private int userId;
+    private Date expiration;
 
     //Singleton
     private static Token instance;
@@ -15,9 +20,10 @@ public class Token {
         return instance;
     }
 
-    public void setValueAndUserId(String value, int userId){
+    public void setValueAndUserId(String value, int userId,Date expiration){
         this.value = value;
         this.userId = userId;
+        this.expiration = expiration;
     }
 
     public String getValue() {
@@ -26,6 +32,10 @@ public class Token {
 
     public int getUserId() {
         return userId;
+    }
+
+    public String getExpiration() {
+        return new SimpleDateFormat("dd/MM/yyyy", Locale.US).format(expiration);
     }
 
     public static boolean hasInstance(){

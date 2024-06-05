@@ -75,7 +75,7 @@ public class ContraseniaManager extends AppCompatActivity {
                     mensaje.setText(R.string.invalido_contrasenia);
 
                 }else {
-                    loginViewModel.cambiarPassword(Token.getInstance().getUserId(),contrasenia.getEditText().getText().toString(),mensaje);
+                    loginViewModel.cambiarPassword(Token.getInstance().getValue(),Token.getInstance().getUserId(),contrasenia.getEditText().getText().toString(),mensaje);
                 }
             });
         }

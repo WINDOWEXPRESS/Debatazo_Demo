@@ -25,6 +25,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.debatazo.R;
 import com.example.debatazo.band.BandObject;
@@ -70,7 +71,7 @@ public class DebateDetalle extends AppCompatActivity {
     UserLikeDebateModelView userLikeDebateMV;
     NestedScrollView nestedScrollView;
     private int debateid, currentTotalItemCount = 0, bandButtonWidth, pid = 0, likes = 0;
-    private static final int ANCHO = 50;
+    private static final int ANCHO = 10;
     private BandObject selectBand, currentSelectBand, favor, contra;
     private Call<DebateDetalleObjeto> debateDetalleService;
     private Boolean hasLike,hasFollow;
@@ -84,6 +85,7 @@ public class DebateDetalle extends AppCompatActivity {
         vincularComponentes();
         comentarios.setNestedScrollingEnabled(false);
         bundle = getIntent().getExtras();
+
 
         if (bundle == null) {
             setResult(GlobalConstants.ERROR_CODE);
@@ -124,7 +126,18 @@ public class DebateDetalle extends AppCompatActivity {
             }else{
                 aDDebate_bt_band_contra.setEnabled(true);
                 aDDebate_bt_band_favor.setEnabled(true);
-                Dialogs dialogs = new Dialogs(Dialogs.E,value.get(0).getError());
+
+                Dialogs dialogs;
+                try {
+                    if(value.size() > 1){
+                        String mesage = getResources().getString(Integer.parseInt(value.get(0).getError()));
+                        dialogs = new Dialogs(getResources().getString(R.string.error),mesage.concat(" ").concat(value.get(1).getError()));
+                    }else{
+                        dialogs = new Dialogs(getResources().getString(R.string.error),value.get(0).getError());
+                    }
+                }catch (NumberFormatException e){
+                    dialogs = new Dialogs(getResources().getString(R.string.error),getResources().getString(R.string.error_desconocido));
+                }
                 dialogs.showDialog(DebateDetalle.this);
             }
         });
@@ -135,9 +148,21 @@ public class DebateDetalle extends AppCompatActivity {
                 likes = n;
                 hasLike = !hasLike;
                 cambiarMeGusta(hasLike);
+            } catch (NumberFormatException e){
+                Dialogs dialogs;
+                String[] mesage = value.split("<>");
+                try {
+                    if(mesage.length == 1){
+                        dialogs = new Dialogs(getResources().getString(R.string.error),getResources().getString(Integer.parseInt(mesage[0])));
+                    }else{
+                        dialogs = new Dialogs(getResources().getString(R.string.error),getResources().getString(Integer.parseInt(mesage[0])).concat(mesage[1]));
+                    }
+                }catch (NumberFormatException ex){
+                    dialogs = new Dialogs(getResources().getString(R.string.error),getResources().getString(R.string.error_desconocido));
+                }
+                dialogs.showDialog(DebateDetalle.this);
+            }finally {
                 aDDebate_imageB_meGusta.setEnabled(true);
-            }catch (NumberFormatException e){
-                throw new RuntimeException(e);
             }
         });
 
@@ -154,7 +179,7 @@ public class DebateDetalle extends AppCompatActivity {
             }else{
                 aDDebate_textV_fondo.setVisibility(View.GONE);
                 aDDebate_progressB.setVisibility(View.GONE);
-                Dialogs dialogs = new Dialogs(Dialogs.E,value.get(1));
+                Dialogs dialogs = new Dialogs(getResources().getString(R.string.error),value.get(1));
                 dialogs.showDialog(DebateDetalle.this);
             }
             aDDebate_bt_enviar.setEnabled(true);
@@ -228,11 +253,6 @@ public class DebateDetalle extends AppCompatActivity {
                     adaptador = new ComentarioAdaptador(detalle.getComments(),DebateDetalle.this,debateid,selectBand,getSupportFragmentManager());
                     comentarios.setAdapter(adaptador);
 
-                    imageButton.setOnClickListener(view -> {
-                        setResult(RESULT_CANCELED);
-                        finish();
-                    });
-
                     adaptador.setClickListener((vista, posicion, comentario) -> {
                         aDDebate_editT_entrada.requestFocus();
                         aDDebate_editT_entrada.setHint(comentario.getUserName());
@@ -249,12 +269,22 @@ public class DebateDetalle extends AppCompatActivity {
             public void onFailure(@NonNull Call<DebateDetalleObjeto> call, @NonNull Throwable t){
                 Dialogs dialogs;
                 if(t instanceof IOException){
-                    dialogs = new Dialogs(Dialogs.E,"conexion fallida");
+                    dialogs = new Dialogs(getResources().getString(R.string.error),getResources().getString(R.string.conexion_fallido));
                 }else{
-                    dialogs = new Dialogs(Dialogs.E,"error desconocido");
+                    dialogs = new Dialogs(getResources().getString(R.string.error),getResources().getString(R.string.error_desconocido));
                 }
-                dialogs.showDialog(DebateDetalle.this);
+                if(!isDestroyed() && !isFinishing()){
+                    dialogs.showDialog(DebateDetalle.this);
+                    new Handler().postDelayed(()->{
+                        finish();
+                    },GlobalConstants.DIALOG_SLEEP_TIME);
+                }
             }
+        });
+
+        imageButton.setOnClickListener(view -> {
+            setResult(RESULT_CANCELED);
+            finish();
         });
     }
 
@@ -340,23 +370,36 @@ public class DebateDetalle extends AppCompatActivity {
             aDDebate_bt_band_favor.setEnabled(true);
             aDDebate_bt_band_favor.setText(getResources().getString(R.string.a_favor));
             aDDebate_bt_band_contra.setText(getResources().getString(R.string.en_contra));
-            cambiarBandAncho();
+            resetearBandAncho();
         }
     }
 
     private void cambiarBandAncho(){
         ViewGroup.LayoutParams favorLayoutParams = aDDebate_bt_band_favor.getLayoutParams();
         ViewGroup.LayoutParams contraLayoutParams = aDDebate_bt_band_contra.getLayoutParams();
+        int ancho;
         if(favor.getNum() > contra.getNum()){
-            favorLayoutParams.width =bandButtonWidth + ANCHO;
-            contraLayoutParams.width =bandButtonWidth - ANCHO;
+            ancho = (favor.getNum() - contra.getNum()) * ANCHO;
+            if(ancho > 200) ancho = 200;
+            favorLayoutParams.width = bandButtonWidth + ancho;
+            contraLayoutParams.width = bandButtonWidth - ancho;
         }else if(favor.getNum() < contra.getNum()){
-            favorLayoutParams.width = bandButtonWidth - ANCHO;
-            contraLayoutParams.width = bandButtonWidth + ANCHO;
+            ancho = contra.getNum() - favor.getNum() * ANCHO;
+            if(ancho > 200) ancho = 200;
+            favorLayoutParams.width = bandButtonWidth - ancho;
+            contraLayoutParams.width = bandButtonWidth + ancho;
         }else if(favor.getNum() == contra.getNum()){
             favorLayoutParams.width = bandButtonWidth;
             contraLayoutParams.width = bandButtonWidth;
         }
+        aDDebate_bt_band_favor.setLayoutParams(favorLayoutParams);
+        aDDebate_bt_band_contra.setLayoutParams(contraLayoutParams);
+    }
+    private void resetearBandAncho(){
+        ViewGroup.LayoutParams favorLayoutParams = aDDebate_bt_band_favor.getLayoutParams();
+        ViewGroup.LayoutParams contraLayoutParams = aDDebate_bt_band_contra.getLayoutParams();
+        favorLayoutParams.width = bandButtonWidth;
+        contraLayoutParams.width = bandButtonWidth;
         aDDebate_bt_band_favor.setLayoutParams(favorLayoutParams);
         aDDebate_bt_band_contra.setLayoutParams(contraLayoutParams);
     }
@@ -367,7 +410,7 @@ public class DebateDetalle extends AppCompatActivity {
              if(buton.getId() == R.id.aDDebate_bt_band_favor){
                  if(!Token.hasInstance()){
                      intent = new Intent(this, IniciaSesion.class);
-                     Dialogs dialogs = new Dialogs(Dialogs.W,String.valueOf(R.string.iniciar_sesision),intent,true,true);
+                     Dialogs dialogs = new Dialogs(getResources().getString(R.string.advertencia),String.valueOf(R.string.iniciar_sesision),intent,true,true);
                      dialogs.showConfirmDialog(DebateDetalle.this);
                  }else{
                      aDDebate_bt_band_contra.setEnabled(false);
@@ -384,7 +427,7 @@ public class DebateDetalle extends AppCompatActivity {
              } else if (buton.getId() == R.id.aDDebate_bt_band_contra){
                  if(!Token.hasInstance()){
                      intent = new Intent(this, IniciaSesion.class);
-                     Dialogs dialogs = new Dialogs(Dialogs.W,String.valueOf(R.string.iniciar_sesision),intent,true,true);
+                     Dialogs dialogs = new Dialogs(getResources().getString(R.string.advertencia),String.valueOf(R.string.iniciar_sesision),intent,true,true);
                      dialogs.showConfirmDialog(DebateDetalle.this);
                  }else{
                      aDDebate_bt_band_contra.setEnabled(false);
@@ -409,7 +452,7 @@ public class DebateDetalle extends AppCompatActivity {
         aDDebate_bt_enviar.setOnClickListener(view -> {
             if(!Token.hasInstance()){
                 intent = new Intent(this, IniciaSesion.class);
-                Dialogs dialogs = new Dialogs(Dialogs.W,String.valueOf(R.string.iniciar_sesision),intent,true,true);
+                Dialogs dialogs = new Dialogs(getResources().getString(R.string.advertencia),String.valueOf(R.string.iniciar_sesision),intent,true,true);
                 dialogs.showConfirmDialog(DebateDetalle.this);
             }else{
                 String description = aDDebate_editT_entrada.getText().toString();
@@ -428,7 +471,7 @@ public class DebateDetalle extends AppCompatActivity {
                             (selectBand != null)? String.valueOf(selectBand.getId()) : null
                     );
                 }else{
-                    Dialogs dialogs = new Dialogs(Dialogs.E,getResources().getString(R.string.introduce_algo));
+                    Dialogs dialogs = new Dialogs(getResources().getString(R.string.error),getResources().getString(R.string.introduce_algo));
                     dialogs.showDialog(DebateDetalle.this);
                 }
             }
@@ -439,7 +482,7 @@ public class DebateDetalle extends AppCompatActivity {
         aDDebate_imageB_meGusta.setOnClickListener(view ->{
             if(!Token.hasInstance()){
                 intent = new Intent(this, IniciaSesion.class);
-                Dialogs dialogs = new Dialogs(Dialogs.W,String.valueOf(R.string.iniciar_sesision),intent,true,true);
+                Dialogs dialogs = new Dialogs(getResources().getString(R.string.advertencia),String.valueOf(R.string.iniciar_sesision),intent,true,true);
                 dialogs.showConfirmDialog(DebateDetalle.this);
             }else{
                 aDDebate_imageB_meGusta.setEnabled(false);

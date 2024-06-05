@@ -3,13 +3,19 @@ package com.example.debatazo.debaterecycler.detalle.modelview;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.example.debatazo.R;
 import com.example.debatazo.band.BandObject;
+import com.example.debatazo.debaterecycler.DebateProducto;
 import com.example.debatazo.debaterecycler.api.servicio.ServicioUserOperations;
 import com.example.debatazo.debaterecycler.detalle.objecto.user_operations.UserSelectBandObjecto;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.HttpException;
 import retrofit2.Response;
 
 public class UserSelectBandModelView extends ViewModel {
@@ -39,7 +45,14 @@ public class UserSelectBandModelView extends ViewModel {
                     }
                     @Override
                     public void onFailure(Call<List<BandObject>> call, Throwable t) {
-                        error.add(new BandObject(t.toString()));
+                        if(t instanceof IOException){
+                            error.add(new BandObject(String.valueOf(R.string.conexion_fallido)));
+                        }else if(t instanceof HttpException){
+                            error.add(new BandObject(t.getMessage()));
+                        }else{
+                            error.add(new BandObject(String.valueOf(R.string.error_desconocido)));
+                            error.add(new BandObject(t.getMessage()));
+                        }
                         respuesta.postValue(error);
                     }
                 });

@@ -6,7 +6,6 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -24,14 +23,12 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.example.debatazo.R;
 import com.example.debatazo.databinding.ActividadDatosPersonalBinding;
 import com.example.debatazo.imgur.ImgurObject;
@@ -42,10 +39,11 @@ import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModel;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModelFactory;
 import com.example.debatazo.utils.BrilloUtils;
+import com.example.debatazo.utils.GlobalFuntion;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-import java.text.DateFormat;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -56,8 +54,7 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -84,6 +81,7 @@ public class ActividadDatosPersonal extends AppCompatActivity {
     private Button guardar;
     private final Medias medias = new Medias();
     private boolean imagenGaleria = false;
+    private int debate_create = 0, comment_debate = 0, debate_like = 0;
     ActivityResultLauncher<String> requestResultLauncher ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,8 +116,7 @@ public class ActividadDatosPersonal extends AppCompatActivity {
             if (isGranted) {
                 abrirGaleria();
             } else {
-                // Si el permiso no está concedido, mostrar un mensaje de error
-                Toast.makeText(this, "No se ha concedido el permiso", Toast.LENGTH_SHORT).show();
+                GlobalFuntion.showSettingsDialog(ActividadDatosPersonal.this);
             }
         });
 
@@ -154,10 +151,14 @@ public class ActividadDatosPersonal extends AppCompatActivity {
 
             // Formatear la fecha y hora con la zona horaria en formato ISO 8601
             String fechaHoraFormateada = fechaHoraConZona.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-
+            loginViewModel.getLoginRepository().getLoggedInUserLiveData().observe(this,loggedInUser -> {
+                debate_create = loggedInUser.getDebate_create();
+                comment_debate = loggedInUser.getComment_debate();
+                debate_like = loggedInUser.getDebate_like();
+            });
             LoggedInUser user = new LoggedInUser(id.getText().toString(),nombreUsuario.getText().toString(),
                     nombrePersonal.getText().toString(),perfil_img_url,fechaHoraFormateada,
-                    descripcionPersonal.getText().toString(), sexoAbreviatura);
+                    descripcionPersonal.getText().toString(), sexoAbreviatura,debate_create,comment_debate,debate_like);
 
             if (imagenGaleria){
                 subirImagenImgur(user);

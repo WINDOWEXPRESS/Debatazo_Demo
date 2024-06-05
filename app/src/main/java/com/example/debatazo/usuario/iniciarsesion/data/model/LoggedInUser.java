@@ -26,6 +26,19 @@ public class LoggedInUser {
         this.sex = sex;
     }
 
+    public LoggedInUser(String user_id, String user_name, String full_name, String profile_img, String birth_date, String self, String sex, int debate_create, int comment_debate, int debate_like) {
+        this.user_id = user_id;
+        this.user_name = user_name;
+        this.full_name = full_name;
+        this.profile_img = profile_img;
+        this.birth_date = birth_date;
+        this.self = self;
+        this.sex = sex;
+        this.debate_create = debate_create;
+        this.comment_debate = comment_debate;
+        this.debate_like = debate_like;
+    }
+
     public void setUser_name(String user_name) {
         this.user_name = user_name;
     }

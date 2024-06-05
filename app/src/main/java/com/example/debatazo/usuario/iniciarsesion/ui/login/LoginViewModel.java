@@ -11,6 +11,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.debatazo.R;
+import com.example.debatazo.usuario.iniciarsesion.data.model.Token;
+import com.example.debatazo.utils.GlobalFuntion;
 import com.example.debatazo.utils.SharedPreferenceUtils;
 import com.example.debatazo.usuario.iniciarsesion.data.LoginCallBack;
 import com.example.debatazo.usuario.iniciarsesion.data.LoginRepository;
@@ -96,10 +98,10 @@ public class LoginViewModel extends ViewModel {
 
         // Obtener una referencia al archivo de preferencias compartidas para almacenar y recuperar el token de autenticación.
         SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferenceUtils.PREFS_TOKEN, Context.MODE_PRIVATE);
-
+        Boolean hasExpirate = GlobalFuntion.comparaTiempo(sharedPreferences.getString(SharedPreferenceUtils.EXPIRATION, ""));
         // Verificar si el token y el ID de usuario están disponibles en las preferencias compartidas
         if (!Objects.requireNonNull(sharedPreferences.getString(SharedPreferenceUtils.TOKEN_VALUE, "")).isEmpty() &&
-                sharedPreferences.getInt(SharedPreferenceUtils.USER_ID, 0) != 0) {
+                sharedPreferences.getInt(SharedPreferenceUtils.USER_ID, 0) != 0 && Boolean.TRUE.equals(hasExpirate)) {
 
             //Otiene correo y contraseña de usuario y hacer login
             sharedPreferences = context.getSharedPreferences(SharedPreferenceUtils.PREFS_CUENTA, Context.MODE_PRIVATE);
@@ -138,8 +140,8 @@ public class LoginViewModel extends ViewModel {
     public void recuperarPassword(String email, TextView mensaje) {
         loginRepository.recuperarPassword(email,loadingLiveData,mensaje);
     }
-    public void cambiarPassword(int id ,String password,TextView mensaje) {
-        loginRepository.cambiarPassword( id ,password,loadingLiveData,mensaje);
+    public void cambiarPassword(String token,int id ,String password,TextView mensaje) {
+        loginRepository.cambiarPassword(token, id ,password,loadingLiveData,mensaje);
     }
 
 
