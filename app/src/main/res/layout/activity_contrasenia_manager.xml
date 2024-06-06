@@ -45,7 +45,7 @@
                 android:paddingStart="10dp"
                 android:text="@string/cambiar_contrasenia"
                 android:textColor="?attr/colorPrimary"
-                android:textSize="30sp"
+                android:textSize="24sp"
                 tools:ignore="RtlSymmetry" />
 
         </LinearLayout>

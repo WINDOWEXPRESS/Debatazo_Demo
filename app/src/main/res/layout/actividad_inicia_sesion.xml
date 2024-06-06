@@ -184,28 +184,19 @@
             </LinearLayout>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/aISesion_button_iniciaSesion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="32dp"
-            android:enabled="false"
-            android:text="@string/accion_inicia_sesion" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="invisible">
 
             <ImageView
                 android:id="@+id/aISesion_imageV_horizontalIzquierda"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/barra_horizontal_tabla_inicia_sesion"
-                android:importantForAccessibility="no" />
+                android:importantForAccessibility="no"
+                android:src="@drawable/barra_horizontal_tabla_inicia_sesion" />
 
             <TextView
                 android:id="@+id/aISesion_textV_otrosAcceso"
@@ -222,39 +213,40 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/barra_horizontal_tabla_inicia_sesion"
-                android:importantForAccessibility="no" />
+                android:importantForAccessibility="no"
+                android:src="@drawable/barra_horizontal_tabla_inicia_sesion" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="invisible">
 
             <ImageView
                 android:id="@+id/aISesion_imageV_gmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/gmail_nuevo"
-                android:contentDescription="Gmail" />
+                android:contentDescription="Gmail"
+                android:src="@drawable/gmail_nuevo" />
 
             <ImageView
                 android:id="@+id/aISesion_imageV_wechat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/wechat"
-                android:contentDescription="Wechat" />
+                android:contentDescription="Wechat"
+                android:src="@drawable/wechat" />
 
             <ImageView
                 android:id="@+id/aISesion_imageV_facebook"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/facebook"
-                android:contentDescription="Facebook" />
+                android:contentDescription="Facebook"
+                android:src="@drawable/facebook" />
 
 
         </LinearLayout>
@@ -267,7 +259,18 @@
             android:layout_weight="1"
             android:buttonTint="#000000"
             android:text="He leído y acepto los términos y condiciones de uso"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/aISesion_button_iniciaSesion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:enabled="false"
+            android:text="@string/accion_inicia_sesion" />
     </LinearLayout>
 
     <ProgressBar

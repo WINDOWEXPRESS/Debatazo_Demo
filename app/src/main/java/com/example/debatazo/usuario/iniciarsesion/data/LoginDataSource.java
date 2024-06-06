@@ -53,7 +53,7 @@ public class LoginDataSource {
                                     callBack.onSuccess(new Result.Success<>(response.body()));
                                     loadingLiveData.setValue(false);
                                 } else {
-                                    String errorMessage = "Error al iniciar sesión: " + response.code() + " - " + response.message();
+                                    String errorMessage = "Error al iniciar sesión 1: " + response.code() + " - " + response.message();
                                     callBack.onFailure(new Result.Error(new IOException(errorMessage)));
                                     loadingLiveData.setValue(false);
                                 }
@@ -68,7 +68,7 @@ public class LoginDataSource {
 
                     }else{
                         loadingLiveData.setValue(false);
-                        String errorMessage = "Error al iniciar sesión: " + response.code() + " - " + response.message();
+                        String errorMessage = ""+response.code();
                         callBack.onFailure(new Result.Error(new IOException(errorMessage)));
                     }
                 }
@@ -83,7 +83,7 @@ public class LoginDataSource {
 
         } catch (Exception e) {
             loadingLiveData.setValue(false);
-            callBack.onFailure(new Result.Error(new IOException("Error al iniciar sesión", e)));
+            callBack.onFailure(new Result.Error(new IOException("Error al iniciar sesión 3", e)));
             loadingLiveData.setValue(false);
         }
     }

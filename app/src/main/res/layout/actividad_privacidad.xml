@@ -34,7 +34,7 @@
             android:paddingStart="10dp"
             android:text="@string/poltica_de_privacidad"
             android:textColor="@color/black"
-            android:textSize="24sp"
+            android:textSize="26sp"
             tools:ignore="RtlSymmetry" />
 
     </LinearLayout>

@@ -14,7 +14,7 @@
     <string name="pista_email" translatable="false">Email</string>
     <string name="pista_contrasenia">Contraseña</string>
     <string name="pista_repetir_contrasenia">Repetir Contraseña</string>
-    <string name="accion_inicia_sesion">Inicia sesion</string>
+    <string name="accion_inicia_sesion">Inicia sesión</string>
     <string name="accion_inicia_sesion_corto">Inicia sesion</string>
     <string name="bienvenido">Bienvenido </string>
     <string name="invalido_email_usuario">Email invalido!</string>
@@ -29,6 +29,7 @@
 
     <!--    LOGIN ViewModel   -->
     <string name="inicia_sesion_fallido">Error inesperado al inicia sesión.</string>
+    <string name="inicia_sesion_fallido_por_error_emailcontra">Email o c ontraseña incorrecto.</string>
     <!--    contentDescription -->
     <string name="boton_volver">Boton volver</string>
     <!--    DETALLE DEBATE-->
@@ -117,5 +118,6 @@
     <string name="cambiar_contrasenia">Cambiar Contraseña</string>
     <string name="contrasenia_nueva">Contraseña nueva</string>
     <string name="confirmar">Confirmar</string>
+    <string name="perfil_actualizado_con_xito">Perfil actualizado con éxito.</string>
 
 </resources>

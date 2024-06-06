@@ -6,6 +6,7 @@ import android.widget.TextView;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.debatazo.R;
 import com.example.debatazo.usuario.apirest.RetrofitCliente;
 import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
 import com.example.debatazo.usuario.iniciarsesion.data.model.Token;
@@ -86,12 +87,10 @@ public class LoginRepository {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 loadingLiveData.setValue(false);
                 if (response.isSuccessful()) {
-                    try {
-                        loggedInUserMutableLiveData.postValue(user);
-                        mensajeError.setText(response.body().string());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+
+                    loggedInUserMutableLiveData.postValue(user);
+                    mensajeError.setText(R.string.perfil_actualizado_con_xito);
+
                 } else {
                     String errorMessage = "Error: " + response.code() + " - " + response.message();
                     mensajeError.setText(errorMessage);
@@ -125,15 +124,18 @@ public class LoginRepository {
                         throw new RuntimeException(e);
                     }
                 } else {
-                    String errorMessage = "Error: " + response.code() + " - " + response.message();
-                    mensajeError.setText(errorMessage);
+                    if(response.code() == 404){
+                        String errorMessage = "Error! Usuario no encontrado.";
+                        mensajeError.setText(errorMessage);
+                    }
+
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 loadingLiveData.setValue(false);
-                String errorMessage = "Error: " + t.getCause() + " - " + t.getMessage();
+                String errorMessage = "Error inesperado al enviar." ;
                 mensajeError.setText(errorMessage);
             }
         });

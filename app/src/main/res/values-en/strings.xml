@@ -15,6 +15,7 @@
     <string name="invalido_contrasenia">The length must be greater than 5 and less than 20.</string>
     <string name="error_registrar_contrasenia">Error! Password does not match</string>
     <string name="inicia_sesion_fallido">Unexpected error when logging in.</string>
+    <string name="inicia_sesion_fallido_por_error_emailcontra">Email o c ontraseña incorrecto.</string>
     <string name="boton_volver">Return button</string>
     <string name="boton_seguir">Follow</string>
     <string name="introduce_comentario">Enter your comment</string>
@@ -71,16 +72,17 @@
     <string name="cargando">Loading</string>
     <string name="no_mas_elementos">No more items to load</string>
     <string name="introduce_algo"> Introduce something</string>
-    <string name="volver">Volver</string>
+    <string name="volver">Back</string>
     <string name="logo">Logo</string>
-    <string name="cambiar_contrase_a">Cambiar contraseña</string>
+    <string name="cambiar_contrase_a">Change Password</string>
     <string name="imagen_like">heart-shaped like image</string>
     <string name="imagen_comentario">comment image</string>
     <string name="mis_interacciones">My Interactions</string>
     <string name="debate_publicado">Debate\nPublished</string>
     <string name="debate_respondido">Debate\nResponded</string>
     <string name="debate_gustado">Debate\nLiked</string>
-    <string name="cambiar_contrasenia">Cambiar Contraseña</string>
-    <string name="contrasenia_nueva">Contraseña nueva</string>
-    <string name="confirmar">Confirmar</string>
+    <string name="cambiar_contrasenia">Change Password</string>
+    <string name="contrasenia_nueva">New password</string>
+    <string name="confirmar">Confirm</string>
+    <string name="perfil_actualizado_con_xito">Profile successfully updated.</string>
 </resources>

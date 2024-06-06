@@ -138,26 +138,34 @@ public class ActividadDatosPersonal extends AppCompatActivity {
                         android.R.layout.simple_spinner_dropdown_item
                 ).getItem(sexo.getSelectedItemPosition()).toString();
             ;
+            LoggedInUser user;
+//si fecha no es vacio
+            if(!fecha.getText().toString().isEmpty()) {
+                LocalDate fech = LocalDate.parse(fecha.getText());
+                // Hora actual
+                LocalTime hora = LocalTime.now();
 
-            LocalDate fech = LocalDate.parse(fecha.getText());
-            // Hora actual
-            LocalTime hora = LocalTime.now();
+                // Fecha y hora combinadas
+                LocalDateTime fechaHora = fech.atTime(hora);
 
-            // Fecha y hora combinadas
-            LocalDateTime fechaHora = fech.atTime(hora);
+                // Zona horaria (UTC)
+                ZoneOffset zonaHoraria = ZoneOffset.UTC;
 
-            // Zona horaria (UTC)
-            ZoneOffset zonaHoraria = ZoneOffset.UTC;
+                // Agregar la zona horaria a la fecha y hora combinadas
+                OffsetDateTime fechaHoraConZona = fechaHora.atOffset(zonaHoraria);
 
-            // Agregar la zona horaria a la fecha y hora combinadas
-            OffsetDateTime fechaHoraConZona = fechaHora.atOffset(zonaHoraria);
+                // Formatear la fecha y hora con la zona horaria en formato ISO 8601
+                String fechaHoraFormateada = fechaHoraConZona.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
 
-            // Formatear la fecha y hora con la zona horaria en formato ISO 8601
-            String fechaHoraFormateada = fechaHoraConZona.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+                user = new LoggedInUser(id.getText().toString(),nombreUsuario.getText().toString(),
+                        nombrePersonal.getText().toString(),perfil_img_url,fechaHoraFormateada,
+                        descripcionPersonal.getText().toString(), sexoAbreviatura);
+            }else {
+                 user = new LoggedInUser(id.getText().toString(),nombreUsuario.getText().toString(),
+                        nombrePersonal.getText().toString(),perfil_img_url,null,
+                        descripcionPersonal.getText().toString(), sexoAbreviatura);
+            }
 
-            LoggedInUser user = new LoggedInUser(id.getText().toString(),nombreUsuario.getText().toString(),
-                    nombrePersonal.getText().toString(),perfil_img_url,fechaHoraFormateada,
-                    descripcionPersonal.getText().toString(), sexoAbreviatura);
 
             if (imagenGaleria){
                 subirImagenImgur(user);
