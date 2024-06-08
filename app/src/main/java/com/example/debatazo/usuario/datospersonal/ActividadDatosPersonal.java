@@ -81,7 +81,6 @@ public class ActividadDatosPersonal extends AppCompatActivity {
     private Button guardar;
     private final Medias medias = new Medias();
     private boolean imagenGaleria = false;
-    private int debate_create = 0, comment_debate = 0, debate_like = 0;
     ActivityResultLauncher<String> requestResultLauncher ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,30 +134,34 @@ public class ActividadDatosPersonal extends AppCompatActivity {
                         android.R.layout.simple_spinner_dropdown_item
                 ).getItem(sexo.getSelectedItemPosition()).toString();
             ;
+            LoggedInUser user;
+//si fecha no es vacio
+            if(!fecha.getText().toString().isEmpty()) {
+                LocalDate fech = LocalDate.parse(fecha.getText());
+                // Hora actual
+                LocalTime hora = LocalTime.now();
 
-            LocalDate fech = LocalDate.parse(fecha.getText());
-            // Hora actual
-            LocalTime hora = LocalTime.now();
+                // Fecha y hora combinadas
+                LocalDateTime fechaHora = fech.atTime(hora);
 
-            // Fecha y hora combinadas
-            LocalDateTime fechaHora = fech.atTime(hora);
+                // Zona horaria (UTC)
+                ZoneOffset zonaHoraria = ZoneOffset.UTC;
 
-            // Zona horaria (UTC)
-            ZoneOffset zonaHoraria = ZoneOffset.UTC;
+                // Agregar la zona horaria a la fecha y hora combinadas
+                OffsetDateTime fechaHoraConZona = fechaHora.atOffset(zonaHoraria);
 
-            // Agregar la zona horaria a la fecha y hora combinadas
-            OffsetDateTime fechaHoraConZona = fechaHora.atOffset(zonaHoraria);
+                // Formatear la fecha y hora con la zona horaria en formato ISO 8601
+                String fechaHoraFormateada = fechaHoraConZona.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
 
-            // Formatear la fecha y hora con la zona horaria en formato ISO 8601
-            String fechaHoraFormateada = fechaHoraConZona.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-            loginViewModel.getLoginRepository().getLoggedInUserLiveData().observe(this,loggedInUser -> {
-                debate_create = loggedInUser.getDebate_create();
-                comment_debate = loggedInUser.getComment_debate();
-                debate_like = loggedInUser.getDebate_like();
-            });
-            LoggedInUser user = new LoggedInUser(id.getText().toString(),nombreUsuario.getText().toString(),
-                    nombrePersonal.getText().toString(),perfil_img_url,fechaHoraFormateada,
-                    descripcionPersonal.getText().toString(), sexoAbreviatura,debate_create,comment_debate,debate_like);
+                user = new LoggedInUser(id.getText().toString(),nombreUsuario.getText().toString(),
+                        nombrePersonal.getText().toString(),perfil_img_url,fechaHoraFormateada,
+                        descripcionPersonal.getText().toString(), sexoAbreviatura);
+            }else {
+                 user = new LoggedInUser(id.getText().toString(),nombreUsuario.getText().toString(),
+                        nombrePersonal.getText().toString(),perfil_img_url,null,
+                        descripcionPersonal.getText().toString(), sexoAbreviatura);
+            }
+
 
             if (imagenGaleria){
                 subirImagenImgur(user);

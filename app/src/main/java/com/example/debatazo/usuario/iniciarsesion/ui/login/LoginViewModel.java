@@ -74,15 +74,17 @@ public class LoginViewModel extends ViewModel {
                     // Se actualiza el resultado del inicio de sesión con la información del usuario autenticado
                     loginResult.setValue(new LoginResult(new LoggedInUserView(data.getUser_name())));
                 } else {
-                    // Si la autenticación falló, se actualiza el resultado del inicio de sesión con un mensaje de error
-                    loginResult.setValue(new LoginResult(R.string.inicia_sesion_fallido));
+                        // Si la autenticación falló, se actualiza el resultado del inicio de sesión con un mensaje de error
+                        loginResult.setValue(new LoginResult(R.string.inicia_sesion_fallido));
+
                 }
                 return user;
             }
 
             @Override
             public Result<LoggedInUser> onFailure(Result<LoggedInUser> mensajeError) {
-                loginResult.setValue(new LoginResult(R.string.inicia_sesion_fallido));
+                if(mensajeError.toString().contains("400")||mensajeError.toString().contains("404"))
+                    loginResult.setValue(new LoginResult(R.string.inicia_sesion_fallido_por_error_emailcontra));
                 return null;
             }
         });

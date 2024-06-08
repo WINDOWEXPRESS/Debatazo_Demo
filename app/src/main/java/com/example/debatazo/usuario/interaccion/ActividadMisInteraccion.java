@@ -22,8 +22,6 @@ import com.example.debatazo.debaterecycler.detalle.DebateDetalle;
 import com.example.debatazo.utils.Dialogs;
 import com.example.debatazo.utils.GlobalConstants;
 
-import java.util.ArrayList;
-
 public class ActividadMisInteraccion extends AppCompatActivity {
     private ImageButton aMInteraccion_limageB_volver;
     private Bundle bundle;

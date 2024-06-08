@@ -88,6 +88,7 @@ public class ActividadPrincipal extends AppCompatActivity {
 
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory()).get(LoginViewModel.class);
         loginViewModel.autoLogin(this);
+
         //ajuste de brillo
         BrilloUtils.getInstancia().brilloAppObserver(this);
 
