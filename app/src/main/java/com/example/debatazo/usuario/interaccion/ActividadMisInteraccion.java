@@ -161,7 +161,11 @@ public class ActividadMisInteraccion extends AppCompatActivity {
             }
         });
 
-        resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {});
+        resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            debateAdaptador = null;
+            animacion_carga();
+            cargarLista(seleccion);
+        });
 
         aMInteraccion_limageB_volver.setOnClickListener( view ->{
             finish();
