@@ -194,7 +194,11 @@ public class PerfilFragment extends Fragment {
         fPerfil_datosP_debateR.setOnClickListener(manejador);
         fPerfil_datosP_debateG.setOnClickListener(manejador);
 
-        resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {});
+        resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+
+            loginViewModel.autoLogin(getContext());
+            mostrarDatos();
+        });
         return rootView;
 
     }
