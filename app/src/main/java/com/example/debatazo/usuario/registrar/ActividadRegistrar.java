@@ -1,8 +1,5 @@
 package com.example.debatazo.usuario.registrar;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,9 +11,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.debatazo.R;
-import com.example.debatazo.configuracion.BrilloUtils;
-import com.example.debatazo.databinding.ActividadIniciaSesionBinding;
+import com.example.debatazo.utils.BrilloUtils;
 import com.example.debatazo.databinding.ActividadRegistrarBinding;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -34,7 +33,6 @@ public class ActividadRegistrar extends AppCompatActivity {
     private EditText contraseniaRepetir;
     TextInputLayout contraseniaTextInputLayout;
     TextInputLayout contraseniaRepetirTextInputLayout;
-    private TextView errorMensaje;
     private CheckBox terminosYCondiciones;
     private Button registrar;
     private ProgressBar cargando;
@@ -49,7 +47,7 @@ public class ActividadRegistrar extends AppCompatActivity {
         vincularVistas();
 
         //ajuste de brillo
-        BrilloUtils.getInstancia().brilloAppVista(this);
+        BrilloUtils.getInstancia().brilloAppObserver(this);
 
         RegistrarViewModel registrarViewModel = new RegistrarViewModel();
         registrarViewModel.getRegistrarFormulaEstado().observe(this, registrarFormulaEstado -> {
@@ -80,12 +78,11 @@ public class ActividadRegistrar extends AppCompatActivity {
 
         });
         //Mostrar progressBar mientras carga
-        registrarViewModel.getLoadingLiveData().observe(this, loading -> {
-            cargando.setVisibility(loading ? View.VISIBLE : View.GONE);
-        });
-        terminosYCondiciones.setOnCheckedChangeListener((compoundButton, isChecked) -> {
-            registrarViewModel.RegistrarDataChanged(email.getText().toString(), contrasenia.getText().toString(), contraseniaRepetir.getText().toString(), isChecked);
-        });
+        registrarViewModel.getLoadingLiveData().observe(this, loading -> cargando.setVisibility(loading ? View.VISIBLE : View.GONE));
+
+        terminosYCondiciones.setOnCheckedChangeListener((compoundButton, isChecked) ->
+                registrarViewModel.RegistrarDataChanged(email.getText().toString(), contrasenia.getText().toString(),
+                        contraseniaRepetir.getText().toString(), isChecked));
 
         TextWatcher afterTextChangedListener = getTextWatcher(registrarViewModel);
         email.addTextChangedListener(afterTextChangedListener);
@@ -98,17 +95,17 @@ public class ActividadRegistrar extends AppCompatActivity {
             registrarViewModel.registrarUsuario(emailUsuario, contraseniaUsuario, new Callback<ResponseBody>() {
 
                 @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                     // Manejar el registro exitoso, por ejemplo, mostrar un mensaje de éxito
                     Toast.makeText(ActividadRegistrar.this, "Usuario registrado con éxito", Toast.LENGTH_LONG).show();
                     finish();
                 }
 
                 @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                     // Manejar el error durante el registro, por ejemplo, mostrar un mensaje de error
-                    Toast.makeText(ActividadRegistrar.this, t.getMessage().toString(), Toast.LENGTH_LONG).show();
-                    errorMensaje.setText("Error: " + t.getMessage().toString());
+                    //Toast.makeText(ActividadRegistrar.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(ActividadRegistrar.this,"Error inesperado al registrarse.", Toast.LENGTH_LONG).show();
                 }
             });
         });
@@ -116,7 +113,7 @@ public class ActividadRegistrar extends AppCompatActivity {
 
     @NonNull
     private TextWatcher getTextWatcher(RegistrarViewModel registrarViewModel) {
-        TextWatcher afterTextChangedListener = new TextWatcher() {
+        return new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // ignore
@@ -132,18 +129,16 @@ public class ActividadRegistrar extends AppCompatActivity {
                 registrarViewModel.RegistrarDataChanged(email.getText().toString(), contrasenia.getText().toString(), contraseniaRepetir.getText().toString(), null);
             }
         };
-        return afterTextChangedListener;
     }
 
     public void vincularVistas() {
-        email = binding.actividadRTextILEmail.getEditText();
-        contrasenia = binding.actividadRTextILContrasenia.getEditText();
-        contraseniaTextInputLayout = binding.actividadRTextILContrasenia;
-        contraseniaRepetir = binding.actividadRTextILRepetirContrasenia.getEditText();
-        contraseniaRepetirTextInputLayout = binding.actividadRTextILRepetirContrasenia;
-        errorMensaje = binding.actividadRTextVMensajeError;
-        terminosYCondiciones = binding.actividadRCheckBTerminosYCondiciones;
-        registrar = binding.actividadRButtonRegistrar;
-        cargando = binding.actividadRProgressBCargando;
+        email = binding.aRegistrarTextILEmail.getEditText();
+        contrasenia = binding.aRegistrarTextILContrasenia.getEditText();
+        contraseniaTextInputLayout = binding.aRegistrarTextILContrasenia;
+        contraseniaRepetir = binding.aRegistrarTextILRepetirContrasenia.getEditText();
+        contraseniaRepetirTextInputLayout = binding.aRegistrarTextILRepetirContrasenia;
+        terminosYCondiciones = binding.aRegistrarCheckBTerminosYCondiciones;
+        registrar = binding.aRegistrarButtonRegistrar;
+        cargando = binding.aRegistrarProgressBCargando;
     }
 }

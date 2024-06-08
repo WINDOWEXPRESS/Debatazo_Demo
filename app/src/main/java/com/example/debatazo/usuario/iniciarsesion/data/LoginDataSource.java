@@ -3,13 +3,17 @@ package com.example.debatazo.usuario.iniciarsesion.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.debatazo.savesharedpreference.SaveSharedPreference;
+
+import com.example.debatazo.utils.GlobalFuntion;
+import com.example.debatazo.utils.SharedPreferenceUtils;
 import com.example.debatazo.usuario.apirest.RetrofitCliente;
 import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
-import com.example.debatazo.token.Token;
-import com.example.debatazo.usuario.md5.SaltMD5Util;
+import com.example.debatazo.usuario.iniciarsesion.data.model.Token;
+import com.example.debatazo.utils.SaltMD5Util;
 
 import java.io.IOException;
 
@@ -29,33 +33,36 @@ public class LoginDataSource {
 
             tokenLlamada.enqueue(new Callback<Token>() {
                 @Override
-                public void onResponse(Call<Token> call, Response<Token> response) {
+                public void onResponse(@NonNull Call<Token> call, @NonNull Response<Token> response) {
                     if(response.isSuccessful()){
                         // Se hace el primero pedicion de token con login.
 
                         loadingLiveData.setValue(false);
 
-                        Token token = response.body();
-                        SharedPreferences sharedPreferences = context.getSharedPreferences(SaveSharedPreference.PREFS_TOKEN,Context.MODE_PRIVATE);
+                        Token.getInstance().setValueAndUserId(response.body().getValue(),response.body().getUserId(), GlobalFuntion.getDateByString(response.body().getExpiration()));
+                        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferenceUtils.PREFS_TOKEN,Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putInt(SaveSharedPreference.USER_ID,token.userId);
-                        editor.putString(SaveSharedPreference.TOKEN_VALUE,token.value);
+                        editor.putInt(SharedPreferenceUtils.USER_ID,Token.getInstance().getUserId());
+                        editor.putString(SharedPreferenceUtils.TOKEN_VALUE,Token.getInstance().getValue());
+                        editor.putString(SharedPreferenceUtils.EXPIRATION,Token.getInstance().getExpiration());
                         editor.apply();
 
                         //Con los datos que responde por token se hace pedicion de perfil usario con token obtenido.
-                        Call<LoggedInUser> llamada = retrofitCliente.getApiUsuario().getProfile(token.value,token.userId);
+                        Call<LoggedInUser> llamada = retrofitCliente.getApiUsuario().getProfile(Token.getInstance().getValue(),Token.getInstance().getUserId());
                         llamada.enqueue(new Callback<LoggedInUser>() {
                             @Override
-                            public void onResponse(Call<LoggedInUser> call, Response<LoggedInUser> response) {
+                            public void onResponse(@NonNull Call<LoggedInUser> call, @NonNull Response<LoggedInUser> response) {
                                 if (response.isSuccessful()) {
                                     callBack.onSuccess(new Result.Success<>(response.body()));
+                                    loadingLiveData.setValue(false);
                                 } else {
-                                    String errorMessage = "Error al iniciar sesión: " + response.code() + " - " + response.message();
+                                    String errorMessage = "Error al iniciar sesión 1: " + response.code() + " - " + response.message();
                                     callBack.onFailure(new Result.Error(new IOException(errorMessage)));
+                                    loadingLiveData.setValue(false);
                                 }
                             }
                             @Override
-                            public void onFailure(Call<LoggedInUser> call, Throwable t) {
+                            public void onFailure(@NonNull Call<LoggedInUser> call, @NonNull Throwable t) {
                                 loadingLiveData.setValue(false);
                                 String errorMessage = "Error al iniciar sesión onFailure: " + t.getMessage();
                                 callBack.onFailure(new Result.Error(new IOException(errorMessage)));
@@ -63,13 +70,14 @@ public class LoginDataSource {
                         });
 
                     }else{
-                        String errorMessage = "Error al iniciar sesión: " + response.code() + " - " + response.message();
+                        loadingLiveData.setValue(false);
+                        String errorMessage = ""+response.code();
                         callBack.onFailure(new Result.Error(new IOException(errorMessage)));
                     }
                 }
 
                 @Override
-                public void onFailure(Call<Token> call, Throwable t) {
+                public void onFailure(@NonNull Call<Token> call, @NonNull Throwable t) {
                     loadingLiveData.setValue(false);
                     String errorMessage = "Error al iniciar sesión onFailure: " + t.getMessage();
                     callBack.onFailure(new Result.Error(new IOException(errorMessage)));
@@ -78,13 +86,14 @@ public class LoginDataSource {
 
         } catch (Exception e) {
             loadingLiveData.setValue(false);
-            callBack.onFailure(new Result.Error(new IOException("Error al iniciar sesión", e)));
+            callBack.onFailure(new Result.Error(new IOException("Error al iniciar sesión 3", e)));
+            loadingLiveData.setValue(false);
         }
     }
 
     // Se pasa el context como parametro para hacer borrar de token y sharedPreferences para log out
     public void logout(Context context) {
         Token.removeInstance();
-        context.deleteSharedPreferences(SaveSharedPreference.PREFS_TOKEN);
+        context.deleteSharedPreferences(SharedPreferenceUtils.PREFS_TOKEN);
     }
 }

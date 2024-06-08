@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:textAlignment="center"
     tools:context=".usuario.PerfilFragment">
 
     <LinearLayout
@@ -11,35 +12,40 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="10dp"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="right"
+            android:gravity="end"
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/fragmentoP_imageV_tema"
+                android:id="@+id/fPerfil_imageV_tema"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginEnd="10dp"
-                android:tooltipText="Tema"
+                android:contentDescription="Tema"
                 android:src="@drawable/tema_nocturno"
-                android:tag="nocturno" />
+                android:tag="nocturno"
+                android:tint="?attr/colorPrimary"
+                android:tooltipText="Tema" />
 
             <ImageView
-                android:id="@+id/fragmentoP_imageV_configuracion"
+                android:id="@+id/fPerfil_imageV_configuracion"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:tooltipText="Ajuste"
                 android:layout_marginEnd="10dp"
-                android:src="@drawable/configuracion" />
+                android:contentDescription="Ajuste"
+                android:src="@drawable/configuracion"
+                android:tint="?attr/colorPrimary"
+                android:tooltipText="Ajuste" />
         </LinearLayout>
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/fragmentoP_imageV_perfil"
+            android:id="@+id/fPerfil_imageV_perfil"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginTop="30dp"
@@ -49,7 +55,7 @@
             app:shapeAppearanceOverlay="@style/redondearImageView" />
 
         <LinearLayout
-            android:id="@+id/fragmentoP_datosUsuario"
+            android:id="@+id/fPerfil_datosUsuario"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="30dp"
@@ -63,8 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/conectar_ahora"
-                android:textColor="@color/black"
-                android:textSize="24dp" />
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/fragmentoP_textV_idUsuario"
@@ -83,108 +88,163 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/fragmentoP_datosPublicacion"
+            android:id="@+id/fPerfil_datosPublicacion"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="15dp"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/fPerfil_datosP_debateP"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/fPerfil_textV_publicarDebate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingBottom="5dp"
+                    android:text="@string/debate_publicado"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    tools:ignore="NestedWeights" />
+
+                <TextView
+                    android:id="@+id/fPerfil_textV_numeroPublicarDebate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    tools:ignore="NestedWeights" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fPerfil_datosP_debateR"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp">
 
                 <TextView
-                    android:id="@+id/fragmentoP_textV_numeroPublicarDebate"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/fPerfil_textV_publicarDebateRespondido"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="0"
+                    android:paddingBottom="5dp"
+                    android:text="@string/debate_respondido"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/fragmentoP_textV_numeroPublicarDebateRespondido"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/fPerfil_textV_numeroPublicarDebateRespondido"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="0"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fPerfil_datosP_debateG"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp">
+
+                <TextView
+                    android:id="@+id/fPerfil_textV_publicarDebateGustado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingBottom="5dp"
+                    android:text="@string/debate_gustado"
+                    android:textAlignment="center"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/fragmentoP_textV_numeroPublicarValoracion"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/fPerfil_textV_numeroPublicarDebateGustado"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="0"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/fragmentoP_textV_numeroPublicarValoracionRespondido"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="0"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="horizontal"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp">
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="gone">
 
                 <TextView
-                    android:id="@+id/fragmentoP_textV_publicarDebate"
+                    android:id="@+id/fPerfil_textV_publicarValoracion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Debate publicado"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/fragmentoP_textV_publicarDebateRespondido"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Debate respondido"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/fragmentoP_textV_publicarValoracion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:paddingBottom="5dp"
                     android:text="Valoracion publicado"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    tools:visibility="gone" />
 
                 <TextView
-                    android:id="@+id/fragmentoP_textV_publicarValoracionRespondido"
+                    android:id="@+id/fPerfil_textV_numeroPublicarValoracion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    tools:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="gone">
+
+                <TextView
+                    android:id="@+id/fPerfil_textV_publicarValoracionRespondido"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:paddingBottom="5dp"
                     android:text="Valoracion respondido"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    tools:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/fPerfil_textV_numeroPublicarValoracionRespondido"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    tools:visibility="gone" />
             </LinearLayout>
 
         </LinearLayout>

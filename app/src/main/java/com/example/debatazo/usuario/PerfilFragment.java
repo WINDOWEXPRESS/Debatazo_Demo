@@ -1,35 +1,34 @@
 package com.example.debatazo.usuario;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.example.debatazo.ActividadPrincipal;
 import com.example.debatazo.R;
-import com.example.debatazo.configuracion.BrilloUtils;
-import com.example.debatazo.configuracion.Configuracion;
-import com.example.debatazo.savesharedpreference.SaveSharedPreference;
-import com.example.debatazo.token.Token;
+import com.example.debatazo.configuracion.view.Configuracion;
 import com.example.debatazo.usuario.datospersonal.ActividadDatosPersonal;
-import com.example.debatazo.usuario.iniciarsesion.data.LoginDataSource;
-import com.example.debatazo.usuario.iniciarsesion.data.LoginRepository;
-import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModel;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModelFactory;
+import com.example.debatazo.usuario.interaccion.ActividadMisInteraccion;
+import com.example.debatazo.utils.Dialogs;
+import com.example.debatazo.utils.GlobalConstants;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -86,11 +85,15 @@ public class PerfilFragment extends Fragment {
     private ImageView perfil;
     private ImageView modoTema;
     private LoginViewModel loginViewModel;
-    private TextView nombreUsuario;
+    private TextView nombreUsuario, nPublicarD, nPublicarDRespondido, nPublicarDGustado;
     private TextView idUsuario;
+    private LinearLayout fPerfil_datosP_debateP,fPerfil_datosP_debateR, fPerfil_datosP_debateG ,fPerfil_datosPublicacion;
+    private View.OnClickListener manejador;
+    private ActivityResultLauncher<Intent> resultLauncher;
+    public static final String TYPE_KEY = "TYPE_KEY";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragmento_perfil, container, false);
@@ -101,20 +104,9 @@ public class PerfilFragment extends Fragment {
         // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory()).get(LoginViewModel.class);
 
+        loginViewModel.autoLogin(getContext());
+
         mostrarDatos();
-
-        //ActivityResultLauncher<Intent> lanzador = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            //if (result.getResultCode() == Activity.RESULT_OK) {
-                //mostrarDatos();
-           //}
-        //});
-
-        ActivityResultLauncher<Intent> lanzadorLogOut = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == Activity.RESULT_OK) {
-                resetearDatos();
-            }
-        });
-
 
         info.setOnClickListener(view -> {
             if (!loginViewModel.getLoginRepository().isLoggedIn()){
@@ -136,38 +128,106 @@ public class PerfilFragment extends Fragment {
         });
         configuracion.setOnClickListener(view -> {
             Intent i = new Intent(getContext(), Configuracion.class);
-            lanzadorLogOut.launch(i);
+            startActivity(i);
         });
+
+        int currentNightMode = getResources().getConfiguration().uiMode
+                & Configuration.UI_MODE_NIGHT_MASK;
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                modoTema.setImageResource(R.drawable.tema_diurno);
+                modoTema.setTag("diurno");
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+            // Night mode is not active, we're in day time
+            case Configuration.UI_MODE_NIGHT_YES:
+                modoTema.setImageResource(R.drawable.tema_nocturno);
+                modoTema.setTag("nocturno");
+                break;
+            // Night mode is active, we're at night!
+            case Configuration.UI_MODE_NIGHT_UNDEFINED:
+                modoTema.setImageResource(R.drawable.tema_dia_noche);
+                modoTema.setTag("auto");
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                break;
+            // We don't know what mode we're in, assume notnight
+        }
 
         modoTema.setOnClickListener(view -> {
             if (modoTema.getTag().equals("diurno")) {
                 modoTema.setImageResource(R.drawable.tema_nocturno);
                 modoTema.setTag("nocturno");
-            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else if (modoTema.getTag().equals("nocturno")){
+                modoTema.setImageResource(R.drawable.tema_dia_noche);
+                modoTema.setTag("auto");
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+            }else {
                 modoTema.setImageResource(R.drawable.tema_diurno);
                 modoTema.setTag("diurno");
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
         });
+
+        manejador = view ->{
+            Intent intent = new Intent(getActivity(), ActividadMisInteraccion.class);
+            if (loginViewModel.getLoginRepository().isLoggedIn()) {
+                if (view.getId() == R.id.fPerfil_datosP_debateP) {
+                    intent.putExtra(GlobalConstants.INTENT_KEY, ActividadMisInteraccion.KEY_DEBATE_P);
+                    resultLauncher.launch(intent);
+                }
+                if (view.getId() == R.id.fPerfil_datosP_debateR) {
+                    intent.putExtra(GlobalConstants.INTENT_KEY, ActividadMisInteraccion.KEY_DEBATE_R);
+                    resultLauncher.launch(intent);
+                }
+                if (view.getId() == R.id.fPerfil_datosP_debateG) {
+                    intent.putExtra(GlobalConstants.INTENT_KEY, ActividadMisInteraccion.KEY_DEBATE_G);
+                    resultLauncher.launch(intent);
+                }
+            }else {
+                Intent i = new Intent(getContext(), IniciaSesion.class);
+                startActivity(i);
+            }
+        };
+
+        fPerfil_datosP_debateP.setOnClickListener(manejador);
+        fPerfil_datosP_debateR.setOnClickListener(manejador);
+        fPerfil_datosP_debateG.setOnClickListener(manejador);
+
+        resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {});
         return rootView;
 
     }
     private void vincularVistas() {
-        info = rootView.findViewById(R.id.fragmentoP_datosUsuario);
-        perfil = rootView.findViewById(R.id.fragmentoP_imageV_perfil);
-        configuracion = rootView.findViewById(R.id.fragmentoP_imageV_configuracion);
-        modoTema = rootView.findViewById(R.id.fragmentoP_imageV_tema);
+        info = rootView.findViewById(R.id.fPerfil_datosUsuario);
+        perfil = rootView.findViewById(R.id.fPerfil_imageV_perfil);
+        configuracion = rootView.findViewById(R.id.fPerfil_imageV_configuracion);
+        modoTema = rootView.findViewById(R.id.fPerfil_imageV_tema);
         nombreUsuario = rootView.findViewById(R.id.fragmentoP_textV_nombreUsuario);
         idUsuario = rootView.findViewById(R.id.fragmentoP_textV_idUsuario);
-
+        nPublicarD = rootView.findViewById(R.id.fPerfil_textV_numeroPublicarDebate);
+        nPublicarDRespondido = rootView.findViewById(R.id.fPerfil_textV_numeroPublicarDebateRespondido);
+        nPublicarDGustado = rootView.findViewById(R.id.fPerfil_textV_numeroPublicarDebateGustado);
+        fPerfil_datosP_debateP = rootView.findViewById(R.id.fPerfil_datosP_debateP);
+        fPerfil_datosP_debateR = rootView.findViewById(R.id.fPerfil_datosP_debateR);
+        fPerfil_datosP_debateG = rootView.findViewById(R.id.fPerfil_datosP_debateG);
+        fPerfil_datosPublicacion = rootView.findViewById(R.id.fPerfil_datosPublicacion);
     }
 
     public void mostrarDatos() {
         if(loginViewModel != null){
             loginViewModel.getLoginRepository().getLoggedInUserLiveData().observe(getViewLifecycleOwner(),loggedInUser -> {
-                nombreUsuario.setText(loggedInUser.getUser_name());
-                idUsuario.setText("ID:" + loggedInUser.getId());
-                Picasso.get().load(loggedInUser.getProfile_img()).into(perfil);
-                info.setClickable(false);
+                if(loggedInUser != null){
+                    nombreUsuario.setText(loggedInUser.getUser_name());
+                    idUsuario.setText(String.format("ID:%s", loggedInUser.getId()));
+                    Picasso.get().load(loggedInUser.getProfile_img()).into(perfil);
+                    nPublicarD.setText(String.valueOf(loggedInUser.getDebate_create()));
+                    nPublicarDRespondido.setText(String.valueOf(loggedInUser.getComment_debate()));
+                    nPublicarDGustado.setText(String.valueOf(loggedInUser.getDebate_like()));
+                    info.setClickable(false);
+                }else {
+                    resetearDatos();
+                }
             });
         }
     }
@@ -176,6 +236,9 @@ public class PerfilFragment extends Fragment {
         nombreUsuario.setText(R.string.conectar_ahora);
         idUsuario.setText(R.string.mensaje_campo_id_usuario);
         perfil.setImageResource(R.drawable.usuario);
+        nPublicarD.setText("0");
+        nPublicarDRespondido.setText("0");
+        nPublicarDGustado.setText("0");
         info.setClickable(true);
     }
 }

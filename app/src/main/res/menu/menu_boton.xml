@@ -4,12 +4,16 @@
 
     <item
         android:id="@+id/menuB_principal"
+        android:checkable="false"
+        android:enabled="false"
         android:icon="@drawable/principal"
-        android:title="@string/principal" />
+        android:title="@string/principal"
+        android:visible="false" />
 
     <item
         android:id="@+id/menuB_debate"
         android:icon="@drawable/debate"
+        android:checked="true"
         android:title="@string/debate" />
 
     <item
@@ -18,8 +22,11 @@
 
     <item
         android:id="@+id/menuB_valoracion"
+        android:checkable="false"
+        android:enabled="false"
         android:icon="@drawable/valoracion"
-        android:title="@string/valoracion" />
+        android:title="@string/valoracion"
+        android:visible="false" />
     <item
         android:id="@+id/menuB_usuario"
         android:icon="@drawable/usuario"

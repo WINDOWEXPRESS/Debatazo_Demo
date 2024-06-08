@@ -9,22 +9,62 @@ public class LoggedInUser {
     private  String user_name;
     private  String full_name;
     private  String profile_img;
-    private  String age;
+    private  String birth_date;
     private  String self;
     private  String sex;
+    private int debate_create;
+    private int comment_debate;
+    private int debate_like;
 
-    public LoggedInUser(String user_id, String user_name, String full_name, String profile_img, String age, String self, String sex) {
+    public LoggedInUser(String user_id, String user_name, String full_name, String profile_img, String birth_date, String self, String sex) {
         this.user_id = user_id;
         this.user_name = user_name;
         this.full_name = full_name;
         this.profile_img = profile_img;
-        this.age = age;
+        this.birth_date = birth_date;
         this.self = self;
         this.sex = sex;
     }
 
+    public LoggedInUser(String user_id, String user_name, String full_name, String profile_img, String birth_date, String self, String sex, int debate_create, int comment_debate, int debate_like) {
+        this.user_id = user_id;
+        this.user_name = user_name;
+        this.full_name = full_name;
+        this.profile_img = profile_img;
+        this.birth_date = birth_date;
+        this.self = self;
+        this.sex = sex;
+        this.debate_create = debate_create;
+        this.comment_debate = comment_debate;
+        this.debate_like = debate_like;
+    }
+
     public void setUser_name(String user_name) {
         this.user_name = user_name;
+    }
+
+    public void setProfile_img(String profile_img) {
+        this.profile_img = profile_img;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
+
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
+    }
+
+    public void setBirth_date(String birth_date) {
+        this.birth_date = birth_date;
+    }
+
+    public void setSelf(String self) {
+        this.self = self;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public String getId() {
@@ -43,8 +83,8 @@ public class LoggedInUser {
         return profile_img;
     }
 
-    public String getAge() {
-        return age;
+    public String getBirth_date() {
+        return birth_date;
     }
 
     public String getSex() {
@@ -57,5 +97,17 @@ public class LoggedInUser {
 
     public String getSelf() {
         return self;
+    }
+
+    public int getDebate_create() {
+        return debate_create;
+    }
+
+    public int getComment_debate() {
+        return comment_debate;
+    }
+
+    public int getDebate_like(){
+        return debate_like;
     }
 }

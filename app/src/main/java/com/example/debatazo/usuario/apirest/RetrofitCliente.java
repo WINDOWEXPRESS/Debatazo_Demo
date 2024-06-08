@@ -1,6 +1,10 @@
 package com.example.debatazo.usuario.apirest;
 
-import com.example.debatazo.R;
+import static com.example.debatazo.utils.GlobalConstants.BASE_URI_SERVER;
+import static com.example.debatazo.utils.GlobalConstants.URL_EMULADOR;
+import static com.example.debatazo.utils.GlobalConstants.URL_EMULADOR_XING;
+
+import com.example.debatazo.utils.GlobalConstants;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -9,19 +13,16 @@ public class RetrofitCliente {
     private static RetrofitCliente instancia;
     private static ApiServicioUsuario apiServicioUsuario;
 
-    private String URL_ORDENADOR_CHEN = "http://192.168.1.131:8080/";
-    private String URL_EMULADOR = "http://10.0.2.2:8080/";
-
     private RetrofitCliente(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(URL_EMULADOR)
+                .baseUrl(GlobalConstants.emulador)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         apiServicioUsuario = retrofit.create(ApiServicioUsuario.class);
     }
 
-    public static ApiServicioUsuario getApiUsuario(){
+    public ApiServicioUsuario getApiUsuario(){
         return apiServicioUsuario;
     }
 

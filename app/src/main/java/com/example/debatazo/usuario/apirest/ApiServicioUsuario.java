@@ -1,8 +1,12 @@
 package com.example.debatazo.usuario.apirest;
 
+import com.example.debatazo.debaterecycler.DebateProducto;
+import com.example.debatazo.debaterecycler.detalle.objecto.ComentarioObjeto;
 import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
-import com.example.debatazo.token.Token;
+import com.example.debatazo.usuario.iniciarsesion.data.model.Token;
 import com.example.debatazo.usuario.registrar.RegistrarUsuarioPojo;
+
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -26,9 +30,22 @@ public interface ApiServicioUsuario {
     Call<Token> loginUsuario(@Query("email") String email, @Query("passwd") String passwd);
 
     @GET("users/profile/{id}")
-    Call<LoggedInUser> getProfile( @Header("token") String token,@Path("id") int id);
+    Call<LoggedInUser> getProfile(@Header("token") String token, @Path("id") int id);
 
-    @PUT("users/updateToken")
-    Call<String> updateTonk( @Header("token") String token);
+    @PUT("users/profile/update/{id}")
+    Call<ResponseBody> updateProfile(@Header("token") String token, @Path("id") int id,@Body LoggedInUser user);
+
+    @PUT("users/passwd/forget/{email}/{passwd}/{passwordEncriptado}")
+    Call<ResponseBody> recoveryPassword(@Path("email") String email,@Path("passwd") String passwd,@Path("passwordEncriptado") String passwordEncriptado);
+
+    @PUT("users/passwd/change/{id}/{passwd}")
+    Call<ResponseBody> changePassword(@Header("token") String token,@Path("id") int id,@Path("passwd") String passwd);
+
+    @GET("users/profile/{id}/debates")
+    Call<List<DebateProducto>> getDebateCreate(@Header("token") String token,@Header("offset") String offset, @Path("id") int id);
+    @GET("users/profile/{id}/like")
+    Call<List<DebateProducto>> getDebateLike(@Header("token") String token,@Header("offset") String offset, @Path("id") int id);
+    @GET("users/profile/{id}/comment/debate")
+    Call<List<DebateProducto>> getDebateComment(@Header("token") String token, @Header("offset") String offset, @Path("id") int id);
 
 }

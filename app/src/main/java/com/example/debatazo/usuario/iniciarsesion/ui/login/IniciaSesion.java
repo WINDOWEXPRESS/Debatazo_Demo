@@ -1,19 +1,11 @@
 package com.example.debatazo.usuario.iniciarsesion.ui.login;
 
 import android.app.Activity;
-
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -24,12 +16,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.debatazo.R;
 
-import com.example.debatazo.configuracion.BrilloUtils;
+import com.example.debatazo.usuario.contraseniamanager.ContraseniaManager;
+import com.example.debatazo.utils.BrilloUtils;
 import com.example.debatazo.databinding.ActividadIniciaSesionBinding;
+import com.example.debatazo.utils.Dialogs;
+import com.example.debatazo.utils.SharedPreferenceUtils;
 import com.example.debatazo.usuario.registrar.ActividadRegistrar;
-import com.example.debatazo.savesharedpreference.SaveSharedPreference;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class IniciaSesion extends AppCompatActivity {
@@ -56,13 +54,10 @@ public class IniciaSesion extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         //ajuste de brillo
-        BrilloUtils.getInstancia().brilloAppVista(this);
-
-        // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
-        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
-                .get(LoginViewModel.class);
+        BrilloUtils.getInstancia().brilloAppObserver(this);
 
         vincularVistas();
+
         // Observa los cambios en el estado del formulario de inicio de sesión
         loginViewModel.getLoginFormState().observe(this, loginFormState -> {
             // Verifica si el estado del formulario es nulo
@@ -86,8 +81,15 @@ public class IniciaSesion extends AppCompatActivity {
                 passwordTextInputLayout.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
             }
         });
+
         loginViewModel.getLoadingLiveData().observe(this, loading -> {
-            cargando.setVisibility(loading?View.VISIBLE:View.GONE);
+            if(loading){
+                cargando.setVisibility(View.VISIBLE);
+                loginButton.setEnabled(false);
+            }else{
+                cargando.setVisibility(View.GONE);
+                loginButton.setEnabled(true);
+            }
         });
 
         //OBSERVAR EL RESULTADO DE LOGIN
@@ -110,7 +112,7 @@ public class IniciaSesion extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 //loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
-               //         passwordEditText.getText().toString());
+                //         passwordEditText.getText().toString());
             }
 
             @Override
@@ -131,56 +133,50 @@ public class IniciaSesion extends AppCompatActivity {
         mostrarInfoConSharedPreference(usernameEditText, passwordEditText, recordar);
 
         // Establece un listener para capturar el evento cuando se presiona una acción en el teclado virtual
-        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                // Verifica si la acción es "Done" en el teclado virtual
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    // Cuando se presiona "Done", se llama al método login del ViewModel
-                    // para intentar iniciar sesión con el nombre de usuario y la contraseña proporcionados
-                    loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString(),IniciaSesion.this);
-                }
-                // Devuelve falso para indicar que el evento no está consumido y puede ser manejado por otros listeners
-                return false;
+        passwordEditText.setOnEditorActionListener((v, actionId, event) -> {
+            // Verifica si la acción es "Done" en el teclado virtual
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                // Cuando se presiona "Done", se llama al método login del ViewModel
+                // para intentar iniciar sesión con el nombre de usuario y la contraseña proporcionados
+                loginViewModel.login(usernameEditText.getText().toString(),
+                        passwordEditText.getText().toString(), IniciaSesion.this);
             }
+            // Devuelve falso para indicar que el evento no está consumido y puede ser manejado por otros listeners
+            return false;
         });
 
         loginButton.setOnClickListener(v -> {
             String email = usernameEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 
-            SharedPreferences sharedPreferences = getSharedPreferences(SaveSharedPreference.PREFS_NOMBRE, MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferenceUtils.PREFS_CUENTA, MODE_PRIVATE);
             // Editar los valores de SharedPreferences
             SharedPreferences.Editor editor = sharedPreferences.edit();
             //Si esta marcado el recordar se guarda con un sharedPreferences
             if (recordar.isChecked()) {
                 // Obtener una instancia de SharedPreferences
-                editor.putString(SaveSharedPreference.EMAIL, email);
-                editor.putString(SaveSharedPreference.CONTRASENIA, password);
-                editor.putBoolean(SaveSharedPreference.RECORDAR, true);
+                editor.putString(SharedPreferenceUtils.EMAIL, email);
+                editor.putString(SharedPreferenceUtils.CONTRASENIA, password);
+                editor.putBoolean(SharedPreferenceUtils.RECORDAR, true);
             } else {
                 editor.clear();
             }
             editor.apply(); // Guardar los cambios
 
-            loginViewModel.login(email, password,IniciaSesion.this);
+            loginViewModel.login(email, password, IniciaSesion.this);
+
         });
 
         olvidarContrasenia.setOnClickListener(view -> {
-                    Toast.makeText(IniciaSesion.this, "Sin implementar ", Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(this, ContraseniaManager.class);
+                    i.putExtra(ContraseniaManager.TIPO, ContraseniaManager.RECUPER_KEY);
+                    startActivity(i);
                 }
         );
 
-        gmail.setOnClickListener(view -> {
-            otraFormaDeAcceso(view);
-        });
-        wechat.setOnClickListener(view -> {
-            otraFormaDeAcceso(view);
-        });
-        facebook.setOnClickListener(view -> {
-            otraFormaDeAcceso(view);
-        });
+        gmail.setOnClickListener(view -> otraFormaDeAcceso());
+        wechat.setOnClickListener(view -> otraFormaDeAcceso());
+        facebook.setOnClickListener(view -> otraFormaDeAcceso());
 
         registrar.setOnClickListener(view -> {
             Intent i = new Intent(IniciaSesion.this, ActividadRegistrar.class);
@@ -191,27 +187,31 @@ public class IniciaSesion extends AppCompatActivity {
     }
 
     private void vincularVistas() {
-        usernameEditText = binding.actividadISTextILEmail.getEditText();
-        passwordEditText = binding.actividadISTextILContrasenia.getEditText();
-        passwordTextInputLayout = binding.actividadISTextILContrasenia;
-        loginButton = binding.actividadISButtonResgistrar;
-        cargando = binding.actividadISProgressBCargando;
-        gmail = binding.actividadISImageVGmail;
-        wechat = binding.actividadISImageVWechat;
-        facebook = binding.actividadISImageVFacebook;
-        olvidarContrasenia = binding.actividadISTextVOlvidarContrasenia;
-        registrar = binding.actividadISTextVRegistrar;
-        recordar = binding.actividadISCheckBRecordar;
+        usernameEditText = binding.aISesionTextILEmail.getEditText();
+        passwordEditText = binding.aISesionTextILContrasenia.getEditText();
+        passwordTextInputLayout = binding.aISesionTextILContrasenia;
+        loginButton = binding.aISesionButtonIniciaSesion;
+        cargando = binding.aISesionProgressBCargando;
+        gmail = binding.aISesionImageVGmail;
+        wechat = binding.aISesionImageVWechat;
+        facebook = binding.aISesionImageVFacebook;
+        olvidarContrasenia = binding.aISesionTextVOlvidarContrasenia;
+        registrar = binding.aISesionTextVRegistrar;
+        recordar = binding.aISesionCheckBRecordar;
+
+        // Crear una instancia del ViewModel utilizando un ViewModelProvider y una Factory personalizada
+        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
+                .get(LoginViewModel.class);
     }
 
     private void mostrarInfoConSharedPreference(EditText usernameEditText, EditText passwordEditText, CheckBox recordar) {
         // Obtener una instancia de SharedPreferences
-        SharedPreferences sharedPreferences = getSharedPreferences(SaveSharedPreference.PREFS_NOMBRE, MODE_PRIVATE);
-        boolean esRecordar = sharedPreferences.getBoolean(SaveSharedPreference.RECORDAR, false);
+        SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferenceUtils.PREFS_CUENTA, MODE_PRIVATE);
+        boolean esRecordar = sharedPreferences.getBoolean(SharedPreferenceUtils.RECORDAR, false);
         //Si en SharedPreferences tiene datos de recordar y es verdad se autocompleta.
         if (esRecordar) {
-            String email = sharedPreferences.getString(SaveSharedPreference.EMAIL, "");
-            String contrasenia = sharedPreferences.getString(SaveSharedPreference.CONTRASENIA, "");
+            String email = sharedPreferences.getString(SharedPreferenceUtils.EMAIL, "");
+            String contrasenia = sharedPreferences.getString(SharedPreferenceUtils.CONTRASENIA, "");
             usernameEditText.setText(email);
             passwordEditText.setText(contrasenia);
             recordar.setChecked(true);
@@ -226,10 +226,11 @@ public class IniciaSesion extends AppCompatActivity {
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
-        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+        Dialogs dialogs = new Dialogs(getResources().getString(R.string.error),getResources().getString(errorString));
+        dialogs.showDialog(IniciaSesion.this);
     }
 
-    private void otraFormaDeAcceso(View view) {
+    private void otraFormaDeAcceso() {
         Toast.makeText(IniciaSesion.this, "Sin implementar ", Toast.LENGTH_LONG).show();
     }
 }

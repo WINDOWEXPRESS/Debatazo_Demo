@@ -3,17 +3,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".debaterecycler.DebateFragmento">
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fragmentD_recyclerV"
+    <LinearLayout
+        android:id="@+id/fDebate_lineaL"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:padding="5dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fDebate_recyclerV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/fDebate_textV_recarga"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"
+            android:background="#B5AEAE"
+            android:paddingStart="15dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="2dp"
+            android:textColor="#424242"
+            android:textSize="16sp"
+            android:visibility="gone"
+            tools:visibility="gone" />
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/fragmentD_progressB"
@@ -25,4 +47,5 @@
         android:indeterminateTint="@color/azul_marino"
         android:indeterminateTintMode="src_atop"
         tools:visibility="visible" />
+
 </FrameLayout>

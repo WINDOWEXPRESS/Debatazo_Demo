@@ -1,19 +1,29 @@
 package com.example.debatazo.usuario.iniciarsesion.data;
 
 import android.content.Context;
+import android.widget.TextView;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.debatazo.R;
+import com.example.debatazo.usuario.apirest.RetrofitCliente;
 import com.example.debatazo.usuario.iniciarsesion.data.model.LoggedInUser;
+import com.example.debatazo.usuario.iniciarsesion.data.model.Token;
+import com.example.debatazo.utils.SaltMD5Util;
+
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Class that requests authentication and user information from the remote data source and
  * maintains an in-memory cache of login status and user credentials information.
  */
 public class LoginRepository {
-
-    private static volatile LoginRepository instance;
 
     private LoginDataSource dataSource;
 
@@ -25,6 +35,8 @@ public class LoginRepository {
         return loggedInUserMutableLiveData;
     }
 
+    //Singleton
+    private static volatile LoginRepository instance;
     // private constructor : singleton access
     private LoginRepository(LoginDataSource dataSource) {
         this.dataSource = dataSource;
@@ -42,7 +54,7 @@ public class LoginRepository {
     }
 
     public void logout(Context context) {
-        loggedInUserMutableLiveData.postValue(null);
+        loggedInUserMutableLiveData.setValue(null);
         dataSource.logout(context);
     }
 
@@ -65,4 +77,100 @@ public class LoginRepository {
             }
         });
     }
+
+    public void updatePerfil(LoggedInUser user, MutableLiveData<Boolean> loadingLiveData, TextView mensajeError) {
+        loadingLiveData.setValue(true);
+        Call<ResponseBody> updateProfile = RetrofitCliente.getInstancia().getApiUsuario().updateProfile(Token.getInstance().getValue(),
+                Token.getInstance().getUserId(), user);
+        updateProfile.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                loadingLiveData.setValue(false);
+                if (response.isSuccessful()) {
+
+                    loggedInUserMutableLiveData.postValue(user);
+                    mensajeError.setText(R.string.perfil_actualizado_con_xito);
+
+                } else {
+                    String errorMessage = "Error: " + response.code() + " - " + response.message();
+                    mensajeError.setText(errorMessage);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                loadingLiveData.setValue(false);
+                String errorMessage = "Error: " + t.getCause() + " - " + t.getMessage();
+                mensajeError.setText(errorMessage);
+            }
+        });
+    }
+
+    public void recuperarPassword(String email, MutableLiveData<Boolean> loadingLiveData, TextView mensajeError) {
+        loadingLiveData.setValue(true);
+        //Nueva contraseña de 6 caracteres
+        String newPassword = SaltMD5Util.generateRandomCadena();
+        //Sal generado
+        String passwordEncriptado = SaltMD5Util.generateSaltPassword(newPassword);
+        Call<ResponseBody> call = RetrofitCliente.getInstancia().getApiUsuario().recoveryPassword(email,newPassword,passwordEncriptado);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                loadingLiveData.setValue(false);
+                if (response.isSuccessful()) {
+                    try {
+                        mensajeError.setText(response.body().string());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    if(response.code() == 404){
+                        String errorMessage = "Error! Usuario no encontrado.";
+                        mensajeError.setText(errorMessage);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                loadingLiveData.setValue(false);
+                String errorMessage = "Error inesperado al enviar." ;
+                mensajeError.setText(errorMessage);
+            }
+        });
+    }
+
+    public void cambiarPassword(String token,int id,String password, MutableLiveData<Boolean> loadingLiveData, TextView mensajeError) {
+        loadingLiveData.setValue(true);
+        Call<ResponseBody> call = RetrofitCliente.getInstancia().getApiUsuario().changePassword(token,id,SaltMD5Util.generateSaltPassword(password));
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                loadingLiveData.setValue(false);
+                if (response.isSuccessful()) {
+
+                        mensajeError.setText("Contraseña cambiado correctamente.");
+
+                } else {
+
+                    if (response.code() == 404){
+                        mensajeError.setText("Error usuario no existe.");
+                    }else {
+                        mensajeError.setText("Error conexión con el servidor.");
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                loadingLiveData.setValue(false);
+                String errorMessage = "Error: " + t.getCause() + " - " + t.getMessage();
+                mensajeError.setText(errorMessage);
+            }
+        });
+    }
+
+
 }

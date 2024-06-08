@@ -1,7 +1,5 @@
 package com.example.debatazo.usuario.registrar;
 
-import com.google.gson.annotations.SerializedName;
-
 public class RegistrarUsuarioPojo {
 
     private String email;

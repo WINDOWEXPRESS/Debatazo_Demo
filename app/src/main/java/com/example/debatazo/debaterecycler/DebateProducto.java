@@ -1,8 +1,12 @@
 package com.example.debatazo.debaterecycler;
 
+import com.example.debatazo.band.BandObject;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+import java.util.Set;
 
 public class DebateProducto implements Serializable {
     private int userId;
@@ -12,9 +16,14 @@ public class DebateProducto implements Serializable {
     private String userName;
     private String title;
     private String description;
-    private String imgUrl;
+    private String imageUrl;
+    private Set<BandObject> bands;
+    private String imageDeleteHast;
+    private int like;
+    private int comment;
+    private String error;
 
-    public DebateProducto(int userId, int debateId, String profileImg, Date releaseDate, String userName, String title, String description, String imgUrl) {
+    public DebateProducto(int userId, int debateId, String profileImg, Date releaseDate, String userName, String title, String description, String imageUrl) {
         this.userId = userId;
         this.debateId = debateId;
         this.profileImg = profileImg;
@@ -22,7 +31,19 @@ public class DebateProducto implements Serializable {
         this.userName = userName;
         this.title = title;
         this.description = description;
-        this.imgUrl = imgUrl;
+        this.imageUrl = imageUrl;
+        this.error = null;
+    }
+
+    public DebateProducto(String title, String description, Set<BandObject> bands) {
+        this.title = title;
+        this.description = description;
+        this.bands = bands;
+        this.error = null;
+    }
+
+    public DebateProducto(String error) {
+        this.error = error;
     }
 
     public int getUserId() {
@@ -38,7 +59,7 @@ public class DebateProducto implements Serializable {
     }
 
     public String getReleaseDate() {
-        return new SimpleDateFormat("dd/MM/yyyy").format(releaseDate);
+        return new SimpleDateFormat("dd/MM/yyyy", Locale.US).format(releaseDate);
     }
 
     public String getUserName() {
@@ -53,7 +74,27 @@ public class DebateProducto implements Serializable {
         return description;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setImageDeleteHash(String imageDeleteHast) {
+        this.imageDeleteHast = imageDeleteHast;
+    }
+
+    public int getLike() {
+        return like;
+    }
+
+    public int getComment() {
+        return comment;
+    }
+
+    public String getError() {
+        return error;
     }
 }

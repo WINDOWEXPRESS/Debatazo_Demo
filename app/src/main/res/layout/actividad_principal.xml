@@ -4,61 +4,94 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".ActividadPrincipal">
 
+    <ProgressBar
+        android:id="@+id/aPrincipal_progressB"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/azul_marino"
+        android:indeterminateTintMode="src_atop"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/aDDebate_linearL_barraS"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/aPrincipal_textV_fondo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/trasparente"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="595dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/borde_logo"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="3dp">
 
             <ImageView
-                android:id="@+id/fragmentoP_imageV_logoAplicacion"
+                android:id="@+id/aPrincipal_imageV_logoAplicacion"
                 android:layout_width="0dp"
-                android:layout_height="45dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:src="@mipmap/aplicacion_logo_round" />
+                android:padding="3dp"
+                app:srcCompat="@mipmap/aplicacion_logo_round"
+                android:contentDescription="Logo" />
 
             <TextView
-                android:id="@+id/fragmentoP_textV_nombreAplicacion"
+                android:id="@+id/aPrincipal_textV_nombreAplicacion"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:fontFamily="@font/designer"
                 android:paddingTop="5dp"
                 android:text="@string/app_name"
-                android:textColor="@color/black"
-                android:textSize="50dp" />
+                android:textColor="?attr/colorPrimary"
+                android:textSize="50sp" />
         </LinearLayout>
 
-        <FrameLayout
-            android:id="@+id/actividadP_frameL"
+        <TextView
+            android:id="@+id/fragmentoP_textV_borde_titulo"
             android:layout_width="match_parent"
-            android:layout_height="535dp" />
+            android:layout_height="1dp"
+            android:background="@drawable/borde_logo" />
+
+        <FrameLayout
+            android:id="@+id/aPrincipal_frameL"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="60dp" />
     </LinearLayout>
 
     <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/actividadP_bottomAB"
+        android:id="@+id/aPrincipal_bottomAB"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/white"
+        android:background="?attr/colorOnPrimary"
         app:fabCradleMargin="10dp"
         app:fabCradleRoundedCornerRadius="50dp">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/actividadP_bottomNV"
+            android:id="@+id/aPrincipal_bottomNV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
@@ -69,7 +102,7 @@
     </com.google.android.material.bottomappbar.BottomAppBar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/actividadP_floatingAB"
+        android:id="@+id/aPrincipal_floatingAB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/red"

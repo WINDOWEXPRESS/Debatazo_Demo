@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".usuario.contraseniamanager.ContraseniaManager">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/aCManager_imageV_volver"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:backgroundTint="?android:attr/colorBackground"
+                android:contentDescription="@string/boton_volver"
+                android:scaleType="centerCrop"
+                android:src="@drawable/flecha_volver"
+                app:tint="?attr/colorPrimary"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/aCManager_textV_titulo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|start"
+                android:paddingStart="10dp"
+                android:text="@string/cambiar_contrasenia"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="24sp"
+                tools:ignore="RtlSymmetry" />
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/aConfiguracion_textV_borde_configuracion"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/borde_logo" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/aCManager_textIL_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/pista_email"
+                android:visibility="visible"
+
+                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundMode="outline"
+
+                app:endIconTint="@color/azul_marino"
+                app:helperText="Introducir el email"
+
+                app:helperTextEnabled="true"
+                app:helperTextTextColor="@color/azul_marino"
+                app:startIconDrawable="@drawable/email"
+                app:startIconTint="@color/azul_marino">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@android:color/transparent"
+                    android:inputType="textEmailAddress"
+                    android:textSize="18sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/aCManager_textIL_contrasenia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/contrasenia_nueva"
+                app:boxBackgroundColor="@color/white"
+
+                app:boxBackgroundMode="outline"
+                app:counterEnabled="true"
+
+                app:counterMaxLength="20"
+                app:endIconTint="@color/azul_marino"
+
+                app:errorEnabled="true"
+                app:errorTextColor="@color/red"
+
+                app:helperText="Introducir la contraseña nueva"
+                app:helperTextEnabled="true"
+                app:helperTextTextColor="@color/azul_marino"
+
+                app:startIconDrawable="@drawable/contrasenia"
+                app:startIconTint="@color/azul_marino"
+                tools:ignore="MissingConstraints">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@android:color/transparent"
+                    android:inputType="textVisiblePassword"
+                    android:textSize="18sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/aCManager_textIL_repetirContrasenia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/pista_repetir_contrasenia"
+
+                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundMode="outline"
+                app:counterEnabled="true"
+                app:counterMaxLength="20"
+
+                app:endIconTint="@color/azul_marino"
+                app:errorEnabled="true"
+                app:errorTextColor="@color/red"
+                app:helperText="Repitir la contraseña"
+                app:helperTextEnabled="true"
+
+                app:helperTextTextColor="@color/azul_marino"
+                app:startIconDrawable="@drawable/contrasenia"
+                app:startIconTint="@color/azul_marino">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@android:color/transparent"
+                    android:inputType="textVisiblePassword"
+                    android:textSize="18sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+        <TextView
+            android:id="@+id/aCManager_tView_mensaje"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/aCManager_button_confirmar"
+            app:layout_constraintEnd_toEndOf="@+id/aCManager_button_confirmar"
+            app:layout_constraintStart_toStartOf="@+id/aCManager_button_confirmar" />
+        <Button
+            android:id="@+id/aCManager_button_confirmar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="@string/confirmar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/aCManager_progressB_cargando"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:indeterminateTint="@color/azul_marino"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

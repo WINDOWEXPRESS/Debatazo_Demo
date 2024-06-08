@@ -6,11 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".usuario.datospersonal.ActividadDatosPersonal">
 
+    <ProgressBar
+        android:id="@+id/aDPersona_progressB_cargando"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/azul_marino"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,28 +35,42 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/actividadDP_imageB_volver"
+                android:id="@+id/aDPersonal_imageB_volver"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:backgroundTint="@color/white"
+                android:layout_margin="5dp"
+                android:backgroundTint="?android:attr/colorBackground"
                 android:contentDescription="@string/boton_volver"
                 android:scaleType="centerCrop"
                 android:src="@drawable/flecha_volver"
+                app:tint="?attr/colorPrimary"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
-                android:id="@+id/actividadDP_textV_datosPersonal"
-                android:layout_width="wrap_content"
+                android:id="@+id/aDPersonal_textV_datosPersonal"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Datos personal"
-                android:textColor="@color/black"
-                android:textSize="34sp" />
+                android:gravity="center|start"
+                android:paddingStart="10dp"
+                android:text="@string/datos_personal"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="24sp" />
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/aConfiguracion_textV_borde_configuracion"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/borde_logo" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/actividadDP_imageV_perfil"
+            android:id="@+id/aDPersonal_imageV_perfil"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
@@ -59,26 +86,24 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/actividadDP_textV_idUsuario"
-
+                android:id="@+id/aDPersonal_textV_idUsuario"
                 android:layout_width="match_parent"
-
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center|start"
-                android:text="Id"
-                android:textColor="#000000"
+                android:text="@string/id"
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/actividadDP_editTT_id"
+                android:id="@+id/aDPersonal_editTT_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:backgroundTint="@android:color/transparent"
                 android:enabled="false"
-                android:gravity="center|right"
-                android:backgroundTint="@android:color/transparent"
+                android:gravity="center|end"
                 android:hint="@string/sin_rellenar"
+                android:importantForAutofill="no"
                 android:inputType="text"
                 android:singleLine="true" />
         </LinearLayout>
@@ -89,79 +114,83 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/actividadDP_textV_nombreUsuario"
+                android:id="@+id/aDPersonal_textV_nombreUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center|start"
-                android:text="Nombre usuario"
-                android:textColor="#000000"
+                android:text="@string/nombre_usuario"
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/actividadDP_editTT_nombre"
+                android:id="@+id/aDPersonal_editTT_nombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center|right"
                 android:backgroundTint="@android:color/transparent"
+                android:gravity="center|end"
                 android:hint="@string/sin_rellenar"
+                android:importantForAutofill="no"
                 android:inputType="text"
+                android:maxLength="100"
                 android:singleLine="true" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/actividadDP_textV_nombrePersonalUsuario"
+                android:id="@+id/aDPersonal_textV_nombrePersonalUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center|start"
-                android:text="Nombre personal"
-                android:textColor="#000000"
+                android:text="@string/nombre_personal"
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/actividadDP_editTT_nombrePersonal"
+                android:id="@+id/aDPersonal_editTT_nombrePersonal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center|right"
-                android:hint="@string/sin_rellenar"
-                android:inputType="text"
                 android:backgroundTint="@android:color/transparent"
+                android:gravity="center|end"
+                android:hint="@string/sin_rellenar"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:maxLength="100"
                 android:singleLine="true" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/actividadDP_textV_fechaUsuario"
+                android:id="@+id/aDPersonal_textV_fechaUsuario"
 
                 android:layout_width="match_parent"
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center|start"
-                android:text="Fecha"
-                android:textColor="#000000"
+                android:text="@string/fecha_nacicmiento"
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/actividadDP_editTT_fecha"
+                android:id="@+id/aDPersonal_editTT_fecha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center|right"
-                android:hint="@string/sin_rellenar"
-                android:inputType="text"
+                android:backgroundTint="@android:color/transparent"
                 android:focusableInTouchMode="false"
-                android:backgroundTint="@android:color/transparent"
+                android:gravity="center|end"
+                android:hint="@string/sin_rellenar"
+                android:importantForAutofill="no"
+                android:inputType="text"
                 android:singleLine="true" />
         </LinearLayout>
 
@@ -171,80 +200,81 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/actividadDP_textV_sexoUsuario"
+                android:id="@+id/aDPersonal_textV_sexoUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center|start"
-                android:text="Sexo"
-                android:textColor="#000000"
+                android:text="@string/sexo"
                 android:textSize="20sp" />
 
             <Spinner
-                android:id="@+id/actividadDP_spinner_sexo"
+                android:id="@+id/aDPersonal_spinner_sexo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:entries="@array/sex_array"/>
+                android:entries="@array/sex_array" />
 
         </LinearLayout>
 
-
-
-        <RelativeLayout
+        <TextView
+            android:id="@+id/aDPersonal_textV_descripcionPersonal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/actividadDP_textV_descripcionPersonal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
-                android:text="Descripción personal"
-                android:textColor="#000000"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/actividadDP_textV_limiteNumerico"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/actividadDP_editTT_descripcionPersonal"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="12dp"
-                android:layout_marginBottom="5dp"
-                android:text="@string/limite_numerico_inicio" />
-
-            <EditText
-                android:id="@+id/actividadDP_editTT_descripcionPersonal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/actividadDP_textV_descripcionPersonal"
-                android:layout_alignParentStart="true"
-                android:background="@drawable/borde_descripcion_personal"
-                android:gravity="top"
-                android:hint="Haz clic para rellenar tu perfil con aficiones, estilo de vida, etc."
-                android:inputType="textMultiLine"
-                android:focusable="auto"
-                android:maxLength="100"
-                android:maxLines="10"
-                android:minLines="4"
-                android:padding="10dp"
-                android:scrollbars="vertical" />
-        </RelativeLayout>
-
-        <Button
-            android:id="@+id/actividadDP_button_guardar"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:minHeight="48dp"
-            android:text="Guardar" />
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="@string/descripcion_personal"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/aDPersonal_textV_limiteNumerico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/limite_numerico_inicio" />
+
+        <EditText
+            android:id="@+id/aDPersonal_editTT_descripcionPersonal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/borde_descripcion_personal"
+            android:focusable="auto"
+            android:gravity="top"
+            android:hint="@string/descripcion_personal_hint"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:maxLength="100"
+            android:maxLines="10"
+            android:minLines="4"
+            android:padding="10dp"
+            android:scrollbars="vertical" />
+    </LinearLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/aDPersonal_textView_mensajeError"
+        android:layout_width="356dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:textColor="@color/red"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/aDPersonal_button_guardar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/aDPersonal_button_guardar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="24dp"
+        android:minHeight="48dp"
+        android:text="@string/guardar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
