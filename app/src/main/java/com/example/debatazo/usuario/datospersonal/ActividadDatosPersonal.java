@@ -104,6 +104,10 @@ public class ActividadDatosPersonal extends AppCompatActivity {
         maximoCaracteres(descripcionPersonal, limiteNumerico);
 
         loginViewModel.getLoadingLiveData().observe(this, loading -> cargando.setVisibility(loading?View.VISIBLE:View.GONE));
+        
+        loginViewModel.getLoadingLiveData().observe((this) , loading-> {
+            guardar.setEnabled(!loading);
+        });
 
         guardar.setOnClickListener(view -> {
             updatePerfil();
@@ -167,6 +171,7 @@ public class ActividadDatosPersonal extends AppCompatActivity {
                 subirImagenImgur(user);
             }else {
                 loginViewModel.updatePerfil(user,mensajeError);
+
             }
 
 

@@ -87,21 +87,21 @@ public class LoginRepository {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 loadingLiveData.setValue(false);
                 if (response.isSuccessful()) {
-
                     loggedInUserMutableLiveData.postValue(user);
                     mensajeError.setText(R.string.perfil_actualizado_con_xito);
-
                 } else {
-                    String errorMessage = "Error: " + response.code() + " - " + response.message();
-                    mensajeError.setText(errorMessage);
+                    mensajeError.setText(R.string.actualizar_fallido);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 loadingLiveData.setValue(false);
-                String errorMessage = "Error: " + t.getCause() + " - " + t.getMessage();
-                mensajeError.setText(errorMessage);
+                    String errorMessage = "Error: " + t.getCause() + " - " + t.getMessage();
+                    System.out.println(errorMessage);
+
+                    mensajeError.setText(R.string.actualizar_fallido);
+
             }
         });
     }
