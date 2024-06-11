@@ -9,17 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.debatazo.ActividadPrincipal;
 import com.example.debatazo.R;
 import com.example.debatazo.configuracion.view.Configuracion;
 import com.example.debatazo.usuario.datospersonal.ActividadDatosPersonal;
@@ -27,7 +24,6 @@ import com.example.debatazo.usuario.iniciarsesion.ui.login.IniciaSesion;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModel;
 import com.example.debatazo.usuario.iniciarsesion.ui.login.LoginViewModelFactory;
 import com.example.debatazo.usuario.interaccion.ActividadMisInteraccion;
-import com.example.debatazo.utils.Dialogs;
 import com.example.debatazo.utils.GlobalConstants;
 import com.squareup.picasso.Picasso;
 
@@ -90,7 +86,6 @@ public class PerfilFragment extends Fragment {
     private LinearLayout fPerfil_datosP_debateP,fPerfil_datosP_debateR, fPerfil_datosP_debateG ,fPerfil_datosPublicacion;
     private View.OnClickListener manejador;
     private ActivityResultLauncher<Intent> resultLauncher;
-    public static final String TYPE_KEY = "TYPE_KEY";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -158,15 +153,16 @@ public class PerfilFragment extends Fragment {
                 modoTema.setImageResource(R.drawable.tema_nocturno);
                 modoTema.setTag("nocturno");
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            } else if (modoTema.getTag().equals("nocturno")){
-                modoTema.setImageResource(R.drawable.tema_dia_noche);
-                modoTema.setTag("auto");
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-            }else {
+            } else {
                 modoTema.setImageResource(R.drawable.tema_diurno);
                 modoTema.setTag("diurno");
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
+//            else if (modoTema.getTag().equals("nocturno")){
+//                modoTema.setImageResource(R.drawable.tema_dia_noche);
+//                modoTema.setTag("auto");
+//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+//            }
         });
 
         manejador = view ->{
