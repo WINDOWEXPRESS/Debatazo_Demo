@@ -108,7 +108,7 @@
         android:backgroundTint="@color/red"
         android:contentDescription="@string/publicar"
         android:src="@drawable/aniadir"
-        app:layout_anchor="@string/actividadP_floatingAB_layoutA"
+        app:layout_anchor="@id/aPrincipal_bottomAB"
         app:maxImageSize="50dp"
         app:tint="@color/white" />
 
