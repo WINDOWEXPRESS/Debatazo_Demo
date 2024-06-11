@@ -102,6 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textVisiblePassword"
+            android:maxLength="20"
             android:backgroundTint="@android:color/transparent"
             android:textSize="18sp" />
 
@@ -112,8 +113,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:maxLength="20"
         android:hint="@string/pista_repetir_contrasenia"
-        android:outlineSpotShadowColor="@color/purple_200"
 
         app:boxBackgroundColor="@color/white"
         app:boxBackgroundMode="outline"

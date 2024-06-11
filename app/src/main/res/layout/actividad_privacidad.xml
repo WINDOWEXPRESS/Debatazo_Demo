@@ -22,7 +22,8 @@
             android:contentDescription="@string/boton_volver"
             android:scaleType="centerCrop"
             android:src="@drawable/flecha_volver"
-            tools:ignore="TouchTargetSizeCheck" />
+            tools:ignore="TouchTargetSizeCheck"
+            app:tint="?attr/colorPrimary" />
 
         <TextView
             android:id="@+id/aPrivacidad_textV_privacidad"
@@ -33,7 +34,7 @@
             android:onClick="@{()->click.login}"
             android:paddingStart="10dp"
             android:text="@string/poltica_de_privacidad"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorPrimary"
             android:textSize="26sp"
             tools:ignore="RtlSymmetry" />
 
@@ -43,6 +44,7 @@
         android:id="@+id/aPrivacidad_webV_html"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="?attr/colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

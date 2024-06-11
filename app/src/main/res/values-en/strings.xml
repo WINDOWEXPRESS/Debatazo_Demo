@@ -95,4 +95,5 @@
     <string name="todavia_no_has_comentado_ningun_debate">You Haven\'t Commented on Any Debates Yet</string>
     <string name="todavia_no_has_gustado_ningun_debate">You Haven\'t Liked Any Debates Yet</string>
     <string name="perfil_actualizado_con_xito">Profile successfully updated.</string>
+    <string name="actualizar_fallido">Unexpected error updating, please try again later.</string>
 </resources>

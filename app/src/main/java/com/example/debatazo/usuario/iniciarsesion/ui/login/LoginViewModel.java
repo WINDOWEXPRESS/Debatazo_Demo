@@ -74,8 +74,8 @@ public class LoginViewModel extends ViewModel {
                     // Se actualiza el resultado del inicio de sesión con la información del usuario autenticado
                     loginResult.setValue(new LoginResult(new LoggedInUserView(data.getUser_name())));
                 } else {
-                        // Si la autenticación falló, se actualiza el resultado del inicio de sesión con un mensaje de error
-                        loginResult.setValue(new LoginResult(R.string.inicia_sesion_fallido));
+                    // Si la autenticación falló, se actualiza el resultado del inicio de sesión con un mensaje de error
+                    loginResult.setValue(new LoginResult(R.string.inicia_sesion_fallido));
 
                 }
                 return user;
